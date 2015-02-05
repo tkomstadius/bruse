@@ -4,7 +4,7 @@ default: &default
   pool: 5
   host: localhost
   username: bruse
-  password: password
+  password: kex2015
 
 development:
   <<: *default
