@@ -1,0 +1,352 @@
+\documentclass[a4paper,12pt,oneside,final]{extbook}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage[english,swedish]{babel}
+
+\usepackage{geometry}
+
+\geometry{
+ margin=20mm
+}
+
+\usepackage{fancyhdr}
+
+\usepackage{titling}
+\title{Projektplan, TNM094}
+\author{\textbf{Team Bruse}\\ Daniel Rönnkvist\\ Klas Eskilson\\ Ronja Grosz\\ Erik Olsson \\ Therése Komstadius}
+
+\frenchspacing
+\setlength{\parindent}{0pt}
+\parskip 5pt
+
+\usepackage{color}
+\definecolor{rltred}{rgb}{.5,0,0}
+\definecolor{rltgreen}{rgb}{0,.5,0}
+\definecolor{rltblue}{rgb}{0,0,1}
+
+\usepackage[pdftex,
+ colorlinks=true,
+ urlcolor=rltblue,       % \href{...}{...} external (URL)
+ filecolor=rltgreen,     % \href{...} local file
+ linkcolor=rltred,       % \ref{...} and \pageref{...}
+ citecolor=rltgreen,     % \cite{...}
+ pdftitle={},
+ pdfauthor={},
+ pdfsubject={Projektrapport, TNM094},
+ pdfkeywords={},
+ pdfpagemode=,
+ pdfstartview=FitH,
+ bookmarks=true,
+ bookmarksopen=false,
+ bookmarksnumbered=true
+        ]{hyperref}
+
+
+\begin{document}
+
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\frontmatter
+
+\maketitle
+
+\pagestyle{fancy}
+
+\chapter{Sammanfattning}
+
+Detta är en plan för utvecklingen av en webb-baserad databas för
+hantering av filer på \emph{Dropbox}.
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{Kort beskrivning av projektet och dess mål}
+
+Projektet går ut på att skapa en multifunktionell webb-databas som
+är tillgänglig för flera olika användare. Det ska vara möjligt för
+användaren att installera tjänsten lokalt på sin egen dator. Målet
+med webb-databasen är att hantera olika typer av filer och kunna
+hitta dem på ett lätt och smidigt sätt med hjälp av nyckelord. Dessa
+nyckelord kommer vara sökningsbara och med hjälp av dessa ska olika
+typer av filer kunna visas upp enkelt och sorterade efter olika
+parametrar, exempelvis nyckelord, filtyp, namn eller liknande.
+
+\section{Frågeställningar}
+
+\begin{itemize}
+\item Hur kan filer hanteras och lagras på ett sätt som är effektivt
+      för slutanvändare, utvecklare och system?
+\item Hur går det att säkerställa att informationen som lagras inte
+      är åtkomlig för fel personer?
+\item Hur kan en fillista presenteras på ett bra sätt i en platt
+      hierarki?
+\item Hur kan en molnbaserad fillagringstjänst sticka ut i ett hav
+      av liknande tjänster?
+\item På vilket sätt kan användargränssnittet utvecklas för att visa
+      på all den funktionalitet systemet besitter?
+\end{itemize}
+
+\chapter{Tidsplan}
+
+För att snabbt få en överblick över projektet och se distribution
+gällande till exempel resurser och arbetsfördelning är \emph{Gantt}-scheman
+ett bra verktyg. Varje dag under projektets gång specificeras här,
+och samtliga händelser under projektets gång markeras i schemat.
+Länk till Gantt-schemat finns \href{http://goo.gl/dL0ydY}{här}.
+
+\section{Tid för planering, efterforskningar och tekniska studier}
+En övergripande efterforskning görs under projektuppstarten. Under
+projektets gång kommer sedan ytterligare tekniska studier ske inför
+och under varje \emph{sprint}, för att ta reda på hur vissa krav ska realiseras.
+
+\section{Sprints och deras möten}
+\label{sprintomoten}
+En sprint pågår i tre veckor. I början på varje sprint kommer det
+hållas ett planeringsmöte på sex timmar inför kommande sprint. Där
+bestämmer gruppen tillsammans vilka scenarion som ska genomföras inför
+kommande sprint. Ett sprintmål kommer att formas efter dessa
+scenarier som gruppen kommer jobba mot att nå. Det är önskvärt
+att ha en fungerande produkt efter varje sprint. De scenarion som
+är intressant flyttas sedan över från projektets produkt-backlogg
+till aktuell sprint-backlogg tillsammans med de uppgifter som finns
+för att utföra arbetet.
+
+Varje arbetsdag kommer ett 15 minuter långt dagligt Scrum-möte att hållas.
+De kommer att vara stående möten utan datorer för att hålla dem
+fokuserade och effektiva. Där diskuteras vad gruppmedlemmarna
+gjorde förra arbetsdagen och vad de ska göra den kommande dagen
+för att hjälpa till att nå målet för aktuell sprint. Där utvärderas
+också möjligheten att slutföra de krav som finns i nuvarande
+sprint backlogg.
+
+Som avslutning i varje sprint kommer två möten att hållas. Först
+hålls en sprintgranskning, som är tidsbestämd till tre timmar, där
+det arbete som precis genomförts utvärderas. Här är det även bra
+att ha med kunden som kan få en demonstration av systemet som
+hittills utvecklats. Här redovisas även de problem som kan ha
+stötts på och hur de har blivit lösta. Mötet ger också en möjlighet
+att uppdatera projektets produkt-backlogg om nya krav eller
+förändringar i existerande krav dykt upp.
+
+Till sist hålls en sprintåterblick som är ett möte på två timmar.
+Här går gruppen igenom den  sprint som genomförts utifrån sina egna
+arbetsinsatser, verktyg, processer och kommunikationen i gruppen.
+Det framförs konstruktiv kritik och görs upp en plan för hur
+arbetet kan förbättras ur denna aspekt.
+
+\section{Milstolpar och leverabler}
+Efter varje sprint skall produkten vara ett inkrement på produkten
+från föregående sprint. Detta innebär att en förbättrad version av produkten
+skall finnas redo för leverans efter varje sprint.
+
+\section{Avstämningsmöten med ledningsgruppen}
+Bör hållas ett par gånger i samband med att en sprint avslutas.
+Tanken är att detta kan hållas efter sprintgranskning och sprintåterblick,
+så att dessa möten kan hålla fokus på det som är
+viktigt för utvecklingsprocessen.
+
+\chapter{Infrastruktur för programmering och systemutveckling}
+
+\section{Utvecklingsplattform}
+Alla i projektet utvecklar i en \emph{UNIX}-baserad miljö. Detta valdes
+för att majoriteten hade vana i denna miljö och för att förenkla
+samarbetet.
+
+\section{Kravhantering}
+De kravspecifikationer som finns gällande systemets funktionalitet
+från en användarsynpunkt kommer från kunden. Här är det önskvärt
+att kraven blir tydligt definierade och att alla menar samma sak.
+Det ligger i detta skede inget fokus på hur kraven ska uppnås.
+Dessa krav diskuteras sedan av utvecklingsteamet för att ta fram
+kravspecifikationer, alltså de krav som krävs för att uppnå kundens
+krav. Alla kravdefinitoner sparas som scenarion i projektets
+produkt-backlogg. Dessa bryts ner i mindre kravspecifikationer i form av
+uppgifter. Det ska vara möjligt att genomföra ett scenario över en sprint
+och en uppgift på en arbetsdag. Det är viktigt att det finns mycket
+detaljer för att arbetet ska bli rätt från början. Det är önskvärt
+att ha ett möte med kunden efter varje sprint för att visa upp
+arbetet så långt i projektet och se om några krav har förändrats.
+
+\section{Scenario- och uppgiftshantering}
+Varje krav kommer att förvandlas till ett scenario som kommer sparas
+ner i backloggen. Dessa scenarion kommer sedan att brytas ner till
+mindre uppgifter. För att få en bra översikt på hur
+backloggen och uppgifter hanteras kommer webbtjänsten \emph{Trello} att användas.
+
+\section{Versionshanteringssystem och rutiner}
+För att hantera projektets kod kommer \emph{Git} användas tillsammans med
+\emph{Github}. Git är ett etablerat verktyg för versionshantering av kod.
+För att lätt kunna dela koden lagras den på Github. Versionshantering
+sker genom förgreningar från huvud- och utvecklingsgrenen där all
+utveckling sker i grenarna. När utvecklingen i någon förgrening är
+klar ska koden granskas av minst två andra personer innan den
+sammanfogas med huvudgrenen. Koden får endast sammanfogas med
+huvudgrenen av en person för att minska risken för att trasig kod.
+
+\section{Testningsprinciper och rutiner}
+Inför varje sprint kommer den testansvarige att säkerställa att
+det finns tester som kan möta sprintens krav. Testen kommer att
+skrivas för att upptäcka fel i den kod som skrivs för kraven,
+även för att upptäcka fel som skapas.
+
+I projektets början kommer enhetstester att implementeras. Senare
+i projektet när ett användargränssnitt har byggts kommer
+integrationstester att tillämpas genom användartester. Användartesterna
+utförs genom att filma en testperson och skärmaktiviteten samtidigt
+medan systemet manövreras.
+
+\section{Dokumentationsprinciper och rutiner}
+All dokumentation i form av textdokument och filer samlas i \emph{Google
+drive}. Vid varje möte förs ett kort mötesprotokoll och alla
+tavelanteckningar sparas som bilder. Backlogg samt sprints dokumenteras
+på Trello som kommer agera som Scrumtavla. Backloggen beskrivs genom
+olika fall där det finns kategorier för fall som är antingen vedertagna,
+idéer eller slutförda. Varje sprint har en egen gren som innehåller
+tillhörande scenarion, uppgifter, pågående uppgifter, uppgifter
+som ska godkännas och godkända uppgifter.
+
+För att generera lättöverskådlig dokumentation från koden används
+\emph{TomDoc}. Då skrivs exempelvis klass- och funktionskommentarer i koden,
+som sedan genereras till en \emph{HTML}-sida.
+
+\section{Modelleringsstandard och rutiner}
+Systemet kommer att modelleras upp som UML-modeller på tavla.
+Det ger hela teamet en möjlighet att vara delaktiga och få samma bild
+av systemet. Inför varje ny implementation bör nya strukturer modelleras
+för att säkerställa att samtliga utvecklare har en gemensam bild av hur
+strukturerna skall komma att se ut.
+
+\chapter{Organisation}
+
+\section{Teammedlemmar och kontaktuppgifter}
+\begin{itemize}
+  \item Klas Eskilson, \href{mailto:klaes950@student.liu.se}{klaes950@student.liu.se}, 073-730 73 56
+  \item Ronja Grosz, \href{rongr946@student.liu.se}{rongr946@student.liu.se}, 076-218 64 26
+  \item Therése Komstadius, \href{theko867@student.liu.se}{theko867@student.liu.se}, 073-940 42 28
+  \item Erik Olsson \href{eriol726@student.liu.se}{eriol726@student.liu.se}, 073-840 68 72
+  \item Daniel Rönnkvist, \href{danro716@student.liu.se}{danro716@student.liu.se}, 076-396 74 24
+\end{itemize}
+
+\section{Ansvarsfördelning och arbetsgrupper}
+  \subsection{Erik Olsson - \emph{Scrummästaren}}
+  Det är Scrummästarens uppgift att se till så att Scrum-teamet
+  efterföljer Scrum-teorin och få de att förstå hur den fungerar.
+  Scrummästaren hjälper också produktägaren med att hantera produkt
+  backloggen på rätt sätt. Scrummästaren ska även ansvar för att
+  produktutvecklingen flyter på och att det råder en god arbetsro.
+
+  \subsection{Therése Komstadius - \emph{Produktägare}}
+  Dennes uppgift är att hålla kontakt med kunden och i takt med
+  det hålla kraven uppdaterade. Största ansvarsområde är att se
+  till att projektets produkt-backlogg är uppdaterad och organiserad
+  på ett sätt som gör att projektmålen går att nås. Det är även
+  viktigt att alla förstår kraven som finns i den och att den är
+  synlig och tydlig för alla.
+
+  \subsection{Ronja Grosz  - \emph{Dokumentansvarig}}
+  Dokumentansvarige har hand om att dokumentationen och
+  dokumentationsprinciperna av projektet följs och utförs korrekt.
+  Så som att se till att mötesprotokoll alltid förs vid varje möte
+  av beslutsgrundande karaktär och att samla alla relevanta dokument.
+
+  \subsection{Daniel Rönnkvist - \emph{Testansvarig}}
+  Som testansvarig har denne som uppgift att säkerställa att tester
+  skrivs som kontrollerar att kraven för den aktuella sprinten uppfylls.
+  Det åligger även denne att se till så att testning sker
+  kontinuerligt och att tester skrivs inför och under varje sprint.
+  Denne ska även jobba för att skriva tester för att upptäcka brister
+  i systemet.
+
+  \subsection{Klas Eskilson  - \emph{Kodansvarig}}
+  Uppgiften för den kodansvarige är huvudsakligen ansvarig för
+  kodgranskningen inom gruppen. Koden som begärs att sammanfoga med
+  redan befintlig kod skall hålla en god kvalité och inte upprepa
+  sig för mycket. Det är den kodansvariges ansvar att se till att
+  denna granskning görs av minst två personer som inte var involverade
+  i utvecklingen av det som ska sammanfogas. Till sin hjälp har den
+  kodansvarige verktyg som automatiserar detta, tex \emph{Code Climate}.
+
+  \section{Mötesprinciper och rutiner}
+  Dagar börjar 08:30 och slutar 17:00 om inte annat anges. För
+  principer kring Scrum-relaterade möten, se kapitlet \ref{sprintomoten}.
+  Mötena kommer att ske varje onsdag till fredag under vårens första period,
+  diskussion om vilka arbetsdagar som kommer vara aktuella under andra
+  perioden sker senare. All information angående salsbokning och mötestider
+  sker via \emph{Facebook}-gruppen. Personen som bokar sal varierar beroende på hur
+  många timmar denne har att utnyttja i salsbokningsystemet.
+
+\chapter{Teknisk beskrivning}
+\section{Målplattform, behov av programvara, grundläggande system-arkitektur, standarder och APIer}
+Systemet kommer att utvecklas i \emph{Ruby} med ramverket \emph{Ruby on Rails}.
+Detta ramverk är byggt enligt designmönstret \emph{Model-View-Controller}, där
+olika delar i systemet är nedbrutna i olika komponenter. I \emph{model} hanteras
+databasen och dess innehåll. I \emph{view} lagras alla olika vyer, tex hur det
+ser ut när en användare ombeds logga in eller när någon besöker startsidan.
+\emph{Controller} fungerar som spindeln i nätet. Här finns logik, och denna
+komponent förser view med data från model.
+
+För databashantering används Ruby on Rails inbyggda \emph{ActiveRecord}-modul,
+som bygger på \emph{object relation model}. Detta innebär att det är enkelt
+att strukturera upp relationer mellan olika tabeller och inlägg. Exempelvis
+kan man säga att en användare har många filer, och på så sätt låta systemet
+enkelt lista en användares filer, utan att skapa avancerade \emph{SQL}-frågor.
+
+\section{\emph{Build}-miljö, \emph{IDE}, kompilator, \emph{debug}-verktyg, profileringsverktyg}
+Då Ruby on rails inte kräver en kompilator kommer valet av textredigerare
+vara upp till programmeraren. Ett alternativ till en vanlig textredigerare
+är att använda \emph{IDE}:n \emph{Rubymine}, som går att använda gratis som
+student.
+
+De \emph{debug}-verktyg som redan är inbyggda i rails kommer i huvudsak att
+användas, men även verktyg så som; \emph{byebug}, \emph{better-errors} och
+\emph{did-you-mean}.
+
+För testning kommer verktyget \emph{minitest} att implementeras och
+tredjepartstjänsten \emph{Travis CI} kommer att kopplas till systemet för
+att användas som ett komplement till kodgranskning för att försäkra kodstandard.
+Minitest kommer även att användas för att köra test för att mäta systemets prestanda.
+För att kolla \emph{test-coverage} och \emph{code smells} osv. ska tredjepartstjänsten
+Code Climate användas. Detta för att automatisera processen att hitta duplicerad
+kod och på så sätt snabba på och underlätta för refaktorering.
+
+\section{Systembegränsningar, responstid, körtid}
+För att systemet inte ska uppfattas som långsamt och irriterande för användaren
+är målet att en sökning får ta max tre sekunder. Efter lätta undersökningar på
+hur liknande tjänster levererar sin sökning är tre sekunder en rimlig begränsning.
+
+Programmet kommer endast att utvecklas för att kunna köras i UNIX-miljö.
+\emph{Windows} prioriteras inte på grund av att ingen av de tänkta servrar där
+projektet kommer att köras är en Windows server. Windows-maskiner kommer
+fortfarande att kunna utnyttja tjänsten via en webbläsare.
+
+Ansvaret för vad som laddas upp på servern ligger endast på användaren.
+Detta krav måste användaren acceptera för att få ta del av webbtjänsten.
+Alltså är det användarens skyldighet att läsa på om reglerna som gäller för
+att använda vår webbtjänst. Olagliga filer har systemadministratörerna rätt
+att ta bort.
+
+\section{Standarder, metoder och tredjeparts-APIer}
+Som standard skall GitHubs stilguide för Ruby, \emph{JavaScript} och \emph{CSS}
+användas. Den finns \href{https://github.com/styleguide}{här}.
+
+För att hantera användares filer via Dropbox kommer deras \emph{API} att användas.
+Detta genom den Ruby-klient som Dropbox tillhandahåller för att enkelt uppdatera,
+lista och skapa filer på användarens Dropbox-konto. På sikt skall även \emph{Google}:s
+och \emph{Box}:s API för filhantering undersökas för att se om det kan användas.
+
+\section{Systemmiljö, filer/filformat, input och output}
+Dropbox kommer användas som server för att underlätta hantering av filer. Därav
+kommer webbtjänsten kunna hantera de filtyper Dropbox stödjer. I dagsläget innebär
+detta i princip samtliga filer som går att lagra på en dators hårddisk.
+Inledningsvis kommer fokus ligga på att kunna presentera bilder, länkar, \emph{pdf}-filer,
+ljud-filer samt videor. För att kunna redigera en fil måste den laddas ner från
+webbtjänsten till sin dator sen är det upp till användaren att själv hitta ett
+passande program för att redigera filen.
+
+\end{document}
