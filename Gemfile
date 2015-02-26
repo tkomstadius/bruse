@@ -44,6 +44,5 @@ group :development, :test do
 end
 
 group :test do
-  # Cleares the test database after each run
-  gem 'database_cleaner', '~> 1.4.0'
+
 end
