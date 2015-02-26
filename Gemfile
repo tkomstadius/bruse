@@ -61,3 +61,7 @@ group :development, :test do
   gem 'figaro'
 end
 
+group :test do
+  # capybara for emulating browser
+  gem 'minitest-rails-capybara'
+end
