@@ -15,6 +15,19 @@ secrets with the whole internets, this file is ignored by git. Instead, we have
 So, before running the app you **have to rename** this file and remove the
 `.example` from the name and **fill the details** listed there.
 
+### API keys and such
+
+Read [Environment variables](#environment-variables) to understand how
+environment variables should be stored during development.
+
+#### Dropbox
+
+To use the Dropbox features, you need a key and a secret from Dropbox. You can
+get this by creating an app on the
+[Dropbox App Console](https://www.dropbox.com/developers/apps). Your app should
+be a *Dropbox API app* and have access to everything, basically. Once you've
+created your app, add its credentials to your `config/application.yml` file.
+
 ### PostgreSQL setup
 
 The following are `psql` commands:

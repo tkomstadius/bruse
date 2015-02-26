@@ -1,15 +1,15 @@
 class SessionsController < ApplicationController
   def create
     session[:user_token] = auth_hash[:credentials][:token]
-    flash[:notice] = "Logged in"
 
+    flash[:notice] = "Logged in"
     redirect_to root_url
   end
 
   def destroy
     session[:user_token] = nil
-    flash[:notice] = "Logged out"
 
+    flash[:notice] = "Logged out"
     redirect_to root_url
   end
 
