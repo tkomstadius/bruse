@@ -44,5 +44,6 @@ group :development, :test do
 end
 
 group :test do
-
+  # capybara for emulating browser
+  gem 'minitest-rails-capybara'
 end
