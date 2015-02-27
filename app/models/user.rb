@@ -1,5 +1,11 @@
 class User < ActiveRecord::Base
   has_many :identities
+  validates :email, presence: true,
+                    uniqueness: true,
+                    format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+                              message: "enter a valid email" },
+                    on: :create
+  validates_presence_of :name, :on => :create
 
   # Public: Creates or finds a user from oauth information.
   # To be used when a user signs in.

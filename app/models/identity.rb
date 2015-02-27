@@ -1,5 +1,7 @@
 class Identity < ActiveRecord::Base
   belongs_to :user
+  validates_uniqueness_of :uid, :on => :create
+  validates_presence_of [:uid, :token, :service, :name], :on => :create
 
   # Public: Creates or finds an identity from oauth information
   #
