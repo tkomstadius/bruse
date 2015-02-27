@@ -1,11 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 
-  token: MyString
-  service: MyString
-
-two:
-  user_id: 
-  token: MyString
-  service: MyString
+  user_id: 1
+  token: xyz123
+  service: Dropbox
+  name: Dropbox - Foo Bar
+  uid: 666123
