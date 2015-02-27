@@ -1,24 +1,26 @@
-<h1>
-  Hi, <%= current_user["name"] %>!
-</h1>
+<div ng-controller="FileCtrl">
+  <h1>
+    Hi, <%= current_user["name"] %>!
+  </h1>
 
-<h2>
-  Files
-</h2>
+  <h2>
+    Files
+  </h2>
 
-<%= link_to "Parent folder", files_path(path: @parent_path) %>
+  <%= link_to "Parent folder", files_path(path: @parent_path) %>
 
-<ul>
-  <% @file["contents"].each do |c| %>
-    <li>
-      <% if c["is_dir"] %>
-        <%= link_to c["path"], files_path(path: c["path"]) %>
-      <% else %>
-        <%= c["path"] %>
-      <% end %>
-      <!-- <pre>
-        <%= c.inspect %>
-      </pre> -->
-    </li>
-  <% end %>
-</ul>
+  <ul>
+    <% @file["contents"].each do |c| %>
+      <li>
+        <% if c["is_dir"] %>
+          <%= link_to c["path"], files_path(path: c["path"]) %>
+        <% else %>
+          <%= c["path"] %>
+        <% end %>
+        <!-- <pre>
+          <%= c.inspect %>
+        </pre> -->
+      </li>
+    <% end %>
+  </ul>
+</div>
