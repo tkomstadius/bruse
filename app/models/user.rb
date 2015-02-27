@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
   has_many :identities
 
-  # Public: Creates or finds a user from oauth information
+  # Public: Creates or finds a user from oauth information.
+  # To be used when a user signs in.
   #
   # auth_hash  - Hash with information from omniauth
   # signed_in_user - if a user is currently signed in it will be passed
@@ -31,6 +32,13 @@ class User < ActiveRecord::Base
       identity.user = user
       identity.save!
     end
-    user.id # return user
+    user.sign_in
+  end
+
+  def sign_in
+    self.sign_in_count += 1
+    self.last_sign_in_at = DateTime.now
+    self.save!
+    self.id # return user
   end
 end
