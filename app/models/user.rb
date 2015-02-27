@@ -42,6 +42,6 @@ class User < ActiveRecord::Base
     self.sign_in_count += 1
     self.last_sign_in_at = DateTime.now
     self.save!
-    self.id # return user
+    self # return user
   end
 end
