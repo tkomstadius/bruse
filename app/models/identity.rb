@@ -14,9 +14,11 @@ class Identity < ActiveRecord::Base
   def self.find_or_create_from_oauth(auth_hash)
     identity = self.find_by(:uid => auth_hash[:info][:uid], :service => auth_hash[:provider])
     if !identity
+      provider = (auth_hash[:provider].include? 'dropbox') ? 'Dropbox' : auth_hash[:provider]
       identity = Identity.new(:uid     => auth_hash[:info][:uid],
                               :token   => auth_hash[:credentials][:token],
-                              :service => auth_hash[:provider])
+                              :service => auth_hash[:provider],
+                              :name    => "#{provider} - #{auth_hash[:info][:name]}")
     else
       identity.token = auth_hash[:credentials][:token]
     end
