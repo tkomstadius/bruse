@@ -11,5 +11,8 @@
 #= require nprogress
 #= require nprogress-turbolinks
 #= require angular
+#= require lodash
 #= require main
+#= require_tree ./factories
+#= require_tree ./controllers
 #= require_tree .

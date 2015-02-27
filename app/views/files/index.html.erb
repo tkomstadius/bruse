@@ -1,11 +1,28 @@
+<script type="text/ng-template" id="fileTree">
+  {{file.path}}
+  <span ng-click="expand(file)" ng-if="file.is_dir">expand</span>
+  <span ng-if="file.expand">expanded!!!</span>
+  <ul ng-if="file.is_dir && file.expand && file.contents">
+    <li ng-repeat="file in file.contents" ng-include="'fileTree'"></li>
+  </ul>
+</script>
+
 <div ng-controller="FileCtrl">
   <h1>
     Hi, <%= current_user["name"] %>!
   </h1>
 
+  <p ng-if="message.length > 0">
+    {{message}}
+  </p>
+
   <h2>
     Files
   </h2>
+
+  <ul>
+    <li ng-repeat="file in files" ng-include="'fileTree'"></li>
+  </ul>
 
   <%= link_to "Parent folder", files_path(path: @parent_path) %>
 
@@ -19,8 +36,8 @@
         <% end %>
         <!-- <pre>
           <%= c.inspect %>
-        </pre> -->
+        </pre>
       </li>
     <% end %>
-  </ul>
+  </ul> -->
 </div>

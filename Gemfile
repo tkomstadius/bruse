@@ -16,6 +16,8 @@ gem 'coffee-rails', '~> 4.1.0'
 ## frontend libs
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+# nice javascript toolbelt
+# gem 'lodash-rails'
 # Turbolinks makes following links in your web application faster.
 gem 'turbolinks'
 # Make sure load events are thrown even though we use turbolinks
