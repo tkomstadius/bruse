@@ -1,5 +1,7 @@
 # Bruse
 
+[![Code Climate](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/gpa.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed) [![Test Coverage](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/coverage.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed)
+
 Multi-purpose personal file database.
 
 ## Setup
