@@ -1,9 +1,6 @@
 class SessionsController < ApplicationController
   def create
-    user = {token: auth_hash[:credentials][:token],
-            email: auth_hash[:extra][:raw_info][:email],
-            name: auth_hash[:extra][:raw_info][:display_name]}
-    session[:user] = user
+    session[:user] = User.find_or_create_from_oauth(auth_hash, current_user)
 
     flash[:notice] = "Logged in"
     redirect_to root_url

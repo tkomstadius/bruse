@@ -4,16 +4,17 @@ class User < ActiveRecord::Base
   # Public: Creates or finds a user from oauth information
   #
   # auth_hash  - Hash with information from omniauth
+  # signed_in_user - if a user is currently signed in it will be passed
   #
   # Examples
   #
-  #   User.find_or_create_from_oauth(auth_hash)
+  #   User.find_or_create_from_oauth(auth_hash, current_user)
   #   # => User
   #
   # Returns a user object
-  def self.find_or_create_from_oauth(auth_hash)
+  def self.find_or_create_from_oauth(auth_hash, signed_in_user)
     identity = Identity.find_or_create_from_oauth(auth_hash)
-    user = identity.user
+    user = signed_in_user ? signed_in_user : identity.user
 
     if user.nil?
       email = auth_hash[:info][:email]
@@ -30,6 +31,6 @@ class User < ActiveRecord::Base
       identity.user = user
       identity.save!
     end
-    user # return user
+    user.id # return user
   end
 end
