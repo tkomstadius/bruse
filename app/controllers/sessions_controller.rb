@@ -1,8 +1,9 @@
 class SessionsController < ApplicationController
   def create
     user = {token: auth_hash[:credentials][:token],
-            email: auth_hash[:extra][:raw_info][:email],
-            name: auth_hash[:extra][:raw_info][:display_name]}
+            email: auth_hash[:info][:email],
+            name: auth_hash[:info][:name],
+            uid: auth_hash[:info][:uid]}
     session[:user] = user
 
     flash[:notice] = "Logged in"

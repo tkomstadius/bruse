@@ -17,12 +17,12 @@ secrets with the whole internets, this file is ignored by git. Instead, we have
 So, before running the app you **have to rename** this file and remove the
 `.example` from the name and **fill the details** listed there.
 
-### API keys and such
+#### API keys and such
 
 Read [Environment variables](#environment-variables) to understand how
 environment variables should be stored during development.
 
-#### Dropbox
+##### Dropbox
 
 To use the Dropbox features, you need a key and a secret from Dropbox. You can
 get this by creating an app on the
