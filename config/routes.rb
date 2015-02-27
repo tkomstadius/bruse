@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   match '/auth/:provider/callback', via: [:get, :post], to: 'sessions#create'
   # logout
   match '/signout', via: [:get, :post], to: 'sessions#destroy'
+
+  # files
+  get '/files(/*path)', to: 'files#index', as: :files
 end

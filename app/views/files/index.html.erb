@@ -1,0 +1,32 @@
+<h1>
+  Hi, <%= current_user["name"] %>!
+</h1>
+
+<h2>
+  Files
+</h2>
+
+<%
+# remove eveything after the last '/' in the current dropbox path
+parent_path = @files["path"].slice(0..(@files["path"].rindex('/')))
+%>
+<%= link_to "Parent folder", files_path(path: parent_path) %>
+
+<ul>
+  <% @files["contents"].each do |c| %>
+    <li>
+      <% if c["is_dir"] %>
+        <%= link_to c["path"], files_path(path: c["path"]) %>
+      <% else %>
+        <%= c["path"] %>
+        <%= link_to "Share!", @client.shares(c["path"])["url"] if c["mime_type"] == "image/jpeg" %>
+      <% end %>
+      <!-- <pre>
+        <%= c.inspect %>
+      </pre> -->
+    </li>
+  <% end %>
+</ul>
+<pre>
+  <%= @files.inspect %>
+</pre>
