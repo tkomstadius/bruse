@@ -11,9 +11,9 @@ class User < ActiveRecord::Base
   #   # => User
   #
   # Returns a user object
-  def find_or_create_from_oauth(auth_hash)
+  def self.find_or_create_from_oauth(auth_hash)
     identity = Identity.find_or_create_from_oauth(auth_hash)
-    user = current_user ? current_user : identity.user
+    user = identity.user
 
     if user.nil?
       email = auth_hash[:info][:email]
