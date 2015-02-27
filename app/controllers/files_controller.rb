@@ -11,6 +11,8 @@ class FilesController < ApplicationController
     # setup client
     @client = DropboxClient.new(current_user["token"])
     # load files
-    @files = @client.metadata(path)
+    @file = @client.metadata(path)
+    # remove eveything after the last '/' in the current dropbox path
+    @parent_path = @file["path"].slice(0..(@file["path"].rindex('/')))
   end
 end
