@@ -13,7 +13,10 @@ class User < ActiveRecord::Base
   #   # => User
   #
   # Returns a user object
-  def self.find_or_create_from_oauth(auth_hash, signed_in_user)
+  def self.find_or_create_from_oauth(auth_hash, signed_in_user = nil)
+    if auth_hash.nil?
+      return nil
+    end
     identity = Identity.find_or_create_from_oauth(auth_hash)
     user = signed_in_user ? signed_in_user : identity.user
 
