@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
   # User profile
   get '/user', to: 'users#show', as: 'profile'
+  get '/user/terminate', to: 'users#terminate', as: 'terminate_user'
 
   delete '/provider/:id', to: 'identities#destroy', as: 'destroy_provider'
+  delete '/user', to: 'users#destroy', as: 'destroy_user'
 
   # recieve auth callback
   match '/auth/:provider/callback', via: [:get, :post], to: 'sessions#create'

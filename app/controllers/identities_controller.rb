@@ -5,11 +5,7 @@ class IdentitiesController < ApplicationController
       identity.destroy
       redirect_to profile_url
     else
-      user = identity.user
-      identity.destroy
-      user.destroy
-      session[:user_id] = nil
-      redirect_to root_url
+      redirect_to terminate_user_url
     end
   end
 end
