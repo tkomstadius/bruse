@@ -16,27 +16,10 @@
   </p>
 
   <h2>
-    Files
+    Files <span ng-if="loading">Loading...</span>
   </h2>
 
   <ul>
     <li ng-repeat="file in files" ng-include="'fileTree'"></li>
   </ul>
-
-  <%= link_to "Parent folder", files_path(path: @parent_path) %>
-
-  <ul>
-    <% @file["contents"].each do |c| %>
-      <li>
-        <% if c["is_dir"] %>
-          <%= link_to c["path"], files_path(path: c["path"]) %>
-        <% else %>
-          <%= c["path"] %>
-        <% end %>
-        <!-- <pre>
-          <%= c.inspect %>
-        </pre>
-      </li>
-    <% end %>
-  </ul> -->
 </div>
