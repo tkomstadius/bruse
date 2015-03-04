@@ -30,4 +30,9 @@ class UserTest < ActiveSupport::TestCase
     user = User.new
     assert_not user.save
   end
+
+  test "welcome email is sent after a user is created" do
+    user = User.find_or_create_from_oauth(dropbox_new)
+    assert_not ActionMailer::Base.deliveries.empty?
+  end
 end
