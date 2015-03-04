@@ -1,7 +1,6 @@
 <script type="text/ng-template" id="fileTree">
-  {{file.path}}
-  <span ng-click="expand(file)" ng-if="file.is_dir">expand</span>
-  <span ng-if="file.expand">expanded!!!</span>
+  {{file.name}}
+  <a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
   <ul ng-if="file.is_dir && file.expand && file.contents">
     <li ng-repeat="file in file.contents" ng-include="'fileTree'"></li>
   </ul>
