@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   match '/signout', via: [:get, :post], to: 'sessions#destroy'
 
   # files
-  get '/files(/*path)', to: 'files#index', as: :files
+  # get '/files(/*path)', to: 'files#index', as: :files
+  resources :files, only: [:index, :create, :destroy]
 end

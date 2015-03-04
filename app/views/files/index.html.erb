@@ -1,8 +1,19 @@
 <script type="text/ng-template" id="fileTree">
+  <!-- template for our file list -->
   {{file.name}}
   <a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
-  <ul ng-if="file.is_dir && file.expand && file.contents">
-    <li ng-repeat="file in file.contents" ng-include="'fileTree'"></li>
+
+  <span class="tools" ng-if="!file.is_dir">
+    <a href="#" ng-click="add(file)" class="tool" ng-if="!file.bruse_file">
+      <%= icon 'plus-square-o' %>
+    </a>
+    <a href="#" ng-click="remove(file)" class="tool" ng-if="file.bruse_file">
+      <%= icon 'minus-square-o' %>
+    </a>
+  </span>
+
+  <ul ng-if="file.is_dir && file.expand && file.contents" class="file-list">
+    <li ng-repeat="file in file.contents" ng-include="'fileTree'" class="file"></li>
   </ul>
 </script>
 
@@ -11,15 +22,11 @@
     Hi, <%= current_user["name"] %>!
   </h1>
 
-  <p ng-if="message.length > 0">
-    {{message}}
-  </p>
-
   <h2>
     Files <span ng-if="loading">Loading...</span>
   </h2>
 
-  <ul>
-    <li ng-repeat="file in files" ng-include="'fileTree'"></li>
+  <ul class="file-list">
+    <li ng-repeat="file in files" ng-include="'fileTree'" class="file"></li>
   </ul>
 </div>

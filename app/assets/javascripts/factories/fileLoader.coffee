@@ -1,4 +1,4 @@
-@bruseApp.factory 'fileLoader', ['$http', ($http) ->
+@bruseApp.factory 'FileLoader', ['$http', ($http) ->
   return {
     async: (path) ->
       promise = $http.get('/files.json?path=' + path)
