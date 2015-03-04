@@ -1,6 +1,6 @@
 # Bruse
 
-[![Code Climate](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/gpa.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed) [![Test Coverage](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/coverage.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed)
+[![Code Climate](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/gpa.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed) [![Test Coverage](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/coverage.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed) [![Build Status](https://travis-ci.org/tkomstadius/bruse.svg?branch=develop)](https://travis-ci.org/tkomstadius/bruse)
 
 Multi-purpose personal file database.
 
