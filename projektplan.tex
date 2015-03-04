@@ -80,16 +80,19 @@ parametrar, exempelvis nyckelord, filtyp, namn eller liknande.
 \section{Frågeställningar}
 
 \begin{itemize}
-\item Hur kan filer hanteras och lagras på ett sätt som är effektivt
-      för slutanvändare, utvecklare och system?
-\item Hur går det att säkerställa att informationen som lagras inte
-      är åtkomlig för fel personer?
-\item Hur kan en fillista presenteras på ett bra sätt i en platt
-      hierarki?
-\item Hur kan en molnbaserad fillagringstjänst sticka ut i ett hav
-      av liknande tjänster?
-\item På vilket sätt kan användargränssnittet utvecklas för att visa
-      på all den funktionalitet systemet besitter?
+\item Hur ska en webbdatabas struktureras för att sökning efter sparade
+      objekt ska kunna levereras enligt en användares förväntnignar om hastighet
+      och resultat?
+\item Hur går det att säkerställa att en användares information som
+      lagras i en webbdatabas inte är tillgänglig för någon som inte är den
+      specifika användaren eller har blivit  auktoriserad av den specifika
+      användaren?
+\item Hur kan filer i en webbdatabas presenteras i en webbapplikation
+      på ett sätt som gör de överskådliga,  hanterbara och lättilgängliga för
+      en användare, i en filstruktur utan kataloger eller annan hierarki?
+\item På vilket sätt kan en webbapplikations användargränssnitt
+      designas för att demonstrera all funktionalitet ett system besitter
+      och göra det intuitivt för en användare?
 \end{itemize}
 
 \chapter{Tidsplan}
@@ -98,7 +101,7 @@ För att snabbt få en överblick över projektet och se distribution
 gällande till exempel resurser och arbetsfördelning är \emph{Gantt}-scheman
 ett bra verktyg. Varje dag under projektets gång specificeras här,
 och samtliga händelser under projektets gång markeras i schemat.
-Länk till Gantt-schemat finns \href{http://goo.gl/dL0ydY}{här}.
+Projektets Gantt schema finns att se i bilaga A.
 
 \section{Tid för planering, efterforskningar och tekniska studier}
 En övergripande efterforskning görs under projektuppstarten. Under
@@ -145,6 +148,16 @@ Efter varje sprint skall produkten vara ett inkrement på produkten
 från föregående sprint. Detta innebär att en förbättrad version av produkten
 skall finnas redo för leverans efter varje sprint.
 
+Efter den första sprinten är målet ha en så kallad \emph{minimal viable product}.
+Användaren ska kunna skapa ett konto, eller logga in på ett befintligt, och
+lägga till filer från dennes Dropbox-mapp samt ge filerna nyckelord. Andra
+sprinten kommer till stor del handla om att göra filerna lättåtkomliga och
+sökbara för användaren. Tredje sprinten kommer att fokusera på att förbättra
+användagränssnittet för att gör det mer attraktivt för användaren.
+Användartester ska vara genomförda innan starten för sprint fyra. Resterande
+sprintar kommer att användas för att utveckla lägre prioriterade önskemål som
+delning av filer.
+
 \section{Avstämningsmöten med ledningsgruppen}
 Bör hållas ett par gånger i samband med att en sprint avslutas.
 Tanken är att detta kan hållas efter sprintgranskning och sprintåterblick,
@@ -190,10 +203,11 @@ sammanfogas med huvudgrenen. Koden får endast sammanfogas med
 huvudgrenen av en person för att minska risken för att trasig kod.
 
 \section{Testningsprinciper och rutiner}
-Inför varje sprint kommer den testansvarige att säkerställa att
-det finns tester som kan möta sprintens krav. Testen kommer att
-skrivas för att upptäcka fel i den kod som skrivs för kraven,
-även för att upptäcka fel som skapas.
+Inför varje sprint kommer den testansvarige att säkerställa att det
+finns tester som kan möta sprintens krav. Testen kommer att skrivas
+för att upptäcka fel i den kod som skrivs för kraven, även för att
+upptäcka fel som skapas. Detta kommer att ske löpande under varje
+sprint efter att en funktion har implementerats.
 
 I projektets början kommer enhetstester att implementeras. Senare
 i projektet när ett användargränssnitt har byggts kommer
@@ -296,6 +310,12 @@ som bygger på \emph{object relation model}. Detta innebär att det är enkelt
 att strukturera upp relationer mellan olika tabeller och inlägg. Exempelvis
 kan man säga att en användare har många filer, och på så sätt låta systemet
 enkelt lista en användares filer, utan att skapa avancerade \emph{SQL}-frågor.
+
+För att användarens användarupplevelse inte ska avbrytas utav att sidan laddas
+om för ofta kommer många anrop till ett eget API att ske via \emph{Javascript} och med
+hjälp av \emph{AngularJS} presentera detta för användaren. Detta för att sträva efter
+en snabb och effektiv upplevelse för användaren. Till exempel vid sökning så
+kommer anrop ske löpande och resultaten renderas i webbläsaren.
 
 \section{\emph{Build}-miljö, \emph{IDE}, kompilator, \emph{debug}-verktyg, profileringsverktyg}
 Då Ruby on rails inte kräver en kompilator kommer valet av textredigerare
