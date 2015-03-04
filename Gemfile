@@ -59,6 +59,9 @@ group :development, :test do
 
   # handle secrets nicely
   gem 'figaro'
+
+  # opens emails in browser
+  gem 'letter_opener'
 end
 
 group :test do
