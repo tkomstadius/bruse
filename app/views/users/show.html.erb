@@ -2,6 +2,6 @@
 
 <h3>List of providers</h3>
 <% current_user.identities.each do |id| %>
-  <p><%= id.name %></p>
+  <p><%= id.name %> - <%= link_to 'unlink', destroy_provider_path(id.id), :method => 'delete' %></p>
 <% end %>
 <p><%= link_to 'Add another Dropbox account', '/auth/dropbox_oauth2' %></p>
