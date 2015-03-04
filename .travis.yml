@@ -4,6 +4,7 @@ before_script:
 - cp config/database.yml.travis config/database.yml
 - psql -c 'create database travis_ci_test;' -U postgres
 script: bundle exec rake test
-env:
-  global:
-    secure: UHzpBhoIkaMzZ0ex6E/u5q5Sxx3ZdPmQTr7Im2LuKd+DMMkd0C9AwpveeJBE3eZpkzF1FnVYYp0+CYkRfZdZEf+6Ru7lSXMa2QZg7qKfMs1uq4rLkMO5+zS+/EhQqJML+/INzlLyBNkgEoIbGJr3DOPJg4E0AaQvNvEM1BhWhqk=
+addons:
+  code_climate:
+    repo_token:
+      secure: "aUCnkGrQaWV8CDCs64R/Kvi3rNC88VzrFRCSGeEgd+yTIxkNPeQTUmeXDVS3sKzvoHps4PcR9KpaH3JBLt11Rujlcl8xtp7e7AQdsxPdOdWDlJ8ZVolYnvul4lKqafDvRCZBRi2LKdoBwIMMfJumFk3oUjzzkQN8xZSIN4DNiPU="
