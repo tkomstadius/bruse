@@ -1,5 +1,6 @@
 require 'test_helper'
 require 'helpers/omniauth_helper'
+require 'helpers/users_helper'
 
 class UserTest < ActiveSupport::TestCase
   test "create from oauth" do
@@ -33,6 +34,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "welcome email is sent after a user is created" do
     user = User.find_or_create_from_oauth(dropbox_new)
-    assert_not ActionMailer::Base.deliveries.empty?
+    assert_not_nil last_email
+    assert_equal [user.email], last_email.to
   end
 end
