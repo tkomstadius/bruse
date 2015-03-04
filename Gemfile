@@ -31,8 +31,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Use omniauth for session handling
-gem 'omniauth'
+## Use omniauth for session handling
 # dropbox omniauth stategy
 gem 'omniauth-dropbox-oauth2'
 
