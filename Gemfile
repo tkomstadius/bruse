@@ -26,6 +26,8 @@ gem 'jquery-turbolinks'
 gem 'nprogress-rails'
 # Use Angular for nice dom manipulation
 gem 'angularjs-rails'
+# Lodash is a nice javascript toolbelt
+gem 'lodash-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -45,18 +47,19 @@ gem 'dropbox-sdk'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+  # replace the standard Rails error page
+  gem 'better_errors'
+  # nice clever errors
+  gem 'did_you_mean'
+
+  # generate source maps from coffee and sass files
+  gem 'coffee-rails-source-maps'
+  gem 'sass-rails-source-maps'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  # replace the standard Rails error page
-  gem 'better_errors'
-
-  # nice clever errors
-  gem 'did_you_mean'
 
   # handle secrets nicely
   gem 'figaro'
