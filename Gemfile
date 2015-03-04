@@ -29,6 +29,12 @@ gem 'angularjs-rails'
 # Lodash is a nice javascript toolbelt
 gem 'lodash-rails'
 
+## css/sass stuff
+# icons!
+gem 'font-awesome-sass'
+# sass mixins that makes you happy
+gem 'bourbon'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
