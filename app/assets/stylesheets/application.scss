@@ -1,0 +1,18 @@
+/*
+ * Bruse is so stylish!
+ *
+ *= require_self
+ */
+
+// our own variables with some settings and such
+@import "variables";
+
+// some css/sass libs
+@import "bourbon";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "nprogress";
+@import "nprogress-bootstrap";
+
+// all the child style sheets
+@import "files";

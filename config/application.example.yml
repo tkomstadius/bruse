@@ -1,4 +1,4 @@
 # Add configuration values here, as shown below.
 
-DROPBOX_SECRET: ''
 DROPBOX_KEY: ''
+DROPBOX_SECRET: ''
