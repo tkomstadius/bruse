@@ -2,6 +2,3 @@
 
 DROPBOX_SECRET: ''
 DROPBOX_KEY: ''
-
-# for test coverage
-CODE_CLIMATE_REPO_KEY: ''

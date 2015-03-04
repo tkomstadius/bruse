@@ -1,9 +1,9 @@
-addons:
-  code_climate:
-    repo_token: <%= ENV['CODE_CLIMATE_REPO_TOKEN'] %>
 rvm:
-  - 2.2.0
+- 2.2.0
 before_script:
-  - cp config/database.yml.travis config/database.yml
-  - psql -c 'create database travis_ci_test;' -U postgres
+- cp config/database.yml.travis config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
 script: bundle exec rake test
+env:
+  global:
+    secure: UHzpBhoIkaMzZ0ex6E/u5q5Sxx3ZdPmQTr7Im2LuKd+DMMkd0C9AwpveeJBE3eZpkzF1FnVYYp0+CYkRfZdZEf+6Ru7lSXMa2QZg7qKfMs1uq4rLkMO5+zS+/EhQqJML+/INzlLyBNkgEoIbGJr3DOPJg4E0AaQvNvEM1BhWhqk=
