@@ -62,6 +62,9 @@ group :development, :test do
 
   # opens emails in browser
   gem 'letter_opener'
+
+  # testing javascript
+  gem 'jasmine'
 end
 
 group :test do
