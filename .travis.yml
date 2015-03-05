@@ -3,7 +3,7 @@ rvm:
 before_script:
 - cp config/database.yml.travis config/database.yml
 - psql -c 'create database travis_ci_test;' -U postgres
-script: bundle exec rake test
+script: bundle exec rake test && rake jasmine:ci JASMINE_CONFIG_PATH=test/javascripts/support/jasmine.yml
 addons:
   code_climate:
     repo_token:
