@@ -1,17 +1,13 @@
 class SessionsController < ApplicationController
   def create
-    user = {token: auth_hash[:credentials][:token],
-            email: auth_hash[:info][:email],
-            name: auth_hash[:info][:name],
-            uid: auth_hash[:info][:uid]}
-    session[:user] = user
+    session[:user_id] = User.find_or_create_from_oauth(auth_hash, current_user).id
 
     flash[:notice] = "Logged in"
     redirect_to root_url
   end
 
   def destroy
-    session[:user] = nil
+    session[:user_id] = nil
 
     flash[:notice] = "Logged out"
     redirect_to root_url

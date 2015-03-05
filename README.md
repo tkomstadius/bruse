@@ -11,10 +11,10 @@ Multi-purpose personal file database.
 To handle environment variables during development, we use the gem
 [Figaro](https://github.com/laserlemon/figaro/). This uses looks for variables
 set in the file `config/application.yml`. Since we don't want to share our
-secrets with the whole internets, this file is ignored by git. Instead, we have
+secrets with the whole internetz, this file is ignored by git. Instead, we have
 [`config/application.example.yml`](config/application.example.yml).
 
-So, before running the app you **have to rename** this file and remove the
+So, before running the app you **have to copy** this file and remove the
 `.example` from the name and **fill the details** listed there.
 
 #### API keys and such
@@ -30,6 +30,9 @@ get this by creating an app on the
 be a *Dropbox API app* and have access to everything, basically. Once you've
 created your app, add its credentials to your `config/application.yml` file.
 
+You also need to add `http://localhost:3000/auth/dropbox_oauth2/callback` to your
+redirect URLs in your Dropbox app.
+
 ### PostgreSQL setup
 
 The following are `psql` commands:
@@ -37,8 +40,9 @@ The following are `psql` commands:
 1. Create database user, as seen in [`database.yml`](config/database.yml), we're
 gonna use `bruse` as username. Therefore, run `CREATE USER bruse;`.
 2. Alter the user password by running `ALTER USER bruse WITH PASSWORD 'kex2015';`.
-3. Create development database by running `CREATE DATABASE bruse_development;`
+3. Alter user to be a superuser, this is for allowing the user to delete and create the test database `ALTER USER bruse SUPERUSER;`.
+4. Create development database by running `CREATE DATABASE bruse_development;`
 and create test database by running `CREATE DATABASE bruse_test;`.
-4. Change database ownership by running `ALTER DATABASE bruse_development OWNER TO bruse;`
+5. Change database ownership by running `ALTER DATABASE bruse_development OWNER TO bruse;`
 and `ALTER DATABASE bruse_test OWNER TO bruse;`.
-5. All done!
+6. All done!
