@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
@@ -31,6 +30,15 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+# Use omniauth for session handling
+gem 'omniauth'
+# dropbox omniauth stategy
+gem 'omniauth-dropbox-oauth2'
+
+## APIs
+# dropbox ruby sdk
+gem 'dropbox-sdk'
 
 # development tools
 group :development, :test do
