@@ -4,6 +4,6 @@ class PagesController < ApplicationController
   end
 
   def omniauth_failure
-  	redirect_to root_url 
+    redirect_to root_url
   end
 end
