@@ -11,10 +11,10 @@ Multi-purpose personal file database.
 To handle environment variables during development, we use the gem
 [Figaro](https://github.com/laserlemon/figaro/). This uses looks for variables
 set in the file `config/application.yml`. Since we don't want to share our
-secrets with the whole internets, this file is ignored by git. Instead, we have
+secrets with the whole internetz, this file is ignored by git. Instead, we have
 [`config/application.example.yml`](config/application.example.yml).
 
-So, before running the app you **have to rename** this file and remove the
+So, before running the app you **have to copy** this file and remove the
 `.example` from the name and **fill the details** listed there.
 
 ### API keys and such
