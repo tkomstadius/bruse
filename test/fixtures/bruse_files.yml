@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
+  name: diary
   identity_id: 1
-  foreign_ref: MyString
-  type: 
+  foreign_ref: dropbox
+  filetype: "words"
+  meta: "Dear diary, today was a great day. It was a rails day."
 
 two:
-  name: MyString
-  identity_id: 1
-  foreign_ref: MyString
-  type: 
+  name: beerlist
+  identity_id: 2
+  foreign_ref: drive
+  filetype: "list"
+  meta: "Beer is good, beer is great. Drink one a day and float away."
