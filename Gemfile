@@ -59,6 +59,9 @@ group :development, :test do
 
   # handle secrets nicely
   gem 'figaro'
+
+  # testing javascript
+  gem 'jasmine'
 end
 
 group :test do
