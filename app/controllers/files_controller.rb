@@ -10,6 +10,10 @@ class FilesController < ApplicationController
 
   require 'dropbox_sdk'
 
+  def new
+    @identity = Identity.find(params[:identity_id])
+  end
+
   def browse
     path = params[:path] || '/'
 
