@@ -30,6 +30,9 @@ get this by creating an app on the
 be a *Dropbox API app* and have access to everything, basically. Once you've
 created your app, add its credentials to your `config/application.yml` file.
 
+You also need to add `http://localhost:3000/auth/dropbox_oauth2/callback` to your
+redirect URLs in your Dropbox app.
+
 ### PostgreSQL setup
 
 The following are `psql` commands:
