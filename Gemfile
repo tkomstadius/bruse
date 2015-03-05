@@ -62,6 +62,10 @@ group :development, :test do
 end
 
 group :test do
+  # Runs the tests
+  gem 'rake'
   # capybara for emulating browser
   gem 'minitest-rails-capybara'
+  # test coverage
+  gem 'codeclimate-test-reporter', require: nil
 end
