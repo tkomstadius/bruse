@@ -1,6 +1,11 @@
-<% if session[:user].nil? %>
+<% if current_user.nil? %>
   <%= link_to 'Log in using Dropbox', '/auth/dropbox_oauth2' %>
 <% else %>
   <%= link_to 'Sign out user', signout_path %>
-  <%= session[:user] %>
+  <%= current_user.name %>
+  <ul>
+    <% current_user.identities.each do |id| %>
+     <li><%= id.name %></li>
+    <% end %>
+  </ul>
 <% end %>
