@@ -1,3 +1,9 @@
+<script type="text/javascript">
+  // global js object to give frontend access to current identity
+  IDENTITY_PARAMS = {
+    id: <%= params[:identity_id] %>
+  };
+</script>
 <script type="text/ng-template" id="fileTree">
   <!-- template for our file list -->
   {{file.name}}

@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   match '/signout', via: [:get, :post], to: 'sessions#destroy'
 
   # files
-  # get '/files(/*path)', to: 'files#index', as: :files
-  resources :files, only: [:create, :new, :destroy], path_names: {new: 'add'}
-  get '/files/browse', to: 'files#browse'
+  scope '/service/:identity_id' do
+    resources :files, only: [:create, :new, :destroy], path_names: {new: 'add'}
+    get '/files/browse', to: 'files#browse'
+  end
 end

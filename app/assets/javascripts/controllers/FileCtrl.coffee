@@ -2,8 +2,11 @@
   $scope.files = []
   $scope.loading = true
 
+  # get identity information from add view
+  $scope.identity = IDENTITY_PARAMS
+
   # load root files
-  FileLoader.async('/').then((data) ->
+  FileLoader.async($scope.identity.id, '/').then((data) ->
     $scope.files = data
     $scope.loading = false
     )
@@ -15,7 +18,7 @@
     # if we haven't allready, load file info from dropbox
     unless file.contents and file.contents.length > 0
       $scope.loading = true
-      FileLoader.async(file.path).then((data) ->
+      FileLoader.async($scope.identity.id, file.path).then((data) ->
         file.contents = data
         $scope.loading = false
         )
@@ -33,7 +36,7 @@
           modified: file.modified
 
       # send file information to backend
-      $http.post('/files.json', post_data)
+      $http.post('/service/'+$scope.identity.id+'/files.json', post_data)
         .success((data) ->
           # file saved
           file.bruse_file = data.file
@@ -47,7 +50,7 @@
 
   $scope.remove = (file) ->
     # send delete request
-    $http.delete('/files/'+file.bruse_file.id+'.json')
+    $http.delete('/service/'+$scope.identity.id+'/files/'+file.bruse_file.id+'.json')
       .success((data) ->
         # file deleted
         file.bruse_file = data.file

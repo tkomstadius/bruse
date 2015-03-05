@@ -2,6 +2,6 @@
   <%= link_to 'Log in using Dropbox', '/auth/dropbox_oauth2' %>
 <% else %>
   <%= link_to 'Sign out user', signout_path %>
-  <%= link_to 'Add more files', new_file_path %>
+  <%= link_to 'Add more files', new_file_path(identity_id: 1) %>
   <%= session[:user] %>
 <% end %>
