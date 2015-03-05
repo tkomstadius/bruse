@@ -2,13 +2,15 @@ class FilesController < ApplicationController
   # make sure user is logged in
   before_filter :ensure_login
 
-  # disable CSRF protection on create method
+  # Disable CSRF protection on create and destroy method, since we call them
+  # using javascript. If we didn't do this, we'd get problems since the CSRF
+  # params from rails isn't passed along.
   # http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
   skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
   require 'dropbox_sdk'
 
-  def index
+  def browse
     path = params[:path] || '/'
 
     # setup client

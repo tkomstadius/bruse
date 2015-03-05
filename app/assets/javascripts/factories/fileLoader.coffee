@@ -1,7 +1,7 @@
 @bruseApp.factory 'FileLoader', ['$http', ($http) ->
   return {
     async: (path) ->
-      promise = $http.get('/files.json?path=' + path)
+      promise = $http.get('/files/browse.json?path=' + path)
         .then((response) ->
           console.log 'Collecting files...', path
           data = response.data.file.contents

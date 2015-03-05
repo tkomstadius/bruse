@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   # files
   # get '/files(/*path)', to: 'files#index', as: :files
-  resources :files, only: [:index, :create, :destroy]
+  resources :files, only: [:create, :new, :destroy], path_names: {new: 'add'}
+  get '/files/browse', to: 'files#browse'
 end
