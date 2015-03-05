@@ -46,3 +46,7 @@ and create test database by running `CREATE DATABASE bruse_test;`.
 5. Change database ownership by running `ALTER DATABASE bruse_development OWNER TO bruse;`
 and `ALTER DATABASE bruse_test OWNER TO bruse;`.
 6. All done!
+
+## Testing
+
+To test the javascript in the application run `rake jasmine:ci JASMINE_CONFIG_PATH=test/javascripts/support/jasmine.yml`. This will install *phantom js* for you and run the tests headless. For all other test run `rake test`. Or you could visit our repo on [Travis CI](https://travis-ci.org/tkomstadius/bruse).
