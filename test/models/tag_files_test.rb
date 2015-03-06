@@ -10,7 +10,7 @@ class TagTest < ActiveSupport::TestCase
   	file2.tags.append(tag)
     assert_equal file.tags.first.name, tag.name
     assert_equal file2.tags.first.name, tag.name
-    assert_equal tag.bruse_file.second.name, file.name
-    assert_equal tag.bruse_file.first.name, file2.name
+    assert_equal tag.bruse_files.second.name, file.name
+    assert_equal tag.bruse_files.first.name, file2.name
   end
 end

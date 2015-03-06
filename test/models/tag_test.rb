@@ -7,6 +7,6 @@ class TagTest < ActiveSupport::TestCase
   	tag = Tag.create(:name => "cool")
   	file.tags.append(tag)
     assert_equal file.tags.first.name, tag.name
-    assert_equal tag.bruse_file.first.name, file.name
+    assert_equal tag.bruse_files.first.name, file.name
   end
 end
