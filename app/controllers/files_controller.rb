@@ -12,7 +12,6 @@ class FilesController < ApplicationController
   require 'dropbox_sdk'
 
   def new
-    @identity = Identity.find(params[:identity_id])
   end
 
   def browse
@@ -28,7 +27,7 @@ class FilesController < ApplicationController
   end
 
   def create
-    @file = BruseFile.new(file_params, identity: @identity)
+    @file = BruseFile.new(file_params)
     @file.identity = @identity
 
     unless @file.save
