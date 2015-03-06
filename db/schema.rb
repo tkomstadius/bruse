@@ -31,10 +31,32 @@ ActiveRecord::Schema.define(version: 20150305125606) do
     t.integer "tag_id"
   end
 
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "token"
+    t.string   "service"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "uid"
+    t.string   "name"
+  end
+
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
   create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string   "email"
+    t.string   "name"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "sign_in_count",   default: 0
+    t.datetime "last_sign_in_at"
+  end
+
+  add_foreign_key "identities", "users"
 end
