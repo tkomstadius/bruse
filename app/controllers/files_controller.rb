@@ -37,9 +37,14 @@ class FilesController < ApplicationController
   end
 
   def destroy
-    # logger.debug params
-    @file = nil
-    @message = "File deleted."
+    @file = BruseFile.find(params[:id])
+
+    if @file.identity == @identity && @file.destroy
+      @message = "File deleted."
+      @file = nil
+    else
+      @message = "Could not delete file!"
+    end
   end
 
   private
