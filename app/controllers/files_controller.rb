@@ -1,6 +1,7 @@
 class FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
+  before_filter :set_identity
 
   # Disable CSRF protection on create and destroy method, since we call them
   # using javascript. If we didn't do this, we'd get problems since the CSRF
@@ -17,8 +18,6 @@ class FilesController < ApplicationController
   def browse
     path = params[:path] || '/'
 
-    @identity = Identity.find(params[:identity_id])
-
     # setup client
     @client = DropboxClient.new(@identity.token)
 
@@ -29,10 +28,12 @@ class FilesController < ApplicationController
   end
 
   def create
-    # logger.debug params
+    @file = BruseFile.new(file_params, identity: @identity)
+    @file.identity = @identity
 
-    # create dummy file
-    @file = {id: 1, name: params[:name]}
+    unless @file.save
+      @file = nil
+    end
   end
 
   def destroy
@@ -40,4 +41,12 @@ class FilesController < ApplicationController
     @file = nil
     @message = "File deleted."
   end
+
+  private
+    def set_identity
+      @identity = Identity.find(params[:identity_id])
+    end
+    def file_params
+      params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
+    end
 end

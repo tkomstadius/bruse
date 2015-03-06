@@ -35,7 +35,7 @@
       post_data =
         name: file.path
         foreign_ref: file.rev
-        type: file.mime_type
+        filetype: file.mime_type
         meta:
           size: file.bytes
           modified: file.modified
