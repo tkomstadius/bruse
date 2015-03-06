@@ -18,8 +18,8 @@ end
 def dropbox_old
   omniauth_hash_old = { 'provider' => 'dropbox_oauth2',
                         'info' => {
-                            'name' => 'Foo Bar',
-                            'email' => 'foo@bar.com',
+                            'name' => users(:fooBar).name,
+                            'email' => users(:fooBar).email,
                             'uid' => '666123'
                         },
                         'credentials' => {
@@ -27,14 +27,4 @@ def dropbox_old
                         }
   }
   OmniAuth.config.add_mock(:dropbox_oauth2, omniauth_hash_old)
-end
-
-def log_in_user(user_id)
-  session[:user] = user_id
-end
-
-def log_out_user(user_id)
-  if session[:user] == user_id
-    session[:user] = nil
-  end
 end

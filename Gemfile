@@ -59,6 +59,12 @@ group :development, :test do
 
   # handle secrets nicely
   gem 'figaro'
+
+  # opens emails in browser
+  gem 'letter_opener'
+
+  # testing javascript
+  gem 'jasmine'
 end
 
 group :test do
