@@ -19,13 +19,13 @@
   </thead>
 
   <tbody>
-    <% @bruse_files.each do |file| %>
-      <tr>
+    <% @bruse_files.each do |file| %>  
+      <tr> 
         <td><%= file.name %></td>
         <td><%= file.filetype %></td>
         <td><%= file.meta %></td>
         <% file.tags.each do |t| %>
-          <td><%= t.name %> </td>
+          <td><%= link_to t.name, t %> </td>
         <% end %>
         <td><%= link_to 'Destroy', file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

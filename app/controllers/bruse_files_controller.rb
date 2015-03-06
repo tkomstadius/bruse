@@ -1,5 +1,5 @@
 class BruseFilesController < ApplicationController
-	before_action :set_order , only: [:show, :edit, :destroy]
+	before_action :set_file , only: [:show, :edit, :destroy]
 
   def index
     @bruse_files = BruseFile.all
@@ -24,7 +24,11 @@ class BruseFilesController < ApplicationController
     
 
     tag.each do |t|
-      @bruse_file.tags.append(Tag.create(:name => t)) 
+      tag = Tag.find_by(:name => t)
+      if tag.nil? 
+        tag = Tag.create(:name => t)
+      end
+      @bruse_file.tags.append(tag) 
     end
 
     respond_to do |format|
@@ -47,7 +51,7 @@ class BruseFilesController < ApplicationController
 
 	private
 	# Use callbacks to share common setup or constraints between actions.
-	def set_order
+	def set_file
 	  @bruse_file = BruseFile.find(params[:id])
 	end
 

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root 'pages#show', page: 'home'
 
   resources :bruse_files
+  resources :tags
 
   # recieve auth callback
   match '/auth/:provider/callback', via: [:get, :post], to: 'sessions#create'

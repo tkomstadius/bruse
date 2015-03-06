@@ -6,5 +6,6 @@ class BruseFile < ActiveRecord::Base
 	validates :name,     presence: true
 	validates :filetype,     presence: true
 	validates :meta,     presence: true
+	validates :tagname,     presence: true
 
 end
