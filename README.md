@@ -1,6 +1,8 @@
 # Bruse
 
-[![Code Climate](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/gpa.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed) [![Test Coverage](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/coverage.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed)
+[![Code Climate](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/gpa.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed)
+[![Test Coverage](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/coverage.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed)
+[![Build Status](https://travis-ci.org/tkomstadius/bruse.svg?branch=develop)](https://travis-ci.org/tkomstadius/bruse)
 
 Multi-purpose personal file database.
 
@@ -40,9 +42,18 @@ The following are `psql` commands:
 1. Create database user, as seen in [`database.yml`](config/database.yml), we're
 gonna use `bruse` as username. Therefore, run `CREATE USER bruse;`.
 2. Alter the user password by running `ALTER USER bruse WITH PASSWORD 'kex2015';`.
-3. Alter user to be a superuser, this is for allowing the user to delete and create the test database `ALTER USER bruse SUPERUSER;`.
+3. Alter user to be a superuser, this is for allowing the user to delete and
+  create the test database `ALTER USER bruse SUPERUSER;`.
 4. Create development database by running `CREATE DATABASE bruse_development;`
 and create test database by running `CREATE DATABASE bruse_test;`.
 5. Change database ownership by running `ALTER DATABASE bruse_development OWNER TO bruse;`
 and `ALTER DATABASE bruse_test OWNER TO bruse;`.
 6. All done!
+
+## Testing
+
+To test the javascript in the application run
+`rake jasmine:ci JASMINE_CONFIG_PATH=test/javascripts/support/jasmine.yml`. This
+will install *phantom js* for you and run the tests headless. For all other test
+run `rake test`. Or you could visit our repo on
+[Travis CI](https://travis-ci.org/tkomstadius/bruse).

@@ -1,6 +1,6 @@
 class FilesController < ApplicationController
   # make sure user is logged in
-  before_filter :ensure_login
+  before_filter :authenticate_user!
 
   # Disable CSRF protection on create and destroy method, since we call them
   # using javascript. If we didn't do this, we'd get problems since the CSRF

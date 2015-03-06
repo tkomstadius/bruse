@@ -4,17 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # give access to helper methods
-  helper_method [:current_user, :ensure_login]
+  helper_method [:current_user, :authenticate_user]
 
   private
-    # Internal: Get current signed in user
-    #
-    # Examples
-    #
-    #   current_user["email"]
-    #   # => "name@example.com"
-    #
-    # Returns currently signed in user as hash object
+
     def current_user
       @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end
@@ -23,13 +16,11 @@ class ApplicationController < ActionController::Base
     #
     # Examples
     #
-    #   before_filter :ensure_login
+    #   before_filter :authenticate_user!
     #
     # Returns nothing
-    def ensure_login
-      if session[:user].nil?
-        flash[:notice] = "You need to log in first."
-        redirect_to root_url
-      end
+    def authenticate_user!
+      redirect_to root_url if !current_user
     end
+
 end
