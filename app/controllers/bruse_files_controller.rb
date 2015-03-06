@@ -1,5 +1,5 @@
 class BruseFilesController < ApplicationController
-	before_action :set_order , only: [:show, :edit]
+	before_action :set_order , only: [:show, :edit, :destroy]
 
   def index
     @bruse_files = BruseFile.all
@@ -35,6 +35,13 @@ class BruseFilesController < ApplicationController
         format.html { render :new }
         format.json { render json: @bruse_file.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  def destroy
+    @bruse_file.destroy
+    respond_to do |format|
+      format.html { redirect_to bruse_files_url, notice: 'Order was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
