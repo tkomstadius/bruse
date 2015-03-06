@@ -1,4 +1,4 @@
-@bruseApp.controller 'FileCtrl', ['FileLoader', '$scope', '$http', (FileLoader, $scope, $http) ->
+@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
   $scope.loading = true
 
@@ -6,7 +6,7 @@
   $scope.identity = IDENTITY_PARAMS
 
   # load root files
-  FileLoader.async($scope.identity.id, '/').then((data) ->
+  FileHandler.async($scope.identity.id, '/').then((data) ->
     $scope.files = data
     $scope.loading = false
     )
@@ -18,7 +18,7 @@
     # if we haven't allready, load file info from dropbox
     unless file.contents and file.contents.length > 0
       $scope.loading = true
-      FileLoader.async($scope.identity.id, file.path).then((data) ->
+      FileHandler.async($scope.identity.id, file.path).then((data) ->
         file.contents = data
         $scope.loading = false
         )

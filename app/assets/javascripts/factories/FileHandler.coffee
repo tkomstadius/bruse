@@ -1,4 +1,4 @@
-@bruseApp.factory 'FileLoader', ['$http', ($http) ->
+@bruseApp.factory 'FileHandler', ['$http', ($http) ->
   return {
     async: (identity_id, path) ->
       promise = $http.get('/service/'+identity_id+'/files/browse.json?path=' + path)
