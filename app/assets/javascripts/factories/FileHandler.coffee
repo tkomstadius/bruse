@@ -33,8 +33,8 @@
     put: (identity_id, file) ->
       # prepare post data from file
       post_data =
-        name: file.path
-        foreign_ref: file.rev
+        name: file.name
+        foreign_ref: file.path
         filetype: file.mime_type
         meta:
           size: file.bytes
