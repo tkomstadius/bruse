@@ -1,6 +1,10 @@
 rvm:
-  - 2.2.0
+- 2.2.0
 before_script:
-  - cp config/database.yml.travis config/database.yml
-  - psql -c 'create database travis_ci_test;' -U postgres
+- cp config/database.yml.travis config/database.yml
+- psql -c 'create database travis_ci_test;' -U postgres
 script: bundle exec rake test
+addons:
+  code_climate:
+    repo_token:
+      secure: "aUCnkGrQaWV8CDCs64R/Kvi3rNC88VzrFRCSGeEgd+yTIxkNPeQTUmeXDVS3sKzvoHps4PcR9KpaH3JBLt11Rujlcl8xtp7e7AQdsxPdOdWDlJ8ZVolYnvul4lKqafDvRCZBRi2LKdoBwIMMfJumFk3oUjzzkQN8xZSIN4DNiPU="
