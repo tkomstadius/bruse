@@ -1,7 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: personal
-
-two:
-  name: beer
+  user_id: 1
+  token: xyz123
+  service: dropbox_oauth2
+  name: Dropbox - Foo Bar
+  uid: 666123

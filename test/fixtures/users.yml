@@ -1,7 +1,5 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: personal
-
-two:
-  name: beer
+  email: foo@bar.com
+  name: Foo Bar
