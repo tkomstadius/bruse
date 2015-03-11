@@ -9,7 +9,7 @@
   {{file.name}}
   <a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
 
-  <span class="tools" ng-if="!file.is_dir">
+  <span class="tools">
     <a href="#" ng-click="add(file)" class="tool" ng-if="!file.bruse_file">
       <%= icon 'plus-square-o' %>
     </a>

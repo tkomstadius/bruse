@@ -24,13 +24,11 @@
         )
 
   $scope.add = (file) ->
-    # make sure we are not adding a file
-    unless file.is_dir
-      file.loading = true
-      FileHandler.put($scope.identity.id, file).then((data) ->
-        file.bruse_file = data
-        file.loading = false
-        )
+    file.loading = true
+    FileHandler.put($scope.identity.id, file).then((data) ->
+      file.bruse_file = data
+      file.loading = false
+      )
 
   $scope.remove = (file) ->
     # send delete request

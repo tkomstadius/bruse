@@ -27,17 +27,21 @@ class FilesController < ApplicationController
   end
 
   def create
-    @file = BruseFile.new(file_params)
-    @file.identity = @identity
-
-    unless @file.save
-      @file = nil
+    # are we adding file or folder?
+    if params[:is_dir]
+      # call to recursive file adding here
+      @files = add_folder_recursive(params[:foreign_ref])
+    else
+      # add file!
+      @file = add_file(file_params)
     end
   end
 
   def destroy
+    # find file
     @file = BruseFile.find(params[:id])
 
+    # make sure file belongs to current identity and delete file
     if @file.identity == @identity && @file.destroy
       @message = "File deleted."
       @file = nil
@@ -47,10 +51,79 @@ class FilesController < ApplicationController
   end
 
   private
+    # Private: Set current identity from request parameters.
     def set_identity
       @identity = Identity.find(params[:identity_id])
     end
+
+    # Private: Safely extract file parameters from the scary internets
+    #
+    # Examples
+    #
+    #   file_params
+    #   # => { name: 'hej.rb', foreign_ref: 'hej/hej.rb'}
+    #
+    # Return safer parameters
     def file_params
       params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
+    end
+
+    # Private: Add a folder and ALL it's children from Dropbox to BruseFile
+    # model. It calls the add_file(params) method when it detects a file.
+    #
+    # Examples
+    #   add_folder_recursive('path/to/folder')
+    #   # => '[<BruseFile>, <BruseFile>, [<BruseFile>, <BruseFile>]]'
+    #
+    # Returns a list of added files
+    def add_folder_recursive(path)
+      # setup client
+      @client = DropboxClient.new(@identity.token)
+      # load directory contents
+      dir = @client.metadata(path)
+
+      # create empty array for file storing
+      files = []
+
+      # iterate over the directory's content
+      dir['contents'].each do |file|
+        # check if current child is a directory
+        if file['is_dir']
+          # add folder recursivly
+          files << add_folder_recursive(file['path'])
+        else
+          # prepare file data
+          file_data = {
+            # extract name from path
+            :name => file['path'].split('/').last,
+            # use path as foreign ref
+            :foreign_ref => file['path'],
+            # save file type
+            :filetype => file['mime_type']
+          }
+
+          # create a file and push it to files list
+          files << add_file(file_data)
+        end
+      end
+
+      # return the list of files added
+      return files
+    end
+
+    # Private: Add a file to BruseFile
+    #
+    # Returns a BruseFile record on success, nil on fail.
+    def add_file(bruse_params)
+      file = BruseFile.new(bruse_params)
+      file.identity = @identity
+
+      # could we save the file?
+      unless file.save
+        file = nil
+      end
+
+      # return the file
+      file
     end
 end

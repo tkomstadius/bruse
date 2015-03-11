@@ -31,17 +31,23 @@
     # Save file
     #
     put: (identity_id, file) ->
+      console.log 'Saving file...', file.path
       # prepare post data from file
       post_data =
         name: file.name
+        # dropbox likes the full paths! save it as foreign ref.
         foreign_ref: file.path
         filetype: file.mime_type
+        # send info wether or not this is a directory to server
+        is_dir: file.is_dir
+        # store some useful meta data
         meta:
           size: file.bytes
           modified: file.modified
       # post it to our backend!
       # promise gets returned
       promise = $http.post('/service/'+identity_id+'/files.json', post_data)
+        # wait for server to be done
         .then((response) ->
           # return bruse file data
           response.data.file
