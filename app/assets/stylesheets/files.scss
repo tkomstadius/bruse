@@ -1,0 +1,17 @@
+// Place all the styles related to the files controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.file-list .file {
+  .tools {
+    opacity: 0;
+  }
+
+  &:hover {
+    background-color: rgba($silver, .5);
+
+    > .tools {
+      opacity: 1;
+    }
+  }
+}
