@@ -59,6 +59,8 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-angular (0.1.0)
+      capybara
     cliver (0.3.2)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -173,6 +175,9 @@ GEM
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack_session_access (0.1.1)
+      builder (>= 2.0.0)
+      rack (>= 1.0.0)
     rails (4.2.0)
       actionmailer (= 4.2.0)
       actionpack (= 4.2.0)
@@ -258,6 +263,7 @@ DEPENDENCIES
   better_errors
   bourbon
   byebug
+  capybara-angular
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   coffee-rails-source-maps
@@ -278,6 +284,7 @@ DEPENDENCIES
   omniauth-dropbox-oauth2
   pg
   poltergeist
+  rack_session_access
   rails (= 4.2.0)
   rake
   sass-rails (~> 5.0)
