@@ -24,5 +24,6 @@ Rails.application.routes.draw do
   end
 
   # search
-  get '/search/:query', to: 'search#find', as: 'search', :defaults => { :format => 'json' }
+  get '/search/:query', to: 'search#find', :defaults => { :format => 'json' }
+  get '/search', to: 'search#home', as: 'search'
 end

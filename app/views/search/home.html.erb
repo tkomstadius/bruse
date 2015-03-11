@@ -1,0 +1,7 @@
+<div ng-controller="SearchCtrl">
+  <h1>Sök</h1>
+  <input type="text" placeholder="Search" ng-model="search">
+  <div class="results">
+    <div ng-repeat="file in files">{{file.name}}</div>
+  </div>
+</div>

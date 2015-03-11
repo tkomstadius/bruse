@@ -1,5 +1,19 @@
 class SearchController < ApplicationController
-  # TODO: implement fuzzy search
+  before_action :authenticate_user!
+
+  def home
+  end
+
+  # Public: Finds files from BruseFile or Tag model.
+  #
+  # query  - search query
+  #
+  # Examples
+  #
+  #   find("teesst")
+  #   # => { files: [{name: "test"}] }
+  #
+  # Returns an array of files
   def find
     query = params[:query]
     # Initiates array here since ruby is a pass by reference language
