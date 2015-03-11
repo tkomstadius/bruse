@@ -24,7 +24,7 @@
         )
 
   $scope.add = (file) ->
-    # make sure we are not adding a file
+    # make sure we are not adding a folder
     unless file.is_dir
       file.loading = true
       FileHandler.put($scope.identity.id, file).then((data) ->
