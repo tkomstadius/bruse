@@ -5,7 +5,10 @@
     if($scope.search != "")
       $http.get('/search/'+$scope.search)
         .then((response) ->
-          $scope.files = response.data.files;
+          if response.data.files.length > 0
+            $scope.files = response.data.files;
+          else
+            console.log "No results found"
           )
         .catch((response) ->
           console.error "Couldn't search.."
