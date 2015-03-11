@@ -2,8 +2,13 @@ class SearchController < ApplicationController
   # TODO: implement fuzzy search
   def find
     query = params[:query]
-    @results = Tag.where(:name => query)
-    @results.push(File.where(:name => query))
-    @results.uniq # Remove dublicates
+    # Initiates array here since ruby is a pass by reference language
+    @results = []
+    @results = BruseFile.where(:name => query)
+    tags = Tag.where(:name => query)
+    tags.each do |tag|
+      @results.push(tag.bruse_file) # Get the files from each tag
+    end
+    @results.uniq # Remove duplicates
   end
 end
