@@ -22,4 +22,7 @@ Rails.application.routes.draw do
     resources :files, only: [:create, :new, :destroy], path_names: {new: 'add'}
     get '/files/browse', to: 'files#browse'
   end
+
+  # search
+  get '/search/:query', to: 'search#find', as: 'search', :defaults => { :format => 'json' }
 end
