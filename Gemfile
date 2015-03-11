@@ -36,6 +36,9 @@ gem 'omniauth'
 # dropbox omniauth stategy
 gem 'omniauth-dropbox-oauth2'
 
+# Fuzzy search for activerecord models
+gem 'fuzzily'
+
 ## APIs
 # dropbox ruby sdk
 gem 'dropbox-sdk'
