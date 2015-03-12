@@ -1,7 +1,39 @@
 @bruseApp.factory 'FileHandler', ['$http', ($http) ->
+  # here, we return an object with different async methods
   return {
     #
-    # Get files
+    # Collect saved BruseFiles from this identity
+    #
+    collect: (identity_id) ->
+      # send a get request
+      promise = $http.get('/service/'+identity_id+'/files.json')
+        .then((response) ->
+          # return files
+          response.data.files
+          )
+        .catch((response) ->
+          alert "Failed to collect exsiting files!"
+          console.log response
+          )
+    #
+    # Delete file
+    #
+    delete: (identity_id, file) ->
+      # post it to our backend!
+      # promise gets returned
+      promise = $http.delete('/service/'+identity_id+'/files/'+file.bruse_file.id+'.json')
+        .then((response) ->
+          # file should have been deleted, return what the server says about
+          # this file
+          response.data.file
+          )
+        .catch((response) ->
+          # some error occured! notify user and log the accident.
+          alert "Could not un-save file!"
+          console.log response
+          )
+    #
+    # Get files from remote service
     #
     get: (identity_id, path) ->
       # the promise gets returned
@@ -50,28 +82,11 @@
         # wait for server to be done
         .then((response) ->
           # return bruse file data
-          response.data.file
+          response.data.files
           )
         .catch((response) ->
           # some error occured! notify user and log the accident.
           alert "Could not save file!"
-          console.log response
-          )
-    #
-    # Delete file
-    #
-    delete: (identity_id, file) ->
-      # post it to our backend!
-      # promise gets returned
-      promise = $http.delete('/service/'+identity_id+'/files/'+file.bruse_file.id+'.json')
-        .then((response) ->
-          # file should have been deleted, return what the server says about
-          # this file
-          response.data.file
-          )
-        .catch((response) ->
-          # some error occured! notify user and log the accident.
-          alert "Could not un-save file!"
           console.log response
           )
   }

@@ -52,6 +52,10 @@ class FilesController < ApplicationController
     end
   end
 
+  def index
+    @files = @identity.bruse_files
+  end
+
   private
     # Private: Set current identity from request parameters.
     def set_identity

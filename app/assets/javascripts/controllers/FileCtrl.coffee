@@ -1,5 +1,6 @@
 @bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
+  $scope.bruse_files = []
   $scope.loading = true
 
   # get identity information from add view
@@ -8,7 +9,12 @@
   # load root files on page load
   FileHandler.get($scope.identity.id, '/').then((data) ->
     $scope.files = data
-    $scope.loading = false
+
+    # when we have loaded remote folder, load BruseFiles
+    FileHandler.collect($scope.identity.id).then((data) ->
+      $scope.bruse_files = data
+      $scope.loading = false
+      )
     )
 
   $scope.expand = (file) ->
@@ -17,10 +23,10 @@
 
     # if we haven't allready, load file info from dropbox
     unless file.contents and file.contents.length > 0
-      $scope.loading = true
+      file.loading = true
       FileHandler.get($scope.identity.id, file.path).then((data) ->
         file.contents = data
-        $scope.loading = false
+        file.loading = false
         )
 
   $scope.add = (file) ->
@@ -32,8 +38,10 @@
 
   $scope.remove = (file) ->
     # send delete request
+    file.loading = true
     if file.bruse_file
       FileHandler.delete($scope.identity.id, file).then((data) ->
         file.bruse_file = data
+        file.loading = false
         )
 ]
