@@ -6,6 +6,24 @@
 
 <h1>Listing Files</h1>
 
+
+
+<%= form_tag(bruse_files_path, class: "form-inline", method: :get) do  %>
+  <div class="form-group"></div>
+  <%= label_tag(:query, "Search for:") %>
+  <%= text_field_tag(:query, params[:query], class: "form-control" )%>
+  <%= submit_tag("Search", class: "btn btn-primary" )%>
+  <% if params[:query].present? %>
+    <%= link_to "clear", bruse_files_path %>
+  <% end %>
+<% end %>
+
+<%= form_tag tags_path, :method => 'get' do %>
+  <%= label_tag(:search, "Search for:") %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Search", :name =>nil %>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -17,6 +35,8 @@
       <th colspan="3"></th>
     </tr>
   </thead>
+
+  
 
   <tbody>
     <% @bruse_files.each do |file| %>  
@@ -36,6 +56,7 @@
 
   </tbody>
 </table>
+
 
 <br>
 
