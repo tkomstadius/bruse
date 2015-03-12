@@ -77,9 +77,9 @@ class FilesController < ApplicationController
     file = BruseFile.find_by(:download_hash => params[:download_hash])
     if file.identity.user == current_user
       # creates a dropbox client
-      client = DropboxClient.new(file.identity.token)
+      set_client(file.identity)
       # send the file to the user
-      send_data client.get_file(file.foreign_ref), :type => file.filetype
+      send_data @client.get_file(file.foreign_ref), :type => file.filetype
     end
   end
 
@@ -90,8 +90,11 @@ class FilesController < ApplicationController
     def set_file
       @file = BruseFile.find(params[:id])
     end
-    def set_client
-      @client = DropboxClient.new(@identity.token)
+    def set_client(id = nil)
+      identity = id ? id : @identity
+      if identity.service.downcase.include? "dropbox"
+        @client = DropboxClient.new(identity.token)
+      end
     end
     def file_params
       params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
