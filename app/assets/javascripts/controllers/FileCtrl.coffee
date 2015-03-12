@@ -12,8 +12,11 @@
 
     # when we have loaded BruseFiles, load root remote files
     FileHandler.get($scope.identity.id, '/').then((data) ->
+      # append data to files
       $scope.files = data
-      _.map $scope.files, findFile
+      # append BruseFile info to our file list
+      _.map $scope.files, (remote_file) ->
+        findFile $scope.bruse_files, remote_file
       $scope.loading = false
       )
     )
@@ -27,13 +30,21 @@
       file.loading = true
       FileHandler.get($scope.identity.id, file.path).then((data) ->
         file.contents = data
+
+        # find all the allready added files!
+        _.map data, (remote_file) ->
+          findFile $scope.bruse_files, remote_file
+
         file.loading = false
         )
 
   $scope.add = (file) ->
     file.loading = true
     FileHandler.put($scope.identity.id, file).then((data) ->
-      file.bruse_file = data
+      # add file to list of existing files
+      $scope.bruse_files.push(data)
+      # append bruse_file to this remote file
+      findFile $scope.bruse_files, file
       file.loading = false
       )
 
@@ -46,11 +57,9 @@
         file.loading = false
         )
 
-  findFile = (remote_file) ->
-    console.log remote_file
+  findFile = (list_of_files, remote_file) ->
     # find the first corresponding brusefile. note this -------------------vvv
-    bruse_file = _.where($scope.bruse_files, foreign_ref: remote_file.path)[0]
-    console.log bruse_file
+    bruse_file = _.where(list_of_files, foreign_ref: remote_file.path)[0]
     # set remote_file's bruse_file property
     remote_file.bruse_file = bruse_file
     # return remote_file
