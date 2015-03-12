@@ -44,7 +44,12 @@ class FilesController < ApplicationController
   end
 
   def download
-    @download = @client.get_file(@file.foreign_ref)
+    download = @client.get_file(@file.foreign_ref)
+    filepath = "#{Rails.root}/public/#{@file.name}"
+    newfile = File.new(filepath, "w")
+    if newfile
+      newfile.syswrite(download)
+    end
   end
 
   private
