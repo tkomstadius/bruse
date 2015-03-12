@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     session[:user_id] = User.find_or_create_from_oauth(auth_hash, current_user).id
 
     flash[:notice] = "Logged in"
-    redirect_to root_url
+    redirect_to profile_url
   end
 
   def destroy

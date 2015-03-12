@@ -12,6 +12,13 @@ require "minitest/rails/capybara"
 # Uncomment for awesome colorful output
 require "minitest/pride"
 
+# Javascript driver for capybara. This renders javascript using phantomjs when doing E2E testing
+require 'capybara/poltergeist'
+Capybara.default_driver = :poltergeist
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {js_errors: false, phantomjs_options: ['--ignore-ssl-errors=yes']})
+end
+
 class ActiveSupport::TestCase
   ActiveRecord::Migration.check_pending!
 

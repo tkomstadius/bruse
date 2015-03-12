@@ -1,5 +1,7 @@
 class BruseFile < ActiveRecord::Base
 	has_and_belongs_to_many :tags
+  belongs_to :identity
+
 	attr_accessor :tagname
 
 
@@ -15,5 +17,4 @@ class BruseFile < ActiveRecord::Base
       all
     end
   end
-
 end

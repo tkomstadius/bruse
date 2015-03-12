@@ -1,11 +1,19 @@
 class User < ActiveRecord::Base
+  # relations
   has_many :identities
+
+  # validations
   validates :email, presence: true,
                     uniqueness: true,
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
                               message: "enter a valid email" },
                     on: :create
   validates_presence_of :name, :on => :create
+
+  # before/after hooks
+  after_create :send_welcome_email
+
+  # methods
 
   # Public: Creates or finds a user from oauth information.
   # To be used when a user signs in.
@@ -49,5 +57,9 @@ class User < ActiveRecord::Base
     self.last_sign_in_at = DateTime.now
     self.save!
     self # return user
+  end
+
+  def send_welcome_email
+    UserMailer.welcome(self).deliver_now!
   end
 end
