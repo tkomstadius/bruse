@@ -43,14 +43,30 @@ class FilesController < ApplicationController
     end
   end
 
+  # Public: generates a secure download url only accessable for
+  # the owner.
+  #
+  # identity_id - gets owner of file
+  # file_id - specified file
+  #
+  # Examples
+  #   {identity_id: 1, file_id: 1} --> download_url
+  #   # => @filepath # a secure unique url
+  #
   def download_url
     if @file.identity.user == current_user
+      # downloads the file from dropbox
       download = @client.get_file(@file.foreign_ref)
+
+      # creates desired directory
       dir = "#{Rails.root}/download/#{@file.generate_download_hash}"
       Dir.mkdir dir
       dir = "#{dir}/#{@file.name}"
+
+      # creates an empty file with in the correct location
       newfile = File.new(dir, "w")
       if newfile
+        # write the downloaded information from dropbox
         newfile.syswrite(download)
         @filepath = "get/#{@file.download_hash}/#{@file.name}"
       end
@@ -58,11 +74,24 @@ class FilesController < ApplicationController
   end
 
   # Todo: delete file after download
+  #
+  # Public: Sends requested file to user if the user has
+  # the rights to download
+  #
+  # download_hash - unique hash for a file
+  # name - name of the requested file
+  # format - format of the file thats being downloaded
+  #
+  # Examples
+  #   Get /get/lkajdflakjsdflhb/file.m
+  #     # => downloads file.m
+  #
   def download
     file = BruseFile.find_by(:download_hash => params[:download_hash])
     if file.identity.user == current_user
       filepath = "#{Rails.root}/download/#{file.download_hash}/#{params[:name]}.#{params[:format]}"
-      send_file "#{Rails.root}/download/#{file.download_hash}/#{params[:name]}.#{params[:format]}", :type => file.filetype
+      # send the file to the user
+      send_file filepath, :type => file.filetype
     end
   end
 
