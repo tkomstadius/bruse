@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   scope '/service/:identity_id' do
     resources :files, only: [:create, :new, :destroy], path_names: {new: 'add'}
     get '/files/browse', to: 'files#browse'
+    get '/files/download/:id', to: 'files#download'
   end
 
   # search
