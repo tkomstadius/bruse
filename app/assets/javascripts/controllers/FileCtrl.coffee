@@ -6,13 +6,14 @@
   # get identity information from add view
   $scope.identity = IDENTITY_PARAMS
 
-  # load root files on page load
-  FileHandler.get($scope.identity.id, '/').then((data) ->
-    $scope.files = data
+  # load existing BruseFiles on page load
+  FileHandler.collect($scope.identity.id).then((data) ->
+    $scope.bruse_files = data
 
-    # when we have loaded remote folder, load BruseFiles
-    FileHandler.collect($scope.identity.id).then((data) ->
-      $scope.bruse_files = data
+    # when we have loaded BruseFiles, load root remote files
+    FileHandler.get($scope.identity.id, '/').then((data) ->
+      $scope.files = data
+      _.map $scope.files, findFile
       $scope.loading = false
       )
     )
@@ -44,4 +45,14 @@
         file.bruse_file = data
         file.loading = false
         )
+
+  findFile = (remote_file) ->
+    console.log remote_file
+    # find the first corresponding brusefile. note this -------------------vvv
+    bruse_file = _.where($scope.bruse_files, foreign_ref: remote_file.path)[0]
+    console.log bruse_file
+    # set remote_file's bruse_file property
+    remote_file.bruse_file = bruse_file
+    # return remote_file
+    remote_file
 ]
