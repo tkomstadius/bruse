@@ -21,8 +21,9 @@ Rails.application.routes.draw do
   scope '/service/:identity_id' do
     resources :files, only: [:create, :new, :destroy], path_names: {new: 'add'}
     get '/files/browse', to: 'files#browse'
-    get '/files/download/:id', to: 'files#download'
+    get '/files/download/:id', to: 'files#download_url'
   end
+  get '/get/:download_hash/:name', to: 'files#download', :via => :all
 
   # search
   get '/search/:query', to: 'search#find', :defaults => { :format => 'json' }

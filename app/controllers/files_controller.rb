@@ -1,9 +1,9 @@
 class FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
-  before_filter :set_identity
-  before_filter :set_file, only: [:destroy, :download]
-  before_filter :set_client, only: [:browse, :download]
+  before_filter :set_identity, except: :download
+  before_filter :set_file, only: [:destroy, :download_url]
+  before_filter :set_client, only: [:browse, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
   # using javascript. If we didn't do this, we'd get problems since the CSRF
@@ -43,15 +43,26 @@ class FilesController < ApplicationController
     end
   end
 
+  def download_url
+    if @file.identity.user == current_user
+      download = @client.get_file(@file.foreign_ref)
+      dir = "#{Rails.root}/download/#{@file.generate_download_hash}"
+      Dir.mkdir dir
+      dir = "#{dir}/#{@file.name}"
+      newfile = File.new(dir, "w")
+      if newfile
+        newfile.syswrite(download)
+        @filepath = "get/#{@file.download_hash}/#{@file.name}"
+      end
+    end
+  end
+
+  # Todo: delete file after download
   def download
-    # todo: check if the current_user owns the file
-    download = @client.get_file(@file.foreign_ref)
-    Dir.mkdir "#{Rails.root}/public/get/#{current_user.generate_download_hash}"
-    @filepath = "#{Rails.root}/public/get/#{current_user.download_hash}/#{@file.name}"
-    newfile = File.new(@filepath, "w")
-    if newfile
-      newfile.syswrite(download)
-      @filepath = "get/#{current_user.download_hash}/#{@file.name}"
+    file = BruseFile.find_by(:download_hash => params[:download_hash])
+    if file.identity.user == current_user
+      filepath = "#{Rails.root}/download/#{file.download_hash}/#{params[:name]}.#{params[:format]}"
+      send_file "#{Rails.root}/download/#{file.download_hash}/#{params[:name]}.#{params[:format]}", :type => file.filetype
     end
   end
 
