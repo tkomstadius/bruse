@@ -1,4 +1,4 @@
-@bruseApp.controller 'SearchCtrl', ['$scope', '$http', ($scope, $http) ->
+@bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
 
   $scope.$watch "search", () ->
@@ -15,4 +15,9 @@
           )
     else
       $scope.files = []
+
+  $scope.download = (identity_id, file_id) ->
+    FileHandler.download(identity_id, file_id).then((data) ->
+      console.log data
+      )
 ]

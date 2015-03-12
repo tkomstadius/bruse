@@ -2,6 +2,6 @@
   <h1>Sök</h1>
   <input type="text" name="search" autocomplete="off" placeholder="Search" ng-model="search">
   <div class="results">
-    <div ng-repeat="file in files">{{file.name}}</div>
+    <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">{{file.name}}</div>
   </div>
 </div>
