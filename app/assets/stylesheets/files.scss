@@ -1,16 +1,24 @@
-// Place all the styles related to the files controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$list-padding: 15px;
 
-.file-list .file {
-  .tools {
-    opacity: 0;
-  }
+.c-filelist {
+  list-style-type: none;
+  padding-left: 0;
 
-  &:hover {
-    background-color: rgba($silver, .5);
+  &__file {
+    padding-left: $list-padding;
+    background-color: white;
 
-    > .tools {
+    &:nth-child(even) {
+      background-color: lighten($silver, 8%);
+    }
+    &--folder {
+      color: gray;
+    }
+
+    &__tools {
+      opacity: 0;
+    }
+    &:hover > &__tools {
       opacity: 1;
     }
   }

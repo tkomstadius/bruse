@@ -36,6 +36,8 @@ gem 'lodash-rails'
 gem 'font-awesome-sass'
 # sass mixins that makes you happy
 gem 'bourbon'
+# normalize!
+gem 'normalize-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
