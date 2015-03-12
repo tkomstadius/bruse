@@ -44,11 +44,14 @@ class FilesController < ApplicationController
   end
 
   def download
+    # todo: check if the current_user owns the file
     download = @client.get_file(@file.foreign_ref)
-    filepath = "#{Rails.root}/public/#{@file.name}"
-    newfile = File.new(filepath, "w")
+    Dir.mkdir "#{Rails.root}/public/get/#{current_user.generate_download_hash}"
+    @filepath = "#{Rails.root}/public/get/#{current_user.download_hash}/#{@file.name}"
+    newfile = File.new(@filepath, "w")
     if newfile
       newfile.syswrite(download)
+      @filepath = "get/#{current_user.download_hash}/#{@file.name}"
     end
   end
 

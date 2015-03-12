@@ -1,1 +1,1 @@
-json.name @file.name
+json.url @filepath

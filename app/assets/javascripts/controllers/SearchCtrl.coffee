@@ -18,7 +18,7 @@
 
   $scope.download = (identity_id, file_id) ->
     FileHandler.download(identity_id, file_id).then((data) ->
-      win = window.open('/'+data.name, '_blank')
+      win = window.open('/'+data.url, '_blank')
       win.focus()
       )
 ]
