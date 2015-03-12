@@ -55,21 +55,8 @@ class FilesController < ApplicationController
   #
   def download_url
     if @file.identity.user == current_user
-      # downloads the file from dropbox
-      download = @client.get_file(@file.foreign_ref)
-
-      # creates desired directory
-      dir = "#{Rails.root}/download/#{@file.generate_download_hash}"
-      Dir.mkdir dir
-      dir = "#{dir}/#{@file.name}"
-
-      # creates an empty file with in the correct location
-      newfile = File.new(dir, "w")
-      if newfile
-        # write the downloaded information from dropbox
-        newfile.syswrite(download)
-        @filepath = "get/#{@file.download_hash}/#{@file.name}"
-      end
+      @file.generate_download_hash
+      @filepath = "get/#{@file.download_hash}/#{@file.name}"
     end
   end
 
@@ -89,9 +76,10 @@ class FilesController < ApplicationController
   def download
     file = BruseFile.find_by(:download_hash => params[:download_hash])
     if file.identity.user == current_user
-      filepath = "#{Rails.root}/download/#{file.download_hash}/#{params[:name]}.#{params[:format]}"
+      # creates a dropbox client
+      client = DropboxClient.new(file.identity.token)
       # send the file to the user
-      send_file filepath, :type => file.filetype
+      send_data client.get_file(file.foreign_ref), :type => file.filetype
     end
   end
 
