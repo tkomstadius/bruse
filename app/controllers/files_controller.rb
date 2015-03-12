@@ -31,9 +31,11 @@ class FilesController < ApplicationController
     if params[:is_dir]
       # call to recursive file adding here
       @files = add_folder_recursive(params[:foreign_ref])
+      # bulk save our files
+      BruseFile.import @files
     else
       # add file!
-      @file = add_file(file_params)
+      @files = add_file(file_params)
     end
   end
 
@@ -42,7 +44,7 @@ class FilesController < ApplicationController
     @file = BruseFile.find(params[:id])
 
     # make sure file belongs to current identity and delete file
-    if @file.identity == @identity && @file.destroy
+    if @file.identity == @identity && @identity.user == current_user && @file.destroy
       @message = "File deleted."
       @file = nil
     else
@@ -75,7 +77,7 @@ class FilesController < ApplicationController
     #   add_folder_recursive('path/to/folder')
     #   # => '[<BruseFile>, <BruseFile>, [<BruseFile>, <BruseFile>]]'
     #
-    # Returns a list of added files
+    # Returns a list of new, UNSAVED, files
     def add_folder_recursive(path)
       # setup client
       @client = DropboxClient.new(@identity.token)
@@ -89,8 +91,9 @@ class FilesController < ApplicationController
       dir['contents'].each do |file|
         # check if current child is a directory
         if file['is_dir']
-          # add folder recursivly
-          files << add_folder_recursive(file['path'])
+          # add folder recursivly, and merge the results with our current files
+          # array
+          files.concat(add_folder_recursive(file['path']))
         else
           # prepare file data
           file_data = {
@@ -99,15 +102,17 @@ class FilesController < ApplicationController
             # use path as foreign ref
             :foreign_ref => file['path'],
             # save file type
-            :filetype => file['mime_type']
+            :filetype => file['mime_type'],
+            # save identity
+            :identity => @identity
           }
 
           # create a file and push it to files list
-          files << add_file(file_data)
+          files << BruseFile.new(file_data)
         end
       end
 
-      # return the list of files added
+      # return the list of files NOT YET saved to db
       return files
     end
 
