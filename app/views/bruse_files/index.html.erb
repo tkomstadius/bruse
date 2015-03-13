@@ -46,8 +46,10 @@
         <td><%= file.meta %></td>
         <% file.tags.each do |t| %>
           <td><%= link_to t.name, t %> </td>
+          <td><%= link_to 'Edit', edit_tag_path(t) %></td>
         <% end %>
         <td><%= link_to 'Destroy', file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
       </tr>
     <% end %>
 
