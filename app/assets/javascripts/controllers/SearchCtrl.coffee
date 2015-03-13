@@ -3,7 +3,7 @@
 
   # watches the search input field for changes
   $scope.$watch "search", () ->
-    if($scope.search !== "")
+    if($scope.search != "")
       # send a search request to the server
       $http.get('/search/'+$scope.search)
         .then((response) ->
