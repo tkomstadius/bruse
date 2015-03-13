@@ -18,10 +18,20 @@ class SearchController < ApplicationController
     query = params[:query]
     # Initiates array here since ruby is a pass by reference language
     @results = []
-    @results = BruseFile.find_by_fuzzy_name(query)
+
+    # Get all files that matches the query
+    files = BruseFile.find_by_fuzzy_name(query)
+    files.each do |file|
+      # push to results if the current user owns it
+      @results.push(file) if file.identity.user_id == current_user.id
+    end
+
     tags = Tag.find_by_fuzzy_name(query)
     tags.each do |tag|
-      @results.push(tag.bruse_file) # Get the files from each tag
+      # Get the files from each tag
+      tag.bruse_files.each do |file|
+        @results.push(file) if file.identity.user_id == current_user.id
+      end
     end
     @results.uniq # Remove duplicates
   end
