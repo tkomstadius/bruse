@@ -60,8 +60,6 @@ class FilesController < ApplicationController
     end
   end
 
-  # Todo: delete file after download
-  #
   # Public: Sends requested file to user if the user has
   # the rights to download
   #
