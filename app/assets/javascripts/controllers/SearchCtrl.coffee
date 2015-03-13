@@ -3,15 +3,12 @@
 
   # watches the search input field for changes
   $scope.$watch "search", () ->
-    if($scope.search != "")
+    if($scope.search !== "")
       # send a search request to the server
       $http.get('/search/'+$scope.search)
         .then((response) ->
-          if response.data.files.length > 0
-            # write reponse to the current scope
-            $scope.files = response.data.files;
-          else
-            console.log "No results found"
+          # write reponse to the current scope
+          $scope.files = response.data.files;
           )
         .catch((response) ->
           console.error "Couldn't search.."
