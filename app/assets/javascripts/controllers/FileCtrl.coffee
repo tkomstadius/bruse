@@ -30,11 +30,9 @@
       file.loading = true
       FileHandler.get($scope.identity.id, file.path).then((data) ->
         file.contents = data
-
         # find all the allready added files!
         _.map data, (remote_file) ->
           findFile $scope.bruse_files, remote_file
-
         file.loading = false
         )
 

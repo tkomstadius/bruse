@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # recieve auth callback
   match '/auth/:provider/callback', via: [:get, :post], to: 'sessions#create'
+  match '/auth/failure', via: [:get, :post], to: 'pages#omniauth_failure', as: 'omniauth_failure'
   # logout
   match '/signout', via: [:get, :post], to: 'sessions#destroy'
 
