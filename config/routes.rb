@@ -5,12 +5,6 @@ Rails.application.routes.draw do
   root 'pages#show', page: 'home'
 
   resources :bruse_files 
-  # do
-  #   collection do
-  #     post :import
-  #     get :autocomplete # <= add this line
-  #   end
-  # end
 
   resources :tags 
 

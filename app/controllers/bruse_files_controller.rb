@@ -2,8 +2,8 @@ class BruseFilesController < ApplicationController
 	before_action :set_file , only: [:show, :edit, :destroy]
 
   def index
-   #@bruse_files = BruseFile.all
-   @bruse_files = BruseFile.search(params[:search])
+   @bruse_files = BruseFile.all
+   
     
   end
   
@@ -13,6 +13,7 @@ class BruseFilesController < ApplicationController
 
   # GET /orders/1/edit
   def edit
+    
   end
 
   # GET /orders/new

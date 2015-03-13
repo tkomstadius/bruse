@@ -3,19 +3,24 @@ class TagsController < ApplicationController
 
   def index
     @tag = Tag.search(params[:search])
-    # if params[:q].present?
-    #   @tags = Tag.search(params[:q], page: params[:page])
-    # else
-    #   @tags = Tag.all.page params[:page]
-    # end
   end
 
-  def autocomplete
-    render json: Tag.search(params[:query], autocomplete: true, limit: 10).map(&:name)
+  def edit
+      @tag = Tag.find(params[:id])
   end
 
 	def show
   end
+
+  def update
+  @tag = Tag.find(params[:id])
+ 
+  if @tag.update(tag_params)
+    redirect_to @tag
+  else
+    render 'edit'
+  end
+end
 
   private
 
@@ -23,7 +28,7 @@ class TagsController < ApplicationController
 	  @tag = Tag.find(params[:id])
 	end
 
-	def bruse_file_params
+	def tag_params
       params.require(:tag).permit(:name)
   end
 
