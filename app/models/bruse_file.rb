@@ -7,6 +7,8 @@ class BruseFile < ActiveRecord::Base
   # make sure file only added once from each identity
   validates :foreign_ref, uniqueness: { scope: :identity,
     message: 'That file appears to be added!' }
+  # make sure name, foreign_ref and filetype is present
+  validates :name, :foreign_ref, :filetype, presence: true
 
   # Fuzzy search for :name
   fuzzily_searchable :name
