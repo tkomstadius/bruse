@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/danielronnkvist/fuzzily.git
-  revision: 294275f3c51480af4e32793d9c24f673e8117ec3
+  revision: 5f97c96ff22bc33a5518f4dadca18b542808775d
   specs:
     fuzzily (0.3.2)
       activerecord (>= 2.3.17)
