@@ -7,6 +7,11 @@
       # send a search request to the server
       $http.get('/search/'+$scope.search)
         .then((response) ->
+          if response.data.files.length > 0
+            # write reponse to the current scope
+            $scope.files = response.data.files;
+          else
+            console.log "No results found"
           # write reponse to the current scope
           $scope.files = response.data.files;
           )
@@ -21,6 +26,6 @@
     FileHandler.download(identity_id, file_id).then((data) ->
       # open the returned url in a new tab
       win = window.open('/'+data.url, '_blank')
-      win.focus()
+      win.focus() # TODO: make sure it is not stopped by ad-block
       )
 ]
