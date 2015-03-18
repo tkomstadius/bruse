@@ -31,6 +31,7 @@ gem 'lodash-rails'
 
 ## css/sass stuff
 # icons!
+gem 'font-awesome-rails'
 gem 'font-awesome-sass'
 # sass mixins that makes you happy
 gem 'bourbon'
@@ -46,7 +47,7 @@ gem 'omniauth'
 gem 'omniauth-dropbox-oauth2'
 
 # Fuzzy search for activerecord models
-gem 'fuzzily'#, :path => '/home/daniel/documents/gems/fuzzily'
+gem 'fuzzily', :path => '/home/daniel/documents/gems/fuzzily'
 
 ## APIs
 # dropbox ruby sdk
