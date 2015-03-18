@@ -25,7 +25,6 @@
   $scope.download = (identity_id, file_id) ->
     FileHandler.download(identity_id, file_id).then((data) ->
       # open the returned url in a new tab
-      win = window.open('/'+data.url, '_blank')
-      win.focus() # TODO: make sure it is not stopped by ad-block
+      win = window.open('/'+data.url, '_self')
       )
 ]
