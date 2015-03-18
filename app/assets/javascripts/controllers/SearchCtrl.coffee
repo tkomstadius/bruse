@@ -10,11 +10,11 @@
         .then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
-            $scope.empty = false;
             $scope.files = response.data.files;
           else
-            $scope.empty = true;
             console.log "No results found"
+          # write reponse to the current scope
+          $scope.files = response.data.files;
           )
         .catch((response) ->
           console.error "Couldn't search.."
