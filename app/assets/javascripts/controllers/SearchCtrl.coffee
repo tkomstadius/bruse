@@ -1,14 +1,40 @@
 @bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
+  $scope.search = ""
 
   # watches the search input field for changes
   $scope.$watch "search", () ->
-    if($scope.search != "")
+    #console.log $scope.search;
+
+    if $scope.search != ""
+      # console.log typeof $scope.search
+      temp = $scope.search.split(" ")
+      #console.log temp;
+      temp.forEach (element, index, array) ->
+        #console.log element.charAt(0)
+        #must send searchinfo all the time
+        if element.charAt(0) == "#"
+          tags = []
+          tags.push element
+        else if element.charAt(0) == "."
+          types = []
+          types.push element
+        else
+          $scope.files.push element
+        
+        console.log $scope.files
+        console.log types
+        console.log tags
+
+        #TODO: make sure that there are something in array to measure length
+
+
       # send a search request to the server
       $http.get('/search/'+$scope.search)
         .then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
+
             $scope.files = response.data.files;
           else
             console.log "No results found"
