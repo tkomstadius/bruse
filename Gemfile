@@ -4,6 +4,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
+# give AR some superpowers when it comes to bulk insertion
+gem 'activerecord-import', '~> 0.4.0'
 
 ## frontend management
 # Use SCSS for stylesheets
@@ -13,7 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 
-## frontend libs
+## frontend js libs and tools
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # nice javascript toolbelt
@@ -35,6 +37,8 @@ gem 'font-awesome-rails'
 gem 'font-awesome-sass'
 # sass mixins that makes you happy
 gem 'bourbon'
+# normalize!
+gem 'normalize-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'

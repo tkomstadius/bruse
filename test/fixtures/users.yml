@@ -3,3 +3,7 @@
 fooBar:
   email: foo@bar.com
   name: Foo Bar
+
+arbar:
+  email: arbar@lithehack.cool
+  name: Arbar Baraf
