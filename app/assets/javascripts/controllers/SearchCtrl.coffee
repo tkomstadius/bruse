@@ -1,5 +1,6 @@
 @bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
+  $scope.empty = false;
 
   # watches the search input field for changes
   $scope.$watch "search", () ->
@@ -9,8 +10,10 @@
         .then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
+            $scope.empty = false;
             $scope.files = response.data.files;
           else
+            $scope.empty = true;
             console.log "No results found"
           )
         .catch((response) ->
