@@ -1,6 +1,5 @@
 @bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
-  $scope.empty = false;
 
   # watches the search input field for changes
   $scope.$watch "search", () ->
