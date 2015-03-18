@@ -1,0 +1,38 @@
+class SearchController < ApplicationController
+  before_action :authenticate_user!
+
+  def home
+  end
+
+  # Public: Finds files from BruseFile or Tag model.
+  #
+  # query  - search query
+  #
+  # Examples
+  #
+  #   find("teesst")
+  #   # => { files: [{name: "test"}] }
+  #
+  # Returns an array of files
+  def find
+    query = params[:query]
+    # Initiates array here since ruby is a pass by reference language
+    @results = []
+
+    # Get all files that matches the query
+    files = BruseFile.find_by_fuzzy_name(query)
+    files.each do |file|
+      # push to results if the current user owns it
+      @results.push(file) if file.identity.user_id == current_user.id
+    end
+
+    tags = Tag.find_by_fuzzy_name(query)
+    tags.each do |tag|
+      # Get the files from each tag
+      tag.bruse_files.each do |file|
+        @results.push(file) if file.identity.user_id == current_user.id
+      end
+    end
+    @results.uniq # Remove duplicates
+  end
+end

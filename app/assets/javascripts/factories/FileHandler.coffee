@@ -89,5 +89,33 @@
           alert "Could not save file!"
           console.log response
           )
+    #
+    # Delete file
+    #
+    delete: (identity_id, file) ->
+      # post it to our backend!
+      # promise gets returned
+      promise = $http.delete('/service/'+identity_id+'/files/'+file.bruse_file.id+'.json')
+        .then((response) ->
+          # file should have been deleted, return what the server says about
+          # this file
+          response.data.file
+          )
+        .catch((response) ->
+          # some error occured! notify user and log the accident.
+          alert "Could not un-save file!"
+          console.log response
+          )
+    #
+    # Download file
+    #
+    download: (identity_id, file_id) ->
+      promsie = $http.get('/service/'+identity_id+'/files/download/'+file_id+'.json')
+        .then((response) ->
+          response.data
+          )
+        .catch((response) ->
+          console.error response
+          )
   }
 ]
