@@ -68,5 +68,16 @@
           alert "Could not un-save file!"
           console.log response
           )
+    #
+    # Download file
+    #
+    download: (identity_id, file_id) ->
+      promsie = $http.get('/service/'+identity_id+'/files/download/'+file_id+'.json')
+        .then((response) ->
+          response.data
+          )
+        .catch((response) ->
+          console.error response
+          )
   }
 ]

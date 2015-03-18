@@ -45,6 +45,9 @@ gem 'omniauth'
 # dropbox omniauth stategy
 gem 'omniauth-dropbox-oauth2'
 
+# Fuzzy search for activerecord models
+gem 'fuzzily'#, :path => '/home/daniel/documents/gems/fuzzily'
+
 ## APIs
 # dropbox ruby sdk
 gem 'dropbox-sdk'
@@ -82,8 +85,12 @@ group :test do
   gem 'rake'
   # capybara for emulating browser
   gem 'minitest-rails-capybara'
+  # knows how to wait for angular
+  gem 'capybara-angular'
   # phantomjs for capybara
   gem 'poltergeist'
+  # session controll with capybara
+  gem 'rack_session_access'
   # test coverage
   gem 'codeclimate-test-reporter', require: nil
 end
