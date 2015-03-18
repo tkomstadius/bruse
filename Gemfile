@@ -47,7 +47,7 @@ gem 'omniauth'
 gem 'omniauth-dropbox-oauth2'
 
 # Fuzzy search for activerecord models
-gem 'fuzzily', :path => '/home/daniel/documents/gems/fuzzily'
+gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'
 
 ## APIs
 # dropbox ruby sdk
