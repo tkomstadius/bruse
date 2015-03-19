@@ -24,11 +24,11 @@ class SearchController < ApplicationController
     query = params[:query]
 
     # Find tags from the query
-    tags = Tag.find_from_search(query['tags'])
+    tags = Tag.find_from_search(query[:tags])
     # Find files from filetypes
-    files = BruseFile.find_from_search(query['filetypes'])
+    files = BruseFile.find_from_search(query[:filetypes])
     # Find fuzzy results
-    fuzz = find_fuzz_from_search(query['fuzzy'])
+    fuzz = find_fuzz_from_search(query[:fuzzy])
     # Find where the arrays mathes
     @results = tags & files & fuzz
   end
