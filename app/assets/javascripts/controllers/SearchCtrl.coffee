@@ -9,38 +9,45 @@
     if $scope.search != ""
       # console.log typeof $scope.search
       temp = $scope.search.split(" ")
+      hashTags = []
+      types = []
+      docName = []
       #console.log temp;
       temp.forEach (element, index, array) ->
-        #console.log element.charAt(0)
-        #must send searchinfo all the time
+        # 
         if element.charAt(0) == "#"
-          tags = []
-          tags.push element
+          hashTags.push element
         else if element.charAt(0) == "."
-          types = []
           types.push element
         else
-          docName = []
           docName.push element
 
-          # send a search request to the server
-          $http.get('/search/'+docName)
-            .then((response) ->
-              if response.data.files.length > 0
-                # write reponse to the current scope
+        # create a search object divided by category 
+        searchObject = {tags:hashTags, filetypes:types, fuzz:docName}
 
-                $scope.files = response.data.files;
-              else
-                console.log "No results found"
-              # write reponse to the current scope
-              $scope.files = response.data.files;
-              )
-            .catch((response) ->
-              console.error "Couldn't search.."
-              )  
-        console.log docName
-        console.log types
-        console.log tags
+        # send search object to server
+        console.log searchObject.fuzz
+        console.log searchObject.filetypes
+        console.log searchObject.tags
+
+          # send a search request to the server
+          # $http.get('/search/'+docName)
+          #   .then((response) ->
+          #     if response.data.files.length > 0
+          #       # write reponse to the current scope
+
+          #       $scope.files = response.data.files;
+          #     else
+          #       console.log "No results found"
+          #     # write reponse to the current scope
+          #     $scope.files = response.data.files;
+          #     )
+          #   .catch((response) ->
+          #     console.error "Couldn't search.."
+          #     )  
+        # console.log docName
+        # console.log types
+        # console.log tags
         console.log "----------------------------------"
 
     else
