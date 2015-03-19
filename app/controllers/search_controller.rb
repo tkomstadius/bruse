@@ -31,11 +31,12 @@ class SearchController < ApplicationController
     fuzz = find_fuzz_from_search(query[:fuzzy])
     # Find where the arrays mathes
     data = [tags, files, fuzz]
+    # find the first array that isn't empty. Or assign emtpy array
     @results = data.bsearch { |d| !d.empty? } || []
-    data.each do |d|
+    data.each {|d|
       # store the similarities in @results
       @results = @results & d if !d.empty?
-    end
+    } if !@results.empty? # loop through if the results isn't empty
   end
 
   private
