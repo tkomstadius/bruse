@@ -10,6 +10,7 @@ class FilesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
   require 'dropbox_sdk'
+  require 'google/api_client'
 
   def new
   end
@@ -18,8 +19,8 @@ class FilesController < ApplicationController
     path = params[:path] || '/'
 
     # setup client
-    @client = DropboxClient.new(@identity.token)
-
+    #@client = DropboxClient.new(@identity.token)
+    @client =  GoogleClient.new(@identity.token)
     # load files
     @file = @client.metadata(path)
     # remove eveything after the last '/' in the current dropbox path

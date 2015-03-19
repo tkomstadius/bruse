@@ -1,6 +1,18 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
 
+  #Have to put this data in somewhere... doesn't work yet
+  def self.from_omniauth(auth)
+    where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.name = auth.info.name
+      user.oauth_token = auth.credentials.token
+      user.oauth_expires_at = Time.at(auth.credentials.expires_at)
+      user.save!
+    end
+  end
+
   def show
   end
 

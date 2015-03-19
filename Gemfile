@@ -53,6 +53,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'omniauth'
 # dropbox omniauth stategy
 gem 'omniauth-dropbox-oauth2'
+# Drive omniauth stategy
+gem "omniauth-google-oauth2"
 
 ## APIs
 # dropbox ruby sdk
