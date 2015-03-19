@@ -27,13 +27,13 @@ class FilesController < ApplicationController
     # are we adding file or folder?
     if params[:is_dir]
       # call to recursive file adding here
-      @files = add_folder_recursive(params[:foreign_ref])
+      # @files = add_folder_recursive(params[:foreign_ref])
+      @files = @identity.add_folder_recursive(file_params)
       # bulk save our files
-      BruseFile.import @files
+      # BruseFile.import @files
     else
       # add file!
-      # @files = add_file(file_params)
-      @files = @identity.add_files(file_params)
+      @files = @identity.add_file(file_params)
     end
   end
 
@@ -118,51 +118,5 @@ class FilesController < ApplicationController
     # Return safer parameters
     def file_params
       params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
-    end
-
-    # Private: Add a folder and ALL it's children from Dropbox to BruseFile
-    # model. It calls the add_file(params) method when it detects a file.
-    #
-    # Examples
-    #   add_folder_recursive('path/to/folder')
-    #   # => '[<BruseFile>, <BruseFile>, [<BruseFile>, <BruseFile>]]'
-    #
-    # Returns a list of new, UNSAVED, files
-    def add_folder_recursive(path)
-      # setup client
-      @client = DropboxClient.new(@identity.token)
-      # load directory contents
-      dir = @client.metadata(path)
-
-      # create empty array for file storing
-      files = []
-
-      # iterate over the directory's content
-      dir['contents'].each do |file|
-        # check if current child is a directory
-        if file['is_dir']
-          # add folder recursivly, and merge the results with our current files
-          # array
-          files.concat(add_folder_recursive(file['path']))
-        else
-          # prepare file data
-          file_data = {
-            # extract name from path
-            :name => file['path'].split('/').last,
-            # use path as foreign ref
-            :foreign_ref => file['path'],
-            # save file type
-            :filetype => file['mime_type'],
-            # save identity
-            :identity => @identity
-          }
-
-          # create a file and push it to files list
-          files << BruseFile.new(file_data)
-        end
-      end
-
-      # return the list of files NOT YET saved to db
-      return files
     end
 end

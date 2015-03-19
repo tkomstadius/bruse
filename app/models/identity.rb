@@ -31,6 +31,16 @@ class Identity < ActiveRecord::Base
 
   require 'dropbox_sdk'
 
+  # Public: Browse this identity's file system
+  #
+  # path  - the path do browse
+  #
+  # Examples
+  #
+  #   file_info = browse('path/with/folders')
+  #   # => {name: 'path/with/folders', contents: [<file>,<file>,<file>,<file>]}
+  #
+  # Returns the client's info about the path
   def browse(path = '/')
     # set the client
     set_client
@@ -48,26 +58,51 @@ class Identity < ActiveRecord::Base
   #   # => <#BruseFile...>
   #
   # Returns the file/list of files
-  def add_files(file_params)
-    # are we adding file or folder?
-    if file_params[:is_dir]
-
+  def add_file(file_params)
+    # append a new file to our the current identity's list of bruse_files
+    file = BruseFile.new(file_params)
+    if bruse_files << file
+      # return file
+      file
     else
-      # append a new file to our the current identity's list of bruse_files
-      file = BruseFile.new(file_params)
-      if bruse_files << file
-        # return file
-        file
-      else
-        # could not append file!
-        file.destroy
-        nil
-      end
+      # could not append file!
+      file.destroy
+      nil
     end
   end
 
+  # Public: Add folder and all of its contents
+  #
+  # folder_params - the folder to add, needs to contain the :foreign_ref parameter
+  #
+  # Examples
+  #   add_folder_recursive('path/to/folder')
+  #   # => '[<BruseFile>, <BruseFile>, [<BruseFile>, <BruseFile>]]'
+  #
+  # Returns list of added files
+  def add_folder_recursive(folder_params)
+    folder = browse(folder_params[:foreign_ref])
+
+    # prepare file array
+    files = []
+
+    folder['contents'].each do |child|
+      if child['is_dir']
+        # concat merges two arrays
+        files.concat(add_folder_recursive({ :foreign_ref => child['path'] }))
+      else
+        file_params = extract_file_params(child)
+        # add new file
+        files << add_file(file_params)
+      end
+    end
+
+    # return list of added files
+    files
+  end
+
   private
-    # Public: Get the file handling client from the identity
+    # Private: Get the file handling client from the identity
     #
     # path  - The path to browse, defaults to root
     #
@@ -80,6 +115,29 @@ class Identity < ActiveRecord::Base
     def set_client
       if service.downcase.include? "dropbox"
         @client ||= DropboxClient.new(token)
+      end
+    end
+
+    # Extract BruseFile params from pristine file object from service
+    #
+    # pristine  - untouched service file object
+    #
+    # Exampes
+    #
+    #   file_params = extract_file_params(untouched)
+    #   # => {name: '', foreign_ref: ''}
+    def extract_file_params(pristine)
+      if service.downcase.include? "dropbox"
+        file_params = {
+          # extract name from path
+          :name => pristine['path'].split('/').last,
+          # use path as foreign ref
+          :foreign_ref => pristine['path'],
+          # save file type
+          :filetype => pristine['mime_type']
+        }
+        # return file params
+        file_params
       end
     end
 end
