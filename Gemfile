@@ -58,6 +58,9 @@ gem 'omniauth-dropbox-oauth2'
 # dropbox ruby sdk
 gem 'dropbox-sdk'
 
+# Drive ruby sdk
+gem 'google-api-client'
+
 gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 
 ## Developtment tools
