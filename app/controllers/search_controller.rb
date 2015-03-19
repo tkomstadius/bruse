@@ -30,7 +30,12 @@ class SearchController < ApplicationController
     # Find fuzzy results
     fuzz = find_fuzz_from_search(query[:fuzzy])
     # Find where the arrays mathes
-    @results = tags & files & fuzz
+    data = [tags, files, fuzz]
+    @results = data.bsearch { |d| !d.empty? } || []
+    data.each do |d|
+      # store the similarities in @results
+      @results = @results & d if !d.empty?
+    end
   end
 
   private
