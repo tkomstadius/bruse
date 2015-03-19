@@ -21,8 +21,6 @@ class SearchController < ApplicationController
   #
   # Returns an array of files
   def find
-    # parse query from json to ruby object
-    # byebug
     # Find tags from the query
     tags = Tag.find_from_search(params[:tags]) if params[:tags]
     # Find files from filetypes
