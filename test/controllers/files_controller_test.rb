@@ -8,6 +8,13 @@ class FilesControllerTest < ActionController::TestCase
     assert_redirected_to root_url
   end
 
+  test "denies user to add files if it is not their identity" do
+    get :new, {identity_id: identities(:one).id}, {user_id: users(:arbar)}
+
+    assert_response :found
+    assert_redirected_to root_url
+  end
+
   test "deletes existing file" do
     assert_difference('BruseFile.count', -1) do
       delete :destroy, { format: 'json', identity_id: identities(:one).id, id: bruse_files(:one) },

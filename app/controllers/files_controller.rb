@@ -94,6 +94,10 @@ class FilesController < ApplicationController
     # Private: Set current identity from request parameters.
     def set_identity
       @identity = Identity.find(params[:identity_id])
+      # make sure the identity belongs to this user
+      unless @identity.user == current_user
+        redirect_to root_url
+      end
     end
     def set_file
       @file = BruseFile.find(params[:id])
