@@ -1,0 +1,31 @@
+<h2> Tag </h2>
+<h1>Editing article</h1>
+ 
+<%= form_for tag_path(@tag) do |f| %>
+ 
+  <% if @tag.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@tag.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @tag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>
+ 
+<%= link_to 'Back', bruse_files_path %>

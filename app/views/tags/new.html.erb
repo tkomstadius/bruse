@@ -1,0 +1,17 @@
+<h2>New Tag for <%= @file.name %></h2>
+
+ 
+<%= form_for(@tag) do |t| %>
+
+  <p>
+    <%= t.label :name %></br>
+    <%= t.text_field :name %>
+  </p>
+  <%=t.hidden_field :file_id, :value => @file.id %>
+  <p>
+    <%= t.submit %>
+  </p>
+<% end %>
+
+ <br>
+<%= link_to 'Back', bruse_files_path %>
