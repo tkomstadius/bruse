@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/danielronnkvist/fuzzily.git
+  revision: 5f97c96ff22bc33a5518f4dadca18b542808775d
+  specs:
+    fuzzily (0.3.2)
+      activerecord (>= 2.3.17)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -91,8 +98,6 @@ GEM
       railties (>= 3.2, < 5.0)
     font-awesome-sass (4.3.2)
       sass (~> 3.2)
-    fuzzily (0.3.2)
-      activerecord (>= 2.3.17)
     globalid (0.3.3)
       activesupport (>= 4.1.0)
     hashie (3.4.0)
@@ -275,7 +280,7 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   font-awesome-sass
-  fuzzily
+  fuzzily!
   jasmine
   jbuilder (~> 2.0)
   jquery-rails
