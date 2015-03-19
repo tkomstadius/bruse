@@ -29,4 +29,29 @@ class Identity < ActiveRecord::Base
     identity # return identity
   end
 
+  require 'dropbox_sdk'
+
+  def browse(path = '/')
+    # set the client
+    set_client
+    # is it a dropbox service? return requested path!
+    return @client.metadata(path) if service.downcase.include? "dropbox"
+  end
+
+  private
+    # Public: Get the file handling client from the identity
+    #
+    # path  - The path to browse, defaults to root
+    #
+    # Examples
+    #
+    #   dropbox_identity.get_client
+    #   # => DropboxClient.new
+    #
+    # Returns the client
+    def set_client
+      if service.downcase.include? "dropbox"
+        @client ||= DropboxClient.new(token)
+      end
+    end
 end

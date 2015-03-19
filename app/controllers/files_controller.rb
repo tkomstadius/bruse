@@ -20,9 +20,7 @@ class FilesController < ApplicationController
     path = params[:path] || '/'
 
     # load files
-    @file = @client.metadata(path)
-    # remove eveything after the last '/' in the current dropbox path
-    @parent_path = @file["path"].slice(0..(@file["path"].rindex('/')))
+    @file = @identity.browse(path)
   end
 
   def create
