@@ -32,7 +32,8 @@ class FilesController < ApplicationController
       BruseFile.import @files
     else
       # add file!
-      @files = add_file(file_params)
+      # @files = add_file(file_params)
+      @files = @identity.add_files(file_params)
     end
   end
 
@@ -47,7 +48,7 @@ class FilesController < ApplicationController
   end
 
   def index
-    @files = @identity.bruse_files
+    @files = [@identity.bruse_files]
   end
 
   # Public: generates a secure download url only accessable for
@@ -163,21 +164,5 @@ class FilesController < ApplicationController
 
       # return the list of files NOT YET saved to db
       return files
-    end
-
-    # Private: Add a file to BruseFile
-    #
-    # Returns a BruseFile record on success, nil on fail.
-    def add_file(bruse_params)
-      file = BruseFile.new(bruse_params)
-      file.identity = @identity
-
-      # could we save the file?
-      unless file.save
-        file = nil
-      end
-
-      # return the file
-      file
     end
 end

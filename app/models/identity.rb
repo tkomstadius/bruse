@@ -38,6 +38,34 @@ class Identity < ActiveRecord::Base
     return @client.metadata(path) if service.downcase.include? "dropbox"
   end
 
+  # Add new files to the current identity
+  #
+  # file_params - the file parameters
+  #
+  # Examples
+  #
+  #   @file = @identity.add_files(file_parameters)
+  #   # => <#BruseFile...>
+  #
+  # Returns the file/list of files
+  def add_files(file_params)
+    # are we adding file or folder?
+    if file_params[:is_dir]
+
+    else
+      # append a new file to our the current identity's list of bruse_files
+      file = BruseFile.new(file_params)
+      if bruse_files << file
+        # return file
+        file
+      else
+        # could not append file!
+        file.destroy
+        nil
+      end
+    end
+  end
+
   private
     # Public: Get the file handling client from the identity
     #
