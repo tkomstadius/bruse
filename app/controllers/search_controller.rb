@@ -6,7 +6,12 @@ class SearchController < ApplicationController
 
   # Public: Finds files from BruseFile or Tag model.
   #
-  # query  - search query
+  # query  - search query object divided like this:
+  #          {
+  #             tags: [],
+  #             filetypes: [],
+  #             fuzzy: []
+  #          }
   #
   # Examples
   #
@@ -15,7 +20,20 @@ class SearchController < ApplicationController
   #
   # Returns an array of files
   def find
+    # parse query from json to ruby object
     query = params[:query]
+
+    # Find tags from the query
+    tags = Tag.find_from_search(query['tags'])
+    # Find files from filetypes
+
+    # Find fuzzy results
+
+    # Find where the arrays mathes
+
+    # Return a uniq array
+
+
     # Initiates array here since ruby is a pass by reference language
     @results = []
 
