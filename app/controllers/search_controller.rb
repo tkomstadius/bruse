@@ -28,29 +28,31 @@ class SearchController < ApplicationController
     # Find files from filetypes
     files = BruseFile.find_from_search(query['filetypes'])
     # Find fuzzy results
-
+    fuzz = find_fuzz_from_search(query['fuzzy'])
     # Find where the arrays mathes
+    @results = tags & files & fuzz
+  end
 
-    # Return a uniq array
+  private
 
-
+  def find_fuzz_from_search(query)
     # Initiates array here since ruby is a pass by reference language
-    @results = []
+    results = []
 
     # Get all files that matches the query
     files = BruseFile.find_by_fuzzy_name(query)
     files.each do |file|
       # push to results if the current user owns it
-      @results.push(file) if file.identity.user_id == current_user.id
+      results.push(file) if file.identity.user_id == current_user.id
     end
 
     tags = Tag.find_by_fuzzy_name(query)
     tags.each do |tag|
       # Get the files from each tag
       tag.bruse_files.each do |file|
-        @results.push(file) if file.identity.user_id == current_user.id
+        results.push(file) if file.identity.user_id == current_user.id
       end
     end
-    @results.uniq # Remove duplicates
+    results.uniq # Remove duplicates
   end
 end
