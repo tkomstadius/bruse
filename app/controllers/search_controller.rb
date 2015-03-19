@@ -26,7 +26,7 @@ class SearchController < ApplicationController
     # Find tags from the query
     tags = Tag.find_from_search(query['tags'])
     # Find files from filetypes
-
+    files = BruseFile.find_from_search(query['filetypes'])
     # Find fuzzy results
 
     # Find where the arrays mathes

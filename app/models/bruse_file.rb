@@ -5,6 +5,14 @@ class BruseFile < ActiveRecord::Base
   # Fuzzy search for :name
   fuzzily_searchable :name
 
+  def self.find_from_search(query)
+    results = []
+    query.each do |q|
+      results.push(self.find_by(:filetype => q))
+    end
+    results.uniq #return
+  end
+
   # Generates a secure and unique download hash
   def generate_download_hash
     begin
