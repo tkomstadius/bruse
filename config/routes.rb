@@ -6,7 +6,14 @@ Rails.application.routes.draw do
 
   resources :bruse_files 
 
-  resources :tags 
+  resources :tags, except: :new
+
+
+
+  get '/tag/new/:file_id', to: 'tags#new', as: 'new_tag'
+
+
+  delete '/tag/:id', to: 'tags#destroy', as: 'destroy_tag'
 
   # User profile
   get '/user', to: 'users#show', as: 'profile'

@@ -31,6 +31,7 @@
     # Save file
     #
     put: (identity_id, file) ->
+      console.log 'adding file...', file.path
       # prepare post data from file
       post_data =
         name: file.name

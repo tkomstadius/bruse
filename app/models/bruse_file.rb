@@ -1,5 +1,5 @@
 class BruseFile < ActiveRecord::Base
-	has_and_belongs_to_many :tags
+	has_and_belongs_to_many :tags, dependent: :destroy
   belongs_to :identity
 
 	attr_accessor :tagname
@@ -7,7 +7,6 @@ class BruseFile < ActiveRecord::Base
 
 	validates :name,     presence: true
 	validates :filetype,     presence: true
-	validates :meta,     presence: true
 
 
   def self.search(search)

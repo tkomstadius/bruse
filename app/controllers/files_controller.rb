@@ -31,6 +31,7 @@ class FilesController < ApplicationController
     @file.identity = @identity
 
     unless @file.save
+      @errors = @file.errors.full_messages
       @file = nil
     end
   end
