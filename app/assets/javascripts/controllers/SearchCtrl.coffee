@@ -1,6 +1,6 @@
 @bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
-  $scope.files = []
   $scope.search = ""
+  $scope.files = []
 
   # watches the search input field for changes
   $scope.$watch "search", () ->
@@ -20,30 +20,29 @@
           types = []
           types.push element
         else
-          $scope.files.push element
-        
-        console.log $scope.files
+          docName = []
+          docName.push element
+
+          # send a search request to the server
+          $http.get('/search/'+docName)
+            .then((response) ->
+              if response.data.files.length > 0
+                # write reponse to the current scope
+
+                $scope.files = response.data.files;
+              else
+                console.log "No results found"
+              # write reponse to the current scope
+              $scope.files = response.data.files;
+              )
+            .catch((response) ->
+              console.error "Couldn't search.."
+              )  
+        console.log docName
         console.log types
         console.log tags
+        console.log "----------------------------------"
 
-        #TODO: make sure that there are something in array to measure length
-
-
-      # send a search request to the server
-      $http.get('/search/'+$scope.search)
-        .then((response) ->
-          if response.data.files.length > 0
-            # write reponse to the current scope
-
-            $scope.files = response.data.files;
-          else
-            console.log "No results found"
-          # write reponse to the current scope
-          $scope.files = response.data.files;
-          )
-        .catch((response) ->
-          console.error "Couldn't search.."
-          )
     else
       $scope.files = []
 
