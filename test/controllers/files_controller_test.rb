@@ -9,7 +9,7 @@ class FilesControllerTest < ActionController::TestCase
   end
 
   test "denies user to add files if it is not their identity" do
-    get :new, {identity_id: identities(:one).id}, {user_id: users(:arbar)}
+    get :new, {identity_id: identities(:one).id}, {user_id: users(:arbar).id}
 
     assert_response :found
     assert_redirected_to root_url
