@@ -25,12 +25,14 @@
       searchObject = {tags:hashTags, filetypes:types, fuzz:docName}
       console.log searchObject.fuzz
       console.log searchObject.filetypes
+
       console.log searchObject.tags
       
+      # send search object to server
       $http.post('/search/api', searchObject).then((response) ->
         if response.data.files.length > 0
+          
           # write reponse to the current scope
-
           $scope.files = response.data.files;
         else
           console.log "No results found"
@@ -43,14 +45,8 @@
     else
       $scope.files = []
 
-        # send search object to server
 
         # send a search request to the server
-     ######
-        # console.log docName
-        # console.log types
-        # console.log tags
-        #console.log "----------------------------------"
 
     
   # Gets called when a file is clicked
