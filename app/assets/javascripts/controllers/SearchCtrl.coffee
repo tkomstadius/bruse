@@ -14,7 +14,6 @@
       docName = []
       #console.log temp;
       temp.forEach (element, index, array) ->
-        # 
         if element.charAt(0) == "#"
           hashTags.push element
         else if element.charAt(0) == "."
@@ -22,37 +21,38 @@
         else
           docName.push element
 
-        # create a search object divided by category 
-        searchObject = {tags:hashTags, filetypes:types, fuzz:docName}
+      # create a search object divided by category 
+      searchObject = {tags:hashTags, filetypes:types, fuzz:docName}
+      console.log searchObject.fuzz
+      console.log searchObject.filetypes
+      console.log searchObject.tags
+      
+      $http.post('/search/api', searchObject).then((response) ->
+        if response.data.files.length > 0
+          # write reponse to the current scope
 
-        # send search object to server
-        console.log searchObject.fuzz
-        console.log searchObject.filetypes
-        console.log searchObject.tags
-
-          # send a search request to the server
-          # $http.get('/search/'+docName)
-          #   .then((response) ->
-          #     if response.data.files.length > 0
-          #       # write reponse to the current scope
-
-          #       $scope.files = response.data.files;
-          #     else
-          #       console.log "No results found"
-          #     # write reponse to the current scope
-          #     $scope.files = response.data.files;
-          #     )
-          #   .catch((response) ->
-          #     console.error "Couldn't search.."
-          #     )  
-        # console.log docName
-        # console.log types
-        # console.log tags
-        console.log "----------------------------------"
-
+          $scope.files = response.data.files;
+        else
+          console.log "No results found"
+        # write reponse to the current scope
+        $scope.files = response.data.files;
+        )
+      .catch((response) ->
+        console.error "Couldn't search.."
+        )
     else
       $scope.files = []
 
+        # send search object to server
+
+        # send a search request to the server
+     ######
+        # console.log docName
+        # console.log types
+        # console.log tags
+        #console.log "----------------------------------"
+
+    
   # Gets called when a file is clicked
   $scope.download = (identity_id, file_id) ->
     FileHandler.download(identity_id, file_id).then((data) ->

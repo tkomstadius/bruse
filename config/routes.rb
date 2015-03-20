@@ -26,6 +26,6 @@ Rails.application.routes.draw do
   get '/get/:download_hash/:name', to: 'files#download', :via => :all
 
   # search
-  get '/search/:query', to: 'search#find', :defaults => { :format => 'json' }
+  post '/search/api', to: 'search#find', :defaults => { :format => 'json' }
   get '/search', to: 'search#home', as: 'search'
 end
