@@ -54,7 +54,7 @@
       # append bruse_file to this remote file
       findFile $scope.bruse_files, file
       # if current file is a directory, do something ugly to make the plus sign turn into a minus sign
-      file.bruse_file = true
+      file.bruse_file = true if file.is_dir
       file.loading = false
       )
 
@@ -62,10 +62,11 @@
     # send delete request
     file.loading = true
     if file.bruse_file
-      # check if file is a folder
       if file.is_dir
+        # use delete_folder method!
         FileHandler.delete_folder($scope.identity.id, file).then((data) ->
           file.bruse_file = data
+          console.log 'path: ', file.path
           file.loading = false
           )
       else
