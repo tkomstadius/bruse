@@ -9,6 +9,7 @@ class BruseFile < ActiveRecord::Base
     message: 'That file appears to be added!' }
   # make sure name, foreign_ref and filetype is present
   validates :name, :foreign_ref, :filetype, presence: true
+  validates :name, :foreign_ref, :filetype, :identity_id, presence: true
 
   # Fuzzy search for :name
   fuzzily_searchable :name
