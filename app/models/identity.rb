@@ -103,6 +103,22 @@ class Identity < ActiveRecord::Base
     files
   end
 
+  # Download file from identity's service
+  #
+  # foreign_ref - the service's way to keep track of the file
+  #
+  # Examples
+  #   file_data = @identity.get_file(path_to_img)
+  #   # => <image data>
+  #
+  # Returns the actual file
+  def get_file(foreign_ref)
+    set_client
+
+    # return file data
+    @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
+  end
+
   private
     # Private: Get the file handling client from the identity
     #

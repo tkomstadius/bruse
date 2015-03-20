@@ -3,7 +3,6 @@ class FilesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_identity, except: :download
   before_filter :set_file, only: [:destroy, :download_url]
-  before_filter :set_client, only: [:browse, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
   # using javascript. If we didn't do this, we'd get problems since the CSRF
@@ -79,10 +78,8 @@ class FilesController < ApplicationController
   def download
     file = BruseFile.find_by(:download_hash => params[:download_hash])
     if file.identity.user == current_user
-      # creates a dropbox client
-      set_client(file.identity)
       # send the file to the user
-      send_data @client.get_file(file.foreign_ref), :type => file.filetype
+      send_data file.identity.get_file(file.foreign_ref), :type => file.filetype
     end
   end
 
@@ -97,12 +94,6 @@ class FilesController < ApplicationController
     end
     def set_file
       @file = BruseFile.find(params[:id])
-    end
-    def set_client(id = nil)
-      identity = id ? id : @identity
-      if identity.service.downcase.include? "dropbox"
-        @client = DropboxClient.new(identity.token)
-      end
     end
 
     # Private: Safely extract file parameters from the scary internets
