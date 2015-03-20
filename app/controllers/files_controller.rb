@@ -48,7 +48,7 @@ class FilesController < ApplicationController
   end
 
   def index
-    @files = [@identity.bruse_files]
+    @files = @identity.bruse_files
   end
 
   # Public: generates a secure download url only accessable for
