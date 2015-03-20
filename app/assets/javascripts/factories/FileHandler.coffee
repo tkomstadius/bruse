@@ -15,6 +15,7 @@
           alert "Failed to collect exsiting files!"
           console.log response
           )
+
     #
     # Delete file
     #
@@ -32,6 +33,7 @@
           alert "Could not un-save file!"
           console.log response
           )
+
     #
     # Get files from remote service
     #
@@ -40,7 +42,7 @@
       promise = $http.get('/service/'+identity_id+'/files/browse.json?path=' + path)
         .then((response) ->
           console.log 'Collecting files...', path
-          data = response.data.file.contents
+          data = response.data.file
           # Loop through data response and append the file's name to each child
           # of the array. Map loops through each element in the data array, and
           # sends it into a function. The function returns a modified version of
@@ -59,6 +61,7 @@
           alert "Could not load files!"
           console.log response
           )
+
     #
     # Save file
     #
@@ -89,6 +92,7 @@
           alert "Could not save file!"
           console.log response
           )
+
     #
     # Delete file
     #
@@ -106,6 +110,7 @@
           alert "Could not un-save file!"
           console.log response
           )
+
     #
     # Download file
     #

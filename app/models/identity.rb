@@ -45,7 +45,7 @@ class Identity < ActiveRecord::Base
     # set the client
     set_client
     # is it a dropbox service? return requested path!
-    return @client.metadata(path) if service.downcase.include? "dropbox"
+    return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
   end
 
   # Add new files to the current identity
@@ -86,14 +86,16 @@ class Identity < ActiveRecord::Base
     # prepare file array
     files = []
 
-    folder['contents'].each do |child|
-      if child['is_dir']
-        # concat merges two arrays
-        files.concat(add_folder_recursive({ :foreign_ref => child['path'] }))
+    folder.each do |child|
+      # prepare child parameters
+      child_params = extract_file_params(child)
+      # check if it is a directory or not
+      if is_dir?(child)
+        # concat merges two arrays, use extract method below
+        files.concat(add_folder_recursive(child_params))
       else
-        file_params = extract_file_params(child)
         # add new file
-        files << add_file(file_params)
+        files << add_file(child_params)
       end
     end
 
@@ -139,5 +141,20 @@ class Identity < ActiveRecord::Base
         # return file params
         file_params
       end
+    end
+
+    # Private: Check if pristine remote file object is a child
+    #
+    # Examples
+    #
+    #   is_dir?(child_object_that_is_a_folder)
+    #   # => true
+    #
+    #   is_dir?(child_object_that_is_an_image)
+    #   # => false
+    #
+    # Returns boolean
+    def is_dir?(pristine)
+      return pristine['is_dir'] if service.downcase.include? "dropbox"
     end
 end
