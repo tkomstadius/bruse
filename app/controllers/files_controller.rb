@@ -8,7 +8,7 @@ class FilesController < ApplicationController
   # using javascript. If we didn't do this, we'd get problems since the CSRF
   # params from rails isn't passed along.
   # http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
-  skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:create, :destroy, :destroy_folder]
 
   require 'dropbox_sdk'
 
@@ -40,6 +40,16 @@ class FilesController < ApplicationController
       @file = nil
     else
       @message = "Could not delete file!"
+    end
+  end
+
+  def destroy_folder
+    if @identity.user == current_user
+      files = @identity.bruse_files.where("foreign_ref LIKE (?)", params[:path] + '%')
+      @success = true
+      files.each do |file|
+        @success = false unless file.destroy!
+      end
     end
   end
 

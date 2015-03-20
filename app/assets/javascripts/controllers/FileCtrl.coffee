@@ -53,6 +53,8 @@
       $scope.bruse_files = $scope.bruse_files.concat(data)
       # append bruse_file to this remote file
       findFile $scope.bruse_files, file
+      # if current file is a directory, do something ugly to make the plus sign turn into a minus sign
+      file.bruse_file = true
       file.loading = false
       )
 
@@ -60,10 +62,18 @@
     # send delete request
     file.loading = true
     if file.bruse_file
-      FileHandler.delete($scope.identity.id, file).then((data) ->
-        file.bruse_file = data
-        file.loading = false
-        )
+      # check if file is a folder
+      if file.is_dir
+        FileHandler.delete_folder($scope.identity.id, file).then((data) ->
+          file.bruse_file = data
+          file.loading = false
+          )
+      else
+        FileHandler.delete($scope.identity.id, file).then((data) ->
+          file.bruse_file = data
+          file.loading = false
+          )
+
 
   ###*
   # Callback for _.map functions. Search through list_of_files, looking for
