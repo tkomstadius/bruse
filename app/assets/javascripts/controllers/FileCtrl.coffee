@@ -36,8 +36,6 @@
         file.contents = data
         # find all the allready added files!
         _.map data, (remote_file) ->
-          console.log 'bruse_files: ', $scope.bruse_files
-          console.log 'remote_file: ', remote_file
           findFile $scope.bruse_files, remote_file
         file.loading = false
         )
@@ -52,12 +50,7 @@
     file.loading = true
     FileHandler.put($scope.identity.id, file).then((data) ->
       # add file to list of existing files
-      console.log 'data:', data
-      console.log typeof data
-      if typeof data == 'array'
-        console.log 'hey'
-      else
-        $scope.bruse_files.push(data)
+      $scope.bruse_files = $scope.bruse_files.concat(data)
       # append bruse_file to this remote file
       findFile $scope.bruse_files, file
       file.loading = false

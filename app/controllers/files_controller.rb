@@ -27,13 +27,10 @@ class FilesController < ApplicationController
     # are we adding file or folder?
     if params[:is_dir]
       # call to recursive file adding here
-      # @files = add_folder_recursive(params[:foreign_ref])
       @files = @identity.add_folder_recursive(file_params)
-      # bulk save our files
-      # BruseFile.import @files
     else
       # add file!
-      @files = @identity.add_file(file_params)
+      @files = [@identity.add_file(file_params)]
     end
   end
 
