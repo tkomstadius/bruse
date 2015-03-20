@@ -20,7 +20,11 @@ class FilesController < ApplicationController
 
     # setup client
     #@client = DropboxClient.new(@identity.token)
-    @client =  GoogleClient.new(@identity.token)
+    byebug
+    @client =  Google::APIClient.new(@identity.token)
+    drive = client.discovered_api('drive', 'v2')
+
+    byebug
     # load files
     @file = @client.metadata(path)
     # remove eveything after the last '/' in the current dropbox path
