@@ -12,4 +12,18 @@ class SearchControllerTest < ActionController::TestCase
     assert_response :success
     assert_template :find
   end
+
+  test "search with empty parameters" do
+    response = post(:find, {:tags => [], :filetypes => [], :fuzzy => [], :format => :json}, { :user_id => users(:fooBar).id })
+    assert_equal ActiveSupport::JSON.decode(response.body)["files"], []
+    assert_response :success
+    assert_template :find
+  end
+
+  test "search for a filetype" do
+    response = post(:find, {:tags => [], :filetypes => [bruse_files(:one).filetype], :fuzzy => [], :format => :json}, { :user_id => users(:fooBar).id })
+    assert_equal ActiveSupport::JSON.decode(response.body)["files"].first["name"], bruse_files(:one).name
+    assert_response :success
+    assert_template :find
+  end
 end
