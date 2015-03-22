@@ -2,19 +2,15 @@ class BruseFile < ActiveRecord::Base
 	has_and_belongs_to_many :tags
   belongs_to :identity
 
-	attr_accessor :tagname
+  # Fuzzy search for :name
+  fuzzily_searchable :name
 
-
-	validates :name,     presence: true
-	validates :filetype,     presence: true
-	validates :meta,     presence: true
-
-
-  def self.search(search)
-    if search
-      all.where('name LIKE ?', "%#{search}%")
-    else
-      all
-    end
+  # Generates a secure and unique download hash
+  def generate_download_hash
+    begin
+      self.download_hash = SecureRandom.hex
+    end while self.class.exists?(download_hash: download_hash)
+    self.save! # save to database
+    self.download_hash # return
   end
 end

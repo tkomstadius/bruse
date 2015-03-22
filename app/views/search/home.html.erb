@@ -1,0 +1,10 @@
+<div ng-controller="SearchCtrl">
+  <h1>Sök</h1>
+  <input type="text" name="search" autocomplete="off" placeholder="Search" ng-model="search">
+  <div class="results">
+    <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">{{file.name}}</div>
+    <div ng-if="files.length === 0 && search.length > 0">
+      Aint nothing here for you. :(
+    </div>
+  </div>
+</div>

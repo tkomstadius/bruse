@@ -1,5 +1,6 @@
 class Identity < ActiveRecord::Base
   belongs_to :user
+  has_many :bruse_files
   validates_uniqueness_of :uid, :on => :create
   validates_presence_of [:uid, :token, :service, :name], :on => :create
 
