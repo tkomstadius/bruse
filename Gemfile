@@ -49,6 +49,9 @@ gem 'omniauth-dropbox-oauth2'
 # dropbox ruby sdk
 gem 'dropbox-sdk'
 
+# Drive ruby sdk
+gem 'google-api-client'
+
 ## Developtment tools
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
