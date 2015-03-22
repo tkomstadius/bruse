@@ -1,4 +1,17 @@
 GIT
+  remote: git://github.com/elasticsearch/elasticsearch-ruby.git
+  revision: 5857f415889f96bd23d5e74bef48c795b847539e
+  specs:
+    elasticsearch (1.0.8)
+      elasticsearch-api (= 1.0.7)
+      elasticsearch-transport (= 1.0.7)
+    elasticsearch-api (1.0.7)
+      multi_json
+    elasticsearch-transport (1.0.7)
+      faraday
+      multi_json
+
+GIT
   remote: https://github.com/danielronnkvist/fuzzily.git
   revision: 5f97c96ff22bc33a5518f4dadca18b542808775d
   specs:
@@ -302,8 +315,8 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   font-awesome-sass
-  google-api-client
   fuzzily!
+  google-api-client
   jasmine
   jbuilder (~> 2.0)
   jquery-rails
