@@ -42,8 +42,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use omniauth for session handling
 gem 'omniauth'
-# dropbox omniauth stategy
+# dropbox omniauth strategy
 gem 'omniauth-dropbox-oauth2'
+# Drive omniauth strategy
+gem "omniauth-google-oauth2"
 
 ## APIs
 # dropbox ruby sdk
