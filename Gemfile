@@ -31,6 +31,7 @@ gem 'lodash-rails'
 
 ## css/sass stuff
 # icons!
+gem 'font-awesome-rails'
 gem 'font-awesome-sass'
 # sass mixins that makes you happy
 gem 'bourbon'
@@ -46,6 +47,9 @@ gem 'omniauth'
 gem 'omniauth-dropbox-oauth2'
 # Drive omniauth strategy
 gem "omniauth-google-oauth2"
+
+# Fuzzy search for activerecord models
+gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'
 
 ## APIs
 # dropbox ruby sdk
@@ -87,8 +91,12 @@ group :test do
   gem 'rake'
   # capybara for emulating browser
   gem 'minitest-rails-capybara'
+  # knows how to wait for angular
+  gem 'capybara-angular'
   # phantomjs for capybara
   gem 'poltergeist'
+  # session controll with capybara
+  gem 'rack_session_access'
   # test coverage
   gem 'codeclimate-test-reporter', require: nil
 end

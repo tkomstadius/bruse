@@ -5,6 +5,6 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 
   OmniAuth.config.on_failure = Proc.new do |env|
     # will invoke the omniauth_failure action in PagesController
-    redirect_to omniauth_failure_url(env)
+    PagesController.action(:omniauth_failure).call(env)
   end
 end
