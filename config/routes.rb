@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   root 'pages#show', page: 'home'
 
+  resources :bruse_files 
+
+  resources :tags 
+
   # User profile
   get '/user', to: 'users#show', as: 'profile'
   get '/user/terminate', to: 'users#terminate', as: 'terminate_user'

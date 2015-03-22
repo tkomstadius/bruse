@@ -41,10 +41,21 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+# Use Unicorn as the app server
+# gem 'unicorn'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
+
 # Use omniauth for session handling
 gem 'omniauth'
 # dropbox omniauth stategy
 gem 'omniauth-dropbox-oauth2'
+# Drive omniauth stategy
+gem "omniauth-google-oauth2"
 
 # Fuzzy search for activerecord models
 gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'
@@ -52,6 +63,11 @@ gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'
 ## APIs
 # dropbox ruby sdk
 gem 'dropbox-sdk'
+
+# Drive ruby sdk
+gem 'google-api-client'
+
+gem 'elasticsearch', git: 'git://github.com/elasticsearch/elasticsearch-ruby.git'
 
 ## Developtment tools
 group :development, :test do

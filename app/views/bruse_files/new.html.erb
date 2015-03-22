@@ -1,0 +1,46 @@
+<h1>New File</h1>
+<%= form_for(@bruse_file) do |f| %>
+	<% if @bruse_file.errors.any? %>
+	    <div id="error_explanation">
+	      <h2><%= pluralize(@bruse_file.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+	      <ul>
+	      <% @bruse_file.errors.full_messages.each do |message| %>
+	        <li><%= message %></li>
+	      <% end %>
+	      </ul>
+	    </div>
+	  <% end %>
+  
+   
+
+  <h2> File Name </h2>
+  <p>
+    <%= f.label :name %></br>
+    <%= f.text_field :name %>
+  </p>
+
+  <h2> File Type </h2>
+  <p>
+    <%= f.label :filetype %></br>
+    <%= f.text_field :filetype %>
+  </p>
+
+  <h2> Meta </h2>
+  <p>
+    <%= f.label :meta %></br>
+    <%= f.text_field :meta %>
+  </p>
+
+  <h2> Tag </h2>
+  <p>
+    <%= f.label :tagname %></br>
+    <%= f.text_field :tagname %>
+  </p>
+
+
+
+  <p><%= f.submit "Continue" %></p>
+<% end %>
+
+<%= link_to 'Back', bruse_files_path %>

@@ -12,12 +12,18 @@ class FilesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
   require 'dropbox_sdk'
+  # require 'google/api_client'
 
   def new
   end
 
   def browse
     path = params[:path] || '/'
+
+    # setup client
+    @client = DropboxClient.new(@identity.token)
+    # @client =  Google::APIClient.new(@identity.token)
+    # drive = client.discovered_api('drive', 'v2')
 
     # load files
     @file = @client.metadata(path)
