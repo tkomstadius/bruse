@@ -18,7 +18,7 @@ class Identity < ActiveRecord::Base
   # Apparantly :uid => auth_hash[:info][:uid] doesn't work for drive, so I changed it to
   # :uid => auth_hash[:uid]
   def self.find_or_create_from_oauth(auth_hash)
-    identity = self.find_by(:uid => auth_hash[:info][:uid], :service => auth_hash[:provider])
+    identity = self.find_by(:uid => auth_hash[:uid], :service => auth_hash[:provider])
     if !identity
       provider = (auth_hash[:provider].include? 'dropbox') ? 'Dropbox' :
         (auth_hash[:provider].include? 'google') ? 'Google Drive' : auth_hash[:provider]

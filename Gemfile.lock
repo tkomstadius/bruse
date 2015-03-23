@@ -301,8 +301,8 @@ DEPENDENCIES
   figaro
   font-awesome-rails
   font-awesome-sass
-  google-api-client
   fuzzily!
+  google-api-client
   jasmine
   jbuilder (~> 2.0)
   jquery-rails

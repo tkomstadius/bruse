@@ -3,10 +3,10 @@ OmniAuth.config.test_mode = true
 
 def dropbox_new
   omniauth_hash_new = { 'provider' => 'dropbox_oauth2',
+                        'uid' => '666666',
                         'info' => {
                             'name' => 'Kalle Bar',
-                            'email' => 'kalle@bar.com',
-                            'uid' => '666666'
+                            'email' => 'kalle@bar.com'
                         },
                         'credentials' => {
                           'token' => '1234xyz666abc'
@@ -17,10 +17,10 @@ end
 
 def dropbox_old
   omniauth_hash_old = { 'provider' => 'dropbox_oauth2',
+                        'uid' => '666123',
                         'info' => {
                             'name' => users(:fooBar).name,
-                            'email' => users(:fooBar).email,
-                            'uid' => '666123'
+                            'email' => users(:fooBar).email
                         },
                         'credentials' => {
                           'token' => 'xyz123'
