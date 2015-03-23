@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   root 'pages#show', page: 'home'
 
   # User
-  devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
-  get '/user', to: 'users#show', as: 'profile'
+  devise_for :users, :controllers => { omniauth_callbacks: 'user/omniauth_callbacks',
+                                       registrations: 'user/registrations' }
+  get '/user', to: 'user/users#show', as: 'profile'
   # get '/user/terminate', to: 'users#terminate', as: 'terminate_user'
 
   # delete '/provider/:id', to: 'identities#destroy', as: 'destroy_provider'

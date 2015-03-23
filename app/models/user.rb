@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # Include default devise modules.
   devise :database_authenticatable, :registerable, :omniauthable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   # relations
@@ -13,9 +12,6 @@ class User < ActiveRecord::Base
                               message: "enter a valid email" },
                     on: :create
   validates_presence_of :name, :on => :create
-
-  # before/after hooks
-  after_create :send_welcome_email
 
   # methods
 
@@ -55,17 +51,6 @@ class User < ActiveRecord::Base
       identity.user = user
       identity.save!
     end
-    user.sign_in
-  end
-
-  def sign_in
-    self.sign_in_count += 1
-    self.last_sign_in_at = DateTime.now
-    self.save!
-    self # return user
-  end
-
-  def send_welcome_email
-    UserMailer.welcome(self).deliver_now!
+    user
   end
 end
