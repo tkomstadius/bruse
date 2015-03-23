@@ -30,7 +30,7 @@ class SearchController < ApplicationController
     # combine into new array and remove nils
     data = [tags, files, fuzz].compact
     # find the first array that isn't empty. Or assign emtpy array
-    @results = find_first_array(data)
+    @results = data.find_first_array
     data.each {|d|
       # store the similarities in @results
       @results = @results & d if !d.empty?
@@ -59,12 +59,5 @@ class SearchController < ApplicationController
       end
     end
     results.uniq # Remove duplicates
-  end
-
-  def find_first_array(data)
-    data.each do |d|
-      return d if !d.empty?
-    end
-    return []
   end
 end
