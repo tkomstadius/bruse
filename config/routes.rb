@@ -8,13 +8,10 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { omniauth_callbacks: 'user/omniauth_callbacks',
                                        registrations: 'user/registrations' }
   get '/user', to: 'user/users#show', as: 'profile'
-  # get '/user/terminate', to: 'users#terminate', as: 'terminate_user'
+  get '/users/terminate', to: 'user/users#terminate', as: 'terminate_user'
+  delete '/users', to: 'user/users#destroy', as: 'destroy_user'
 
-  # delete '/provider/:id', to: 'identities#destroy', as: 'destroy_provider'
-  # delete '/user', to: 'users#destroy', as: 'destroy_user'
-
-  # logout
-  # match '/signout', via: [:get, :post], to: 'sessions#destroy'
+  delete '/provider/:id', to: 'identities#destroy', as: 'destroy_provider'
 
   # files
   scope '/service/:identity_id' do
