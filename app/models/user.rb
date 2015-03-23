@@ -44,7 +44,9 @@ class User < ActiveRecord::Base
 
       if user.nil?
         user = User.new(:email => email,
-                        :name  => auth_hash[:info][:name])
+                        :name  => auth_hash[:info][:name],
+                        :password => Devise.friendly_token[0,20])
+        user.skip_confirmation!
         user.save!
       end
     end

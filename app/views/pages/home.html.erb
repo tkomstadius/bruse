@@ -1,7 +1,7 @@
 <% if current_user.nil? %>
-  <%= link_to 'Log in using Dropbox', '/auth/dropbox_oauth2' %>
+  <%= link_to 'Sign in with Dropbox', user_omniauth_authorize_path('dropbox_oauth2') %>
 <% else %>
-  <%= link_to 'Sign out user', signout_path %>
+  <%= link_to 'Sign out user', destroy_user_session_path, method: :delete %>
   <%= current_user.name %>
   <ul>
     <% current_user.identities.each do |id| %>
