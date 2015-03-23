@@ -30,4 +30,9 @@ class SearchControllerTest < ActionController::TestCase
     response = post(:find, {:tags => [tags(:one).name], :filetypes => [], :fuzzy => [], :format => :json}, { :user_id => users(:fooBar).id })
     assert_equal ActiveSupport::JSON.decode(response.body)["files"].first["name"], bruse_files(:one).name
   end
+
+  test "trying to search for files that the user doesn't own" do
+    response = post(:find, {:tags => [], :filetypes => [], :fuzzy => [bruse_files(:one).name], :format => :json}, { :user_id => users(:arbar).id })
+    assert_equal ActiveSupport::JSON.decode(response.body)["files"], []
+  end
 end
