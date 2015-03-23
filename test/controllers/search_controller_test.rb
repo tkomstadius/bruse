@@ -25,4 +25,9 @@ class SearchControllerTest < ActionController::TestCase
     response = post(:find, {:tags => [], :filetypes => [bruse_files(:one).filetype], :fuzzy => [], :format => :json}, { :user_id => users(:fooBar).id })
     assert_equal ActiveSupport::JSON.decode(response.body)["files"].first["name"], bruse_files(:one).name
   end
+
+  test "search for a tag name" do
+    response = post(:find, {:tags => [tags(:one).name], :filetypes => [], :fuzzy => [], :format => :json}, { :user_id => users(:fooBar).id })
+    assert_equal ActiveSupport::JSON.decode(response.body)["files"].first["name"], bruse_files(:one).name
+  end
 end
