@@ -5,10 +5,11 @@ class BruseFile < ActiveRecord::Base
   # Fuzzy search for :name
   fuzzily_searchable :name
 
-  def self.find_from_search(query)
+  def self.find_from_search(query, current_user_id)
     results = []
     query.each do |q|
-      results.push(self.find_by(:filetype => q))
+      file = self.find_by(:filetype => q)
+      results.push(file) if file.identity.user_id == current_user_id
     end
     results.uniq #return
   end

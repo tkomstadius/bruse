@@ -22,9 +22,9 @@ class SearchController < ApplicationController
   # Returns an array of files
   def find
     # Find tags from the query
-    tags = Tag.find_from_search(params[:tags]) if params[:tags]
+    tags = Tag.find_from_search(params[:tags], current_user.id) if params[:tags]
     # Find files from filetypes
-    files = BruseFile.find_from_search(params[:filetypes]) if params[:filetypes]
+    files = BruseFile.find_from_search(params[:filetypes], current_user.id) if params[:filetypes]
     # Find fuzzy results
     fuzz = find_fuzz_from_search(params[:fuzzy]) if params[:fuzzy]
     # combine into new array and remove nils
