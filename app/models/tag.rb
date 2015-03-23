@@ -6,7 +6,9 @@ class Tag < ActiveRecord::Base
   def self.find_from_search(query)
     results = []
     query.each do |q|
-      results.push(self.find_by(:name => q))
+      self.find_by(:name => q).bruse_files.each do |f|
+        results.push(f)
+      end
     end
     results.uniq
   end
