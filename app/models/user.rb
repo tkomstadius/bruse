@@ -42,6 +42,7 @@ class User < ActiveRecord::Base
         user = User.new(:email => email,
                         :name  => auth_hash[:info][:name],
                         :password => Devise.friendly_token[0,20])
+        user.own_password = false
         user.skip_confirmation!
         user.save!
       end
