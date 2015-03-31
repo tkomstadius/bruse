@@ -9,11 +9,11 @@ Rails.application.routes.draw do
   resources :tags, except: :new
 
 
-
   get '/tag/new/:file_id', to: 'tags#new', as: 'new_tag'
 
 
-  delete '/tag/:id', to: 'tags#destroy', as: 'destroy_tag'
+  delete '/file/:file_id/tag/delete/:id', to: 'tags#destroy', as: 'destroy_tag'
+
 
   # User profile
   get '/user', to: 'users#show', as: 'profile'

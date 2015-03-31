@@ -1,9 +1,8 @@
-<p id="notice"><%= notice %></p>
 
 
 <table>
   <thead>
-   <strong>Tag: <%= @tag.name %></strong>
+   <strong>Tags: <%= @tag.name %></strong>
     <tr>
       <th>File name</th>
       <th>File type</th>
@@ -22,12 +21,17 @@
           <td><%= f.name %></td>
           <td><%= f.filetype %></td>
           <td><%= f.meta %></td>
-          <td><%= link_to 'Destroy', @tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td> <%= link_to 'Delete tag', destroy_tag_path(f, @tag), 
+                  method: :delete, 
+                  data: { confirm: 'Are you sure?' } %>
+          </td>
         </tr> 
       <% end %>
     </p>
   </tbody>
 </table>
+
+
 
 <br>
 
