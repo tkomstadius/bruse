@@ -23,4 +23,11 @@ class IdentityTest < ActiveSupport::TestCase
     exception = assert_raises(ActiveRecord::RecordInvalid) { Identity.find_or_create_from_oauth(auth) }
     assert_equal( "Validation failed: Uid can't be blank", exception.message )
   end
+
+  test "creates brusefile using the current identity's add_file method" do
+    assert_difference('BruseFile.count', 1) do
+      file_params = { name: 'test.jpg', foreign_ref: 'path/to/test.jpg', filetype: 'image/jpg' }
+      identities(:one).add_file(file_params)
+    end
+  end
 end
