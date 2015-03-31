@@ -15,23 +15,22 @@
       #console.log temp;
       temp.forEach (element, index, array) ->
         if element.charAt(0) == "#"
-          hashTags.push element
+          hashTags.push element.slice(1)
         else if element.charAt(0) == "."
-          types.push element
+          types.push element.slice(1)
         else
           docName.push element
 
       # create a search object divided by category 
-      searchObject = {tags:hashTags, filetypes:types, fuzz:docName}
+      searchObject = {tags:hashTags, filetypes:types, fuzzy:docName}
       
-      console.log searchObject.fuzz
+      console.log searchObject.fuzzy
       console.log searchObject.filetypes
       console.log searchObject.tags
       
       # send search object to server
-      $http.post('/search/api', searchObject).then((response) ->
+      $http.post('/search', searchObject).then((response) ->
         if response.data.files.length > 0
-          
           # write reponse to the current scope
           $scope.files = response.data.files;
         else
