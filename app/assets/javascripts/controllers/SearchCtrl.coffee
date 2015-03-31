@@ -23,9 +23,9 @@
 
       # create a search object divided by category 
       searchObject = {tags:hashTags, filetypes:types, fuzz:docName}
+      
       console.log searchObject.fuzz
       console.log searchObject.filetypes
-
       console.log searchObject.tags
       
       # send search object to server
@@ -44,9 +44,6 @@
         )
     else
       $scope.files = []
-
-
-        # send a search request to the server
 
     
   # Gets called when a file is clicked
