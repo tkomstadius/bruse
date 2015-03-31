@@ -5,7 +5,7 @@
   $scope.$watch "search", () ->
     if($scope.search != "")
       # send a search request to the server
-      $http.post('/search/api', { fuzzy: [$scope.search], tags: [], filetypes: [] })
+      $http.post('/search', { fuzzy: [$scope.search], tags: [], filetypes: [] })
         .then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
