@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
                     on: :create
   validates_presence_of :name, :on => :create
 
+  # before actions
+  before_destroy :delete_identities
+
   # methods
 
   # Public: Creates or finds a user from oauth information.
@@ -53,5 +56,13 @@ class User < ActiveRecord::Base
       identity.save!
     end
     user
+  end
+
+  protected
+
+  def delete_identities
+    self.identities.each do |id|
+      id.destroy
+    end
   end
 end
