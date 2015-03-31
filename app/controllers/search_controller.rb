@@ -21,18 +21,16 @@ class SearchController < ApplicationController
   #
   # Returns an array of files
   def find
-    # parse query from json to ruby object
-    # byebug
     # Find tags from the query
-    tags = Tag.find_from_search(params[:tags]) if params[:tags]
+    tags = Tag.find_from_search(params[:tags], current_user.id) if params[:tags]
     # Find files from filetypes
-    files = BruseFile.find_from_search(params[:filetypes]) if params[:filetypes]
+    files = BruseFile.find_from_search(params[:filetypes], current_user.id) if params[:filetypes]
     # Find fuzzy results
     fuzz = find_fuzz_from_search(params[:fuzzy]) if params[:fuzzy]
     # combine into new array and remove nils
     data = [tags, files, fuzz].compact
     # find the first array that isn't empty. Or assign emtpy array
-    @results = data.bsearch { |d| !d.empty? } || []
+    @results = data.find_first_array
     data.each {|d|
       # store the similarities in @results
       @results = @results & d if !d.empty?
