@@ -1,12 +1,32 @@
 @bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
+  $scope.search = ""
   $scope.files = []
 
   # watches the search input field for changes
-  $scope.$watch "search", () ->
-    if($scope.search != "")
-      # send a search request to the server
-      $http.post('/search', { fuzzy: [$scope.search], tags: [], filetypes: [] })
-        .then((response) ->
+  $scope.$watch "search", (newTitle, oldTitle) ->
+    if angular.isDefined(newTitle) && angular.isDefined(oldTitle)
+      #console.log $scope.search;
+
+      if $scope.search != ""
+        # console.log typeof $scope.search
+        temp = $scope.search.split(" ")
+        hashTags = []
+        types = []
+        docName = []
+        #console.log temp;
+        temp.forEach (element, index, array) ->
+          if element.charAt(0) == "#"
+            hashTags.push element.slice(1)
+          else if element.charAt(0) == "."
+            types.push element.slice(1)
+          else
+            docName.push element
+
+        # create a search object divided by category 
+        searchObject = {tags:hashTags, filetypes:types, fuzzy:docName}
+        
+        # send search object to server
+        $http.post('/search', searchObject).then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
             $scope.files = response.data.files;
@@ -17,10 +37,12 @@
           )
         .catch((response) ->
           console.error "Couldn't search.."
-          )
-    else
-      $scope.files = []
+          )        
+        
+      else
+        $scope.files = []
 
+    
   # Gets called when a file is clicked
   $scope.download = (identity_id, file_id) ->
     FileHandler.download(identity_id, file_id).then((data) ->
