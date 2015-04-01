@@ -24,10 +24,6 @@
       # create a search object divided by category 
       searchObject = {tags:hashTags, filetypes:types, fuzzy:docName}
       
-      console.log searchObject.fuzzy
-      console.log searchObject.filetypes
-      console.log searchObject.tags
-      
       # send search object to server
       $http.post('/search', searchObject).then((response) ->
         if response.data.files.length > 0
@@ -41,6 +37,13 @@
       .catch((response) ->
         console.error "Couldn't search.."
         )
+
+      i = 0;
+      while i < $scope.files.length
+        console.log $scope.files[i]
+        i++
+      
+      
     else
       $scope.files = []
 
