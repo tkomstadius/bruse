@@ -19,13 +19,15 @@ Rails.application.routes.draw do
 
   # files
   scope '/service/:identity_id' do
-    resources :files, only: [:create, :new, :destroy], path_names: {new: 'add'}
+    resources :files, only: [:create, :new, :destroy, :index], path_names: {new: 'add'}
+    # delete folder
+    post '/files/folder/delete', to: 'files#destroy_folder'
     get '/files/browse', to: 'files#browse'
     get '/files/download/:id', to: 'files#download_url'
   end
   get '/get/:download_hash/:name', to: 'files#download', :via => :all
 
   # search
-  get '/search/:query', to: 'search#find', :defaults => { :format => 'json' }
+  post '/search', to: 'search#find', :defaults => { :format => 'json' }, as: 'search_find'
   get '/search', to: 'search#home', as: 'search'
 end
