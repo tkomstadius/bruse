@@ -5,17 +5,13 @@ class BruseFilesController < ApplicationController
    @bruse_files = BruseFile.all
   end
   
-
   def show
   end
-
 
   def edit
   end
 
-
   def new
-    @bruse_file = BruseFile.new
   end
 
   def create
