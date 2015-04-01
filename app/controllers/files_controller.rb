@@ -12,7 +12,9 @@ class FilesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
   require 'dropbox_sdk'
-  # require 'google/api_client'
+  require 'rubygems'
+  require 'google/api_client'
+  require 'launchy'
 
   def new
   end
@@ -21,14 +23,53 @@ class FilesController < ApplicationController
     path = params[:path] || '/'
 
     # setup client
-    @client = DropboxClient.new(@identity.token)
-    # @client = Google::APIClient.new(@identity.token)
-    # drive = client.discovered_api('drive', 'v2')
+    # @client = DropboxClient.new(@identity.token)
+    # @client = Google::APIClient.new
+    # @drive = @client.discovered_api('drive')
+   
+    # # Request authorization
+    # @client.authorization.client_id = ''
+    # @client.authorization.client_secret = ''
+    # @client.authorization.scope = 'https://www.googleapis.com/auth/drive'
+    # @client.authorization.redirect_uri = @client.authorization.authorization_uri
+
+    # Exchange authorization code for access token
+    # $stdout.write  "Enter authorization code: "
+    # @client.authorization.code = gets.chomp
+     uri = @client.authorization.authorization_uri
+  Launchy.open(uri)
+
+  # Exchange authorization code for access token
+  $stdout.write  "Enter authorization code: "
+  @client.authorization.code = gets.chomp
+  @client.authorization.fetch_access_token!
+    # Insert a file
+    file = @drive.files.insert.request_schema.new({
+      'title' => 'My document',
+      'description' => 'A test document',
+      'mimeType' => 'text/plain'
+    })
+
+    media = Google::APIClient::UploadIO.new('document.txt', 'text/plain')
+    result = client.execute(
+      :api_method => drive.files.insert,
+      :body_object => file,
+      :media => media,
+      :parameters => {
+        'uploadType' => 'multipart',
+        'alt' => 'json'})
+
+    # Pretty print the API result
+    jj result.data.to_hash
+
+    byebug
 
     # load files
-    @file = @client.metadata(path)
+    @file = @client.execute(api_method: drive.files.list)
+    byebug
     # remove eveything after the last '/' in the current dropbox path
-    @parent_path = @file["path"].slice(0..(@file["path"].rindex('/')))
+    # @parent_path = @file["path"].slice(0..(@file["path"].rindex('/')))
+    byebug
   end
 
   def create
@@ -99,6 +140,20 @@ class FilesController < ApplicationController
       if identity.service.downcase.include? "dropbox"
         @client = DropboxClient.new(identity.token)
       end
+      if identity.service.downcase.include? "google"
+        @client = ::Google::APIClient.new(
+          application_name: 'Bruse',
+          application_version: '1.0.0'
+        )
+        @drive = @client.discovered_api('drive')
+   
+        # Request authorization
+        @client.authorization.client_id = ''
+        @client.authorization.client_secret = ''
+        @client.authorization.scope = 'https://www.googleapis.com/auth/drive'
+        @client.authorization.redirect_uri = 'http://localhost:3000/auth/google_oauth2/callback'
+      end
+      byebug
     end
     def file_params
       params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
