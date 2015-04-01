@@ -2,11 +2,6 @@ class TagsController < ApplicationController
 	before_action :set_tag , only: [:show]
 
   def index
-    if params[:search]
-      @tags  = Tag.search(params[:search]).order("created_at DESC")
-    else
-      @tags  = Tag.order("created_at DESC")
-    end
 
   end
 
@@ -74,14 +69,6 @@ class TagsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-
-
-
-def remove_tag_from_file
-
-
-end
 
 
 private

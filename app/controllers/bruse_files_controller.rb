@@ -3,21 +3,17 @@ class BruseFilesController < ApplicationController
 
   def index
    @bruse_files = BruseFile.all
-
-   
-    
   end
   
 
   def show
   end
 
-  # GET /orders/1/edit
+
   def edit
-    
   end
 
-  # GET /orders/new
+
   def new
     @bruse_file = BruseFile.new
   end
@@ -52,7 +48,7 @@ class BruseFilesController < ApplicationController
   def destroy
     @bruse_file.destroy
     respond_to do |format|
-      format.html { redirect_to bruse_files_url, notice: 'Order was successfully destroyed.' }
+      format.html { redirect_to bruse_files_url, notice: 'File was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
