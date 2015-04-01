@@ -8,7 +8,8 @@ class BruseFile < ActiveRecord::Base
   def self.find_from_search(query, current_user_id)
     results = []
     query.each do |q|
-      file = self.find_by(:filetype => q)
+      # file = self.find_by(:filetype => q)
+      file = self.find_by(name ILIKE ? OR postal_code LIKE ? "%#{:filetype}%")
       # name ILIKE ? OR postal_code LIKE ? "%#{:filetype}%", "%#{:filetype}%"
       results.push(file) if file && file.identity.user_id == current_user_id
     end
