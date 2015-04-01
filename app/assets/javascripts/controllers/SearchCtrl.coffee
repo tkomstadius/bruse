@@ -37,13 +37,7 @@
           )
         .catch((response) ->
           console.error "Couldn't search.."
-          )
-
-        i = 0;
-        while i < $scope.files.length
-          console.log $scope.files[i]
-          i++
-        
+          )        
         
       else
         $scope.files = []
