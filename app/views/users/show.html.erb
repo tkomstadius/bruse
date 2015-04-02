@@ -5,3 +5,4 @@
   <p><%= id.name %> - <%= link_to 'unlink', destroy_provider_path(id.id), :method => 'delete' %></p>
 <% end %>
 <p><%= link_to 'Add another Dropbox account', '/auth/dropbox_oauth2' %></p>
+<p><%= link_to "Add another Google account", "/auth/google_oauth2" %></p>

@@ -18,6 +18,9 @@ class FilesController < ApplicationController
   def browse
     path = params[:path] || '/'
 
+    # setup client
+    @client = DropboxClient.new(@identity.token)
+
     # load files
     @file = @identity.browse(path)
   end

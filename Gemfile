@@ -47,8 +47,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use omniauth for session handling
 gem 'omniauth'
-# dropbox omniauth stategy
+# dropbox omniauth strategy
 gem 'omniauth-dropbox-oauth2'
+# Drive omniauth strategy
+gem "omniauth-google-oauth2"
 
 # Fuzzy search for activerecord models
 gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'
@@ -56,6 +58,9 @@ gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'
 ## APIs
 # dropbox ruby sdk
 gem 'dropbox-sdk'
+
+# Drive ruby sdk
+gem 'google-api-client'
 
 ## Developtment tools
 group :development, :test do
