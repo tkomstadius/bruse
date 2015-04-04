@@ -69,11 +69,10 @@ gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'
 # dropbox ruby sdk
 gem 'dropbox-sdk'
 
-<<<<<<< HEAD
-=======
+
 # Drive ruby sdk
 gem 'google-api-client'
->>>>>>> fc9caa44b9f6458033755021e238179173604d3e
+
 
 ## Developtment tools
 group :development, :test do
