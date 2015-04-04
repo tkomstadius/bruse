@@ -6,7 +6,7 @@ class SearchTest < Capybara::Rails::TestCase
   test "visits the search page" do
     page.set_rack_session(user_id: users(:fooBar).id)
     visit search_path
-    assert page.has_content?("Sök")
+    assert page.has_content?("Search")
   end
 end
 

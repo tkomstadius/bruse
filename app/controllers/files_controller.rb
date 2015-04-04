@@ -3,13 +3,12 @@ class FilesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_identity, except: :download
   before_filter :set_file, only: [:destroy, :download_url]
-  before_filter :set_client, only: [:browse, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
   # using javascript. If we didn't do this, we'd get problems since the CSRF
   # params from rails isn't passed along.
   # http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
-  skip_before_action :verify_authenticity_token, only: [:create, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:create, :destroy, :destroy_folder]
 
   require 'dropbox_sdk'
 
@@ -19,29 +18,47 @@ class FilesController < ApplicationController
   def browse
     path = params[:path] || '/'
 
+    # setup client
+    @client = DropboxClient.new(@identity.token)
+
     # load files
-    @file = @client.metadata(path)
-    # remove eveything after the last '/' in the current dropbox path
-    @parent_path = @file["path"].slice(0..(@file["path"].rindex('/')))
+    @file = @identity.browse(path)
   end
 
   def create
-    @file = BruseFile.new(file_params)
-    @file.identity = @identity
 
-    unless @file.save
-      @errors = @file.errors.full_messages
-      @file = nil
+    # are we adding file or folder?
+    if params[:is_dir]
+      # call to recursive file adding here
+      @files = @identity.add_folder_recursive(file_params)
+    else
+      # add file!
+      @files = [@identity.add_file(file_params)]
     end
   end
 
   def destroy
-    if @file.identity == @identity && @file.destroy
+    # make sure file belongs to current identity and delete file
+    if @file.identity == @identity && @identity.user == current_user && @file.destroy
       @message = "File deleted."
       @file = nil
     else
       @message = "Could not delete file!"
     end
+  end
+
+  def destroy_folder
+    if @identity.user == current_user
+      files = @identity.bruse_files.where("foreign_ref LIKE (?)", params[:path] + '%')
+      @success = true
+      files.each do |file|
+        @success = false unless file.destroy!
+      end
+    end
+  end
+
+  def index
+    @files = @identity.bruse_files
   end
 
   # Public: generates a secure download url only accessable for
@@ -75,26 +92,32 @@ class FilesController < ApplicationController
   def download
     file = BruseFile.find_by(:download_hash => params[:download_hash])
     if file.identity.user == current_user
-      # creates a dropbox client
-      set_client(file.identity)
       # send the file to the user
-      send_data @client.get_file(file.foreign_ref), :type => file.filetype
+      send_data file.identity.get_file(file.foreign_ref), :type => file.filetype
     end
   end
 
   private
+    # Private: Set current identity from request parameters.
     def set_identity
       @identity = Identity.find(params[:identity_id])
+      # make sure the identity belongs to this user
+      unless @identity.user == current_user
+        redirect_to root_url
+      end
     end
     def set_file
       @file = BruseFile.find(params[:id])
     end
-    def set_client(id = nil)
-      identity = id ? id : @identity
-      if identity.service.downcase.include? "dropbox"
-        @client = DropboxClient.new(identity.token)
-      end
-    end
+
+    # Private: Safely extract file parameters from the scary internets
+    #
+    # Examples
+    #
+    #   file_params
+    #   # => { name: 'hej.rb', foreign_ref: 'hej/hej.rb'}
+    #
+    # Return safer parameters
     def file_params
       params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
     end
