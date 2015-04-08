@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
   # before/after hooks
   after_create :send_welcome_email
+  after_create :append_local_identity
 
   # methods
 
@@ -62,4 +63,13 @@ class User < ActiveRecord::Base
   def send_welcome_email
     UserMailer.welcome(self).deliver_now!
   end
+
+  private
+    def append_local_identity
+      local_identity = Identity.new(service: 'local',
+                                    token: SecureRandom.hex(5),
+                                    name: 'Bruse',
+                                    uid: SecureRandom.hex(5))
+      identities << local_identity
+    end
 end

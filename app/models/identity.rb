@@ -20,8 +20,9 @@ class Identity < ActiveRecord::Base
   def self.find_or_create_from_oauth(auth_hash)
     identity = self.find_by(:uid => auth_hash[:uid], :service => auth_hash[:provider])
     if !identity
-      provider = (auth_hash[:provider].include? 'dropbox') ? 'Dropbox' :
-        (auth_hash[:provider].include? 'google') ? 'Google Drive' : auth_hash[:provider]
+      provider = "Dropbox" if auth_hash[:provider].downcase.include? 'dropbox'
+      provider = "Google Drive" if auth_hash[:provider].downcase.include? 'google'
+
       identity = Identity.new(:uid => auth_hash[:uid],
                               :token   => auth_hash[:credentials][:token],
                               :service => auth_hash[:provider],
@@ -135,9 +136,7 @@ class Identity < ActiveRecord::Base
     #
     # Returns the client
     def set_client
-      if service.downcase.include? "dropbox"
-        @client ||= DropboxClient.new(token)
-      end
+      @client ||= DropboxClient.new(token) if service.downcase.include? "dropbox"
     end
 
     # Extract BruseFile params from pristine file object from service
@@ -148,6 +147,8 @@ class Identity < ActiveRecord::Base
     #
     #   file_params = extract_file_params(untouched)
     #   # => {name: '', foreign_ref: ''}
+    #
+    # Returns the file params, prepared for db insertion
     def extract_file_params(pristine)
       if service.downcase.include? "dropbox"
         file_params = {

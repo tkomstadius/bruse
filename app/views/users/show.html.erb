@@ -1,8 +1,8 @@
 <h2><%= current_user.name %></h2>
 
-<h3>List of providers</h3>
+<h3>Linked accounts</h3>
 <% current_user.identities.each do |id| %>
-  <p><%= id.name %> - <%= link_to 'unlink', destroy_provider_path(id.id), :method => 'delete' %></p>
+  <p><%= id.name %> - <%= link_to('unlink', destroy_provider_path(id.id), :method => 'delete') if id.service != 'local' %></p>
 <% end %>
 <p><%= link_to 'Add another Dropbox account', '/auth/dropbox_oauth2' %></p>
 <p><%= link_to "Add another Google account", "/auth/google_oauth2" %></p>
