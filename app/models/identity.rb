@@ -113,15 +113,16 @@ class Identity < ActiveRecord::Base
   # foreign_ref - the service's way to keep track of the file
   #
   # Examples
-  #   file_data = @identity.get_file(path_to_img)
+  #   file_data = @identity.get_file(path_to_image)
   #   # => <image data>
   #
-  # Returns the actual file
+  # Returns the actual file data
   def get_file(foreign_ref)
     set_client
 
     # return file data
-    @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
+    return @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
+    return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 
   private
@@ -143,7 +144,7 @@ class Identity < ActiveRecord::Base
     #
     # pristine  - untouched service file object
     #
-    # Exampes
+    # Examples
     #
     #   file_params = extract_file_params(untouched)
     #   # => {name: '', foreign_ref: ''}
@@ -160,7 +161,7 @@ class Identity < ActiveRecord::Base
           :filetype => pristine['mime_type']
         }
         # return file params
-        file_params
+        return file_params
       end
     end
 

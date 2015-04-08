@@ -1,7 +1,7 @@
 class FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
-  before_filter :set_identity, except: :download
+  before_filter :set_identity, except: [:download, :download_url]
   before_filter :set_file, only: [:destroy, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
@@ -92,7 +92,7 @@ class FilesController < ApplicationController
     file = BruseFile.find_by(:download_hash => params[:download_hash])
     if file.identity.user == current_user
       # send the file to the user
-      send_data file.identity.get_file(file.foreign_ref), :type => file.filetype
+      send_data file.identity.get_file(file.foreign_ref), name: file.name, type: file.filetype
     end
   end
 

@@ -65,6 +65,10 @@ class User < ActiveRecord::Base
   end
 
   private
+    # Private: Create an identity for local file handling when user is created.
+    # Future: This should only happen if user has a password.
+    #
+    # Returns nothing
     def append_local_identity
       local_identity = Identity.new(service: 'local',
                                     token: SecureRandom.hex(5),
