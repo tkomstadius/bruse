@@ -1,5 +1,6 @@
 <% if current_user.nil? %>
   <%= link_to 'Sign in with Dropbox', user_omniauth_authorize_path('dropbox_oauth2') %><br>
+  <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
   <%= link_to 'Sign out user', destroy_user_session_path, method: :delete %>

@@ -233,6 +233,8 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   config.omniauth :dropbox_oauth2, ENV['DROPBOX_KEY'], ENV['DROPBOX_SECRET']
+  config.omniauth :google_oauth2, ENV['DRIVE_KEY'], ENV['DRIVE_SECRET'],
+                                  { :scope => 'email,profile'}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

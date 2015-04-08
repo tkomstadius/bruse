@@ -6,6 +6,7 @@ one:
   foreign_ref: dropbox
   filetype: "words"
   meta: "Dear diary, today was a great day. It was a rails day."
+  tags: one, two
 
 two:
   name: beerlist

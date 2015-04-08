@@ -35,6 +35,17 @@ created your app, add its credentials to your `config/application.yml` file.
 You also need to add `http://localhost:3000/auth/dropbox_oauth2/callback` to your
 redirect URLs in your Dropbox app.
 
+##### Google
+
+To use the Google features, you need a key and a secret from Google. You can
+get this by creating a project on the [Google developer pages](https://console.developers.google.com/project). Expand the **APIs & auth** heading and select *APIs*. The following APIs should be enabled: *Contacts API*, *Drive API*, *DriveSDK* and *Google+ API*. 
+
+Click on the *Consent screen* in the menu. Fill in `Bruse` as *Product name*.
+
+Now select the *Credentials* heading. Click on *Create newClient ID*. The application type should be a *Web application*. In *Authorized JavaScript origins* enter `http://localhost:3000` and at *Authorized redirect URIs* enter `http://localhost:3000/auth/google_oauth2/callback`. Once created add its credentials to your `config/application.yml` file. E.g. the *CLIENT ID* and *CLIENT SECRET*.
+
+Now you are finished. The changes can take 10 minutes.
+
 ### PostgreSQL setup
 
 The following are `psql` commands:

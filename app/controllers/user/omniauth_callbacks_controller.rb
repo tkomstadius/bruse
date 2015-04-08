@@ -15,7 +15,7 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   # Creates a function for each provider
-  [:dropbox_oauth2].each do |provider|
+  [:dropbox_oauth2, :google_oauth2].each do |provider|
     provides_callback_for provider
   end
 end
