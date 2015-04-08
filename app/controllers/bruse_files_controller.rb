@@ -4,7 +4,7 @@ class BruseFilesController < ApplicationController
   def index
    @bruse_files = BruseFile.all
   end
-  
+
   def show
   end
 
@@ -13,33 +13,6 @@ class BruseFilesController < ApplicationController
 
   def new
   end
-
-  def create
-
-    tag = bruse_file_params[:tagname].split
-    bruse_file_params.delete :tagname
-    @bruse_file = BruseFile.new(bruse_file_params)
-
-
-    tag.each do |t|
-      tag = Tag.find_by(:name => t)
-      if tag.nil? 
-        tag = Tag.create(:name => t)
-      end
-      @bruse_file.tags.append(tag) 
-    end
-
-    respond_to do |format|
-      if @bruse_file.save
-        format.html { redirect_to @bruse_file, notice: 'File was successfully created.' }
-        format.json { render :show, status: :ok, location: @bruse_file }
-      else
-        format.html { render :new }
-        format.json { render json: @bruse_file.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
 
   def destroy
     @bruse_file.destroy
