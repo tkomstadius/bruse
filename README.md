@@ -42,7 +42,7 @@ get this by creating a project on the [Google developer pages](https://console.d
 
 Click on the *Consent screen* in the menu. Fill in `Bruse` as *Product name*.
 
-Now select the *Credentials* heading. Click on *Create newClient ID*. The application type should be a *Web application*. In *Authorized JavaScript origins* enter `http://localhost:3000` and at *Authorized redirect URIs* enter `http://localhost:3000/auth/google_oauth2/callback`. Once created add its credentials to your `config/application.yml` file. E.g. the *CLIENT ID* and *CLIENT SECRET*.
+Now select the *Credentials* heading. Click on *Create newClient ID*. The application type should be a *Web application*. In *Authorized JavaScript origins* enter `http://localhost:3000` and at *Authorized redirect URIs* enter `http://localhost:3000/users/auth/google_oauth2/callback`. Once created add its credentials to your `config/application.yml` file. E.g. the *CLIENT ID* and *CLIENT SECRET*.
 
 Now you are finished. The changes can take 10 minutes.
 
