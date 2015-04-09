@@ -7,6 +7,9 @@ class Identity < ActiveRecord::Base
   validates_uniqueness_of :uid, :on => :create
   validates_presence_of [:uid, :token, :service, :name], :on => :create
 
+  # before actions
+  before_destroy :update_default_identity
+
   # Public: Creates or finds an identity from oauth information
   #
   # auth_hash  - Hash with information from omniauth
@@ -187,5 +190,10 @@ class Identity < ActiveRecord::Base
     # Returns boolean
     def is_dir?(pristine)
       return pristine['is_dir'] if service.downcase.include? "dropbox"
+    end
+
+    def update_default_identity
+      user.default_identity_id = nil if user.default_identity_id == id
+      user.save!
     end
 end
