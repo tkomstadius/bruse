@@ -84,7 +84,9 @@
     # Save file
     #
     put: (identity_id, file) ->
+
       console.log 'Saving file...', file.path
+
       # prepare post data from file
       post_data =
         name: file.name
