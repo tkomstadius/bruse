@@ -48,22 +48,46 @@
    * @param {obj} file  the file to add
   ###
   $scope.add = (file) ->
-    if file.is_dir
-      console.log "Can't add folders yet!"
-    else
+    if file.is_dir and !file.contents
+      FileHandler.get($scope.identity.id, file.path).then((data)->
+        file.contents = data
+        _.map data, (remote_file) ->
+          findFile $scope.bruse_files, remote_file
+        addFiles(file)
+        )
+    else if file.is_dir
+      addFiles(file)
+    else if !file.added
       file.added = true
       $scope.new_files.push(file)
+
+  ###
+    * Helper function for $scope.add
+    * Used to add files from folders
+  ###
+  addFiles = (file)->
+    file.contents.forEach((f) ->
+      $scope.add(f)
+      return
+      )
+    file.added = true
 
   ###*
    * remove temp added file
    * @param  {obj} file   the file to remove
   ###
   $scope.remove = (file) ->
-    if file.is_dir
-      console.log "Can't remove folders yet!"
+    if file.is_dir and file.contents
+      file.contents.forEach((f)->
+        $scope.remove(f)
+        )
+      file.added = false
     else
       file.added = false
-      # remove file from new_files
+      for i in [0..$scope.new_files.length]
+        if $scope.new_files[i] == file
+          $scope.new_files.splice(i, 1)
+          break
 
   ###*
    * save all files to db
