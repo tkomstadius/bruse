@@ -28,7 +28,7 @@
         <td><%= file.filetype %></td>
         <td><%= file.meta %></td>
         <% file.tags.each do |t| %>
-          <td><%= link_to t.name, tag_path(t) %> </td>
+          <td><%= link_to t.name, t %> </td>
          <td> <%= link_to 'Delete tag', destroy_tag_path(file, t),
                   method: :delete,
                   data: { confirm: 'Are you sure?' } %>
