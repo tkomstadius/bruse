@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  # Include default devise modules.
+  devise :database_authenticatable, :registerable, :omniauthable,
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
   # relations
   has_many :identities
 
@@ -13,6 +16,7 @@ class User < ActiveRecord::Base
   # before/after hooks
   after_create :send_welcome_email
   after_create :append_local_identity
+  before_destroy :delete_identities
 
   # methods
 
@@ -41,7 +45,10 @@ class User < ActiveRecord::Base
 
       if user.nil?
         user = User.new(:email => email,
-                        :name  => auth_hash[:info][:name])
+                        :name  => auth_hash[:info][:name],
+                        :password => Devise.friendly_token[0,20])
+        user.own_password = false
+        user.skip_confirmation!
         user.save!
       end
     end
@@ -50,18 +57,15 @@ class User < ActiveRecord::Base
       identity.user = user
       identity.save!
     end
-    user.sign_in
+    user
   end
 
-  def sign_in
-    self.sign_in_count += 1
-    self.last_sign_in_at = DateTime.now
-    self.save!
-    self # return user
-  end
+  protected
 
-  def send_welcome_email
-    UserMailer.welcome(self).deliver_now!
+  def delete_identities
+    self.identities.each do |id|
+      id.destroy
+    end
   end
 
   private

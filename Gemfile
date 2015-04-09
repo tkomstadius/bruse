@@ -45,6 +45,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Devise for user handling
+gem 'devise'
 # Use omniauth for session handling
 gem 'omniauth'
 # dropbox omniauth strategy
