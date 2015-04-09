@@ -9,18 +9,15 @@ Rails.application.routes.draw do
   get '/tag/new/:file_id', to: 'tags#new', as: 'new_tag'
   delete '/file/:file_id/tag/delete/:id', to: 'tags#destroy', as: 'destroy_tag'
 
-  # User profile
-  get '/user', to: 'users#show', as: 'profile'
-  get '/user/terminate', to: 'users#terminate', as: 'terminate_user'
+  # User
+  devise_for :users, :controllers => { omniauth_callbacks: 'user/omniauth_callbacks',
+                                       registrations: 'user/registrations' }
+  get '/user', to: 'user/users#show', as: 'profile'
+  get '/users/terminate', to: 'user/users#terminate', as: 'terminate_user'
+  delete '/users', to: 'user/users#destroy', as: 'destroy_user'
 
+  # Provider
   delete '/provider/:id', to: 'identities#destroy', as: 'destroy_provider'
-  delete '/user', to: 'users#destroy', as: 'destroy_user'
-
-  # recieve auth callback
-  match '/auth/:provider/callback', via: [:get, :post], to: 'sessions#create'
-  match '/auth/failure', via: [:get, :post], to: 'pages#omniauth_failure', as: 'omniauth_failure'
-  # logout
-  match '/signout', via: [:get, :post], to: 'sessions#destroy'
 
   # files
   scope module: :files do
