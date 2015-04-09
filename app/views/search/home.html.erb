@@ -11,14 +11,23 @@
   <div ng-if="view_list">
 
     <div class="results">
-      <div ng-if="files.length != 0">
-        <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
-          {{file.name}}
-        </div>
-      </div>
-      <div ng-if="files.length === 0 && search.length > 2">
-        Aint nothing here for you. :(
-      </div>
+      <table ng-if="files.length != 0">
+        <tr>
+          <th><a href="">Filename</a></th>
+          <th>Filetype</th>
+          <th>Date</th>
+          <th>Tags</th>
+        </tr>
+        <tr ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+            <td>{{file.name}}</td>
+            <td>.{{getFiletype(file.filetype)}}</td>
+            <td>{{file.date}}</td>
+            <td><ul ng-repeat="tag in file.tags"><li>#{{tag.name}}</li></ul></td>
+        </tr>
+       </table>
+    </div>
+    <div ng-if="files.length === 0 && search.length > 2">
+      Aint nothing here for you. :(
     </div>
 
   </div>
@@ -28,7 +37,7 @@
     <div class="results">
       <div ng-if="files.length != 0">
         <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
-          CRAZY
+          <div style="height:60px">{{file.name}}</div>
         </div>
       </div>
       <div ng-if="files.length === 0 && search.length > 2">

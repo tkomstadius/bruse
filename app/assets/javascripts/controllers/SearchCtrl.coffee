@@ -30,7 +30,7 @@
         $http.post('/search', searchObject).then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
-            $scope.files = response.data.files;
+            $scope.files = response.data.files;   
           else
             console.log "No results found"
             # write reponse to the current scope
@@ -39,10 +39,17 @@
         .catch((response) ->
           console.error "Couldn't search.."
           )        
-        
       else
         $scope.files = []
 
+      i = 0
+      j = 0
+      while i < $scope.files.length
+        console.log $scope.files[i]
+        while j < $scope.files[i].tags.length 
+          console.log $scope.files[i].tags[j]
+          j++
+        i++
     
   # Gets called when a file is clicked
   $scope.download = (identity_id, file_id) ->
@@ -50,4 +57,8 @@
       # open the returned url in a new tab
       win = window.open('/'+data.url, '_self')
       )
+
+  # little helper functions i hope
+  $scope.getFiletype = (mimetype) ->
+    mimetype.split("/")[1]
 ]
