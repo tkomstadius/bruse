@@ -1,7 +1,12 @@
 class BruseFile < ActiveRecord::Base
-  # relations
-	has_and_belongs_to_many :tags
+
+	has_and_belongs_to_many :tags, dependent: :destroy
+
   belongs_to :identity
+	attr_accessor :tagname
+
+
+	validates :filetype,     presence: true
 
   ## validations
   # make sure file only added once from each identity

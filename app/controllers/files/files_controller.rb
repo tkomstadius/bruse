@@ -1,4 +1,4 @@
-class FilesController < ApplicationController
+class Files::FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
   before_filter :set_identity, except: [:download, :download_url]
@@ -12,17 +12,14 @@ class FilesController < ApplicationController
 
   require 'dropbox_sdk'
 
-  def new
+  def show
   end
 
-  def browse
-    path = params[:path] || '/'
+  def show_all
+    @bruse_files = BruseFile.all
+  end
 
-    # setup client
-    @client = DropboxClient.new(@identity.token)
-
-    # load files
-    @file = @identity.browse(path)
+  def new
   end
 
   def create
@@ -46,20 +43,13 @@ class FilesController < ApplicationController
     end
   end
 
-  def destroy_folder
-    if @identity.user == current_user
-      files = @identity.bruse_files.where("foreign_ref LIKE (?)", params[:path] + '%')
-      @success = true
-      files.each do |file|
-        @success = false unless file.destroy!
-      end
-    end
-  end
-
+  # Returns all files that have already been added
+  # so that there is a reference list on the client side
   def index
     @files = @identity.bruse_files
   end
 
+<<<<<<< HEAD:app/controllers/files_controller.rb
   # Public: generates a secure download url only accessable for
   # the owner.
   #
@@ -98,6 +88,10 @@ class FilesController < ApplicationController
 
   private
     # Private: Set current identity from request parameters.
+=======
+  protected
+    # Protected: Set current identity from request parameters.
+>>>>>>> develop:app/controllers/files/files_controller.rb
     def set_identity
       @identity = Identity.find(params[:identity_id])
       # make sure the identity belongs to this user
@@ -105,6 +99,8 @@ class FilesController < ApplicationController
         redirect_to root_url
       end
     end
+
+    # Protected: Set file from request parameters
     def set_file
       @file = BruseFile.find(params[:id])
     end
