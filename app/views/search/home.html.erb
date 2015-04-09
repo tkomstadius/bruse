@@ -13,9 +13,9 @@
     <div class="results">
       <table ng-if="files.length != 0">
         <tr>
-          <th><a href="">Filename</a></th>
+          <th><a href="" ng-click="reverse=!reverse;order('name', reverse)">Filename</a></th>
           <th>Filetype</th>
-          <th>Date</th>
+          <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
           <th>Tags</th>
         </tr>
         <tr ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
@@ -37,7 +37,11 @@
     <div class="results">
       <div ng-if="files.length != 0">
         <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
-          <div style="height:60px">{{file.name}}</div>
+          <div class="block">
+            <div>{{file.name}}</div>
+            <div>{{file.date}}</div>
+            <div ng-repeat="tag in file.tags"><div>{{tag.name}}</div></div>
+          </div>
         </div>
       </div>
       <div ng-if="files.length === 0 && search.length > 2">

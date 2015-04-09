@@ -1,7 +1,8 @@
-@bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
+@bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', '$filter', (FileHandler, $scope, $http, $filter) ->
   $scope.search = ""
   $scope.files = []
   $scope.view_list = true;
+  orderBy = $filter('orderBy')
 
   # watches the search input field for changes
   $scope.$watch "search", (newTitle, oldTitle) ->
@@ -42,6 +43,7 @@
       else
         $scope.files = []
 
+
       i = 0
       j = 0
       while i < $scope.files.length
@@ -58,7 +60,12 @@
       win = window.open('/'+data.url, '_self')
       )
 
-  # little helper functions i hope
+  # change mime to only filetype
   $scope.getFiletype = (mimetype) ->
     mimetype.split("/")[1]
+
+  # a function to order the files
+  $scope.order = (predicate, reverse) ->
+    $scope.files = orderBy($scope.files, predicate, reverse)
+
 ]
