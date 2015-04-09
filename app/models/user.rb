@@ -14,9 +14,10 @@ class User < ActiveRecord::Base
   validates_presence_of :name, :on => :create
 
   # before/after hooks
+  before_destroy :delete_identities
   after_create :send_welcome_email
   after_create :append_local_identity
-  before_destroy :delete_identities
+  after_update :append_local_identity
 
   # methods
 
@@ -74,10 +75,12 @@ class User < ActiveRecord::Base
     #
     # Returns nothing
     def append_local_identity
-      local_identity = Identity.new(service: 'local',
-                                    token: SecureRandom.hex(5),
-                                    name: 'Bruse',
-                                    uid: SecureRandom.hex(5))
-      identities << local_identity
+      if own_password && !identities.exists?(service: 'local')
+        local_identity = Identity.new(service: 'local',
+                                      token: SecureRandom.hex(5),
+                                      name: 'Bruse',
+                                      uid: SecureRandom.hex(5))
+        identities << local_identity
+      end
     end
 end
