@@ -34,6 +34,7 @@ class Identity < ActiveRecord::Base
   end
 
   require 'dropbox_sdk'
+  require 'google/api_client'
 
   # Public: Browse this identity's file system
   #
@@ -50,6 +51,10 @@ class Identity < ActiveRecord::Base
     set_client
     # is it a dropbox service? return requested path!
     return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
+    # is it a google service? return requested path!
+    byebug
+    return @result.data.items if service.downcase.include? "google"
+    byebug
   end
 
   # Add new files to the current identity
@@ -137,6 +142,20 @@ class Identity < ActiveRecord::Base
     def set_client
       if service.downcase.include? "dropbox"
         @client ||= DropboxClient.new(token)
+      end
+      if service.downcase.include? "google"
+        @client ||= Google::APIClient.new(
+          :application_name => 'Bruse',
+          :application_version => '1.0.0'
+          )
+        @drive = @client.discovered_api('drive', 'v2')
+
+        @client.authorization.access_token = token
+
+        @result = @client.execute(
+            api_method: @drive.files.list
+          )
+        byebug
       end
     end
 
