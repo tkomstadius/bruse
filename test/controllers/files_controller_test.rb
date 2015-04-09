@@ -59,4 +59,5 @@ class FilesControllerTest < ActionController::TestCase
   #       { user_id: users(:fooBar).id }
   #   end
   # end
+
 end
