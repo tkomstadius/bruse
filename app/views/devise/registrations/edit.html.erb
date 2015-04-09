@@ -13,6 +13,11 @@
     <%= f.email_field :email, autofocus: true %>
   </div>
 
+  <div class="field">
+    <%= f.label "Default identity" %>
+    <%= f.select(:default_identity, resource.identities.all.collect {|id| [id.name, id.id] }, {prompt: 'Select identity'}) %>
+  </div>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
