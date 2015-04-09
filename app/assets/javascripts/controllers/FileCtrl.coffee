@@ -1,6 +1,7 @@
 @bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
   $scope.bruse_files = []
+  $scope.new_files = []
   $scope.loading = true
 
   # get identity information from add view
@@ -43,37 +44,43 @@
     return
 
   ###*
-   * save file as bruse_file and append bruse_file to the file
-   * @param {obj} file  the file
+   * save file to temp array
+   * @param {obj} file  the file to add
   ###
   $scope.add = (file) ->
-    file.loading = true
-    FileHandler.put($scope.identity.id, file).then((data) ->
-      # add file to list of existing files
-      $scope.bruse_files = $scope.bruse_files.concat(data)
-      # append bruse_file to this remote file
-      findFile $scope.bruse_files, file
-      # if current file is a directory, do something ugly to make the plus sign turn into a minus sign
-      file.bruse_file = true if file.is_dir
-      file.loading = false
-      )
+    if file.is_dir
+      console.log "Can't add folders yet!"
+    else
+      file.added = true
+      $scope.new_files.push(file)
 
+  ###*
+   * remove temp added file
+   * @param  {obj} file   the file to remove
+  ###
   $scope.remove = (file) ->
-    # send delete request
-    file.loading = true
-    if file.bruse_file
-      if file.is_dir
-        # use delete_folder method!
-        FileHandler.delete_folder($scope.identity.id, file).then((data) ->
-          file.bruse_file = data
-          console.log 'path: ', file.path
-          file.loading = false
-          )
-      else
-        FileHandler.delete($scope.identity.id, file).then((data) ->
-          file.bruse_file = data
-          file.loading = false
-          )
+    if file.is_dir
+      console.log "Can't remove folders yet!"
+    else
+      file.added = false
+      # remove file from new_files
+
+  ###*
+   * save all files to db
+  ###
+  $scope.save = ->
+    _.each $scope.new_files, (file, index) ->
+      FileHandler.put($scope.identity.id, file).then((data) ->
+        # add file to list of existing files
+        $scope.bruse_files = $scope.bruse_files.concat(data)
+        # append bruse_file to this remote file
+        findFile $scope.bruse_files, file
+        # remove file from lists of files to add
+        if index is $scope.new_files.length
+          # do something better here
+          console.log "done!"
+        )
+      $scope.new_files = _.without $scope.new_files, file
 
 
   ###*
