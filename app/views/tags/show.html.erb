@@ -1,0 +1,39 @@
+
+
+<table>
+  <thead>
+   <strong>Tags: <%= @tag.name %></strong>
+    <tr>
+      <th>File name</th>
+      <th>File type</th>
+      <th>Meta</th>
+      <th>Unlink</th>
+
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <p>
+
+      <% @tag.bruse_files.each do |f| %>
+        <tr>
+          <td><%= f.name %></td>
+          <td><%= f.filetype %></td>
+          <td><%= f.meta %></td>
+          <td> <%= link_to 'Delete tag', destroy_tag_path(f, @tag),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </p>
+  </tbody>
+</table>
+
+
+
+<br>
+
+
+<%= link_to 'Back', bruse_files_path %>
