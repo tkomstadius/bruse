@@ -27,13 +27,13 @@
         <td><%= file.name %></td>
         <td><%= file.filetype %></td>
         <td><%= file.meta %></td>
-        <% file.tags.each do |t| %>
-          <td><%= link_to t.name, t %> </td>
-         <td> <%= link_to 'Delete tag', destroy_tag_path(file, t),
+        <td><% file.tags.each do |t| %>
+         <%= link_to t.name, t %>
+          <%= link_to 'Delete tag', destroy_tag_path(file, t),
                   method: :delete,
                   data: { confirm: 'Are you sure?' } %>
-        </td>
-        <% end %>
+
+        <% end %></td>
         <td><%= link_to 'Add tag', new_tag_path(file) %></td>
 
       </tr>
