@@ -1,6 +1,9 @@
 class Identity < ActiveRecord::Base
+  # relations
   belongs_to :user
   has_many :bruse_files
+
+  # validations
   validates_uniqueness_of :uid, :on => :create
   validates_presence_of [:uid, :token, :service, :name], :on => :create
 
@@ -31,6 +34,14 @@ class Identity < ActiveRecord::Base
     end
     identity.save!
     identity # return identity
+  end
+
+  def unlink
+    if self.user.identities.length == 1 && !self.user.own_password
+      self.user.destroy
+    else
+      self.destroy
+    end
   end
 
   require 'dropbox_sdk'
