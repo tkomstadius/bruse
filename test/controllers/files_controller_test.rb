@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FilesControllerTest < ActionController::TestCase
+class Files::FilesControllerTest < ActionController::TestCase
   test "denies user to add files if logged out" do
     get :new, {identity_id: identities(:one).id}, {user_id: nil}
 

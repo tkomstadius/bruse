@@ -4,8 +4,6 @@ Rails.application.routes.draw do
 
   root 'pages#show', page: 'home'
 
-  resources :bruse_files 
-
   resources :tags, except: :new
 
 
@@ -29,15 +27,17 @@ Rails.application.routes.draw do
   match '/signout', via: [:get, :post], to: 'sessions#destroy'
 
   # files
-  scope '/service/:identity_id' do
-    resources :files, only: [:create, :new, :destroy, :index], path_names: {new: 'add'}
-    # delete folder
-    post '/files/folder/delete', to: 'files#destroy_folder'
-    get '/files/browse', to: 'files#browse'
-    get '/files/download/:id', to: 'files#download_url'
+  scope module: :files do
+    scope '/service/:identity_id' do
+      resources :files, only: [:show, :create, :new, :destroy, :index], path_names: {new: 'add'}
+      # delete folder
+      post '/files/folder/delete', to: 'browse#destroy_folder'
+      get '/files/browse', to: 'browse#browse'
+      get '/files/download/:id', to: 'download#download_url'
+    end
+    get '/get/:download_hash/:name', to: 'download#download', :via => :all
+    get '/bruse_files', to: 'files#show_all', as: 'bruse_files'
   end
-  get '/get/:download_hash/:name', to: 'files#download', :via => :all
-
   # search
   post '/search', to: 'search#find', :defaults => { :format => 'json' }, as: 'search_find'
   get '/search', to: 'search#home', as: 'search'
