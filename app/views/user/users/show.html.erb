@@ -4,5 +4,5 @@
 <% current_user.identities.each do |id| %>
   <p><%= id.name %> - <%= link_to 'unlink', destroy_provider_path(id.id), :method => 'delete' %></p>
 <% end %>
-<p><%= link_to 'Add another Dropbox account', '/auth/dropbox_oauth2' %></p>
-<p><%= link_to "Add another Google account", "/auth/google_oauth2" %></p>
+<p><%= link_to 'Add another Dropbox account', user_omniauth_authorize_path('dropbox_oauth2') %></p>
+<p><%= link_to "Add another Google account", user_omniauth_authorize_path('google_oauth2') %></p>
