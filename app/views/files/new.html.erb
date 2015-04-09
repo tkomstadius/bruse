@@ -9,7 +9,8 @@
   {{file.name}}
   <a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
 
-  <span class="tools" ng-if="!file.is_dir">
+  <i class="fa fa-circle-o-notch fa-spin" ng-if="file.loading"></i>
+  <span class="c-filelist__file__tools">
     <a href="#" ng-click="add(file)" class="tool" ng-if="!file.bruse_file">
       <%= fa_icon 'plus-square-o' %>
     </a>
@@ -18,8 +19,9 @@
     </a>
   </span>
 
-  <ul ng-if="file.is_dir && file.expand && file.contents" class="file-list">
-    <li ng-repeat="file in file.contents" ng-include="'fileTree'" class="file"></li>
+  <ul ng-if="file.is_dir && file.expand && file.contents" class="c-filelist">
+    <li ng-repeat="file in file.contents" ng-include="'fileTree'" class="c-filelist__file"
+      ng-class="{'c-filelist__file--folder': file.is_dir}"></li>
   </ul>
 </script>
 
@@ -32,7 +34,8 @@
     Files <span ng-if="loading">Loading...</span>
   </h2>
 
-  <ul class="file-list">
-    <li ng-repeat="file in files" ng-include="'fileTree'" class="file"></li>
+  <ul class="c-filelist">
+    <li ng-repeat="file in files" ng-include="'fileTree'" class="c-filelist__file"
+      ng-class="{'c-filelist__file--folder': file.is_dir}"></li>
   </ul>
 </div>
