@@ -3,8 +3,10 @@
   <p>If you want to search for tags add a "#" before your desired word, add a "." to search for filetypes and just add plain text for filename searches.</p>
   <input type="text" name="search" autocomplete="off" placeholder="Search" ng-model="search">
   <div class="results">
-    <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
-      {{file.name}}
+    <div ng-if="files.length != 0">
+      <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+        {{file.name}}
+      </div>
     </div>
     <div ng-if="files.length === 0 && search.length > 2">
       Aint nothing here for you. :(

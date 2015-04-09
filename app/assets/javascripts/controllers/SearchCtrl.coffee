@@ -15,11 +15,11 @@
         docName = []
         #console.log temp;
         temp.forEach (element, index, array) ->
-          if element.charAt(0) == "#"
+          if element.charAt(0) == "#" && element.length > 1
             hashTags.push element.slice(1)
-          else if element.charAt(0) == "."
+          else if element.charAt(0) == "." && element.length > 1
             types.push element.slice(1)
-          else
+          else if element.length > 2
             docName.push element
 
         # create a search object divided by category 
@@ -32,8 +32,8 @@
             $scope.files = response.data.files;
           else
             console.log "No results found"
-          # write reponse to the current scope
-          $scope.files = response.data.files;
+            # write reponse to the current scope
+            $scope.files = [];
           )
         .catch((response) ->
           console.error "Couldn't search.."
