@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>File Name:</strong>
+  <%= @bruse_file.name %>
+</p>
+
+<p>
+  <strong>File type:</strong>
+  <%= @bruse_file.filetype %>
+</p>
+
+<p>
+  <strong>Meta:</strong>
+  <%= @bruse_file.meta %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <% @bruse_file.tags.each do |t| %>
+    <%= t.name %>
+  <% end %>
+</p>
+
+
+<%= link_to 'Back', bruse_files_path %>
