@@ -50,7 +50,7 @@ class Files::FilesController < ApplicationController
   end
 
   protected
-    # Private: Set current identity from request parameters.
+    # Protected: Set current identity from request parameters.
     def set_identity
       @identity = Identity.find(params[:identity_id])
       # make sure the identity belongs to this user
@@ -58,6 +58,8 @@ class Files::FilesController < ApplicationController
         redirect_to root_url
       end
     end
+
+    # Protected: Set file from request parameters
     def set_file
       @file = BruseFile.find(params[:id])
     end
