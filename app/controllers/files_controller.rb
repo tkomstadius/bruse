@@ -121,4 +121,4 @@ class FilesController < ApplicationController
       params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
     end
 end
->>>>>>> fc9caa44b9f6458033755021e238179173604d3e
+
