@@ -8,6 +8,15 @@
 <h1>Listing Files</h1>
 
 
+<%= form_for(@bruse_file, url: upload_path) do |f| %>
+  <div class="field">
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Upload" %>
+  </div>
+<% end %>
 
 <table>
   <thead>

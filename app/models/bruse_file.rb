@@ -5,6 +5,8 @@ class BruseFile < ActiveRecord::Base
   belongs_to :identity
 	attr_accessor :tagname
 
+  mount_uploader :foreign_ref, LocalFileUploader
+
 
 	validates :filetype,     presence: true
 

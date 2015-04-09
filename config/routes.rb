@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   root 'pages#show', page: 'home'
 
-  resources :bruse_files 
+  resources :bruse_files
 
   resources :tags, except: :new
 
@@ -41,4 +41,8 @@ Rails.application.routes.draw do
   # search
   post '/search', to: 'search#find', :defaults => { :format => 'json' }, as: 'search_find'
   get '/search', to: 'search#home', as: 'search'
+
+  # upload
+  post '/upload', to: 'bruse_files#upload', as: 'upload'
+
 end

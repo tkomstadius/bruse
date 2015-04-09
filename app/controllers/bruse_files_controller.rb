@@ -2,7 +2,8 @@ class BruseFilesController < ApplicationController
 	before_action :set_file , only: [:show, :edit, :destroy]
 
   def index
-   @bruse_files = BruseFile.all
+    @bruse_file = BruseFile.new
+    @bruse_files = BruseFile.all
   end
 
   def show
@@ -12,6 +13,14 @@ class BruseFilesController < ApplicationController
   end
 
   def new
+      @bruse_files = BruseFile.new
+      @bruse_files.foreign_ref = params[:file] # Assign a file like this, or
+  end
+
+  def upload
+      uploader = LocalFileUploader.new
+      uploader.store!(params[:bruse_file][:file])
+      redirect_to bruse_files_url
   end
 
   def destroy
