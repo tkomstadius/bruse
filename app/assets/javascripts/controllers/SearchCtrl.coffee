@@ -1,6 +1,7 @@
 @bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.search = ""
   $scope.files = []
+  $scope.view_list = true;
 
   # watches the search input field for changes
   $scope.$watch "search", (newTitle, oldTitle) ->
