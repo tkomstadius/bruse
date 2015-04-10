@@ -9,6 +9,7 @@ class Identity < ActiveRecord::Base
 
   # before actions
   before_destroy :delete_files
+  before_destroy :update_default_identity
 
   # Public: Creates or finds an identity from oauth information
   #
@@ -197,5 +198,10 @@ class Identity < ActiveRecord::Base
       self.bruse_files.each do |file|
         file.destroy
       end
+    end
+
+    def update_default_identity
+      user.default_identity_id = nil if user.default_identity_id == id
+      user.save!
     end
 end
