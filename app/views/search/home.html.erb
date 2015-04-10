@@ -2,12 +2,43 @@
   <h1>Search</h1>
   <p>If you want to search for tags add a "#" before your desired word, add a "." to search for filetypes and just add plain text for filename searches.</p>
   <input type="text" name="search" autocomplete="off" placeholder="Search" ng-model="search">
-  <div class="results">
-    <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
-      {{file.name}}
-    </div>
-    <div ng-if="files.length === 0 && search.length > 2">
+  <button ng-click="view_list = true">
+    List
+  </button>
+  <button ng-click="view_list = false">
+    Block
+  </button>
+
+  <div ng-if="files.length === 0 && search.length > 2">
       Aint nothing here for you. :(
-    </div>
   </div>
+
+  <div ng-if="view_list">
+    <table ng-if="files.length != 0">
+      <tr>
+        <th><a href="" ng-click="reverse=!reverse;order('name', reverse)">Filename</a></th>
+        <th>Filetype</th>
+        <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
+        <th>Tags</th>
+      </tr>
+      <tr ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+          <td>{{file.name}}</td>
+          <td>.{{getFiletype(file.filetype)}}</td>
+          <td>{{file.date}}</td>
+          <td><ul ng-repeat="tag in file.tags"><li>#{{tag.name}}</li></ul></td>
+      </tr>
+     </table>
+  </div>
+
+  <div ng-if="!view_list">
+    <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+      <div class="block">
+        <div>{{file.name}}</div>
+        <div>{{file.date}}</div>
+        <div ng-repeat="tag in file.tags">{{tag.name}}</div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
