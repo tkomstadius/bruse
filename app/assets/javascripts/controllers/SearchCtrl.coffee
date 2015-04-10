@@ -31,7 +31,8 @@
         $http.post('/search', searchObject).then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
-            $scope.files = response.data.files;   
+            $scope.files = response.data.files;
+            $scope.order('name', false) 
           else
             console.log "No results found"
             # write reponse to the current scope
