@@ -36,6 +36,4 @@ Rails.application.routes.draw do
   post '/search', to: 'search#find', :defaults => { :format => 'json' }, as: 'search_find'
   get '/search', to: 'search#home', as: 'search'
 
-  # upload
-
 end

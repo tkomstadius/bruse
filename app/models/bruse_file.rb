@@ -5,6 +5,8 @@ class BruseFile < ActiveRecord::Base
   belongs_to :identity
 	attr_accessor :tagname
 
+  # in "read me" for carrierwave it says: mount the uploader
+  # but it's work without mounting
   #mount_uploader :foreign_ref, LocalFileUploader
 
 
