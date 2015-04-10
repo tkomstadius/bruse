@@ -49,11 +49,13 @@
   ###
   $scope.add = (file) ->
     if file.is_dir and !file.contents
+      file.loading = true
       FileHandler.get($scope.identity.id, file.path).then((data)->
         file.contents = data
         _.map data, (remote_file) ->
           findFile $scope.bruse_files, remote_file
         addFiles(file)
+        file.loading = false
         )
     else if file.is_dir
       addFiles(file)
@@ -66,8 +68,10 @@
     * Used to add files from folders
   ###
   addFiles = (file)->
+    file.loading = true
     file.contents.forEach((f) ->
       $scope.add(f)
+      file.loading = false
       return
       )
     file.added = true
