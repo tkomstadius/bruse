@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
 
   # before/after hooks
   before_destroy :delete_identities
-  after_create :send_welcome_email
   after_create :append_local_identity
   after_update :append_local_identity
 
