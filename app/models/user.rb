@@ -16,8 +16,7 @@ class User < ActiveRecord::Base
 
   # before/after hooks
   before_destroy :delete_identities
-  after_create :append_local_identity
-  after_update :append_local_identity
+  after_save :append_local_identity
 
   # methods
 
@@ -79,7 +78,7 @@ class User < ActiveRecord::Base
         local_identity = Identity.new(service: 'local',
                                       token: SecureRandom.hex(5),
                                       name: 'Bruse',
-                                      uid: SecureRandom.hex(5))
+                                      uid: SecureRandom.uuid)
         identities << local_identity
       end
     end
