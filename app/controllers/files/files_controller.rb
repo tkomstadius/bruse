@@ -1,7 +1,7 @@
 class Files::FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
-  before_filter :set_identity, except: [:download, :download_url]
+  before_filter :set_identity, except: [:download, :download_url, :show_all]
   before_filter :set_file, only: [:destroy, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
@@ -39,6 +39,7 @@ class Files::FilesController < ApplicationController
     if @file.identity == @identity && @identity.user == current_user && @file.destroy
       @message = "File deleted."
       @file = nil
+      redirect_to bruse_files_url
     else
       @message = "Could not delete file!"
     end
@@ -54,6 +55,7 @@ class Files::FilesController < ApplicationController
     # Protected: Set current identity from request parameters.
     def set_identity
       @identity = Identity.find(params[:identity_id])
+
       # make sure the identity belongs to this user
       unless @identity.user == current_user
         redirect_to root_url
