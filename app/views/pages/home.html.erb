@@ -3,7 +3,10 @@
   <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
-  <%= link_to 'Sign out user', destroy_user_session_path, method: :delete %>
+ <%= render 'search/home' %>
+<% end %>
+
+<!-- <%= link_to 'Sign out user', destroy_user_session_path, method: :delete %>
   <%= current_user.name %>
   <ul>
     <% current_user.identities.each do |id| %>
@@ -13,4 +16,4 @@
       </li>
     <% end %>
   </ul>
-<% end %>
+  -->
