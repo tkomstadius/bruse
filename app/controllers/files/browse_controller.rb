@@ -30,13 +30,15 @@ class Files::BrowseController < Files::FilesController
 
 
     file = BruseFile.new
+
     file.foreign_ref = uploader.file.file
+    file.name = uploader.filename
+    file.filetype = uploader.content_type
+    file.identity = current_user.identities.first
 
-    # file.name = uploader.filename
-    # file.type = uploader.content_type
-
-
-
-    redirect_to bruse_files_path
+    if file.save! #current_user.idenities.find_by(:name => "local").bruse_files << file
+      flash[:notice] = "#{file.name} was saved!"
+      redirect_to bruse_files_path
+    end
   end
 end

@@ -18,5 +18,13 @@
 # Ignore application source maps
 public/assets/source_maps/
 
+
 # Ignore user uploads files
 uploads/*
+
+# Ignore user download files
+download/*
+
+# Ignore the contents of usercontent/
+usercontent/
+

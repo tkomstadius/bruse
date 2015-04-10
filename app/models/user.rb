@@ -14,8 +14,9 @@ class User < ActiveRecord::Base
                     on: :create
   validates_presence_of :name, :on => :create
 
-  # before actions
+  # before/after hooks
   before_destroy :delete_identities
+  after_save :append_local_identity
 
   # methods
 
@@ -66,4 +67,19 @@ class User < ActiveRecord::Base
       id.destroy
     end
   end
+
+  private
+    # Private: Create an identity for local file handling when user is created.
+    # Future: This should only happen if user has a password.
+    #
+    # Returns nothing
+    def append_local_identity
+      if own_password && !identities.exists?(service: 'local')
+        local_identity = Identity.new(service: 'local',
+                                      token: SecureRandom.hex(5),
+                                      name: 'Bruse',
+                                      uid: SecureRandom.uuid)
+        identities << local_identity
+      end
+    end
 end
