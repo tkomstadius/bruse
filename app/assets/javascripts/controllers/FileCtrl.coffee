@@ -7,11 +7,11 @@
   $scope.identity = IDENTITY_PARAMS
 
   # load existing BruseFiles on page load
-  FileHandler.collect($scope.identity.id).then((data) ->
+  FileHandler.collect($scope.identity).then((data) ->
     $scope.bruse_files = data
 
     # when we have loaded BruseFiles, load root remote files
-    FileHandler.get($scope.identity.id, '/').then((data) ->
+    FileHandler.get($scope.identity, '/').then((data) ->
       # append data to files
       $scope.files = data
       # append BruseFile info to our file list
@@ -29,12 +29,12 @@
     # set this folder as expanded
     file.expand = !file.expand
 
-    # if we haven't allready, load file info from dropbox
+    # if we haven't already, load file info from dropbox
     unless file.contents and file.contents.length > 0
       file.loading = true
-      FileHandler.get($scope.identity.id, file.path).then((data) ->
+      FileHandler.get($scope.identity, file.path).then((data) ->
         file.contents = data
-        # find all the allready added files!
+        # find all the already added files!
         _.map data, (remote_file) ->
           findFile $scope.bruse_files, remote_file
         file.loading = false
@@ -48,7 +48,8 @@
   ###
   $scope.add = (file) ->
     file.loading = true
-    FileHandler.put($scope.identity.id, file).then((data) ->
+    
+    FileHandler.put($scope.identity, file).then((data) ->
       # add file to list of existing files
       $scope.bruse_files = $scope.bruse_files.concat(data)
       # append bruse_file to this remote file
@@ -64,13 +65,13 @@
     if file.bruse_file
       if file.is_dir
         # use delete_folder method!
-        FileHandler.delete_folder($scope.identity.id, file).then((data) ->
+        FileHandler.delete_folder($scope.identity, file).then((data) ->
           file.bruse_file = data
           console.log 'path: ', file.path
           file.loading = false
           )
       else
-        FileHandler.delete($scope.identity.id, file).then((data) ->
+        FileHandler.delete($scope.identity, file).then((data) ->
           file.bruse_file = data
           file.loading = false
           )

@@ -63,6 +63,7 @@ class Identity < ActiveRecord::Base
     # is it a dropbox service? return requested path!
     return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
     # is it a google service? return requested path!
+    byebug
     return @result.data.items if service.downcase.include? "google"
   end
 
@@ -77,7 +78,6 @@ class Identity < ActiveRecord::Base
   #
   # Returns the file/list of files
   def add_file(file_params)
-    byebug
     # append a new file to our the current identity's list of bruse_files
     file = BruseFile.new(file_params)
     if bruse_files << file

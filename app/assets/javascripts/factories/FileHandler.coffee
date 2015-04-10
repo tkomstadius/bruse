@@ -4,9 +4,9 @@
     #
     # Collect saved BruseFiles from this identity
     #
-    collect: (identity_id) ->
+    collect: (identity) ->
       # send a get request
-      promise = $http.get('/service/'+identity_id+'/files.json')
+      promise = $http.get('/service/'+identity.id+'/files.json')
         .then((response) ->
           # return files
           response.data.files
@@ -19,10 +19,10 @@
     #
     # Delete file
     #
-    delete: (identity_id, file) ->
+    delete: (identity, file) ->
       # post it to our backend!
       # promise gets returned
-      promise = $http.delete('/service/'+identity_id+'/files/'+file.bruse_file.id+'.json')
+      promise = $http.delete('/service/'+identity.id+'/files/'+file.bruse_file.id+'.json')
         .then((response) ->
           # file should have been deleted, return what the server says about
           # this file
@@ -37,10 +37,10 @@
     #
     # Delete folder
     #
-    delete_folder: (identity_id, file) ->
+    delete_folder: (identity, file) ->
       # post it to our backend!
       # promise gets returned
-      promise = $http.post('/service/'+identity_id+'/files/folder/delete.json', file)
+      promise = $http.post('/service/'+identity.id+'/files/folder/delete.json', file)
         .then((response) ->
           # folder should have been deleted, return what the server says about
           # this folder
@@ -55,9 +55,9 @@
     #
     # Get files from remote service
     #
-    get: (identity_id, path) ->
+    get: (identity, path) ->
       # the promise gets returned
-      promise = $http.get('/service/'+identity_id+'/files/browse.json?path=' + path)
+      promise = $http.get('/service/'+identity.id+'/files/browse.json?path=' + path)
         .then((response) ->
           console.log 'Collecting files...', path
           data = response.data.file
@@ -84,25 +84,51 @@
     #
     # Save file
     #
-    put: (identity_id, file) ->
+    put: (identity, file) ->
 
       console.log 'Saving file...', file.path
+      if identity.service.toLowerCase().indexOf('dropbox') > -1
+        # prepare post data from file
+        post_data =
+          name: file.name
+          # dropbox likes the full paths! save it as foreign ref.
+          foreign_ref: file.path
+          filetype: file.mime_type
+          # send info wether or not this is a directory to server
+          is_dir: file.is_dir
+          # store some useful meta data
+          meta:
+            size: file.bytes
+            modified: file.modified
 
-      # prepare post data from file
-      post_data =
-        name: file.name
-        # dropbox likes the full paths! save it as foreign ref.
-        foreign_ref: file.path
-        filetype: file.mime_type
-        # send info wether or not this is a directory to server
-        is_dir: file.is_dir
-        # store some useful meta data
-        meta:
-          size: file.bytes
-          modified: file.modified
-      # post it to our backend!
+      else if identity.service.toLowerCase().indexOf('google') > -1
+        console.log 'You are using DRIVE!!!'
+        post_data =
+          name: file.name
+          # CHANGE THIS SHIT SO THAT IT IS SUITABLE!
+          # dropbox likes the full paths! save it as foreign ref.
+          foreign_ref: file.path
+          filetype: file.mime_type
+          # send info wether or not this is a directory to server
+          is_dir: file.is_dir
+          # store some useful meta data
+          meta:
+            size: file.bytes
+            modified: file.modified
+
+      # post it to our backend!post_data =
+          name: file.name
+          # dropbox likes the full paths! save it as foreign ref.
+          foreign_ref: file.path
+          filetype: file.mime_type
+          # send info wether or not this is a directory to server
+          is_dir: file.is_dir
+          # store some useful meta data
+          meta:
+            size: file.bytes
+            modified: file.modified
       # promise gets returned
-      promise = $http.post('/service/'+identity_id+'/files.json', post_data)
+      promise = $http.post('/service/'+identity.id+'/files.json', post_data)
         # wait for server to be done
         .then((response) ->
           # return bruse file data
@@ -117,8 +143,8 @@
     #
     # Download file
     #
-    download: (identity_id, file_id) ->
-      promsie = $http.get('/service/'+identity_id+'/files/download/'+file_id+'.json')
+    download: (identity, file_id) ->
+      promsie = $http.get('/service/'+identity.id+'/files/download/'+file_id+'.json')
         .then((response) ->
           response.data
           )
