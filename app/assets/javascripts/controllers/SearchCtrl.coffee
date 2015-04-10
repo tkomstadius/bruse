@@ -42,16 +42,6 @@
           )        
       else
         $scope.files = []
-
-
-      i = 0
-      j = 0
-      while i < $scope.files.length
-        console.log $scope.files[i]
-        while j < $scope.files[i].tags.length 
-          console.log $scope.files[i].tags[j]
-          j++
-        i++
     
   # Gets called when a file is clicked
   $scope.download = (identity_id, file_id) ->
