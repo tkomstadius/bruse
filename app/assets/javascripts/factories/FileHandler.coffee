@@ -67,9 +67,10 @@
           # the child element.
           _.map(data, (child) ->
             # split path into an array with '/' as sepparator
-            names = child.path.split '/'
-            # apend the file name to child
-            child.name = names[names.length-1]
+            unless child.name
+              names = child.path.split '/' if child.path
+              # apend the file name to child
+              child.name = names[names.length-1]
             return child
             )
           return data

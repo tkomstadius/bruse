@@ -63,9 +63,7 @@ class Identity < ActiveRecord::Base
     # is it a dropbox service? return requested path!
     return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
     # is it a google service? return requested path!
-    byebug
     return @result.data.items if service.downcase.include? "google"
-    byebug
   end
 
   # Add new files to the current identity
@@ -79,6 +77,7 @@ class Identity < ActiveRecord::Base
   #
   # Returns the file/list of files
   def add_file(file_params)
+    byebug
     # append a new file to our the current identity's list of bruse_files
     file = BruseFile.new(file_params)
     if bruse_files << file
@@ -101,6 +100,7 @@ class Identity < ActiveRecord::Base
   #
   # Returns list of added files
   def add_folder_recursive(folder_params)
+    byebug
     folder = browse(folder_params[:foreign_ref])
 
     # prepare file array
@@ -137,6 +137,8 @@ class Identity < ActiveRecord::Base
 
     # return file data
     @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
+    byebug
+    @client.get_file(foreign_ref) if service.downcase.include? "google"
   end
 
   private
@@ -166,7 +168,15 @@ class Identity < ActiveRecord::Base
         @result = @client.execute(
             api_method: @drive.files.list
           )
-        byebug
+        # redo results parameter item to name! So that it can be accessed like dropbox.
+        @result.data.items.map{|f| f["name"] = f["title"]}
+
+        # @result.data.items.map{|file| file["name"] = file.delete("title")}
+        # @result.data.items.each{|file| file[:name] = :title}
+        # @result.data.items do |file|
+        #   params[:file]['name'] = params[:file][:title]
+        #   params[:file].delete(:title)
+        # end
       end
     end
 
@@ -179,6 +189,7 @@ class Identity < ActiveRecord::Base
     #   file_params = extract_file_params(untouched)
     #   # => {name: '', foreign_ref: ''}
     def extract_file_params(pristine)
+      byebug
       if service.downcase.include? "dropbox"
         file_params = {
           # extract name from path
@@ -188,6 +199,7 @@ class Identity < ActiveRecord::Base
           # save file type
           :filetype => pristine['mime_type']
         }
+        byebug
         # return file params
         file_params
       end
@@ -205,6 +217,8 @@ class Identity < ActiveRecord::Base
     #
     # Returns boolean
     def is_dir?(pristine)
+      byebug
       return pristine['is_dir'] if service.downcase.include? "dropbox"
+      byebug
     end
 end
