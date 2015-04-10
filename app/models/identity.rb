@@ -26,8 +26,9 @@ class Identity < ActiveRecord::Base
   def self.find_or_create_from_oauth(auth_hash)
     identity = self.find_by(:uid => auth_hash[:uid], :service => auth_hash[:provider])
     if !identity
-      provider = (auth_hash[:provider].include? 'dropbox') ? 'Dropbox' :
-        (auth_hash[:provider].include? 'google') ? 'Google Drive' : auth_hash[:provider]
+      provider = "Dropbox" if auth_hash[:provider].downcase.include? 'dropbox'
+      provider = "Google Drive" if auth_hash[:provider].downcase.include? 'google'
+
       identity = Identity.new(:uid => auth_hash[:uid],
                               :token   => auth_hash[:credentials][:token],
                               :service => auth_hash[:provider],
@@ -126,15 +127,16 @@ class Identity < ActiveRecord::Base
   # foreign_ref - the service's way to keep track of the file
   #
   # Examples
-  #   file_data = @identity.get_file(path_to_img)
+  #   file_data = @identity.get_file(path_to_image)
   #   # => <image data>
   #
-  # Returns the actual file
+  # Returns the actual file data
   def get_file(foreign_ref)
     set_client
 
     # return file data
-    @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
+    return @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
+    return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 
   private
@@ -149,19 +151,19 @@ class Identity < ActiveRecord::Base
     #
     # Returns the client
     def set_client
-      if service.downcase.include? "dropbox"
-        @client ||= DropboxClient.new(token)
-      end
+      @client ||= DropboxClient.new(token) if service.downcase.include? "dropbox"
     end
 
     # Extract BruseFile params from pristine file object from service
     #
     # pristine  - untouched service file object
     #
-    # Exampes
+    # Examples
     #
     #   file_params = extract_file_params(untouched)
     #   # => {name: '', foreign_ref: ''}
+    #
+    # Returns the file params, prepared for db insertion
     def extract_file_params(pristine)
       if service.downcase.include? "dropbox"
         file_params = {
@@ -173,7 +175,7 @@ class Identity < ActiveRecord::Base
           :filetype => pristine['mime_type']
         }
         # return file params
-        file_params
+        return file_params
       end
     end
 
