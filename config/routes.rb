@@ -30,12 +30,12 @@ Rails.application.routes.draw do
     end
     get '/get/:download_hash/:name', to: 'download#download', :via => :all
     get '/bruse_files', to: 'files#show_all', as: 'bruse_files'
+    post '/upload', to: 'browse#upload', as: 'upload'
   end
   # search
   post '/search', to: 'search#find', :defaults => { :format => 'json' }, as: 'search_find'
   get '/search', to: 'search#home', as: 'search'
 
   # upload
-  post '/upload', to: 'bruse_files#upload', as: 'upload'
 
 end

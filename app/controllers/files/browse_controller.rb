@@ -1,5 +1,6 @@
 class Files::BrowseController < Files::FilesController
   skip_before_filter :set_file
+  skip_before_filter :set_identity, only: :upload
 
   def browse
     path = params[:path] || '/'
@@ -19,5 +20,23 @@ class Files::BrowseController < Files::FilesController
         @success = false unless file.destroy!
       end
     end
+  end
+
+  def upload
+    uploader = LocalFileUploader.new
+
+
+    uploader.store!(params[:bruse_file][:file])
+
+
+    file = BruseFile.new
+    file.foreign_ref = uploader.file.file
+
+    # file.name = uploader.filename
+    # file.type = uploader.content_type
+
+
+
+    redirect_to bruse_files_path
   end
 end
