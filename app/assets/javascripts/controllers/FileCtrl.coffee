@@ -90,7 +90,7 @@
       file.added = false
       for i in [0..$scope.new_files.length]
         if $scope.new_files[i] == file
-          $scope.new_files = $scope.new_files.splice(i, 1)
+          $scope.new_files.splice(i, 1)
           break
 
   ###*
