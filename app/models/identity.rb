@@ -169,7 +169,15 @@ class Identity < ActiveRecord::Base
             api_method: @drive.files.list
           )
         # redo results parameter item to name! So that it can be accessed like dropbox.
-        @result.data.items.map{|f| f["name"] = f["title"]}
+        @result.data.items.map{ |f| f["name"] = f["title"] }
+        # @result.data.items.map{ |f| f["is_dir"] = false }
+        @result.data.items.each do |f| 
+          if f.mime_type.include? "folder"
+            f["is_dir"] = true
+          else
+            f["is_dir"] = false
+          end
+        end
 
         # @result.data.items.map{|file| file["name"] = file.delete("title")}
         # @result.data.items.each{|file| file[:name] = :title}

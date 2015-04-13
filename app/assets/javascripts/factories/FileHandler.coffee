@@ -94,7 +94,7 @@
           # dropbox likes the full paths! save it as foreign ref.
           foreign_ref: file.path
           filetype: file.mime_type
-          # send info wether or not this is a directory to server
+          # send info whether or not this is a directory to server
           is_dir: file.is_dir
           # store some useful meta data
           meta:
@@ -105,28 +105,17 @@
         console.log 'You are using DRIVE!!!'
         post_data =
           name: file.name
-          # CHANGE THIS SHIT SO THAT IT IS SUITABLE!
-          # dropbox likes the full paths! save it as foreign ref.
-          foreign_ref: file.path
+          foreign_ref: file.downloadUrl
           filetype: file.mime_type
-          # send info wether or not this is a directory to server
+          # send info whether or not this is a directory to server
           is_dir: file.is_dir
           # store some useful meta data
           meta:
-            size: file.bytes
-            modified: file.modified
+            size: file.fileSize
+            modified: file.modifiedDate
 
-      # post it to our backend!post_data =
-          name: file.name
-          # dropbox likes the full paths! save it as foreign ref.
-          foreign_ref: file.path
-          filetype: file.mime_type
-          # send info wether or not this is a directory to server
-          is_dir: file.is_dir
-          # store some useful meta data
-          meta:
-            size: file.bytes
-            modified: file.modified
+      # post it to our backend!
+          
       # promise gets returned
       promise = $http.post('/service/'+identity.id+'/files.json', post_data)
         # wait for server to be done
@@ -144,7 +133,7 @@
     # Download file
     #
     download: (identity, file_id) ->
-      promsie = $http.get('/service/'+identity.id+'/files/download/'+file_id+'.json')
+      promise = $http.get('/service/'+identity.id+'/files/download/'+file_id+'.json')
         .then((response) ->
           response.data
           )
