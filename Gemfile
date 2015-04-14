@@ -77,6 +77,7 @@ gem 'google-api-client'
 # File uploading
 gem 'carrierwave'
 
+
 ## Developtment tools
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

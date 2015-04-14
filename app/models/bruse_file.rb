@@ -7,7 +7,9 @@ class BruseFile < ActiveRecord::Base
 
   # in "read me" for carrierwave it says: mount the uploader
   # but it's work without mounting
-  #mount_uploader :foreign_ref, LocalFileUploader
+
+
+ # mount_uploader :foreign_ref, LocalFileUploader
 
 
 	validates :filetype,     presence: true

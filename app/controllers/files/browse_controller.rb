@@ -23,6 +23,7 @@ class Files::BrowseController < Files::FilesController
   end
 
   def upload
+
     uploader = LocalFileUploader.new
 
 
