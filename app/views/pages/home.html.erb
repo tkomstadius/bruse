@@ -3,6 +3,6 @@
   <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
- <%= render 'search/home' %>
+  <%= render 'search/home' %>
 <% end %>
 
