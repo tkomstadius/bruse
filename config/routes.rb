@@ -19,15 +19,16 @@ Rails.application.routes.draw do
   # Provider
   delete '/provider/:id', to: 'identities#destroy', as: 'destroy_provider'
 
-  # files
+  # all controllers located in the files folder
   scope module: :files do
     scope '/service/:identity_id' do
-      # delete folder
-      post '/files/folder/delete', to: 'browse#destroy_folder'
+      # get folder contents
       get '/files/browse', to: 'browse#browse'
+      # get a url used for downloading a file
       get '/files/download/:id', to: 'download#download_url'
       resources :files, except: :update, path_names: { new: 'add' }
     end
+    # downloads a file
     get '/get/:download_hash/:name', to: 'download#download', :via => :all
     get '/bruse_files', to: 'files#show_all', as: 'bruse_files'
     post '/upload', to: 'browse#upload', as: 'upload'

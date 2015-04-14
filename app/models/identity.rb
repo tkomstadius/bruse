@@ -8,6 +8,7 @@ class Identity < ActiveRecord::Base
   validates_presence_of [:uid, :token, :service, :name], :on => :create
 
   # before actions
+  before_destroy :delete_files
   before_destroy :update_default_identity
 
   # Public: Creates or finds an identity from oauth information
@@ -194,6 +195,13 @@ class Identity < ActiveRecord::Base
     # Returns boolean
     def is_dir?(pristine)
       return pristine['is_dir'] if service.downcase.include? "dropbox"
+    end
+
+    # Private: Deletes all files owned by the identity on destroy.
+    def delete_files
+      self.bruse_files.each do |file|
+        file.destroy
+      end
     end
 
     def update_default_identity

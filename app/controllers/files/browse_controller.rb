@@ -12,15 +12,6 @@ class Files::BrowseController < Files::FilesController
     @file = @identity.browse(path)
   end
 
-  def destroy_folder
-    if @identity.user == current_user
-      files = @identity.bruse_files.where("foreign_ref LIKE (?)", params[:path] + '%')
-      @success = true
-      files.each do |file|
-        @success = false unless file.destroy!
-      end
-    end
-  end
 
   def upload
 
@@ -43,4 +34,5 @@ class Files::BrowseController < Files::FilesController
       redirect_to bruse_files_path
     end
   end
+
 end

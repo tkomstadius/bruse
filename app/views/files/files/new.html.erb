@@ -10,11 +10,11 @@
   <a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
 
   <i class="fa fa-circle-o-notch fa-spin" ng-if="file.loading"></i>
-  <span class="c-filelist__file__tools">
-    <a href="#" ng-click="add(file)" class="tool" ng-if="!file.bruse_file">
+  <span class="c-filelist__file__tools" ng-if="!file.bruse_file">
+    <a href="#" ng-click="add(file)" class="tool" ng-if="!file.added">
       <%= fa_icon 'plus-square-o' %>
     </a>
-    <a href="#" ng-click="remove(file)" class="tool" ng-if="file.bruse_file">
+    <a href="#" ng-click="remove(file)" class="tool" ng-if="file.added">
       <%= fa_icon 'minus-square-o' %>
     </a>
   </span>
@@ -33,6 +33,10 @@
   <h2>
     Files <span ng-if="loading">Loading...</span>
   </h2>
+
+  <button ng-if="new_files.length > 0" ng-click="save()">
+    Save files!
+  </button>
 
   <ul class="c-filelist">
     <li ng-repeat="file in files" ng-include="'fileTree'" class="c-filelist__file"
