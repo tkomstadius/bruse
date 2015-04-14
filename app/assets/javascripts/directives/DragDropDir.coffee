@@ -1,5 +1,5 @@
 # TODO: check all the names
-@bruseApp.directive('bruseDrop', () ->
+@bruseApp.directive('bDrop', () ->
   # restriction to only match the attribute name
   restrict: 'A'
   # create an isolate scope to map the outer scope to our directives inner scope
@@ -24,4 +24,15 @@
     # bind to events dragover and dragenter
     element.bind 'dragover', processDragOverOrEnter
     element.bind 'dragenter', processDragOverOrEnter 
+
+    # bind to drop event on the element, trigger FileReader API
+    # on drop events we stop browser and read the dropped file via the FileReader
+    # the resulting dropped file is bound to the image property of the scope of this directive
+    event?.preventDefault()
+    reader.onload = (evt) ->
+      # TODO: add some security checks?
+    file = event.dataTransfer.files[0]
+    # variable info like name = file.name?
+    reader.readAsDataURL(file)
+    return false
 )
