@@ -1,7 +1,7 @@
 class Files::FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
-  before_filter :set_identity, except: [:download, :download_url]
+  before_filter :set_identity, except: [:download, :download_url, :show_all]
   before_filter :set_file, only: [:destroy, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
