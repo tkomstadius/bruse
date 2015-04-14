@@ -5,7 +5,7 @@
   # create an isolate scope to map the outer scope to our directives inner scope
   scope: {
     # use = when the attribute name is the same as the value in directive
-    file: '='
+    file: '=' # used as: file="", else use var: '=file'
     fileName: '='
   }
   # use link when we want to modify the DOM
