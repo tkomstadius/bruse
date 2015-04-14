@@ -7,15 +7,12 @@
   # watches the search input field for changes
   $scope.$watch "search", (newTitle, oldTitle) ->
     if angular.isDefined(newTitle) && angular.isDefined(oldTitle)
-      #console.log $scope.search;
 
       if $scope.search != ""
-        # console.log typeof $scope.search
         temp = $scope.search.split(" ")
         hashTags = []
         types = []
         docName = []
-        #console.log temp;
         temp.forEach (element, index, array) ->
           if element.charAt(0) == "#" && element.length > 1
             hashTags.push element.slice(1)
