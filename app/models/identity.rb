@@ -80,6 +80,7 @@ class Identity < ActiveRecord::Base
   def add_file(file_params)
     # append a new file to our the current identity's list of bruse_files
     file = BruseFile.new(file_params)
+    byebug
     if bruse_files << file
       # return file
       file
@@ -138,7 +139,7 @@ class Identity < ActiveRecord::Base
     # return file data
     @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
     byebug
-    @client.get_file(foreign_ref) if service.downcase.include? "google"
+    @client.get_file('https://www.googleapis.com/drive/v2/files/'+foreign_ref+'alt=media') if service.downcase.include? "google"
   end
 
   private
@@ -170,6 +171,10 @@ class Identity < ActiveRecord::Base
           )
         # redo results parameter item to name! So that it can be accessed like dropbox.
         @result.data.items.map{ |f| f["name"] = f["title"] }
+        # @result.data.items.map{ |f| f["path"] = f["downloadUrl"] }
+        # @result.data.items.map{ |f| f["bytes"] = f["fileSize"] }
+        # @result.data.items.map{ |f| f["modified"] = f["modifiedDate"] }
+        # @result.data.items.map{ |f| f["mime_type"] = f["mimeType"] }
         # @result.data.items.map{ |f| f["is_dir"] = false }
         @result.data.items.each do |f| 
           if f.mime_type.include? "folder"

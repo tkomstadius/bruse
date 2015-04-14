@@ -101,12 +101,13 @@
             size: file.bytes
             modified: file.modified
 
+        # console.log(post_data)
+
       else if identity.service.toLowerCase().indexOf('google') > -1
-        console.log 'You are using DRIVE!!!'
         post_data =
           name: file.name
-          foreign_ref: file.downloadUrl
-          filetype: file.mime_type
+          foreign_ref: file.id
+          filetype: file.mimeType
           # send info whether or not this is a directory to server
           is_dir: file.is_dir
           # store some useful meta data
