@@ -1,0 +1,3 @@
+@bruseApp.directive('fileDrop', () ->
+
+)
