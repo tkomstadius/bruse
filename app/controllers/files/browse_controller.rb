@@ -14,24 +14,19 @@ class Files::BrowseController < Files::FilesController
 
 
   def upload
-
     uploader = LocalFileUploader.new
 
-
     uploader.store!(params[:bruse_file][:file])
-
 
     file = BruseFile.new
 
     file.foreign_ref = uploader.file.file
-    file.name = uploader.filename
+    file.name = params[:bruse_file][:file].original_filename
     file.filetype = uploader.content_type
-    #temporary solution
-    file.identity = current_user.identities.first
 
+    file.identity = current_user.identities.find_by(:service => "local")
 
-
-    if file.save #current_user.identities.find_by(:name => "local").bruse_files << file
+    if file.save #file.identity.bruse_files << file
         flash[:notice] = "#{file.name} was saved!"
         redirect_to bruse_files_path
     else

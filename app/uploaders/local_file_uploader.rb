@@ -17,6 +17,10 @@ class LocalFileUploader < CarrierWave::Uploader::Base
     "../usercontent"
   end
 
+  def filename
+    "#{SecureRandom.uuid}" if original_filename.present?
+  end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:
