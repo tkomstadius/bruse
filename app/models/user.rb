@@ -60,13 +60,20 @@ class User < ActiveRecord::Base
     user
   end
 
-  protected
-
-  def delete_identities
-    self.identities.each do |id|
-      id.destroy
-    end
+  # Public: get the (if any) local identity
+  #
+  # Returns the identity or nil
+  def local_identity
+    identities.find_by(service: "local")
   end
+
+  protected
+    # Protected: Delete all the identities atteched to this user
+    def delete_identities
+      self.identities.each do |id|
+        id.destroy
+      end
+    end
 
   private
     # Private: Create an identity for local file handling when user is created.
