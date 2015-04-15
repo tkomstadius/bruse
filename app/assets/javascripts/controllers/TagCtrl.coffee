@@ -1,4 +1,7 @@
-@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', 'TagHandler', ($scope, $rootScope, TagHandler) ->
+@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'TagHandler', ($scope, $rootScope, $location, $routeParams, TagHandler) ->
+  if !$rootScope.new_files || !$rootScope.new_files.length
+    $location.path('/service/'+$routeParams.identity_id+'/files/add')
+
   $scope.files = $rootScope.new_files
   $scope.tags = ""
 
