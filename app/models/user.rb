@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   # relations
   has_many :identities
+  has_many :bruse_files, through: :identities
   belongs_to :default_identity, class_name: "Identity"
 
   # validations

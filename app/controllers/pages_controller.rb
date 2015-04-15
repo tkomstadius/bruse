@@ -8,7 +8,7 @@ class PagesController < ApplicationController
     if !current_user
       redirect_to root_url
     else
-      redirect_to profile_url
+      redirect_to search_url
     end
   end
 end
