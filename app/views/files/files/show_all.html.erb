@@ -43,14 +43,3 @@
   </tbody>
 </table>
 
-
-<br/>
-<ul>
-  <% current_user.identities.each do |id| %>
-    <li>
-      <%= link_to 'Add more files', new_file_path(identity_id: id.id) %>
-    </li>
-  <% end %>
-
-  <li><%= link_to 'Search File', search_path %></li>
-</ul>
