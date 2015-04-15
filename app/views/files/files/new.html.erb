@@ -1,16 +1,13 @@
-<script type="text/javascript">
-  // global js object to give frontend access to current identity
-  IDENTITY_PARAMS = {
-    id: <%= @identity.id %>
-  };
-</script>
-
 <script type="text/ng-template" id="fileTree">
  <%= render 'files/files/fileTree' %>
 </script>
 
 <script type="text/ng-template" id="fileBrowse">
  <%= render 'files/files/fileBrowse' %>
+</script>
+
+<script type="text/ng-template" id="tagCreate">
+ <%= render 'tags/tagCreate' %>
 </script>
 
 <div ng-view></div>

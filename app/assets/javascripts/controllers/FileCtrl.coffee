@@ -1,11 +1,13 @@
-@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
+@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$rootScope', '$location', '$routeParams', (FileHandler, $scope, $rootScope, $location, $routeParams) ->
   $scope.files = []
   $scope.bruse_files = []
   $scope.new_files = []
   $scope.loading = true
 
   # get identity information from add view
-  $scope.identity = IDENTITY_PARAMS
+  $scope.identity = {
+    id: $routeParams.identity_id
+  };
 
   # load existing BruseFiles on page load
   FileHandler.collect($scope.identity.id).then((data) ->
@@ -97,6 +99,7 @@
    * save all files to db
   ###
   $scope.save = ->
+    $rootScope.new_files = $scope.new_files
     _.each $scope.new_files, (file, index) ->
       FileHandler.put($scope.identity.id, file).then((data) ->
         # add file to list of existing files
@@ -109,6 +112,8 @@
           console.log "done!"
         )
       $scope.new_files = _.without $scope.new_files, file
+
+    $location.path('/service/'+$scope.identity.id+'/files/add/tag')
 
 
   ###*

@@ -7,6 +7,11 @@
       templateUrl: 'fileBrowse',
       controller: 'FileCtrl'
     }).
+    when('/service/:identity_id/files/add/tag', {
+      path: 'tag',
+      templateUrl: 'tagCreate',
+      controller: 'TagCtrl'
+    }).
     otherwise({
       redirectTo: '/'
     })
