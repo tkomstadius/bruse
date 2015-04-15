@@ -38,7 +38,11 @@ class Files::FilesController < ApplicationController
     # make sure file belongs to current identity and delete file
     if @file.identity == @identity && @identity.user == current_user && @file.destroy
       @message = "File deleted."
-      @file = nil
+
+      if @file.identity.service == 'local'
+        File.delete(Rails.root + 'uploads/nil_class/heej/' + @file.name)
+      end
+      @file.destroy
       redirect_to bruse_files_url
     else
       @message = "Could not delete file!"

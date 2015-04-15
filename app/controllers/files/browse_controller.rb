@@ -29,9 +29,14 @@ class Files::BrowseController < Files::FilesController
     #temporary solution
     file.identity = current_user.identities.first
 
-    if file.save! #current_user.identities.find_by(:name => "local").bruse_files << file
-      flash[:notice] = "#{file.name} was saved!"
-      redirect_to bruse_files_path
+
+
+    if file.save #current_user.identities.find_by(:name => "local").bruse_files << file
+        flash[:notice] = "#{file.name} was saved!"
+        redirect_to bruse_files_path
+    else
+      flash[:notice] = "#{file.name} already exist !"
+        redirect_to bruse_files_path
     end
   end
 

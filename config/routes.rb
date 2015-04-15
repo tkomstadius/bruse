@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     # downloads a file
     get '/get/:download_hash/:name', to: 'download#download', :via => :all
     get '/bruse_files', to: 'files#show_all', as: 'bruse_files'
+   # delete '/bruse_files/:id', to: 'files#destroy', as: 'destroy_file'
     post '/upload', to: 'browse#upload', as: 'upload'
   end
   # search

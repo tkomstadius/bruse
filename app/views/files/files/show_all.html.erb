@@ -39,6 +39,7 @@
 
         <% end %></td>
         <td><%= link_to 'Add tag', new_tag_path(file) %></td>
+        <td><%= link_to 'Destroy', file_path(file.identity, file), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
       </tr>
     <% end %>
