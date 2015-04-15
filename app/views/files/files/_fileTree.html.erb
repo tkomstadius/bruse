@@ -1,0 +1,18 @@
+<!-- template for our file list -->
+{{file.name}}
+<a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
+
+<i class="fa fa-circle-o-notch fa-spin" ng-if="file.loading"></i>
+<span class="c-filelist__file__tools" ng-if="!file.bruse_file">
+  <a href="#" ng-click="add(file)" class="tool" ng-if="!file.added">
+    <%= fa_icon 'plus-square-o' %>
+  </a>
+  <a href="#" ng-click="remove(file)" class="tool" ng-if="file.added">
+    <%= fa_icon 'minus-square-o' %>
+  </a>
+</span>
+
+<ul ng-if="file.is_dir && file.expand && file.contents" class="c-filelist">
+  <li ng-repeat="file in file.contents" ng-include="'fileTree'" class="c-filelist__file"
+    ng-class="{'c-filelist__file--folder': file.is_dir}"></li>
+</ul>

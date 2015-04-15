@@ -20,6 +20,7 @@ class Files::FilesController < ApplicationController
   end
 
   def new
+    @base_href = true
   end
 
   def create

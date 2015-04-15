@@ -1,0 +1,16 @@
+<h1>
+  Hi, <%= current_user["name"] %>!
+</h1>
+
+<h2>
+  Files <span ng-if="loading">Loading...</span>
+</h2>
+
+<button ng-if="new_files.length > 0" ng-click="save()">
+  Save files!
+</button>
+
+<ul class="c-filelist">
+  <li ng-repeat="file in files" ng-include="'fileTree'" class="c-filelist__file"
+    ng-class="{'c-filelist__file--folder': file.is_dir}"></li>
+</ul>
