@@ -171,11 +171,19 @@ class Identity < ActiveRecord::Base
           )
         # redo results parameter item to name! So that it can be accessed like dropbox.
         @result.data.items.map{ |f| f["name"] = f["title"] }
+        # @result.data.items.map{ |f| f["isRoot"] = f.parents[0].isRoot }
         # @result.data.items.map{ |f| f["path"] = f["downloadUrl"] }
         # @result.data.items.map{ |f| f["bytes"] = f["fileSize"] }
         # @result.data.items.map{ |f| f["modified"] = f["modifiedDate"] }
         # @result.data.items.map{ |f| f["mime_type"] = f["mimeType"] }
         # @result.data.items.map{ |f| f["is_dir"] = false }
+        @result.data.items.each do |f| 
+          if f.parents[0]
+            f["isRoot"] = f.parents[0].isRoot
+          else
+            f["isRoot"] = true
+          end
+        end
         @result.data.items.each do |f| 
           if f.mime_type.include? "folder"
             f["is_dir"] = true
