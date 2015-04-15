@@ -32,7 +32,7 @@ class TagsController < ApplicationController
           format.json { render json: {:success => true}, status: :ok }
         else
           format.html { render :new, notice: 'Something went wrong' }
-          format.json { render json: @tag.errors, status: :unprocessable_entity }
+          format.json { render json: {:errors => @tag.errors, :success => false}, status: :unprocessable_entity }
         end
      end
   end

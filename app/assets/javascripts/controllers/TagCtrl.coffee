@@ -19,7 +19,7 @@
       file.new_tags = tagsForFile.concat tagsForAll
       if file.new_tags.length > 0
         TagHandler.put(file.bruse_file.id, file.new_tags).then((data)->
-          success = data
+          success = data.success
           )
       )
     window.location.replace('/bruse_files') if success
