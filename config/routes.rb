@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       # get a url used for downloading a file
       get '/files/download/:id', to: 'download#download_url'
       resources :files, except: :update, path_names: { new: 'add' }
+      get '/files/add/tag', to: 'files#new'
     end
     # downloads a file
     get '/get/:download_hash/:name', to: 'download#download', :via => :all
