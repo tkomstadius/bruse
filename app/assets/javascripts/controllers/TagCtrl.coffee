@@ -7,8 +7,13 @@
 
   $scope.save = ()->
     success = true
+    tagsForAll = _.compact $scope.tags.split ' '
+    ###
+    For each file, split the input field by space into an array.
+    Remove empty strings with the _.compact method.
+    And lastly combine two arrays with concat.
+    ###
     $scope.files.forEach((file)->
-      tagsForAll = _.compact $scope.tags.split ' '
       file.tags = "" if !file.tags
       tagsForFile = _.compact file.tags.split ' '
       file.new_tags = tagsForFile.concat tagsForAll
