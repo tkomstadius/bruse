@@ -16,7 +16,7 @@ class Files::FilesController < ApplicationController
   end
 
   def show_all
-    @bruse_files = BruseFile.all
+    @bruse_files = current_user.bruse_files
   end
 
   def new
