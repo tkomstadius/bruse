@@ -1,7 +1,7 @@
 # TODO: check all the names
 @bruseApp.controller('DragDropCtrl', ($scope) ->
     $scope.image = null
-    $scope.imageFileName = ''
+    # $scope.imageFileName = ''
 )
 
 @bruseApp.directive('bDrop', () ->
@@ -11,7 +11,7 @@
   scope: {
     # use = when the attribute name is the same as the value in directive
     file: '=' # used as: file="", else use var: '=file'
-    fileName: '='
+    # fileName: '='
   }
   # use link when we want to modify the DOM
   # scope - angular scope object
@@ -30,13 +30,14 @@
     console.log element
     console.log attrs
     validMimeTypes = attrs.bDrop
+    console.log validMimeTypes
 
-    isTypeValid = (type) ->
-      if validMimeTypes in [undefined, ''] or validMimeTypes.indexOf(type) > -1
-        true
-      else
-        alert "Invalid file type. File must be one of the following types #{validMimeTypes}"
-        false
+      #isTypeValid = (type) ->
+      #if validMimeTypes in [undefined, ''] or validMimeTypes.indexOf(type) > -1
+      #  true
+      #else
+      #  alert "Invalid file type. File must be one of the following types #{validMimeTypes}"
+      #  false
 
     # bind to events dragover and dragenter
     element.bind 'dragover', processDragOverOrEnter
@@ -50,18 +51,17 @@
         event.preventDefault()
       reader = new FileReader()
       reader.onload = (evt) ->
+        console.log evt
         # TODO: add some security checks?
-        if isTypeValid(type)
+        #if event.originalEvent.dataTransfer.files[0].type in validMimeTypes
           # update bindings
-          scope.$apply ->
-            console.log evt.target.result
-            scope.file = evt.target.result
-            scope.fileName = name if angular.isString scope.fileName
+        scope.$apply ->
+          scope.file = evt.target.result
+          scope.fileName = name if angular.isString scope.fileName
 
       file = event.originalEvent.dataTransfer.files[0]
-      console.log file
-      name = file.name
-      type = file.type
-      reader.readAsDataURL(file)
+      object = {name:file.name, type:file.type}
+      reader.readAsDataURL file
+      console.log object
       return false
 )

@@ -5,11 +5,11 @@
 <% else %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-drop="[image/jpeg, application/pdf]" file="image" file-name="imageFileName">
+    <div b-drop="[image/jpeg, application/pdf]" file="image">
       <span>Put stuff here</span>
     </div>
     <div>
-      <img ng-src="{{image}}"/>
+      <!-- <img ng-src="{{image}}"/> -->
       <span>{{imageFileName}}</span>
     </div>
   </div>
