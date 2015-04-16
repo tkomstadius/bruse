@@ -123,12 +123,12 @@ class Files::FilesController < ApplicationController
     # content   - the file content
     #
     # Returns a new BruseFile
-    def create_text_file(target, content)
+    def create_text_file(content)
       # generate file name
       fileref = SecureRandom.uuid
       local_file_name = Rails.root.join('usercontent', fileref)
       # write to file
-      IO.write(target, content)
+      IO.write(local_file_name, content)
       # create pritty file name
       name = content[0..10].downcase.gsub(/[^a-z0-9_\.]/, '_') + ".txt"
       # return new BruseFile
