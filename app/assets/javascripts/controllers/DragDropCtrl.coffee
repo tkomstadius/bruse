@@ -1,7 +1,7 @@
 # TODO: check all the names
 @bruseApp.controller('DragDropCtrl', ($scope) ->
-    $scope.image = null
-    # $scope.imageFileName = ''
+    $scope.fileObject = null
+    $scope.imageFile = null
 )
 
 @bruseApp.directive('bDrop', () ->
@@ -11,7 +11,7 @@
   scope: {
     # use = when the attribute name is the same as the value in directive
     file: '=' # used as: file="", else use var: '=file'
-    # fileName: '='
+    image: '='
   }
   # use link when we want to modify the DOM
   # scope - angular scope object
@@ -27,11 +27,7 @@
         event.preventDefault()
       (event.originalEvent or event).dataTransfer.effectAllowed = 'move'
       false
-    console.log scope
-    console.log element
-    console.log attrs
     validMimeTypes = attrs.bDrop
-    console.log validMimeTypes
 
       #isTypeValid = (type) ->
       #if validMimeTypes in [undefined, ''] or validMimeTypes.indexOf(type) > -1
@@ -59,6 +55,10 @@
           scope.file = evt.target.result
           # scope.fileName = name if angular.isString scope.fileName
           object.data = reader.result
+          if file.type == 'image/jpeg'
+            scope.image = evt.target.result
+          else
+            scope.image = null
           console.log reader.result
           console.log object
 
