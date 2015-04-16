@@ -5,7 +5,7 @@
   $scope.files = $rootScope.new_files
   $scope.tags = ""
 
-  $scope.save = ()->
+  $scope.save = ->
     success = true
     tagsForAll = _.compact $scope.tags.split ' '
     ###
@@ -13,12 +13,12 @@
     Remove empty strings with the _.compact method.
     And lastly combine two arrays with concat.
     ###
-    $scope.files.forEach((file)->
+    $scope.files.forEach((file) ->
       file.tags = "" if !file.tags
       tagsForFile = _.compact file.tags.split ' '
       file.new_tags = tagsForFile.concat tagsForAll
       if file.new_tags.length > 0
-        TagHandler.put(file.bruse_file.id, file.new_tags).then((data)->
+        TagHandler.put(file.bruse_file.id, file.new_tags).then((data) ->
           success = data.success
           )
       )
