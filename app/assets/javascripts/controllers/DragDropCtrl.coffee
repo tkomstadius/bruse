@@ -1,6 +1,6 @@
 # TODO: check all the names
 @bruseApp.controller('DragDropCtrl', ($scope) ->
-    $scope.image = null
+    $scope.image = ''
     $scope.imageFileName = ''
 )
 
@@ -26,12 +26,15 @@
         event.preventDefault()
       (event.originalEvent or event).dataTransfer.effectAllowed = 'move'
       false
-
+    console.log scope
+    console.log element
+    console.log attrs
     validMimeTypes = attrs.bDrop
 
     isTypeValid = (type) ->
-      if validMimeTypes in [undefined, ''] or validMimeTypes.indexOf(type) > -1
-        # return true if no mime types are provided
+      if file == undefined
+        false
+      else if validMimeTypes.indexOf(type) > -1
         true
       else
         alert "Invalid file type. File must be one of the following types #{validMimeTypes}"
@@ -52,14 +55,15 @@
       reader.onload = (evt) ->
         # TODO: add some security checks?
         if isTypeValid(type)
+          # update bindings
           scope.$apply ->
+            console.log evt.target.result
             scope.file = evt.target.result
             scope.fileName = name if angular.isString scope.fileName
-      if files?
-        console.log event.dataTransfer.files[0]
-        scope.file = event.dataTransfer.files[0]
-        name = file.name
-        type = file.type
-        reader.readAsDataURL(file)
+
+      file = event.dataTransfer.files[0]
+      name = file.name
+      type = file.type
+      reader.readAsDataURL(file)
       return false
 )

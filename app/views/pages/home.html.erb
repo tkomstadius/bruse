@@ -4,8 +4,8 @@
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
   <%= render 'search/home' %>
-  <div ng-controller="DragDropCtrl">
-    <div style="border:solid" b-drop="[image/jpeg]" file="image" file-name="imageFileName">
+  <div style="border:solid" ng-controller="DragDropCtrl">
+    <div b-drop="[image/jpeg, application/pdf]" file="image" file-name="imageFileName">
       <span>Put stuff here</span>
     </div>
     <div>
