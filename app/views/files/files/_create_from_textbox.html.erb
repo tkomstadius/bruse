@@ -1,6 +1,6 @@
 <% if current_user.local_identity %>
   <form ng-controller="CreateFromTextCtrl">
-    <div class="notice" ng-if="msg">{{msg}}</div>
+    <div class="notice" ng-if="message">{{message}}</div>
     <textarea placeholder="Paste/write your text here..." ng-model="text" ng-disabled="{{loading}}"></textarea>
     <button ng-click="save()" type="button">
       Save
