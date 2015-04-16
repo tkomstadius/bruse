@@ -37,17 +37,8 @@ class Files::FilesController < ApplicationController
   def create_from_text
     # check that current user has a local identity
     if current_user.local_identity
-      # generate file name
-      fileref = SecureRandom.uuid
-      local_file_name = Rails.root.join('usercontent', fileref)
-      # write to local file and create a nice filename from content
-      name = create_file(local_file_name, text_params["content"])
-      # save filetype
-      filetype = is_url?(text_params["content"]) ? "application/internet-shortcut" : "text/plain"
       # create the brusefile
-      @file = BruseFile.new(name: name,
-                            foreign_ref: fileref,
-                            filetype: filetype)
+      @file = create_file(text_params["content"])
 
       # insert our file on the users local identity
       if current_user.local_identity.bruse_files << @file
@@ -114,31 +105,36 @@ class Files::FilesController < ApplicationController
   private
     # Private: Create a text or url file containing content
     #
-    # target    - the file name
     # content   - the file content
     #
-    # Returns a pretty file name
-    def create_file(target, content)
+    # Returns a new BruseFile
+    def create_file(content)
       if is_url?(content)
         # return file name from url func
-        create_url_file(target, extract_url(content))
+        create_url_file extract_url content
       else
         # return file name from text func
-        create_text_file(target, content)
+        create_text_file content
       end
     end
 
     # Private: Create a text file containing content
     #
-    # target    - the file name
     # content   - the file content
     #
-    # Returns a pretty file name
+    # Returns a new BruseFile
     def create_text_file(target, content)
+      # generate file name
+      fileref = SecureRandom.uuid
+      local_file_name = Rails.root.join('usercontent', fileref)
       # write to file
       IO.write(target, content)
-      # return pritty file name
-      content[0..10].downcase.gsub(/[^a-z0-9_\.]/, '_') + ".txt"
+      # create pritty file name
+      name = content[0..10].downcase.gsub(/[^a-z0-9_\.]/, '_') + ".txt"
+      # return new BruseFile
+      BruseFile.new(name: name,
+                    foreign_ref: fileref,
+                    filetype: "text/plain")
     end
 
     # Private: Create a url (bookmark) file with the url url
@@ -146,13 +142,13 @@ class Files::FilesController < ApplicationController
     # target  - the file name
     # url     - the url
     #
-    # Returns a pretty file name
-    def create_url_file(target, url)
-      # create .URL file
-      url_string = "[InternetShortcut]\nURL=#{url}"
-      IO.write(target, url_string)
-      # return domain name + tld only
-      url.gsub!(/(https?|s?ftp):\/\//, "").gsub!(/(\/.*)*/, "")
+    # Returns a new BruseFile
+    def create_url_file(url)
+      # name from domain name+tld
+      name = url.gsub!(/(https?|s?ftp):\/\//, "").gsub!(/(\/.*)*/, "")
+      BruseFile.new(name: name,
+                    foreign_ref: url,
+                    filetype: "bruse/url")
     end
 
     # Private: check if string is url
