@@ -18,6 +18,7 @@
   # element - element that this directive matches
   # attrs - hash object with key/value paris
   link: (scope, element, attrs) ->
+    object = {}
 
     # prevent default browser behavior (loading file) 
     # copy restricts the type of drag the user can perform
@@ -51,17 +52,19 @@
         event.preventDefault()
       reader = new FileReader()
       reader.onload = (evt) ->
-        console.log evt
         # TODO: add some security checks?
         #if event.originalEvent.dataTransfer.files[0].type in validMimeTypes
           # update bindings
         scope.$apply ->
           scope.file = evt.target.result
-          scope.fileName = name if angular.isString scope.fileName
+          # scope.fileName = name if angular.isString scope.fileName
+          object.data = reader.result
+          console.log reader.result
+          console.log object
 
       file = event.originalEvent.dataTransfer.files[0]
-      object = {name:file.name, type:file.type}
       reader.readAsDataURL file
-      console.log object
+      object.name = file.name
+      object.type = file.type
       return false
 )
