@@ -41,7 +41,7 @@ class Files::FilesController < ApplicationController
 
 
       if @file.identity.service == 'local'
-        File.delete(Rails.root + 'usercontent/' + @file.name)
+        File.delete(Rails.root + @file.foreign_ref)
       end
       @file.destroy
       redirect_to bruse_files_url
