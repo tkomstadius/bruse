@@ -4,6 +4,12 @@
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
   <%= render 'search/home' %>
-  <div b-drop="">Put stuff here</div>
+  <div style="border:solid" b-drop="[image/jpeg]" file="image" file-name="imageFileName">
+    <span>Put stuff here</span>
+  </div>
+  <div>
+    <img ng-src={{myFile}}/>
+    <span>{{dunno}}</span>
+  </div>
 <% end %>
 
