@@ -5,9 +5,9 @@
 <% else %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-drop="[image/jpeg, application/pdf]" file="fileObject" image="imageFile">
+    <div b-drop file="fileObject" image="imageFile">
       <span>Put stuff here</span>
-    </div>
+    <div>
     <div>
       <img ng-if="imageFile" ng-src="{{imageFile}}"/>
       <span>{{fileObject.name}}</span>
