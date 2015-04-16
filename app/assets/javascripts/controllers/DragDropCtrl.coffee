@@ -1,4 +1,9 @@
 # TODO: check all the names
+@bruseApp.controller('DragDropCtrl', ($scope) ->
+    $scope.image = null
+    $scope.imageFileName = ''
+)
+
 @bruseApp.directive('bDrop', () ->
   # restriction to only match the attribute name
   restrict: 'A'
