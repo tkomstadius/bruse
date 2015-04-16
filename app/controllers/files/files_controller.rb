@@ -1,8 +1,8 @@
 class Files::FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
-  before_filter :set_identity, except: :show_all
-  before_filter :set_file, except: [:new, :create, :index, :destroy_folder, :show_all]
+  before_filter :set_identity, except: [:download, :download_url, :show_all]
+  before_filter :set_file, only: [:destroy, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
   # using javascript. If we didn't do this, we'd get problems since the CSRF
@@ -18,7 +18,7 @@ class Files::FilesController < ApplicationController
   end
 
   def show_all
-    @bruse_files = BruseFile.all
+    @bruse_files = current_user.bruse_files
   end
 
   def new

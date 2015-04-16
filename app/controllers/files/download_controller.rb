@@ -32,7 +32,7 @@ class Files::DownloadController < Files::FilesController
     file = BruseFile.find_by(:download_hash => params[:download_hash])
     if file.identity.user == current_user
       # send the file to the user
-      send_data file.identity.get_file(file.foreign_ref), :type => file.filetype
+      send_data file.identity.get_file(file.foreign_ref), name: file.name, type: file.filetype
     end
   end
 end

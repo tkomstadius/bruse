@@ -1,6 +1,7 @@
 @bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
   $scope.files = []
   $scope.bruse_files = []
+  $scope.new_files = []
   $scope.loading = true
 
   # get identity information from add view
@@ -57,38 +58,71 @@
     return
 
   ###*
-   * save file as bruse_file and append bruse_file to the file
-   * @param {obj} file  the file
+   * save file to temp array
+   * @param {obj} file  the file to add
   ###
   $scope.add = (file) ->
-    file.loading = true
-    
-    FileHandler.put($scope.identity, file).then((data) ->
-      # add file to list of existing files
-      $scope.bruse_files = $scope.bruse_files.concat(data)
-      # append bruse_file to this remote file
-      findFile $scope.bruse_files, file
-      # if current file is a directory, do something ugly to make the plus sign turn into a minus sign
-      file.bruse_file = true if file.is_dir
-      file.loading = false
-      )
+    if file.is_dir and !file.contents
+      file.loading = true
+      FileHandler.get($scope.identity, file.path).then((data)->
+        file.contents = data
+        _.map data, (remote_file) ->
+          findFile $scope.bruse_files, remote_file
+        addFiles(file)
+        file.loading = false
+        )
+    else if file.is_dir
+      addFiles(file)
+    else if !file.added
+      file.added = true
+      $scope.new_files.push(file)
 
-  $scope.remove = (file) ->
-    # send delete request
+  ###
+    * Helper function for $scope.add
+    * Used to add files from folders
+  ###
+  addFiles = (file)->
     file.loading = true
-    if file.bruse_file
-      if file.is_dir
-        # use delete_folder method!
-        FileHandler.delete_folder($scope.identity, file).then((data) ->
-          file.bruse_file = data
-          console.log 'path: ', file.path
-          file.loading = false
-          )
-      else
-        FileHandler.delete($scope.identity, file).then((data) ->
-          file.bruse_file = data
-          file.loading = false
-          )
+    file.contents.forEach((f) ->
+      $scope.add(f)
+      file.loading = false
+      return
+      )
+    file.added = true
+
+  ###*
+   * remove temp added file
+   * @param  {obj} file   the file to remove
+  ###
+  $scope.remove = (file) ->
+    if file.is_dir and file.contents
+      file.contents.forEach((f)->
+        $scope.remove(f)
+        )
+      file.added = false
+    else
+      file.added = false
+      for i in [0..$scope.new_files.length]
+        if $scope.new_files[i] == file
+          $scope.new_files.splice(i, 1)
+          break
+
+  ###*
+   * save all files to db
+  ###
+  $scope.save = ->
+    _.each $scope.new_files, (file, index) ->
+      FileHandler.put($scope.identity, file).then((data) ->
+        # add file to list of existing files
+        $scope.bruse_files = $scope.bruse_files.concat(data)
+        # append bruse_file to this remote file
+        findFile $scope.bruse_files, file
+        # remove file from lists of files to add
+        if index is $scope.new_files.length
+          # do something better here
+          console.log "done!"
+        )
+      $scope.new_files = _.without $scope.new_files, file
 
 
   ###*

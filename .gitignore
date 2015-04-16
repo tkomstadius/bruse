@@ -20,3 +20,6 @@ public/assets/source_maps/
 
 # Ignore user download files
 download/*
+
+# Ignore the contents of usercontent/
+usercontent/

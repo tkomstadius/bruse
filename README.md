@@ -32,13 +32,13 @@ get this by creating an app on the
 be a *Dropbox API app* and have access to everything, basically. Once you've
 created your app, add its credentials to your `config/application.yml` file.
 
-You also need to add `http://localhost:3000/auth/dropbox_oauth2/callback` to your
+You also need to add `http://localhost:3000/users/auth/dropbox_oauth2/callback` to your
 redirect URLs in your Dropbox app.
 
 ##### Google
 
 To use the Google features, you need a key and a secret from Google. You can
-get this by creating a project on the [Google developer pages](https://console.developers.google.com/project). Expand the **APIs & auth** heading and select *APIs*. The following APIs should be enabled: *Contacts API*, *Drive API*, *DriveSDK* and *Google+ API*. 
+get this by creating a project on the [Google developer pages](https://console.developers.google.com/project). Expand the **APIs & auth** heading and select *APIs*. The following APIs should be enabled: *Contacts API*, *Drive API*, *DriveSDK* and *Google+ API*.
 
 Click on the *Consent screen* in the menu. Fill in `Bruse` as *Product name*.
 

@@ -35,24 +35,6 @@
           )
 
     #
-    # Delete folder
-    #
-    delete_folder: (identity, file) ->
-      # post it to our backend!
-      # promise gets returned
-      promise = $http.post('/service/'+identity.id+'/files/folder/delete.json', file)
-        .then((response) ->
-          # folder should have been deleted, return what the server says about
-          # this folder
-          response.data.file
-          )
-        .catch((response) ->
-          # some error occured! notify user and log the accident.
-          alert "Could not un-save file!"
-          console.log response
-          )
-
-    #
     # Get files from remote service
     #
     get: (identity, path) ->
@@ -86,7 +68,7 @@
     #
     put: (identity, file) ->
       console.log 'Saving file...', file.path
-
+      console.log identity
       if identity.service.toLowerCase().indexOf('dropbox') > -1
         # prepare post data from file
         post_data =
