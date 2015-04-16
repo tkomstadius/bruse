@@ -20,7 +20,8 @@ class Files::BrowseController < Files::FilesController
 
     file = BruseFile.new
 
-    file.foreign_ref = uploader.file.file
+    file.foreign_ref = uploader.file.identifier
+
     file.name = params[:bruse_file][:file].original_filename
     file.filetype = uploader.content_type
 
@@ -30,7 +31,7 @@ class Files::BrowseController < Files::FilesController
         flash[:notice] = "#{file.name} was saved!"
         redirect_to bruse_files_path
     else
-      flash[:notice] = "#{file.name} already exist !"
+      flash[:notice] = "you must log in to your bruse acount!"
         redirect_to bruse_files_path
     end
   end
