@@ -179,6 +179,13 @@ class Identity < ActiveRecord::Base
         # @result.data.items.map{ |f| f["is_dir"] = false }
         @result.data.items.each do |f| 
           if f.parents[0]
+            f["parentLink"] = f.parents[0].parentLink
+          else
+            f["parentLink"] = nil
+          end
+        end
+        @result.data.items.each do |f| 
+          if f.parents[0]
             f["isRoot"] = f.parents[0].isRoot
           else
             f["isRoot"] = true

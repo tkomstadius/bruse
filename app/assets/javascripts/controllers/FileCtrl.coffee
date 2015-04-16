@@ -13,21 +13,13 @@
     # when we have loaded BruseFiles, load root remote files
     FileHandler.get($scope.identity, '/').then((data) ->
       # append data to files
-      # $scope.files = data
-      console.log(data)
+      if $scope.identity.service.toLowerCase().indexOf('google') > -1
+        for i in data
+          if i.isRoot
+            $scope.files.push i
+      else
+        $scope.files = data
 
-      for i in data
-        if(i.isRoot)
-          $scope.files.push i
-        # if(i.parents == [])
-        #   console.log i.parents
-        # if(data[i].parents[0].isRoot)
-        #   $scope.files = data[i]
-        #   console.log ('it is happening!')
-      # console.console.log($scope.files)
-
-      # console.log(data[1])
-      # data is the array with the files. if drive it should be filtered so that the files in the parent directory only shows.
       # append BruseFile info to our file list
       _.map $scope.files, (remote_file) ->
         findFile $scope.bruse_files, remote_file
@@ -46,9 +38,16 @@
     # if we haven't already, load file info from dropbox
     unless file.contents and file.contents.length > 0
       file.loading = true
+      fileList = []
+
       FileHandler.get($scope.identity, file.path).then((data) ->
-        # The same here, but files from parent folder should be visible
-        file.contents = data
+        if $scope.identity.service.toLowerCase().indexOf('google') > -1
+          for i in data
+            if(file.selfLink == i.parentLink)
+              fileList.push i
+          file.contents = fileList
+        else
+          file.contents = data
         # find all the already added files!
         _.map data, (remote_file) ->
           findFile $scope.bruse_files, remote_file
