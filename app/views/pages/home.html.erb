@@ -3,15 +3,7 @@
   <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
-  <%= link_to 'Sign out user', destroy_user_session_path, method: :delete %>
-  <%= current_user.name %>
-  <ul>
-    <% current_user.identities.each do |id| %>
-      <li>
-        <%= id.name %>
-        <%= link_to('Add more files', new_file_path(identity_id: id.id)) unless id.service == "local" %>
-      </li>
-    <% end %>
-  </ul>
-  <div b-drop=""></div>
+  <%= render 'search/home' %>
+  <div b-drop="">Put stuff here</div>
 <% end %>
+
