@@ -1,6 +1,6 @@
 # TODO: check all the names
 @bruseApp.controller('DragDropCtrl', ($scope) ->
-    $scope.image = ''
+    $scope.image = null
     $scope.imageFileName = ''
 )
 
@@ -32,9 +32,7 @@
     validMimeTypes = attrs.bDrop
 
     isTypeValid = (type) ->
-      if file == undefined
-        false
-      else if validMimeTypes.indexOf(type) > -1
+      if validMimeTypes in [undefined, ''] or validMimeTypes.indexOf(type) > -1
         true
       else
         alert "Invalid file type. File must be one of the following types #{validMimeTypes}"
@@ -43,7 +41,6 @@
     # bind to events dragover and dragenter
     element.bind 'dragover', processDragOverOrEnter
     element.bind 'dragenter', processDragOverOrEnter 
-    console.log scope.file
 
     # bind to drop event on the element, trigger FileReader API
     # on drop events we stop browser and read the dropped file via the FileReader
@@ -61,7 +58,8 @@
             scope.file = evt.target.result
             scope.fileName = name if angular.isString scope.fileName
 
-      file = event.dataTransfer.files[0]
+      file = event.originalEvent.dataTransfer.files[0]
+      console.log file
       name = file.name
       type = file.type
       reader.readAsDataURL(file)
