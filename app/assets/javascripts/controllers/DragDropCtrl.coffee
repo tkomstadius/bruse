@@ -57,7 +57,7 @@
             scope.fileName = name if angular.isString scope.fileName
       if files?
         console.log event.dataTransfer.files[0]
-        file = event.dataTransfer.files[0]
+        scope.file = event.dataTransfer.files[0]
         name = file.name
         type = file.type
         reader.readAsDataURL(file)
