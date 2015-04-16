@@ -3,7 +3,7 @@
   $scope.loading = false
 
   $scope.$watch "text", (newText, oldText) ->
-    return '' unless angular.isDefined(newText) && angular.isDefined(oldText)
+    return unless angular.isDefined(newText) && angular.isDefined(oldText)
     # regex is afwul but useful, look here to understand what it does: http://www.regexr.com/3aqpu
     urlPattern = new RegExp('(https?|s?ftp):\/\/[\w-]*(\.[\w-]*)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?')
     # this regex matches any ws char
@@ -11,9 +11,9 @@
 
     # create as url if there is an url in the field and no ws chars
     if urlPattern.test($scope.text) && !spacePattern.test(newText)
-      $scope.message = "It looks to us as if you're about to save a link."
+      $scope.url = true
     else
-      $scope.message = ""
+      $scope.url = false
 
   $scope.save = ->
     # make sure text is long "enough"

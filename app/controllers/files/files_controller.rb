@@ -40,14 +40,14 @@ class Files::FilesController < ApplicationController
       # generate file name
       fileref = SecureRandom.uuid
       local_file_name = Rails.root.join('usercontent', fileref)
-      # write to local file
-      IO.write(local_file_name, text_params["content"])
-      # automatically create a nice filename from content
-      name = text_params["content"][0..10].downcase.gsub(/[^a-z0-9_\.]/, '_') + ".txt"
+      # write to local file and create a nice filename from content
+      name = create_file(local_file_name, text_params["content"])
+      # save filetype
+      filetype = is_url?(text_params["content"]) ? "application/internet-shortcut" : "text/plain"
       # create the brusefile
       @file = BruseFile.new(name: name,
                             foreign_ref: fileref,
-                            filetype: Mime::Type.lookup_by_extension('txt').to_s)
+                            filetype: filetype)
 
       # insert our file on the users local identity
       if current_user.local_identity.bruse_files << @file
@@ -108,5 +108,65 @@ class Files::FilesController < ApplicationController
 
     def text_params
       params.require(:text).permit(:content)
+    end
+
+
+  private
+    # Private: Create a text or url file containing content
+    #
+    # target    - the file name
+    # content   - the file content
+    #
+    # Returns a pretty file name
+    def create_file(target, content)
+      if is_url?(content)
+        # return file name from url func
+        create_url_file(target, extract_url(content))
+      else
+        # return file name from text func
+        create_text_file(target, content)
+      end
+    end
+
+    # Private: Create a text file containing content
+    #
+    # target    - the file name
+    # content   - the file content
+    #
+    # Returns a pretty file name
+    def create_text_file(target, content)
+      # write to file
+      IO.write(target, content)
+      # return pritty file name
+      content[0..10].downcase.gsub(/[^a-z0-9_\.]/, '_') + ".txt"
+    end
+
+    # Private: Create a url (bookmark) file with the url url
+    #
+    # target  - the file name
+    # url     - the url
+    #
+    # Returns a pretty file name
+    def create_url_file(target, url)
+      # create .URL file
+      url_string = "[InternetShortcut]\nURL=#{url}"
+      IO.write(target, url_string)
+      # return domain name + tld only
+      url.gsub!(/(https?|s?ftp):\/\//, "").gsub!(/(\/.*)*/, "")
+    end
+
+    # Private: check if string is url
+    #
+    # Returns boolean
+    def is_url?(s)
+      url = extract_url(s)
+      s == url
+    end
+
+    # Private: Extract url from s
+    #
+    # Returns an url from s, if any
+    def extract_url(s)
+      s[/(https?|s?ftp):\/\/[\w-]*(\.[\w-]*)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/]
     end
 end
