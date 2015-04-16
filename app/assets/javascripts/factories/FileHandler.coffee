@@ -85,8 +85,8 @@
     # Save file
     #
     put: (identity, file) ->
-
       console.log 'Saving file...', file.path
+
       if identity.service.toLowerCase().indexOf('dropbox') > -1
         # prepare post data from file
         post_data =
@@ -101,8 +101,6 @@
             size: file.bytes
             modified: file.modified
 
-        # console.log(post_data)
-
       else if identity.service.toLowerCase().indexOf('google') > -1
         post_data =
           name: file.name
@@ -114,9 +112,7 @@
           meta:
             size: file.fileSize
             modified: file.modifiedDate
-
       # post it to our backend!
-          
       # promise gets returned
       promise = $http.post('/service/'+identity.id+'/files.json', post_data)
         # wait for server to be done
