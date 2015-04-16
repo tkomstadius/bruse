@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       resources :files, except: :update, path_names: { new: 'add' }
     end
     # downloads a file
-    get '/get/:download_hash/:name', to: 'download#download', :via => :all
+    get '/get/:download_hash(/:name)', to: 'download#download', :via => :all
 
     post '/upload', to: 'browse#upload', as: 'upload'
 
