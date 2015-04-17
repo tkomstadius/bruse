@@ -80,7 +80,9 @@ class Identity < ActiveRecord::Base
   # Returns the file/list of files
   def add_file(file_params)
     # append a new file to our the current identity's list of bruse_files
+
     file = BruseFile.new(file_params)
+
     if bruse_files << file
       # return file
       file
