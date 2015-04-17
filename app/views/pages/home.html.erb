@@ -5,7 +5,7 @@
 <% else %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-dropzone file="fileObject" name="fileName" object="dataObject" image="imageFile" drop="isDropped">
+    <div b-dropzone file="fileObject" object="dataObject" image="imageFile" drop="isDropped">
       <span>Put stuff here</span>
     </div>
     <div ng-show="isDropped">
@@ -17,7 +17,7 @@
     </div>
     <div>
       <img ng-if="imageFile" ng-src="{{imageFile}}"/>
-      <span>{{fileName}} to {{saveTo}} as {{dataObject}}</span>
+      <span>{{dataObject.name}} to {{dataObject.location}} as {{dataObject}}</span>
     </div>
   </div>
 <% end %>

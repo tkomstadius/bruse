@@ -1,15 +1,13 @@
 # TODO: create modal for save option?
 @bruseApp.controller('DragDropCtrl', ($scope) ->
     $scope.fileObject = null
-    $scope.fileName = ''
-    $scope.dataObject = {}
+    $scope.dataObject = {location:''}
     $scope.imageFile = null
     $scope.isDropped = false
-    $scope.saveTo = ''
 
     $scope.saveOpt = (location) ->
       $scope.isDropped = false
-      $scope.saveTo = location
+      $scope.dataObject.location = location
 )
 
 @bruseApp.directive('bDropzone', () ->
@@ -19,7 +17,6 @@
   scope: {
     # use = when the attribute name is the same as the value in directive
     file: '=' # used as: file="", else use var: '=file'
-    name: '='
     image: '='
     drop: '='
     object: '='
@@ -29,7 +26,6 @@
   # element - element that this directive matches
   # attrs - hash object with key/value paris
   link: (scope, element, attrs) ->
-    # object = {}
 
     # prevent default browser behavior (loading file) 
     # copy restricts the type of drag the user can perform
@@ -39,13 +35,6 @@
       (event.originalEvent or event).dataTransfer.effectAllowed = 'move'
       false
     validMimeTypes = attrs.bDrop
-
-      #isTypeValid = (type) ->
-      #if validMimeTypes in [undefined, ''] or validMimeTypes.indexOf(type) > -1
-      #  true
-      #else
-      #  alert "Invalid file type. File must be one of the following types #{validMimeTypes}"
-      #  false
 
     # bind to events dragover and dragenter
     element.bind 'dragover', processDragOverOrEnter
@@ -64,18 +53,16 @@
           # update bindings
         scope.$apply ->
           scope.file = evt.target.result
-          scope.name = reader.name
           scope.object.data = reader.result
           scope.drop = true
-          if file.type == 'image/jpeg'
+          if file.type == 'image/jpeg' || file.type == 'image/png'
             scope.image = evt.target.result
           else
             scope.image = null
-          console.log scope.object
 
       file = event.originalEvent.dataTransfer.files[0]
-      reader.readAsDataURL file
       scope.object.name = file.name
       scope.object.type = file.type
+      reader.readAsDataURL file
       return false
 )
