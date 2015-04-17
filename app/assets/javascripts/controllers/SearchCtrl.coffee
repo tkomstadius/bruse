@@ -1,7 +1,7 @@
 @bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', '$filter', (FileHandler, $scope, $http, $filter) ->
   $scope.search = ""
   $scope.files = []
-  $scope.view_list = true;
+  $scope.viewList = true;
   orderBy = $filter('orderBy')
 
   # watches the search input field for changes
