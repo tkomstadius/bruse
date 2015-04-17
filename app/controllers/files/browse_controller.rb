@@ -1,6 +1,7 @@
 class Files::BrowseController < Files::FilesController
   skip_before_filter :set_file
   skip_before_filter :set_identity, only: :upload
+  before_filter :encode_file
 
   def browse
     path = params[:path] || '/'
@@ -34,6 +35,9 @@ class Files::BrowseController < Files::FilesController
       flash[:notice] = "you must log in to your bruse acount!"
         redirect_to bruse_files_path
     end
+  end
+
+  def encode_file
   end
 
 end

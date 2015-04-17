@@ -15,9 +15,9 @@
       <button ng-click="saveOpt('local')">Local</button>
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
-    <div>
+    <div ng-show="isSaved">
       <img ng-if="imageFile" ng-src="{{imageFile}}"/>
-      <span>{{dataObject.name}} to {{dataObject.location}} as {{dataObject}}</span>
+      <span>{{dataObject.name}} saved to {{dataObject.location}}</span>
     </div>
   </div>
 <% end %>

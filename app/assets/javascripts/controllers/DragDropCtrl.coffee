@@ -1,13 +1,26 @@
 # TODO: create modal for save option?
-@bruseApp.controller('DragDropCtrl', ($scope) ->
+@bruseApp.controller('DragDropCtrl', ($scope, $http) ->
     $scope.fileObject = null
     $scope.dataObject = {location:''}
     $scope.imageFile = null
     $scope.isDropped = false
+    $scope.isSaved = false;
 
     $scope.saveOpt = (location) ->
       $scope.isDropped = false
       $scope.dataObject.location = location
+
+      if location != ''
+        # send object to server
+        $http.post('/upload', $scope.dataObject).then((response) ->
+          console.log "Saved"
+          $scope.isSaved = true;
+          )
+        .catch((response) ->
+          console.error "Couldn't save.."
+          $scope.isSaved = true;
+          
+          )
 )
 
 @bruseApp.directive('bDropzone', () ->
