@@ -58,14 +58,11 @@ class Files::FilesController < ApplicationController
   def destroy
     # make sure file belongs to current identity and delete file
     if @file.identity == @identity && @identity.user == current_user && @file.destroy
-      flash[:notice] = "#{@file.name} was deleted!"
-
-
-      if @file.identity.service == 'local'
-        File.delete(Rails.root + 'usercontent/' + @file.foreign_ref)
-
+      if @file.destroy
+        flash[:notice] = "#{@file.name} was deleted!"
+      else
+        flash[:notice] = "#{@file.name} was not deleted!"
       end
-      @file.destroy
       redirect_to bruse_files_url
     else
       flash[:notice] = "Could not delete file!"
