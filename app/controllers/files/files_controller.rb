@@ -121,7 +121,7 @@ class Files::FilesController < ApplicationController
     def create_file(content)
       if is_url?(content)
         # return file name from url func
-        create_url_file extract_url content
+        create_url_file(extract_url(content))
       else
         # return file name from text func
         create_text_file content
@@ -155,7 +155,7 @@ class Files::FilesController < ApplicationController
     # Returns a new BruseFile
     def create_url_file(url)
       # name from domain name+tld
-      name = url.gsub!(/(https?|s?ftp):\/\//, "").gsub!(/(\/.*)*/, "")
+      name = url.gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
       BruseFile.new(name: name,
                     foreign_ref: url,
                     filetype: "bruse/url")
