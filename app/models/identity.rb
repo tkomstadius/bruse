@@ -167,11 +167,27 @@ class Identity < ActiveRecord::Base
         # Get authorization for drive
         @client.authorization.access_token = token
         # Get files
-        @result = @client.execute(
+        @tempResult = @client.execute(
             api_method: @drive.files.list,
             :parameters => { 'maxResults' => '1000',
               'q' => "trashed=false" }
           )
+        @result = @tempResult
+        if(@tempResult.data.nextPageToken)
+          @length = @tempResult.data.items.length
+        end
+
+        while @tempResult.data.items.length == @length
+        # while @tempResult.data.nextPageToken
+          @nextResult = @client.execute(
+            api_method: @drive.files.list,
+            :parameters => { 'maxResults' => '1000',
+            :pageToken => @tempResult.data.nextPageToken,
+              'q' => "trashed=false" }
+          )
+          @result.data.items += @nextResult.data.items
+          @tempResult = @nextResult
+        end
         # Rename parameters for easy access
         @result.data.items.map{ |f| f["name"] = f["title"] }
         @result.data.items.each do |f| 
@@ -185,7 +201,7 @@ class Identity < ActiveRecord::Base
           if f.parents[0]
             f["isRoot"] = f.parents[0].isRoot
           else
-            f["isRoot"] = true
+            f["isRoot"] = false
           end
         end
         @result.data.items.each do |f| 
