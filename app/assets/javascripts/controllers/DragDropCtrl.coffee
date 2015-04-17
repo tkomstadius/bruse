@@ -1,24 +1,35 @@
-# TODO: check all the names
+# TODO: create modal for save option?
 @bruseApp.controller('DragDropCtrl', ($scope) ->
     $scope.fileObject = null
+    $scope.fileName = ''
+    $scope.dataObject = {}
     $scope.imageFile = null
+    $scope.isDropped = false
+    $scope.saveTo = ''
+
+    $scope.saveOpt = (location) ->
+      $scope.isDropped = false
+      $scope.saveTo = location
 )
 
-@bruseApp.directive('bDrop', () ->
+@bruseApp.directive('bDropzone', () ->
   # restriction to only match the attribute name
   restrict: 'A'
   # create an isolate scope to map the outer scope to our directives inner scope
   scope: {
     # use = when the attribute name is the same as the value in directive
     file: '=' # used as: file="", else use var: '=file'
+    name: '='
     image: '='
+    drop: '='
+    object: '='
   }
   # use link when we want to modify the DOM
   # scope - angular scope object
   # element - element that this directive matches
   # attrs - hash object with key/value paris
   link: (scope, element, attrs) ->
-    object = {}
+    # object = {}
 
     # prevent default browser behavior (loading file) 
     # copy restricts the type of drag the user can perform
@@ -53,18 +64,18 @@
           # update bindings
         scope.$apply ->
           scope.file = evt.target.result
-          # scope.fileName = name if angular.isString scope.fileName
-          object.data = reader.result
+          scope.name = reader.name
+          scope.object.data = reader.result
+          scope.drop = true
           if file.type == 'image/jpeg'
             scope.image = evt.target.result
           else
             scope.image = null
-          console.log reader.result
-          console.log object
+          console.log scope.object
 
       file = event.originalEvent.dataTransfer.files[0]
       reader.readAsDataURL file
-      object.name = file.name
-      object.type = file.type
+      scope.object.name = file.name
+      scope.object.type = file.type
       return false
 )

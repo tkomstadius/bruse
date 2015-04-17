@@ -5,12 +5,19 @@
 <% else %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-drop file="fileObject" image="imageFile">
+    <div b-dropzone file="fileObject" name="fileName" object="dataObject" image="imageFile" drop="isDropped">
       <span>Put stuff here</span>
-    <div>
+    </div>
+    <div ng-show="isDropped">
+      <!-- TODO: check strings for saving later -->
+      <button ng-click="saveOpt('dropbox')">Dropbox</button>
+      <button ng-click="saveOpt('drive')">Drive</button>
+      <button ng-click="saveOpt('local')">Local</button>
+      <button ng-click="saveOpt('')">Cancel</button>
+    </div>
     <div>
       <img ng-if="imageFile" ng-src="{{imageFile}}"/>
-      <span>{{fileObject.name}}</span>
+      <span>{{fileName}} to {{saveTo}} as {{dataObject}}</span>
     </div>
   </div>
 <% end %>
