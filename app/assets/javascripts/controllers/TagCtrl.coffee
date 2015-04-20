@@ -13,7 +13,7 @@
       if i != $scope.files.length
         putTags($scope.files[i].bruse_file.id, $scope.files[i].new_tags, i)
       else
-        window.location.replace('/bruse_files')
+        window.location.replace('/files')
       return
       )
     return
