@@ -12,7 +12,7 @@
 
       if location != ''
         # send object to server
-        $http.post('/upload_drop', $scope.dataObject).then((response) ->
+        $http.post('/upload_drop.json', $scope.dataObject).then((response) ->
           console.log response
           $scope.isSaved = true;
           )
