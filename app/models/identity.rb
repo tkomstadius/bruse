@@ -62,13 +62,41 @@ class Identity < ActiveRecord::Base
   #   # => {name: 'path/with/folders', contents: [<file>,<file>,<file>,<file>]}
   #
   # Returns the client's info about the path
-  def browse(path = '/')
+  def browse(path)
     # set the client
     set_client
     # is it a dropbox service? return requested path!
     return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
-    # is it a google service? return requested path!
-    return @result.data.items if service.downcase.include? "google"
+
+    # is it a google service? Get files and return items
+    if service.downcase.include? "google"
+      # Get files depending on search path
+      if(path == '/')
+        @result = @client.execute(
+          api_method: @drive.files.list,
+          :parameters => { 'maxResults' => '1000',
+              q: %('root' in parents and trashed=false) })
+      else
+        @result = @client.execute(
+          api_method: @drive.files.list,
+          :parameters => { 'maxResults' => '1000',
+            q: "'" + path +"'" + ' in parents and trashed=false'
+            })
+      end
+
+      # Rename parameters for easy access
+      @result.data.items.each do |f| 
+        if f.mime_type.include? "folder"
+          f["is_dir"] = true
+        else
+          f["is_dir"] = false
+        end
+      end
+      @result.data.items.map{ |f| f["name"] = f["title"] }
+      @result.data.items.map{ |f| f["path"] = f["id"] }
+
+      return @result.data.items if service.downcase.include? "google"
+    end
   end
 
   # Add new files to the current identity
@@ -159,6 +187,7 @@ class Identity < ActiveRecord::Base
       @client ||= DropboxClient.new(token) if service.downcase.include? "dropbox"
       
       if service.downcase.include? "google"
+        @result = Array.new{Array.new}
         @client ||= Google::APIClient.new(
           :application_name => 'Bruse',
           :application_version => '1.0.0'
@@ -166,51 +195,6 @@ class Identity < ActiveRecord::Base
         @drive = @client.discovered_api('drive', 'v2')
         # Get authorization for drive
         @client.authorization.access_token = token
-        # Get files
-        @tempResult = @client.execute(
-            api_method: @drive.files.list,
-            :parameters => { 'maxResults' => '1000',
-              'q' => "trashed=false" }
-          )
-        @result = @tempResult
-        if(@tempResult.data.nextPageToken)
-          @length = @tempResult.data.items.length
-        end
-
-        while @tempResult.data.items.length == @length
-        # while @tempResult.data.nextPageToken
-          @nextResult = @client.execute(
-            api_method: @drive.files.list,
-            :parameters => { 'maxResults' => '1000',
-            :pageToken => @tempResult.data.nextPageToken,
-              'q' => "trashed=false" }
-          )
-          @result.data.items += @nextResult.data.items
-          @tempResult = @nextResult
-        end
-        # Rename parameters for easy access
-        @result.data.items.map{ |f| f["name"] = f["title"] }
-        @result.data.items.each do |f| 
-          if f.parents[0]
-            f["parentLink"] = f.parents[0].parentLink
-          else
-            f["parentLink"] = nil
-          end
-        end
-        @result.data.items.each do |f| 
-          if f.parents[0]
-            f["isRoot"] = f.parents[0].isRoot
-          else
-            f["isRoot"] = false
-          end
-        end
-        @result.data.items.each do |f| 
-          if f.mime_type.include? "folder"
-            f["is_dir"] = true
-          else
-            f["is_dir"] = false
-          end
-        end
       end
     end
 

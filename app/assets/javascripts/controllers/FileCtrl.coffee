@@ -13,13 +13,7 @@
 
     # when we have loaded BruseFiles, load root remote files
     FileHandler.get($scope.identity, '/').then((data) ->
-      # append data to files
-      if $scope.identity.service.toLowerCase().indexOf('google') > -1
-        for i in data
-          if i.isRoot
-            $scope.files.push i
-      else
-        $scope.files = data
+      $scope.files = data
 
       # append BruseFile info to our file list
       _.map $scope.files, (remote_file) ->
@@ -36,18 +30,12 @@
     # set this folder as expanded
     file.expand = !file.expand
 
-    # if we haven't already, load file info from dropbox
+    # if we haven't already, load file info from service
     unless file.contents and file.contents.length > 0
       file.loading = true
       fileList = []
 
       FileHandler.get($scope.identity, file.path).then((data) ->
-        if $scope.identity.service.toLowerCase().indexOf('google') > -1
-          for i in data
-            if(file.selfLink == i.parentLink)
-              fileList.push i
-          file.contents = fileList
-        else
           file.contents = data
         # find all the already added files!
         _.map data, (remote_file) ->
