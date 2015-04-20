@@ -4,7 +4,8 @@
     $scope.dataObject = {location:''}
     $scope.imageFile = null
     $scope.isDropped = false
-    $scope.isSaved = false;
+    $scope.isSaved = false
+    $scope.file = []
 
     $scope.saveOpt = (location) ->
       $scope.isDropped = false
@@ -13,8 +14,12 @@
       if location != ''
         # send object to server
         $http.post('/upload_drop.json', $scope.dataObject).then((response) ->
-          console.log response
-          $scope.isSaved = true;
+          $scope.file = response.data.file;
+          if $scope.file.id != null
+            $scope.isSaved = true
+          else
+            $scope.file = []
+            $scope.isSaved = false
           )
         .catch((response) ->
           console.error "Couldn't save.."
@@ -67,7 +72,7 @@
           scope.object.data = reader.result.split(",")[1]
           console.log scope.object
           scope.drop = true
-          if file.type == 'image/jpeg' || file.type == 'image/png'
+          if file.type in ['image/jpeg', 'image/png']
             scope.image = evt.target.result
           else
             scope.image = null

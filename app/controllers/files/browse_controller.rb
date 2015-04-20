@@ -53,7 +53,6 @@ class Files::BrowseController < Files::FilesController
         if current_user.local_identity.bruse_files << @file
           # send response that everything is ok!
           flash[:notice] = "#{params[:name]} was saved!"
-
         else
           flash[:notice] = "nonono"
         end
@@ -63,7 +62,9 @@ class Files::BrowseController < Files::FilesController
         render status :not_acceptable
       end
     elsif params[:location] == 'dropbox'
+      flash[:notice] = "nonono, not yet"
     elsif params[:location] == 'drive'
+      flash[:notice] = "nonono, maybe later"
     else
       flash[:notice] = "No storage option"
     end
