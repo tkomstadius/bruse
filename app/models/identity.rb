@@ -80,7 +80,7 @@ class Identity < ActiveRecord::Base
         @result = @client.execute(
           api_method: @drive.files.list,
           :parameters => { 'maxResults' => '1000',
-            q: "'" + path +"'" + ' in parents and trashed=false'
+            q: "'"+path+"'"+' in parents and trashed=false'
             })
       end
 

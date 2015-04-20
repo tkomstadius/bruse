@@ -13,8 +13,8 @@
 
     # when we have loaded BruseFiles, load root remote files
     FileHandler.get($scope.identity, '/').then((data) ->
+      # append data to files
       $scope.files = data
-
       # append BruseFile info to our file list
       _.map $scope.files, (remote_file) ->
         findFile $scope.bruse_files, remote_file
@@ -33,8 +33,6 @@
     # if we haven't already, load file info from service
     unless file.contents and file.contents.length > 0
       file.loading = true
-      fileList = []
-
       FileHandler.get($scope.identity, file.path).then((data) ->
           file.contents = data
         # find all the already added files!

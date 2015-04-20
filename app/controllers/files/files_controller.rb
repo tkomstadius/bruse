@@ -13,7 +13,6 @@ class Files::FilesController < ApplicationController
   require 'dropbox_sdk'
   require 'google/api_client'
 
-
   def show
   end
 
@@ -78,4 +77,3 @@ class Files::FilesController < ApplicationController
       params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
     end
 end
-
