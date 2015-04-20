@@ -1,0 +1,39 @@
+<div class="files">
+  <button ng-click="view_list = true">
+    List
+  </button>
+  <button ng-click="view_list = false">
+    Block
+  </button>
+
+  <div ng-if="files.length === 0 && search.length > 2">
+      Aint nothing here for you. :(
+  </div>
+
+  <div ng-if="view_list">
+    <table ng-if="hasFiles()">
+      <tr>
+        <th><a href="" ng-click="reverse=!reverse;order('name', reverse)">Filename</a></th>
+        <th>Filetype</th>
+        <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
+        <th>Tags</th>
+      </tr>
+      <tr ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+          <td>{{file.name}}</td>
+          <td>.{{getFiletype(file.filetype)}}</td>
+          <td>{{file.date}}</td>
+          <td><ul ng-repeat="tag in file.tags"><li>#{{tag.name}}</li></ul></td>
+      </tr>
+     </table>
+  </div>
+
+  <div ng-if="!view_list && hasFiles()">
+    <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+      <div class="block">
+        <div>{{file.name}}</div>
+        <div>{{file.date}}</div>
+        <div ng-repeat="tag in file.tags">{{tag.name}}</div>
+      </div>
+    </div>
+  </div>
+</div>
