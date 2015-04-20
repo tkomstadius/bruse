@@ -1,8 +1,6 @@
-@bruseApp.controller 'SearchCtrl', ['FileHandler', '$scope', '$http', '$filter', (FileHandler, $scope, $http, $filter) ->
+@bruseApp.controller 'SearchCtrl', ['$scope', '$http', ($scope, $http) ->
   $scope.search = ""
   $scope.files = []
-  $scope.view_list = true;
-  orderBy = $filter('orderBy')
 
   # watches the search input field for changes
   $scope.$watch "search", (newTitle, oldTitle) ->
@@ -25,7 +23,7 @@
             docName.push element
 
         # create a search object divided by category
-        searchObject = {tags:hashTags, filetypes:types, fuzzy:docName}
+        searchObject = { tags:hashTags, filetypes:types, fuzzy:docName }
 
         # send search object to server
         $http.post('/search', searchObject).then((response) ->
@@ -39,24 +37,9 @@
             $scope.files = [];
           )
         .catch((response) ->
-          console.error "Couldn't search.."
+          console.error "Couldn't search..", response
           )
       else
         $scope.files = []
-
-  # Gets called when a file is clicked
-  $scope.download = (identity_id, file_id) ->
-    FileHandler.download(identity_id, file_id).then((data) ->
-      # open the returned url in a new tab
-      win = window.open('/'+data.url, '_self')
-      )
-
-  # change mime to only filetype
-  $scope.getFiletype = (mimetype) ->
-    mimetype.split("/")[1]
-
-  # a function to order the files
-  $scope.order = (predicate, reverse) ->
-    $scope.files = orderBy($scope.files, predicate, reverse)
 
 ]
