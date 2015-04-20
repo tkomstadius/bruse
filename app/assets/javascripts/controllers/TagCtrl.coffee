@@ -7,7 +7,7 @@
 
   # Creates a new function for retreiving the tags
   JSTagsCollection.prototype.getTags = ->
-    _.map(_.values($scope.tags.tags), (tag) -> tag.value)
+    _.map(_.values(this.tags), (tag) -> tag.value)
 
   # Some jsTag options
   $scope.tags = new JSTagsCollection();
@@ -17,6 +17,18 @@
     },
     "tags": $scope.tags
   };
+
+  # Initiate the tags variable for each file
+  $scope.files.forEach((file) ->
+    file.tags = new JSTagsCollection();
+    file.jsTagOptions = {
+      texts: {
+        inputPlaceHolder: "Tag"
+      },
+      tags: file.tags
+    }
+    return
+    )
 
   putTags = (file_id, new_tags, i) ->
     console.log "Adding tags to file with index", i
@@ -39,8 +51,7 @@
     ###
     i = 0
     while i < $scope.files.length
-      $scope.files[i].tags = "" if !$scope.files[i].tags
-      tagsForFile = _.compact $scope.files[i].tags.split ' '
+      tagsForFile = _.compact $scope.files[i].tags.getTags()
       $scope.files[i].new_tags = tagsForFile.concat tagsForAll
       if $scope.files[i].new_tags.length == 0
         $scope.files.splice i, 1
