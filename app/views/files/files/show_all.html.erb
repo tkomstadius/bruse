@@ -28,7 +28,9 @@
   <tbody>
     <% @bruse_files.each do |file| %>
       <tr>
-        <td><%= file.name %></td>
+        <td>
+          <%= link_to_if file.filetype == "bruse/url", file.name, file.foreign_ref, target: '_blank' %>
+        </td>
         <td><%= file.filetype %></td>
         <td><%= file.meta %></td>
         <td><% file.tags.each do |t| %>

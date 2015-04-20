@@ -3,6 +3,7 @@
   <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
+  <%= render 'files/files/create_from_textbox' %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
     <div b-dropzone file="fileObject" object="dataObject" image="imageFile" drop="isDropped">

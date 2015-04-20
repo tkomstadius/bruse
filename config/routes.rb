@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   delete '/file/:file_id/tag/delete/:id', to: 'tags#destroy', as: 'destroy_tag'
 
   # User
-  devise_for :users, :controllers => { omniauth_callbacks: 'user/omniauth_callbacks',
-                                       registrations: 'user/registrations' }
+  devise_for :users, controllers: { omniauth_callbacks: 'user/omniauth_callbacks',
+                                    registrations: 'user/registrations' }
   get '/user', to: 'user/users#show', as: 'profile'
   get '/users/terminate', to: 'user/users#terminate', as: 'terminate_user'
   delete '/users', to: 'user/users#destroy', as: 'destroy_user'
@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get '/files/download/:id', to: 'download#download_url'
       resources :files, except: :update, path_names: { new: 'add' }
     end
+    post '/create_file', to: 'files#create_from_text', defaults: { format: 'json' }
     # downloads a file
     get '/get/:download_hash(/:name)', to: 'download#download', :via => :all
 
@@ -39,7 +40,7 @@ Rails.application.routes.draw do
 
   end
   # search
-  post '/search', to: 'search#find', :defaults => { :format => 'json' }, as: 'search_find'
+  post '/search', to: 'search#find', defaults: { format: 'json' }, as: 'search_find'
   get '/search', to: 'search#home', as: 'search'
 
 end

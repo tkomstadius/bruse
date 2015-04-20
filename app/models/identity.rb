@@ -50,6 +50,7 @@ class Identity < ActiveRecord::Base
   end
 
   require 'dropbox_sdk'
+  require 'google/api_client'
 
   # Public: Browse this identity's file system
   #
@@ -61,11 +62,41 @@ class Identity < ActiveRecord::Base
   #   # => {name: 'path/with/folders', contents: [<file>,<file>,<file>,<file>]}
   #
   # Returns the client's info about the path
-  def browse(path = '/')
+  def browse(path)
     # set the client
     set_client
     # is it a dropbox service? return requested path!
     return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
+
+    # is it a google service? Get files and return items
+    if service.downcase.include? "google"
+      # Get files depending on search path
+      if(path == '/')
+        @result = @client.execute(
+          api_method: @drive.files.list,
+          :parameters => { 'maxResults' => '1000',
+              q: %('root' in parents and trashed=false) })
+      else
+        @result = @client.execute(
+          api_method: @drive.files.list,
+          :parameters => { 'maxResults' => '1000',
+            q: "'"+path+"'"+' in parents and trashed=false'
+            })
+      end
+
+      # Rename parameters for easy access
+      @result.data.items.each do |f| 
+        if f.mime_type.include? "folder"
+          f["is_dir"] = true
+        else
+          f["is_dir"] = false
+        end
+      end
+      @result.data.items.map{ |f| f["name"] = f["title"] }
+      @result.data.items.map{ |f| f["path"] = f["id"] }
+
+      return @result.data.items if service.downcase.include? "google"
+    end
   end
 
   # Add new files to the current identity
@@ -139,6 +170,7 @@ class Identity < ActiveRecord::Base
 
     # return file data
     return @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
+    return @client.get_file('https://www.googleapis.com/drive/v2/files/'+foreign_ref+'alt=media') if service.downcase.include? "google"
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 
@@ -155,6 +187,17 @@ class Identity < ActiveRecord::Base
     # Returns the client
     def set_client
       @client ||= DropboxClient.new(token) if service.downcase.include? "dropbox"
+      
+      if service.downcase.include? "google"
+        @result = Array.new{Array.new}
+        @client ||= Google::APIClient.new(
+          :application_name => 'Bruse',
+          :application_version => '1.0.0'
+          )
+        @drive = @client.discovered_api('drive', 'v2')
+        # Get authorization for drive
+        @client.authorization.access_token = token
+      end
     end
 
     # Extract BruseFile params from pristine file object from service
