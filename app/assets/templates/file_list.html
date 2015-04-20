@@ -18,8 +18,15 @@
         <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
         <th>Tags</th>
       </tr>
-      <tr ng-repeat="file in files" ng-click="download(file.identity_id, file)">
-          <td>{{file.name}}</td>
+      <tr ng-repeat="file in files">
+          <td>
+            <a ng-if="file.filetype === 'bruse/url'" ng-href="{{file.url}}" target="_blank">
+              {{file.name}}
+            </a>
+            <span ng-if="file.filetype != 'bruse/url'" ng-click="download(file.identity_id, file)">
+              {{file.name}}
+            </span>
+          </td>
           <td>.{{getFiletype(file.filetype)}}</td>
           <td>{{file.date}}</td>
           <td><ul ng-repeat="tag in file.tags"><li>#{{tag.name}}</li></ul></td>

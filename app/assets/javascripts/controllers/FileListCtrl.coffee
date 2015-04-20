@@ -18,9 +18,7 @@
 
   # Gets called when a file is clicked
   $scope.download = (identity_id, file) ->
-    if file.filetype == "bruse/url"
-      win = window.open(file.url, '_blank')
-    else
+    unless file.filetype == "bruse/url"
       FileHandler.download(identity_id, file.id).then((data) ->
         # open the returned url in a new tab
         win = window.open('/'+data.url, '_self')
