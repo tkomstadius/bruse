@@ -1,5 +1,5 @@
 # TODO: create modal for save option?
-@bruseApp.controller('DragDropCtrl', ($scope, $http) ->
+@bruseApp.controller 'DragDropCtrl', ['$scope', '$http', ($scope, $http) ->
     $scope.fileObject = null
     $scope.dataObject = {location:''}
     $scope.imageFile = null
@@ -24,7 +24,7 @@
         .catch((response) ->
           console.error "Couldn't save.."
           )
-)
+]
 
 @bruseApp.directive('bDropzone', () ->
   # restriction to only match the attribute name
