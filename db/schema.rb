@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 20150409092147) do
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
     t.boolean  "own_password",           default: true
-    t.integer  "default_identity_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

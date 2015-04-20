@@ -24,15 +24,15 @@
           else if element.length > 2
             docName.push element
 
-        # create a search object divided by category 
+        # create a search object divided by category
         searchObject = {tags:hashTags, filetypes:types, fuzzy:docName}
-        
+
         # send search object to server
         $http.post('/search', searchObject).then((response) ->
           if response.data.files.length > 0
             # write reponse to the current scope
             $scope.files = response.data.files;
-            $scope.order('name', false) 
+            $scope.order('name', false)
           else
             console.log "No results found"
             # write reponse to the current scope
@@ -40,16 +40,19 @@
           )
         .catch((response) ->
           console.error "Couldn't search.."
-          )        
+          )
       else
         $scope.files = []
-    
+
   # Gets called when a file is clicked
-  $scope.download = (identity_id, file_id) ->
-    FileHandler.download(identity_id, file_id).then((data) ->
-      # open the returned url in a new tab
-      win = window.open('/'+data.url, '_self')
-      )
+  $scope.download = (identity_id, file) ->
+    if file.filetype == "bruse/url"
+      win = window.open(file.url, '_blank')
+    else
+      FileHandler.download(identity_id, file.id).then((data) ->
+        # open the returned url in a new tab
+        win = window.open('/'+data.url, '_self')
+        )
 
   # change mime to only filetype
   $scope.getFiletype = (mimetype) ->

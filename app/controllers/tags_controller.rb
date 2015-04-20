@@ -47,9 +47,9 @@ class TagsController < ApplicationController
     @tag = @file.tags.find(params[:id])
 
 
-     if @tag
-          @file.tags.delete(@tag)
-     end
+    if @tag
+        @file.tags.delete(@tag)
+    end
 
     respond_to do |format|
       format.html { redirect_to bruse_files_url, notice: 'Deleted tag: ' + @tag.name.to_s}

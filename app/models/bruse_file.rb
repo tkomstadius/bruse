@@ -1,19 +1,18 @@
 class BruseFile < ActiveRecord::Base
-
-	has_and_belongs_to_many :tags, dependent: :destroy
-
-  belongs_to :identity
 	attr_accessor :tagname
 
+  # before/after hooks
+  before_destroy :delete_local_file
 
-	validates :filetype,     presence: true
+  # relationships
+  has_and_belongs_to_many :tags, dependent: :destroy
+  belongs_to :identity
 
   ## validations
   # make sure file only added once from each identity
   validates :foreign_ref, uniqueness: { scope: :identity,
     message: 'That file appears to be added!' }
   # make sure name, foreign_ref and filetype is present
-  validates :name, :foreign_ref, :filetype, presence: true
   validates :name, :foreign_ref, :filetype, :identity_id, presence: true
 
   # Fuzzy search for :name
@@ -39,4 +38,11 @@ class BruseFile < ActiveRecord::Base
     self.save! # save to database
     self.download_hash # return
   end
+
+  private
+    def delete_local_file
+      if identity.service == "local" && filetype != "bruse/url" && !@destroyed
+        File.delete(Rails.root.join('usercontent', foreign_ref))
+      end
+    end
 end

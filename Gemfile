@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
+# set ruby version
+ruby '2.2.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # give AR some superpowers when it comes to bulk insertion
@@ -74,6 +76,9 @@ gem 'dropbox-sdk'
 # Drive ruby sdk
 gem 'google-api-client'
 
+# File uploading
+gem 'carrierwave'
+
 
 ## Developtment tools
 group :development, :test do
@@ -88,7 +93,6 @@ group :development, :test do
 
   # generate source maps from coffee and sass files
   gem 'coffee-rails-source-maps'
-  gem 'sass-rails-source-maps'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
