@@ -104,11 +104,11 @@
         # remove file from lists of files to add
         if index is $scope.new_files.length
           # do something better here
+          $location.path('/service/'+$routeParams.identity_id+'/files/add/tag')
           console.log "done!"
         )
       $scope.new_files = _.without $scope.new_files, file
 
-    $location.path('/service/'+$routeParams.identity_id+'/files/add/tag')
 
 
   ###*

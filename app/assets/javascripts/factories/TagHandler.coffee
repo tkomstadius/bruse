@@ -18,7 +18,7 @@
           )
         .catch((response) ->
           alert "Couldn't add tags.."
-          console.error response
+          response
           )
   }
 ]
