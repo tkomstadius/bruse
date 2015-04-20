@@ -1,3 +1,10 @@
+<script type="text/javascript">
+  // global js object to give frontend access to current identity
+  IDENTITY_PARAMS = {
+    id: <%= @identity.id %>,
+    service: "<%= @identity.service %>"
+  };
+</script>
 <script type="text/ng-template" id="fileTree">
  <%= render 'files/files/fileTree' %>
 </script>

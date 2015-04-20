@@ -11,6 +11,7 @@ class Files::FilesController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create, :destroy, :destroy_folder, :create_from_text]
 
   require 'dropbox_sdk'
+  require 'google/api_client'
 
   def show
   end

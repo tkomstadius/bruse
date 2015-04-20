@@ -1,15 +1,18 @@
-@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$rootScope', '$location', '$routeParams', (FileHandler, $scope, $rootScope, $location, $routeParams) ->
+@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$rootScope', '$location', (FileHandler, $scope, $rootScope, $location) ->
   $scope.files = []
   $scope.bruse_files = []
   $scope.new_files = []
   $scope.loading = true
 
+  # get identity information from add view
+  $scope.identity = IDENTITY_PARAMS
+
   # load existing BruseFiles on page load
-  FileHandler.collect($routeParams.identity_id).then((data) ->
+  FileHandler.collect($scope.identity).then((data) ->
     $scope.bruse_files = data
 
     # when we have loaded BruseFiles, load root remote files
-    FileHandler.get($routeParams.identity_id, '/').then((data) ->
+    FileHandler.get($scope.identity, '/').then((data) ->
       # append data to files
       $scope.files = data
       # append BruseFile info to our file list
@@ -27,12 +30,12 @@
     # set this folder as expanded
     file.expand = !file.expand
 
-    # if we haven't allready, load file info from dropbox
+    # if we haven't already, load file info from service
     unless file.contents and file.contents.length > 0
       file.loading = true
-      FileHandler.get($routeParams.identity_id, file.path).then((data) ->
+      FileHandler.get($scope.identity, file.path).then((data) ->
         file.contents = data
-        # find all the allready added files!
+        # find all the already added files!
         _.map data, (remote_file) ->
           findFile $scope.bruse_files, remote_file
         file.loading = false
@@ -47,7 +50,7 @@
   $scope.add = (file) ->
     if file.is_dir and !file.contents
       file.loading = true
-      FileHandler.get($routeParams.identity_id, file.path).then((data)->
+      FileHandler.get($scope.identity, file.path).then((data)->
         file.contents = data
         _.map data, (remote_file) ->
           findFile $scope.bruse_files, remote_file
@@ -96,7 +99,7 @@
   $scope.save = ->
     $rootScope.new_files = $scope.new_files
     _.each $scope.new_files, (file, index) ->
-      FileHandler.put($routeParams.identity_id, file).then((data) ->
+      FileHandler.put($scope.identity, file).then((data) ->
         # add file to list of existing files
         $scope.bruse_files = $scope.bruse_files.concat(data)
         # append bruse_file to this remote file
@@ -104,7 +107,7 @@
         # remove file from lists of files to add
         if index is $scope.new_files.length
           # do something better here
-          $location.path('/service/'+$routeParams.identity_id+'/files/add/tag')
+          $location.path('/service/'+$scope.identity.id+'/files/add/tag')
           console.log "done!"
         )
       $scope.new_files = _.without $scope.new_files, file
