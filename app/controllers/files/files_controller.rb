@@ -1,8 +1,8 @@
 class Files::FilesController < ApplicationController
   # make sure user is logged in
   before_filter :authenticate_user!
-  before_filter :set_identity, except: :show_all
-  before_filter :set_file, except: [:new, :create, :index, :destroy_folder, :show_all]
+  before_filter :set_identity, except: [:download, :download_url, :show_all]
+  before_filter :set_file, only: [:destroy, :download_url]
 
   # Disable CSRF protection on create and destroy method, since we call them
   # using javascript. If we didn't do this, we'd get problems since the CSRF
@@ -16,7 +16,8 @@ class Files::FilesController < ApplicationController
   end
 
   def show_all
-    @bruse_files = BruseFile.all
+    @bruse_file = BruseFile.new
+    @bruse_files = current_user.bruse_files
   end
 
   def new
@@ -36,9 +37,17 @@ class Files::FilesController < ApplicationController
   def destroy
     # make sure file belongs to current identity and delete file
     if @file.identity == @identity && @identity.user == current_user && @file.destroy
-      @message = "File deleted."
-      @file = nil
+      flash[:notice] = "#{@file.name} was deleted!"
+
+
+      if @file.identity.service == 'local'
+        File.delete(Rails.root + 'usercontent/' + @file.foreign_ref)
+
+      end
+      @file.destroy
+      redirect_to bruse_files_url
     else
+      flash[:notice] = "Could not delete file!"
       @message = "Could not delete file!"
     end
   end
@@ -53,6 +62,7 @@ class Files::FilesController < ApplicationController
     # Protected: Set current identity from request parameters.
     def set_identity
       @identity = Identity.find(params[:identity_id])
+
       # make sure the identity belongs to this user
       unless @identity.user == current_user
         redirect_to root_url

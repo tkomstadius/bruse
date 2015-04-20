@@ -1,13 +1,17 @@
-<h1>Welcome</h1>
-
-<% current_user.identities.each do |id| %>
-      <%= id.name %>
-<% end %>
-
+<h1>Welcome <%= current_user.name %></h1>
 
 <h1>Listing Files</h1>
 
 
+<%= form_for(@bruse_file, url: upload_path) do |f| %>
+  <div class="field">
+    <%= f.label :file %>
+    <%= f.file_field :file %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Upload" %>
+  </div>
+<% end %>
 
 <table>
   <thead>
@@ -35,6 +39,7 @@
 
         <% end %></td>
         <td><%= link_to 'Add tag', new_tag_path(file) %></td>
+        <td><%= link_to 'Destroy', file_path(file.identity, file), method: :delete, data: { confirm: 'Are you sure?' } %></td>
 
       </tr>
     <% end %>
@@ -44,13 +49,3 @@
 </table>
 
 
-<br/>
-<ul>
-  <% current_user.identities.each do |id| %>
-    <li>
-      <%= link_to 'Add more files', new_file_path(identity_id: id.id) %>
-    </li>
-  <% end %>
-
-  <li><%= link_to 'Search File', search_path %></li>
-</ul>
