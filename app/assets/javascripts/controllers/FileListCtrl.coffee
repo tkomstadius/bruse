@@ -8,13 +8,18 @@
   $scope.files = []
   $scope.view_list = true
 
-
   # this function gets called from the directive
   this.init = (element, attrs) ->
     self.$element = element
-    console.log 'FileListCtrl', element, attrs
     $scope.name = attrs.name
-    $scope.files = attrs.files
+    if attrs.files
+      # if file is provided through the directive attributes, use those...
+      $scope.files = attrs.files
+    else
+      # ... otherwise collect them from server
+      FileHandler.collect().then((data) ->
+        $scope.files = data
+        )
 
   # Gets called when a file is clicked
   $scope.download = (identity_id, file) ->

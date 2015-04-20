@@ -17,6 +17,7 @@
         <th>Filetype</th>
         <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
         <th>Tags</th>
+        <th>&nbsp;</th>
       </tr>
       <tr ng-repeat="file in files">
           <td>
@@ -29,7 +30,24 @@
           </td>
           <td>.{{getFiletype(file.filetype)}}</td>
           <td>{{file.date}}</td>
-          <td><ul ng-repeat="tag in file.tags"><li>#{{tag.name}}</li></ul></td>
+          <td>
+            <a ng-href="{{file.add_tags_path}}" title="Add tags">
+              <i class="fa fa-plus-square"></i>
+            </a>
+            <span ng-repeat="tag in file.tags">
+              <a ng-href="{{tag.path}}">
+                #{{tag.name}}
+              </a>
+              <a ng-href="{{tag.destroy_path}}" data-method="delete">
+                <i class="fa fa-minus-square"></i>
+              </a>
+            </span>
+          </td>
+          <td>
+            <a ng-href="{{file.path}}" data-method="delete" data-confirm="Are you sure?">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
       </tr>
      </table>
   </div>

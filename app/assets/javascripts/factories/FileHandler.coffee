@@ -5,8 +5,9 @@
     # Collect saved BruseFiles from this identity
     #
     collect: (identity_id) ->
+      path = if identity_id then '/service/'+identity_id+'/files.json' else '/files.json'
       # send a get request
-      promise = $http.get('/service/'+identity_id+'/files.json')
+      promise = $http.get(path)
         .then((response) ->
           # return files
           response.data.files

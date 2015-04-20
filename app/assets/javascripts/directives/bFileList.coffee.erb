@@ -3,7 +3,7 @@
     controller: 'FileListCtrl'
     # link gets called when this directive is created
     link: (scope, element, attrs, FileListCtrl) ->
-      console.log 'bFileList link!', scope, element, attrs
+      # call the init function in FileListCtrl
       FileListCtrl.init(element, attrs)
     # only allow the directive to be created by using <b-file-list></b-file-list>
     restrict: 'E'
