@@ -8,7 +8,14 @@
 <p><%= link_to "Add Google account", user_omniauth_authorize_path('google_oauth2') %></p>
 
 <% if !current_user.own_password %>
-<p>Would you like to add a password to your account?</p>
-<small>By doing this, you will have access to a magical world</small>
-<%= link_to "Click here", new_user_password_path %>
+  <p>Would you like to add a password to your account?</p>
+  <small>By doing this, you will have access to a magical world</small>
+
+  <%= form_for(current_user, url: password_path(current_user), html: { method: :post }) do |f| %>
+    <%= f.hidden_field :email, autofocus: true %>
+    <div class="actions">
+      <%= f.submit "Send me password instructions" %>
+    </div>
+  <% end %>
+
 <% end %>
