@@ -21,7 +21,7 @@
         <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
         <th>Tags</th>
       </tr>
-      <tr ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+      <tr ng-repeat="file in files" ng-click="download(file.identity_id, file)">
           <td>{{file.name}}</td>
           <td>.{{getFiletype(file.filetype)}}</td>
           <td>{{file.date}}</td>
@@ -31,7 +31,7 @@
   </div>
 
   <div ng-if="!view_list">
-    <div ng-repeat="file in files" ng-click="download(file.identity_id, file.id)">
+    <div ng-repeat="file in files" ng-click="download(file.identity_id, file)">
       <div class="block">
         <div>{{file.name}}</div>
         <div>{{file.date}}</div>
