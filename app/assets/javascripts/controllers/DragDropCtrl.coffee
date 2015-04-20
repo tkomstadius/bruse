@@ -18,8 +18,6 @@
           )
         .catch((response) ->
           console.error "Couldn't save.."
-          $scope.isSaved = true;
-          
           )
 )
 

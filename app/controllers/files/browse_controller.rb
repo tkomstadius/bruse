@@ -1,7 +1,8 @@
 class Files::BrowseController < Files::FilesController
   skip_before_filter :set_file
   skip_before_filter :set_identity, only: :upload
-  before_filter :encode_file
+  before_filter :decode_file
+  require 'base64'
 
   def browse
     path = params[:path] || '/'
@@ -37,7 +38,10 @@ class Files::BrowseController < Files::FilesController
     end
   end
 
-  def encode_file
+  def decode_file
+    byebug
+    # puts ActiveSupport::Base64.decode64(params[:data])
+    puts ActiveSupport::Base64.decode64("T3JpZ2luYWwgdW5lbmNvZGVkIHN0cmluZw==")
   end
 
 end
