@@ -1,10 +1,22 @@
-@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'TagHandler', ($scope, $rootScope, $location, $routeParams, TagHandler) ->
+@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'TagHandler', 'JSTagsCollection', ($scope, $rootScope, $location, $routeParams, TagHandler, JSTagsCollection) ->
   # Redirect if no files are present
   if !$rootScope.new_files || !$rootScope.new_files.length
     $location.path('/service/'+$routeParams.identity_id+'/files/add')
 
   $scope.files = $rootScope.new_files
-  $scope.tags = ""
+
+  # Creates a new function for retreiving the tags
+  JSTagsCollection.prototype.getTags = ->
+    _.map(_.values($scope.tags.tags), (tag) -> tag.value)
+
+  # Some jsTag options
+  $scope.tags = new JSTagsCollection();
+  $scope.jsTagOptions = {
+    "texts": {
+      "inputPlaceHolder": "Tag"
+    },
+    "tags": $scope.tags
+  };
 
   putTags = (file_id, new_tags, i) ->
     console.log "Adding tags to file with index", i
@@ -13,13 +25,13 @@
       if i != $scope.files.length
         putTags($scope.files[i].bruse_file.id, $scope.files[i].new_tags, i)
       else
-        window.location.replace('/bruse_files')
+        window.location.replace('/files')
       return
       )
     return
 
   $scope.save = ->
-    tagsForAll = _.compact $scope.tags.split ' '
+    tagsForAll = _.compact($scope.tags.getTags())
     ###
     For each file, split the input field by space into an array.
     Remove empty strings with the _.compact method.
@@ -36,4 +48,3 @@
         i++
     putTags($scope.files[0].bruse_file.id, $scope.files[0].new_tags, 0)
 ]
-
