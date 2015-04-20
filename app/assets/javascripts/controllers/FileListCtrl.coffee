@@ -17,11 +17,14 @@
     $scope.files = attrs.files
 
   # Gets called when a file is clicked
-  $scope.download = (identity_id, file_id) ->
-    FileHandler.download(identity_id, file_id).then((data) ->
-      # open the returned url in a new tab
-      win = window.open('/'+data.url, '_self')
-      )
+  $scope.download = (identity_id, file) ->
+    if file.filetype == "bruse/url"
+      win = window.open(file.url, '_blank')
+    else
+      FileHandler.download(identity_id, file.id).then((data) ->
+        # open the returned url in a new tab
+        win = window.open('/'+data.url, '_self')
+        )
 
   # change mime to only filetype
   $scope.getFiletype = (mimetype) ->
