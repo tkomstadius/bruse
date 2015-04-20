@@ -13,7 +13,7 @@
       if location != ''
         # send object to server
         $http.post('/upload', $scope.dataObject).then((response) ->
-          console.log "Saved"
+          console.log response
           $scope.isSaved = true;
           )
         .catch((response) ->

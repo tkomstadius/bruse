@@ -3,8 +3,7 @@ class Files::BrowseController < Files::FilesController
   skip_before_filter :set_identity, only: :upload
   # getting 'can't verify CSRF token authenticity'
   # this could be a serius problem in security?
-  skip_before_filter :verify_authenticity_token
-  before_filter :decode_file
+  # skip_before_filter :verify_authenticity_token, only: [:upload_from_base64]
   require 'base64'
 
   def browse
@@ -41,9 +40,25 @@ class Files::BrowseController < Files::FilesController
     end
   end
 
-  def decode_file
+
+  def upload_from_base64
+    uploader = LocalFileUploader.new
+
+    fileref = SecureRandon.uuid
+    # create file
     decoded_content =  Base64.urlsafe_decode64(params[:data])
     IO.write(params[:name], decoded_content)
+
+    if params[:location] == 'local'
+      BruseFile.new(name: params[:name],
+                    foreign_ref: fileref,
+                    filetype: params[:type],
+                    identity: current_user.identities.find_by(:service => "local"))
+    elsif params[:location] == 'dropbox'
+    elsif params[:location] == 'drive'
+    else
+      flash[:notice] = "something is really wrong"
+    end
   end
 
 end
