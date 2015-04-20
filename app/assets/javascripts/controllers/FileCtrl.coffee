@@ -34,7 +34,7 @@
     unless file.contents and file.contents.length > 0
       file.loading = true
       FileHandler.get($scope.identity, file.path).then((data) ->
-          file.contents = data
+        file.contents = data
         # find all the already added files!
         _.map data, (remote_file) ->
           findFile $scope.bruse_files, remote_file
