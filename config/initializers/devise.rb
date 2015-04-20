@@ -234,7 +234,7 @@ Devise.setup do |config|
   # up on your models and hooks.
   config.omniauth :dropbox_oauth2, ENV['DROPBOX_KEY'], ENV['DROPBOX_SECRET']
   config.omniauth :google_oauth2, ENV['DRIVE_KEY'], ENV['DRIVE_SECRET'],
-                                  { :scope => 'email,profile'}
+                                  { :scope => 'email, profile, https://www.googleapis.com/auth/drive'}
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
