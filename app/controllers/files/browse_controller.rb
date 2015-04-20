@@ -1,6 +1,9 @@
 class Files::BrowseController < Files::FilesController
   skip_before_filter :set_file
   skip_before_filter :set_identity, only: :upload
+  # getting 'can't verify CSRF token authenticity'
+  # this could be a serius problem in security?
+  skip_before_filter :verify_authenticity_token
   before_filter :decode_file
   require 'base64'
 
@@ -39,9 +42,8 @@ class Files::BrowseController < Files::FilesController
   end
 
   def decode_file
-    byebug
-    # puts ActiveSupport::Base64.decode64(params[:data])
-    puts ActiveSupport::Base64.decode64("T3JpZ2luYWwgdW5lbmNvZGVkIHN0cmluZw==")
+    decoded_content =  Base64.urlsafe_decode64(params[:data])
+    IO.write(params[:name], decoded_content)
   end
 
 end

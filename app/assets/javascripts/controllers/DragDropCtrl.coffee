@@ -64,7 +64,8 @@
           # update bindings
         scope.$apply ->
           scope.file = evt.target.result
-          scope.object.data = reader.result
+          scope.object.data = reader.result.split(",")[1]
+          console.log scope.object
           scope.drop = true
           if file.type == 'image/jpeg' || file.type == 'image/png'
             scope.image = evt.target.result
