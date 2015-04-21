@@ -1,17 +1,14 @@
 <h2>New tag for file: <%= @file.name %></h2>
 
-
-<%= form_for(@tag) do |t| %>
-
+<form>
   <p>
-    <%= t.label :name %></br>
-    <%= t.text_field :name %>
+    <label for="tag_name">Tags:</label><br>
+    <input name="tag_name" type="text" id="tag_name">
   </p>
-  <%=t.hidden_field :file_id, :value => @file.id %>
-  <p>
-    <%= t.submit %>
-  </p>
-<% end %>
+  <input type="hidden" value="<%= @file.id %>" id="tag_file_id">
+  <button type="submit" onclick="addTags()">Submit</button>
+
+</form>
 
  <br>
 <%= link_to 'Back', bruse_files_path %>
