@@ -52,7 +52,6 @@ class Files::BrowseController < Files::FilesController
         # insert our file on the users local identity
         if current_user.local_identity.bruse_files << @file
           # send response that everything is ok!
-          flash[:notice] = "#{params[:name]} was saved!"
         else
           flash[:notice] = "nonono"
         end

@@ -6,6 +6,7 @@
     $scope.isDropped = false
     $scope.isSaved = false
     $scope.file = []
+    $scope.message = ''
 
     $scope.saveOpt = (location) ->
       $scope.isDropped = false
@@ -17,6 +18,7 @@
           $scope.file = response.data.file;
           if $scope.file.id != null
             $scope.isSaved = true
+            $scope.message = response.data.file.name + " was saved"
           else
             $scope.file = []
             $scope.isSaved = false
