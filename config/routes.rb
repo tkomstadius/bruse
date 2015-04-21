@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       # get a url used for downloading a file
       get '/files/download/:id', to: 'download#download_url'
       resources :files, except: :update, path_names: { new: 'add' }
+      get '/files/add/tag', to: 'files#new'
     end
     post '/create_file', to: 'files#create_from_text', defaults: { format: 'json' }
     # downloads a file
