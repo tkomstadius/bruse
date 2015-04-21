@@ -6,41 +6,18 @@
   };
 </script>
 <script type="text/ng-template" id="fileTree">
-  <!-- template for our file list -->
-  {{file.name}}
-  <a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
-
-  <i class="fa fa-circle-o-notch fa-spin" ng-if="file.loading"></i>
-  <span class="c-filelist__file__tools" ng-if="!file.bruse_file">
-    <a href="#" ng-click="add(file)" class="tool" ng-if="!file.added">
-      <%= fa_icon 'plus-square-o' %>
-    </a>
-    <a href="#" ng-click="remove(file)" class="tool" ng-if="file.added">
-      <%= fa_icon 'minus-square-o' %>
-    </a>
-  </span>
-
-  <ul ng-if="file.is_dir && file.expand && file.contents" class="c-filelist">
-    <li ng-repeat="file in file.contents" ng-include="'fileTree'" class="c-filelist__file"
-      ng-class="{'c-filelist__file--folder': file.is_dir}"></li>
-  </ul>
+  <%= render 'files/files/file_tree' %>
 </script>
 
-<div ng-controller="FileCtrl">
-  <h1>
-    Hi, <%= current_user["name"] %>!
-  </h1>
+<script type="text/ng-template" id="fileBrowse">
+  <%= render 'files/files/file_browse' %>
+</script>
 
-  <h2>
-    Files <span ng-if="loading">Loading...</span>
-  </h2>
+<script type="text/ng-template" id="tagCreate">
+  <%= render 'tags/tag_create' %>
+</script>
 
-  <button ng-if="new_files.length > 0" ng-click="save()">
-    Save files!
-  </button>
+<div ng-view></div>
 
-  <ul class="c-filelist">
-    <li ng-repeat="file in files" ng-include="'fileTree'" class="c-filelist__file"
-      ng-class="{'c-filelist__file--folder': file.is_dir}"></li>
-  </ul>
-</div>
+
+<%= link_to 'My files', bruse_files_path, target: "_self" %>
