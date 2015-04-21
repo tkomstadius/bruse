@@ -13,9 +13,10 @@
       controller: 'TagCtrl'
     }).
     otherwise({
-      path: 'redirect',
-      templateUrl: 'redirect',
-      controller: 'redirectCtrl'
+      controller : ($location) ->
+        window.location.replace($location.$$path);
+      ,
+      template : "<div></div>"
     })
   $locationProvider.html5Mode(true)
 ]
