@@ -1,0 +1,62 @@
+<div class="files">
+  <button ng-click="view_list = true">
+    List
+  </button>
+  <button ng-click="view_list = false">
+    Block
+  </button>
+
+  <div ng-if="view_list">
+    <table ng-if="hasFiles()">
+      <tr>
+        <th><a href="" ng-click="reverse=!reverse;order('name', reverse)">Filename</a></th>
+        <th>Filetype</th>
+        <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Identity</a></th>
+        <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
+        <th>Tags</th>
+        <th>&nbsp;</th>
+      </tr>
+      <tr ng-repeat="file in files">
+          <td>
+            <a ng-if="file.filetype === 'bruse/url'" ng-href="{{file.url}}" target="_blank">
+              {{file.name}}
+            </a>
+            <span ng-if="file.filetype != 'bruse/url'" ng-click="download(file.identity.id, file)">
+              {{file.name}}
+            </span>
+          </td>
+          <td>.{{getFiletype(file.filetype)}}</td>
+          <td>{{file.identity.name}}</td>
+          <td>{{file.date}}</td>
+          <td>
+            <a ng-href="{{file.paths.add_tags}}" title="Add tags">
+              <i class="fa fa-plus-square"></i>
+            </a>
+            <span ng-repeat="tag in file.tags">
+              <a ng-href="{{tag.path}}">
+                #{{tag.name}}
+              </a>
+              <a ng-href="{{tag.destroy_path}}" data-method="delete">
+                <i class="fa fa-minus-square"></i>
+              </a>
+            </span>
+          </td>
+          <td>
+            <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
+              <i class="fa fa-trash"></i>
+            </a>
+          </td>
+      </tr>
+     </table>
+  </div>
+
+  <div ng-if="!view_list && hasFiles()">
+    <div ng-repeat="file in files" ng-click="download(file.identity.id, file)">
+      <div class="block">
+        <div>{{file.name}}</div>
+        <div>{{file.date}}</div>
+        <div ng-repeat="tag in file.tags">{{tag.name}}</div>
+      </div>
+    </div>
+  </div>
+</div>

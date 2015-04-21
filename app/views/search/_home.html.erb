@@ -2,6 +2,7 @@
   <h1>Search</h1>
   <p>If you want to search for tags add a "#" before your desired word, add a "." to search for filetypes and just add plain text for filename searches.</p>
   <input type="text" name="search" autocomplete="off" placeholder="Search" ng-model="search">
+<<<<<<< HEAD
   <button ng-click="viewList = true">
     List
   </button>
@@ -38,7 +39,12 @@
         <div ng-repeat="tag in file.tags">{{tag.name}}</div>
       </div>
     </div>
+=======
+>>>>>>> b5a45e66348b5adb4a228f35d2f38b88358ceef3
 
+  <div ng-if="files.length === 0 && actualSearch.length > 2">
+    Aint nothing here for you. :(
   </div>
 
+  <b-file-list files={{files}}></b-file-list>
 </div>

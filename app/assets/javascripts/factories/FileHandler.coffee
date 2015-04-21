@@ -2,11 +2,12 @@
   # here, we return an object with different async methods
   return {
     #
-    # Collect saved BruseFiles from this identity
+    # Collect saved BruseFiles from this identity or all
     #
     collect: (identity) ->
+      path = if identity then '/service/'+identity.id+'/files.json' else '/files.json'
       # send a get request
-      promise = $http.get('/service/'+identity.id+'/files.json')
+      promise = $http.get(path)
         .then((response) ->
           # return files
           response.data.files
