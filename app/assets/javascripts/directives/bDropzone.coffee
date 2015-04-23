@@ -35,23 +35,32 @@
     element.bind 'drop', (event) ->
       if event?
         event.preventDefault()
-      reader = new FileReader()
-      reader.onload = (evt) ->
+      file = event.originalEvent.dataTransfer.files
+      i = 0
+      f = undefined
+      while f = file[i]
+        reader = new FileReader()
+      
+        console.log f
+        obj.name = f.name
+        obj.type = f.type
+        reader.readAsDataURL f
+
+        reader.onload = (evt) ->
         # TODO: add some security checks?
         #if event.originalEvent.dataTransfer.files[0].type in validMimeTypes
           # update bindings
-        scope.$apply ->
-          scope.file = evt.target.result
-          scope.object.data = reader.result.split(",")[1]
-          console.log scope.object
-          scope.drop = true
-          if file.type in ['image/jpeg', 'image/png']
-            scope.image = evt.target.result
-          else
-            scope.image = null
-
-      file = event.originalEvent.dataTransfer.files[0]
-      scope.object.name = file.name
-      scope.object.type = file.type
-      reader.readAsDataURL file
+          scope.$apply ->
+            scope.file = evt.target.result
+            obj.data = reader.result.split(",")[1]
+            scope.drop = true
+            scope.object.push obj
+            console.log scope.object
+                        
+            if file.type in ['image/jpeg', 'image/png']
+              scope.image = evt.target.result
+            else
+              scope.image = null
+        i++
+      
       return false

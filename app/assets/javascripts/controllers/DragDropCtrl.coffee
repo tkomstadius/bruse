@@ -1,6 +1,6 @@
 # TODO: create modal for save option?
 @bruseApp.controller 'DragDropCtrl', ['$scope', '$http', ($scope, $http) ->
-    $scope.fileObject = null
+    $scope.fileObject = []
     $scope.dataObject = {location:''}
     $scope.imageFile = null
     $scope.isDropped = false
