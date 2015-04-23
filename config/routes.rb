@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 
     post '/upload', to: 'browse#upload', as: 'upload'
 
+    post '/upload_drop', to: 'browse#upload_from_base64', as: 'upload_drop'
+
     get '/files', to: 'files#show_all', as: 'bruse_files'
 
   end

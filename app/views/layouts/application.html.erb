@@ -9,9 +9,9 @@
 </head>
 <body ng-app="bruseApp">
 
-<% flash.each do |key, value| %>
-  <%= content_tag :div, value, class: "flash #{key}" %>
-<% end %>
+  <% flash.each do |key, value| %>
+    <%= content_tag :div, value, class: "flash #{key}" %>
+  <% end %>
 
 <% if current_user %>
   <%= link_to 'Bruse', root_url, target: "_self" %>
@@ -23,7 +23,7 @@
   <%= link_to 'Sign out user', destroy_user_session_path, method: :delete, target: "_self" %>
 <% end %>
 
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>
