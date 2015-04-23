@@ -16,4 +16,13 @@ class Tag < ActiveRecord::Base
     end
     results.uniq
   end
+
+  # Public: Get the files belonging to this tag and to and to the user
+  #
+  # user  - the user
+  #
+  # Returns the files, if any
+  def user_files(user)
+    bruse_files.joins(:identity).where(identities: { user_id: user.id })
+  end
 end
