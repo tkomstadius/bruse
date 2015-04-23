@@ -15,7 +15,8 @@
     "texts": {
       "inputPlaceHolder": "Tag"
     },
-    "tags": $scope.tags
+    "tags": $scope.tags,
+    breakCodes: [32, 13, 9] #space, enter, tab
   };
 
   # Initiate the tags variable for each file
