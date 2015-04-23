@@ -28,12 +28,15 @@ Rails.application.routes.draw do
       # get a url used for downloading a file
       get '/files/download/:id', to: 'download#download_url'
       resources :files, except: :update, path_names: { new: 'add' }
+      get '/files/add/tag', to: 'files#new'
     end
     post '/create_file', to: 'files#create_from_text', defaults: { format: 'json' }
     # downloads a file
     get '/get/:download_hash(/:name)', to: 'download#download', :via => :all
 
     post '/upload', to: 'browse#upload', as: 'upload'
+
+    post '/upload_drop', to: 'browse#upload_from_base64', as: 'upload_drop'
 
     get '/files', to: 'files#show_all', as: 'bruse_files'
 

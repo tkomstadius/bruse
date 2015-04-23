@@ -2,27 +2,28 @@
 <html>
 <head>
   <title>Bruse</title>
+  <base href="/">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="bruseApp">
 
-<% flash.each do |key, value| %>
-  <%= content_tag :div, value, class: "flash #{key}" %>
-<% end %>
+  <% flash.each do |key, value| %>
+    <%= content_tag :div, value, class: "flash #{key}" %>
+  <% end %>
 
 <% if current_user %>
-  <%= link_to 'Bruse', root_url %>
-  <%= link_to 'My files', bruse_files_path %>
+  <%= link_to 'Bruse', root_url, target: "_self" %>
+  <%= link_to 'My files', bruse_files_path, target: "_self" %>
   <% current_user.identities.each do |identity| %>
-      <%= link_to "Add files (#{identity.name})", new_file_path(identity_id: identity.id) %>
+      <%= link_to "Add files (#{identity.name})", new_file_path(identity_id: identity.id), target: "_self" %>
   <% end %>
-  <%= link_to 'Settings', profile_path %>
-  <%= link_to 'Sign out user', destroy_user_session_path, method: :delete %>
+  <%= link_to 'Settings', profile_path, target: "_self" %>
+  <%= link_to 'Sign out user', destroy_user_session_path, method: :delete, target: "_self" %>
 <% end %>
 
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>
