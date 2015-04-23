@@ -31,7 +31,7 @@
               docName.push element
 
           # create a search object divided by category
-          searchObject = { tags: hashTags, filetypes: types, fuzzy: docName }
+          searchObject = {tags: hashTags, filetypes: types, fuzzy: docName}
 
           # send search object to server
           $http.post('/search', searchObject).then((response) ->

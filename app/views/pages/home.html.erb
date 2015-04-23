@@ -5,5 +5,21 @@
 <% else %>
   <%= render 'files/files/create_from_textbox' %>
   <%= render 'search/home' %>
+  <div style="border:solid" ng-controller="DragDropCtrl">
+    <div b-dropzone file="fileObject" object="dataObject" image="imageFile" drop="isDropped">
+      <span>Put stuff here</span>
+    </div>
+    <div ng-show="isDropped">
+      <!-- TODO: check strings for saving later -->
+      <button ng-click="saveOpt('dropbox')">Dropbox</button>
+      <button ng-click="saveOpt('drive')">Drive</button>
+      <button ng-click="saveOpt('local')">Local</button>
+      <button ng-click="saveOpt('')">Cancel</button>
+    </div>
+    <div ng-show="isSaved">
+      <img ng-if="imageFile" ng-src="{{imageFile}}"/>
+      <span>{{message}}</span>
+    </div>
+  </div>
 <% end %>
 
