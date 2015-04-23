@@ -16,7 +16,7 @@
       "inputPlaceHolder": "Tag"
     },
     "tags": $scope.tags,
-    breakCodes: [32, 13, 9] #space, enter, tab
+    breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
   };
 
   # Initiate the tags variable for each file
@@ -27,7 +27,7 @@
         inputPlaceHolder: "Tag"
       },
       tags: file.tags,
-      breakCodes: [32, 13, 9] #space, enter, tab
+      breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
     }
     return
     )
