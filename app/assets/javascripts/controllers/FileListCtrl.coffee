@@ -14,16 +14,25 @@
     if attrs.files
       # if file is provided through the directive attributes, use those...
       $scope.files = attrs.files
-    else if attrs.path
-      # ... or use the path provided to the directive...
-      FileHandler.collect(path: attrs.path).then((data) ->
-        $scope.files = data
-        )
     else
+      # ... or use the path provided to the directive...
       # ... otherwise collect them from server
-      FileHandler.collect().then((data) ->
-        $scope.files = data
-        )
+      offset = 0
+      limit = 20
+      absoluteLimit = 100
+
+      recursiveCollect = ->
+        FileHandler.collect(path: attrs.path, limit: limit, offset: offset).then((data) ->
+          # check if we should load more?
+          if data.length >= limit && offset < absoluteLimit
+            offset += limit
+            recursiveCollect()
+          # append every file to the list of files
+          data.map((file) ->
+            $scope.files.push file
+            )
+          )
+      recursiveCollect()
 
   # Gets called when a file is clicked
   $scope.download = (identity_id, file) ->
