@@ -18,22 +18,38 @@ class Files::BrowseController < Files::FilesController
 
 
   def upload
-    uploader = LocalFileUploader.new
+    identity = Identity.find(params[:service])
+      if identity.name.downcase.include? "dropbox"
+        identity.upload_to_service(params[:bruse_file][:file])
 
-    uploader.store!(params[:bruse_file][:file])
-
-    file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
-                         foreign_ref: uploader.file.identifier,
-                         filetype: uploader.content_type,
-                         identity: current_user.local_identity)
-
-    if file.save #file.identity.bruse_files << file
-        flash[:notice] = "#{file.name} was saved!"
+        flash[:notice] = "Saved in dropbox"
         redirect_to bruse_files_path
-    else
-      flash[:notice] = "you must log in to your bruse acount!"
-        redirect_to bruse_files_path
-    end
+        # if response.save #file.identity.bruse_files << file
+        #     flash[:notice] = "#{file.name} was saved!"
+        #     redirect_to bruse_files_path
+        # else
+        #   flash[:notice] = "Didn't work"
+        #     redirect_to bruse_files_path
+        # end
+      else
+        uploader = LocalFileUploader.new
+
+        uploader.store!(params[:bruse_file][:file])
+
+        file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
+                             foreign_ref: uploader.file.identifier,
+                             filetype: uploader.content_type,
+                             identity: current_user.local_identity)
+
+        if file.save #file.identity.bruse_files << file
+            flash[:notice] = "#{file.name} was saved!"
+            redirect_to bruse_files_path
+        else
+          flash[:notice] = "you must log in to your bruse acount!"
+            redirect_to bruse_files_path
+        end
+      end
   end
+
 
 end

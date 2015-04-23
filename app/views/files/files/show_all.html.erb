@@ -11,7 +11,14 @@
   <div class="actions">
     <%= f.submit "Upload" %>
   </div>
+
+  <% current_user.identities.each do |identity| %>
+    <%= radio_button_tag(:service, identity.id) %>
+    <%= label_tag(:service_dropbox, identity.name) %>
+  <% end %>
+
 <% end %>
+
 
 <table>
   <thead>
@@ -20,7 +27,6 @@
       <th>File type</th>
       <th>Meta</th>
       <th>Tag</th>
-
       <th colspan="3"></th>
     </tr>
   </thead>

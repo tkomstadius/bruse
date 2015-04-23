@@ -85,7 +85,7 @@ class Identity < ActiveRecord::Base
       end
 
       # Rename parameters for easy access
-      @result.data.items.each do |f| 
+      @result.data.items.each do |f|
         if f.mime_type.include? "folder"
           f["is_dir"] = true
         else
@@ -174,6 +174,16 @@ class Identity < ActiveRecord::Base
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 
+  def upload_to_service(file)
+    set_client
+
+    return response = @client.put_file("/#{file.original_filename}", file.tempfile)
+
+    puts "uploaded:", response.inspect
+
+  end
+
+
   private
     # Private: Get the file handling client from the identity
     #
@@ -187,7 +197,7 @@ class Identity < ActiveRecord::Base
     # Returns the client
     def set_client
       @client ||= DropboxClient.new(token) if service.downcase.include? "dropbox"
-      
+
       if service.downcase.include? "google"
         @result = Array.new{Array.new}
         @client ||= Google::APIClient.new(
