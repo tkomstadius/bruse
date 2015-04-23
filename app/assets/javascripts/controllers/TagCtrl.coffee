@@ -25,7 +25,8 @@
       texts: {
         inputPlaceHolder: "Tag"
       },
-      tags: file.tags
+      tags: file.tags,
+      breakCodes: [32, 13, 9] #space, enter, tab
     }
     return
     )
