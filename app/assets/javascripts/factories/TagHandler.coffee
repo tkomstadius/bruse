@@ -2,7 +2,7 @@
   return {
     ###
     Add tags to a file
-      file_id:integer
+      file_id: integer
       tags: string[]
 
     Sends a post request with the data to the server
@@ -19,6 +19,15 @@
         .catch((response) ->
           alert "Couldn't add tags.."
           response
+          )
+
+    collectFiles: (tag_id) ->
+      promise = $http.get("/tags/#{tag_id}.json")
+        .then((response) ->
+          response.data
+          )
+        .catch((response) ->
+          console.error "An error occured."
           )
   }
 ]

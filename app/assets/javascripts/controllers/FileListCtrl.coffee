@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', ($scope, $filter, FileHandler) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', '$http', 'FileHandler', ($scope, $filter, $http, FileHandler) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
@@ -14,6 +14,11 @@
     if attrs.files
       # if file is provided through the directive attributes, use those...
       $scope.files = attrs.files
+    else if attrs.path
+      $http.get(attrs.path)
+        .success((data) ->
+          $scope.files = data.files
+          )
     else
       # ... otherwise collect them from server
       FileHandler.collect().then((data) ->

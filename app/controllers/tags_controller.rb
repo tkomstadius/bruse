@@ -1,24 +1,19 @@
 class TagsController < ApplicationController
-	before_action :set_tag , only: [:show]
+  before_action :set_tag, only: [:show]
+  before_action :set_file, only: [:new, :create, :destroy]
   skip_before_action :verify_authenticity_token, only: :create
 
   def index
-
   end
 
-	def show
-
+  def show
   end
 
   def new
     @tag = Tag.new
-    @file = BruseFile.find(params[:file_id])
-
   end
 
   def create
-    @file = BruseFile.find_by(:id => params[:file_id])
-
     if current_user.id == @file.identity.user_id
       params[:tags].each do |tag|
         @tag = Tag.find_or_create_by(:name => tag)
@@ -37,16 +32,11 @@ class TagsController < ApplicationController
      end
   end
 
-
   def destroy
-
-    @file = BruseFile.find(params[:file_id])
-
     @tag = @file.tags.find(params[:id])
 
-
     if @tag
-        @file.tags.delete(@tag)
+      @file.tags.delete(@tag)
     end
 
     respond_to do |format|
@@ -56,14 +46,16 @@ class TagsController < ApplicationController
   end
 
 
-private
+  private
+    def set_tag
+      @tag = Tag.find(params[:id])
+    end
 
-  def set_tag
-	  @tag = Tag.find(params[:id])
-	end
+    def set_file
+      @file = BruseFile.find(params[:file_id])
+    end
 
-	def tag_params
+    def tag_params
       params.require(:tag).permit(:name, :file_id)
-  end
-
+    end
 end
