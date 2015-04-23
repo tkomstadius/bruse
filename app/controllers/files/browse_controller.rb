@@ -47,14 +47,16 @@ class Files::BrowseController < Files::FilesController
       #check if user has local identity
       if current_user.local_identity
         # if so, create brusefile
-        @file = create_drop_file(params)
+        params[:objects].each {|f|
+          @file = create_drop_file(f) if !f.empty?
 
-        # insert our file on the users local identity
-        if current_user.local_identity.bruse_files << @file
-          # send response that everything is ok!
-        else
-          flash[:notice] = "nonono"
-        end
+          # insert our file on the users local identity
+          if current_user.local_identity.bruse_files << @file
+            # send response that everything is ok!
+          else
+            flash[:notice] = "nonono"
+          end
+        }
       else
         # no file! not working!
         @file = nil
