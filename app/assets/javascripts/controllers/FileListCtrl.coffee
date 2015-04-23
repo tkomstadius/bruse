@@ -2,7 +2,7 @@
 @bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', ($scope, $filter, FileHandler) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
-  self = this;
+  self = this
   # setup some vars
   orderBy = $filter('orderBy')
   $scope.files = []
@@ -11,7 +11,6 @@
   # this function gets called from the directive
   this.init = (element, attrs) ->
     self.$element = element
-    $scope.name = attrs.name
     if attrs.files
       # if file is provided through the directive attributes, use those...
       $scope.files = attrs.files
