@@ -20,17 +20,17 @@ class Files::BrowseController < Files::FilesController
   def upload
     identity = Identity.find(params[:service])
       if identity.name.downcase.include? "dropbox"
-        identity.upload_to_service(params[:bruse_file][:file])
 
-        flash[:notice] = "Saved in dropbox"
-        redirect_to bruse_files_path
-        # if response.save #file.identity.bruse_files << file
-        #     flash[:notice] = "#{file.name} was saved!"
-        #     redirect_to bruse_files_path
-        # else
-        #   flash[:notice] = "Didn't work"
-        #     redirect_to bruse_files_path
-        # end
+        response = identity.upload_to_service(params[:bruse_file][:file])
+
+        if response
+          flash[:notice] = "#{params[:bruse_file][:file].original_filename} was saved in dropbox"
+          redirect_to bruse_files_path
+        else
+          flash[:notice] = "Could not save the file!"
+          redirect_to bruse_files_path
+        end
+
       else
         uploader = LocalFileUploader.new
 

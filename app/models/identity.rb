@@ -177,9 +177,11 @@ class Identity < ActiveRecord::Base
   def upload_to_service(file)
     set_client
 
-    return response = @client.put_file("/#{file.original_filename}", file.tempfile)
+    response = @client.put_file("/#{file.original_filename}", file.tempfile)
 
     puts "uploaded:", response.inspect
+
+    return response
 
   end
 
