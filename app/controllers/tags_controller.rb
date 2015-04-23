@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
 	before_action :set_tag , only: [:show]
+  skip_before_action :verify_authenticity_token, only: :create
 
   def index
 
@@ -16,25 +17,22 @@ class TagsController < ApplicationController
   end
 
   def create
-
-
-
-    @file = BruseFile.find_by(:id => tag_params[:file_id])
+    @file = BruseFile.find_by(:id => params[:file_id])
 
     if current_user.id == @file.identity.user_id
-      tag_params[:name].split.each do |tag|
+      params[:tags].each do |tag|
         @tag = Tag.find_or_create_by(:name => tag)
-        @tag.bruse_files.append( @file )
+        @tag.bruse_files << @file
       end
     end
 
      respond_to do |format|
         if @tag.save
           format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
-          format.json { render :show, status: :ok, location:  @tag.bruse_files }
+          format.json { render json: {:success => true}, status: :ok }
         else
           format.html { render :new, notice: 'Something went wrong' }
-          format.json { render json: @tag.errors, status: :unprocessable_entity }
+          format.json { render json: {:errors => @tag.errors, :success => false}, status: :unprocessable_entity }
         end
      end
   end
