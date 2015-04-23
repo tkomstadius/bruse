@@ -1,4 +1,4 @@
-@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$http', (FileHandler, $scope, $http) ->
+@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$rootScope', '$location', (FileHandler, $scope, $rootScope, $location) ->
   $scope.files = []
   $scope.bruse_files = []
   $scope.new_files = []
@@ -97,6 +97,7 @@
    * save all files to db
   ###
   $scope.save = ->
+    $rootScope.new_files = $scope.new_files
     _.each $scope.new_files, (file, index) ->
       FileHandler.put($scope.identity, file).then((data) ->
         # add file to list of existing files
@@ -106,9 +107,11 @@
         # remove file from lists of files to add
         if index is $scope.new_files.length
           # do something better here
+          $location.path('/service/'+$scope.identity.id+'/files/add/tag')
           console.log "done!"
         )
       $scope.new_files = _.without $scope.new_files, file
+
 
 
   ###*
