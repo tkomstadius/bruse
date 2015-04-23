@@ -4,10 +4,17 @@
     #
     # Collect saved BruseFiles from this identity or all
     #
-    collect: (identity) ->
-      path = if identity then '/service/'+identity.id+'/files.json' else '/files.json'
+    collect: ({identity, path, limit, offset} = {}) ->
+      path ?= '/files.json'
+      offset ?= 0
+
+      # prepare path to load from server
+      loadpath = if identity then '/service/'+identity.id+'/files.json' else path
+      # if limit is provided, send it with the request
+      loadpath += "?limit=#{limit}&offset=#{offset}" if limit
+
       # send a get request
-      promise = $http.get(path)
+      promise = $http.get(loadpath)
         .then((response) ->
           # return files
           response.data.files

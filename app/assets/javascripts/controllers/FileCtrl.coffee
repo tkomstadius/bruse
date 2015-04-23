@@ -8,7 +8,7 @@
   $scope.identity = IDENTITY_PARAMS
 
   # load existing BruseFiles on page load
-  FileHandler.collect($scope.identity).then((data) ->
+  FileHandler.collect(identity: $scope.identity).then((data) ->
     $scope.bruse_files = data
 
     # when we have loaded BruseFiles, load root remote files

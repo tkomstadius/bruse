@@ -17,8 +17,11 @@ class Files::FilesController < ApplicationController
   end
 
   def show_all
+    limit = params.has_key?(:limit) ? params[:limit] : 200
+    offset = params.has_key?(:offset) ? params[:offset] : 0
+
     @bruse_file = BruseFile.new
-    @bruse_files = current_user.bruse_files.includes(:tags)
+    @bruse_files = current_user.bruse_files.includes(:tags).order(created_at: :desc).limit(limit.to_i).offset(offset.to_i)
   end
 
   def new
