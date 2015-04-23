@@ -9,14 +9,14 @@
   <div ng-if="view_list">
     <table ng-if="hasFiles()">
       <tr>
-        <th><a href="" ng-click="reverse=!reverse;order('name', reverse)">Filename</a></th>
+        <th><a href="" ng-click="reverse = !reverse; order_by = 'name';">Filename</a></th>
         <th>Filetype</th>
-        <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Identity</a></th>
-        <th><a href="" ng-click="reverse=!reverse;order('date', reverse)">Date</a></th>
+        <th><a href="" ng-click="reverse = !reverse; order_by = 'identity.name';">Identity</a></th>
+        <th><a href="" ng-click="reverse = !reverse; order_by = 'date';">Date</a></th>
         <th>Tags</th>
         <th>&nbsp;</th>
       </tr>
-      <tr ng-repeat="file in files">
+      <tr ng-repeat="file in files | orderBy : order_by : reverse">
           <td>
             <a ng-if="file.filetype === 'bruse/url'" ng-href="{{file.url}}" target="_blank">
               {{file.name}}

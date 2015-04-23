@@ -1,10 +1,9 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', ($scope, $filter, FileHandler) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', 'FileHandler', ($scope, FileHandler) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
   # setup some vars
-  orderBy = $filter('orderBy')
   $scope.files = []
   $scope.view_list = true
 
@@ -48,8 +47,4 @@
 
   $scope.hasFiles = ->
     Array.isArray($scope.files) && $scope.files.length > 0
-
-  # a function to order the files
-  $scope.order = (predicate, reverse) ->
-    $scope.files = orderBy($scope.files, predicate, reverse)
 ]
