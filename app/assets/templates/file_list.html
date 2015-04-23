@@ -28,7 +28,12 @@
               {{file.name}}
             </span>
           </td>
-          <td>.{{getFiletype(file.filetype)}}</td>
+          <td ng-if="file.filetype.indexOf('google-apps') > -1">
+            {{getFiletype(file.filetype).slice(16,end)}}
+          </td>
+          <td ng-if="file.filetype.indexOf('google-apps') < 0">
+            {{getFiletype(file.filetype)}}
+          </td>
           <td>{{file.identity.name}}</td>
           <td>{{file.date}}</td>
           <td>
