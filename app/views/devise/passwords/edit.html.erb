@@ -20,6 +20,9 @@
 
   <div class="actions">
     <% if !current_user %>
+      <p>
+        FYI, you will be logged out when changing the password.
+      </p>
       <%= f.submit "Change my password" %>
     <% else %>
       <%= f.submit "Create password" %>
