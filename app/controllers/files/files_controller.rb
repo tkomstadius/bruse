@@ -18,7 +18,7 @@ class Files::FilesController < ApplicationController
 
   def show_all
     @bruse_file = BruseFile.new
-    @bruse_files = current_user.bruse_files
+    @bruse_files = current_user.bruse_files.includes(:tags)
   end
 
   def new
