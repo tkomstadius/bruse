@@ -16,14 +16,11 @@
         $scope.dataObjects.objects = $scope.droppedFiles
         $scope.dataObjects.location = location
 
-        console.log $scope.dataObjects.objects
-
         # send object to server
         $http.post('/upload_drop.json', $scope.dataObjects).then((response) ->
-          if $scope.file.id != null
+          if response.data.file.id != null
             $scope.isSaved = true
-            # $scope.message = response.data.file + " was saved"
-            console.log response.data.file
+            $scope.message = "saved"
           else
             $scope.isSaved = false
           )
