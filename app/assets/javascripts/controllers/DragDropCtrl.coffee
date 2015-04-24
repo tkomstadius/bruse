@@ -2,7 +2,7 @@
 @bruseApp.controller 'DragDropCtrl', ['$scope', '$http', ($scope, $http) ->
     $scope.droppedFiles = []
     $scope.dataObjects = {}
-    $scope.imageFiles = null
+    $scope.imageFiles = []
     $scope.isDropped = false
     $scope.isSaved = false
     $scope.message = ''

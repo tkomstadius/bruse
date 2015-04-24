@@ -53,7 +53,7 @@
               scope.drop = true
               scope.theFiles.push obj
               return
-          
+          console.log file.type
           reader.readAsDataURL file
         addFile(files[i])
         i++
