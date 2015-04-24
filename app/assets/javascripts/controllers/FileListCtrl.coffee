@@ -1,11 +1,12 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', 'FileHandler', ($scope, FileHandler) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', ($scope, $filter, FileHandler) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
   # setup some vars
   $scope.files = []
   $scope.view_list = true
+  $scope.showIdentities = []
 
   # this function gets called from the directive
   this.init = (element, attrs) ->
@@ -40,6 +41,11 @@
         # open the returned url in a new tab
         win = window.open('/'+data.url, '_self')
         )
+
+  $scope.identities = ->
+    return [] unless $scope.hasFiles()
+    uniqueIdentities = _.uniq($scope.files, 'identity.name')
+    _.pluck(uniqueIdentities, 'identity')
 
   # change mime to only filetype
   $scope.getFiletype = (mimetype) ->

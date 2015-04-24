@@ -6,6 +6,13 @@
     Block
   </button>
 
+  <div class="filter">
+    <label ng-repeat="identity in identities()">
+      <input type="checkbox" checked="1" ng-model="showIdentities[identity.name]" />
+      {{identity.name}}
+    </label>
+  </div>
+
   <div ng-if="view_list">
     <table ng-if="hasFiles()">
       <tr>
@@ -16,6 +23,7 @@
         <th>Tags</th>
         <th>&nbsp;</th>
       </tr>
+      <!-- this should be added in the future: | IdentityFilter:showIdentities -->
       <tr ng-repeat="file in files | orderBy : order_by : reverse">
           <td>
             <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
