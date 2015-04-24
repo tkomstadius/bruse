@@ -36,6 +36,9 @@
     <div class="field">
       <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
       <%= f.password_field :current_password, autocomplete: "off" %>
+      <p>
+        Forgot your password? <%= link_to "Click here", new_user_password_path %>
+      </p>
     </div>
   <% end %>
 

@@ -2,11 +2,12 @@
   # here, we return an object with different async methods
   return {
     #
-    # Collect saved BruseFiles from this identity
+    # Collect saved BruseFiles from this identity or all
     #
     collect: (identity) ->
+      path = if identity then '/service/'+identity.id+'/files.json' else '/files.json'
       # send a get request
-      promise = $http.get('/service/'+identity.id+'/files.json')
+      promise = $http.get(path)
         .then((response) ->
           # return files
           response.data.files
@@ -90,6 +91,8 @@
           filetype: file.mimeType
           # send info whether or not this is a directory to server
           is_dir: file.is_dir
+          # set link
+          link: file.alternateLink
           # store some useful meta data
           meta:
             size: file.fileSize

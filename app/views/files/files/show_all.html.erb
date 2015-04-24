@@ -2,7 +2,6 @@
 
 <h1>Listing Files</h1>
 
-
 <%= form_for(@bruse_file, url: upload_path) do |f| %>
   <div class="field">
     <%= f.label :file %>
@@ -19,41 +18,5 @@
 
 <% end %>
 
-
-<table>
-  <thead>
-    <tr>
-      <th>File name</th>
-      <th>File type</th>
-      <th>Meta</th>
-      <th>Tag</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @bruse_files.each do |file| %>
-      <tr>
-        <td>
-          <%= link_to_if file.filetype == "bruse/url", file.name, file.foreign_ref, target: '_blank' %>
-        </td>
-        <td><%= file.filetype %></td>
-        <td><%= file.meta %></td>
-        <td><% file.tags.each do |t| %>
-         <%= link_to t.name, t %>
-          <%= link_to 'Delete tag', destroy_tag_path(file, t),
-                  method: :delete,
-                  data: { confirm: 'Are you sure?' } %>
-
-        <% end %></td>
-        <td><%= link_to 'Add tag', new_tag_path(file) %></td>
-        <td><%= link_to 'Destroy', file_path(file.identity, file), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-      </tr>
-    <% end %>
-
-
-  </tbody>
-</table>
-
+<b-file-list></b-file-list>
 

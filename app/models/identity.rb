@@ -170,7 +170,7 @@ class Identity < ActiveRecord::Base
 
     # return file data
     return @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
-    return @client.get_file('https://www.googleapis.com/drive/v2/files/'+foreign_ref+'alt=media') if service.downcase.include? "google"
+    return @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media') if service.downcase.include? "google"
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 
