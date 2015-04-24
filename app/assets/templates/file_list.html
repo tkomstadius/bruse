@@ -18,21 +18,18 @@
       </tr>
       <tr ng-repeat="file in files | orderBy : order_by : reverse">
           <td>
-            <a ng-if="file.filetype === 'bruse/url'" ng-href="{{file.url}}" target="_blank">
-              {{file.name}}
+            <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
+              <i class="fa fa-external-link"></i> {{file.name}}
             </a>
-            <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
-              {{file.name}}
-            </a>
-            <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0" ng-click="download(file.identity.id, file)">
+            <span ng-if="!file.url">
+              <a href="#" ng-click="download(file.identity.id, file)">
+                <i class="fa fa-download"></i>
+              </a>
               {{file.name}}
             </span>
           </td>
-          <td ng-if="file.filetype.indexOf('google-apps') > -1">
-            {{getFiletype(file.filetype).slice(16,end)}}
-          </td>
-          <td ng-if="file.filetype.indexOf('google-apps') < 0">
-            {{getFiletype(file.filetype)}}
+          <td>
+            {{file.filetype.indexOf('google-apps') > -1 ? getFiletype(file.filetype).slice(16,end) : getFiletype(file.filetype)}}
           </td>
           <td>
             <i class="fa fa-dropbox" ng-if="file.identity.service == 'dropbox_oauth2'"></i>
