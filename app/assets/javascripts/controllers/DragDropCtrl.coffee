@@ -18,11 +18,12 @@
 
         # send object to server
         $http.post('/upload_drop.json', $scope.dataObjects).then((response) ->
-          if response.data.file.id != null
+          if response.data.file != null
             $scope.isSaved = true
-            $scope.message = "saved"
+            $scope.message = "Saved to " + location
           else
             $scope.isSaved = false
+            $scope.message = "Something went wrong"
           )
         .catch((response) ->
           console.error "Couldn't save.."

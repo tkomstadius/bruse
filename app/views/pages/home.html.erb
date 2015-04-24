@@ -17,7 +17,7 @@
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
     <div ng-show="isSaved" ng-if="imageFiles != []">
-      <div ng-repeat="im in imageFiles"> 
+      <div class="savedImages"ng-repeat="im in imageFiles"> 
         <img ng-src="{{im}}"/>
       </div>
       <span>{{message}}</span>

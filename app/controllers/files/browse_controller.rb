@@ -62,9 +62,9 @@ class Files::BrowseController < Files::FilesController
         render status :not_acceptable
       end
     elsif params[:location] == 'dropbox'
-      flash[:notice] = "nonono, not yet"
+      @file = nil
     elsif params[:location] == 'drive'
-      flash[:notice] = "nonono, maybe later"
+      @file = nil
     else
       flash[:notice] = "No storage option"
     end
