@@ -11,6 +11,7 @@ end
 json.identity do
   json.id file.identity.id
   json.name file.identity.name
+  json.service file.identity.service
 end
 json.tags file.tags do |tag|
   json.name tag.name
