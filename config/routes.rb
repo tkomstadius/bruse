@@ -11,7 +11,8 @@ Rails.application.routes.draw do
 
   # User
   devise_for :users, controllers: { omniauth_callbacks: 'user/omniauth_callbacks',
-                                    registrations: 'user/registrations' }
+                                    registrations: 'user/registrations',
+                                    passwords: 'user/passwords' }
   get '/user', to: 'user/users#show', as: 'profile'
   get '/users/terminate', to: 'user/users#terminate', as: 'terminate_user'
   delete '/users', to: 'user/users#destroy', as: 'destroy_user'
