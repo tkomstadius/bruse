@@ -9,6 +9,7 @@
     theFiles: '='
     images: '='
     drop: '='
+    info: '='
   }
   # use link when we want to modify the DOM
   # scope - angular scope object
@@ -52,6 +53,7 @@
               obj.data = reader.result.split(",")[1]
               scope.drop = true
               scope.images = []
+              scope.info = ''
               scope.theFiles.push obj
               if file.type in ['image/jpeg', 'image/png']
                 scope.images.push evt.target.result

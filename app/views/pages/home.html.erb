@@ -6,7 +6,7 @@
   <%= render 'files/files/create_from_textbox' %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-dropzone the-files="droppedFiles" images="imageFiles" drop="isDropped">
+    <div b-dropzone the-files="droppedFiles" images="imageFiles" drop="isDropped" info="message">
       <span>Put stuff here</span>
     </div>
     <div ng-show="isDropped">
