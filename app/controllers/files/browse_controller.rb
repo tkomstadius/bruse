@@ -63,7 +63,7 @@ class Files::BrowseController < Files::FilesController
       end
     elsif params[:location] == 'dropbox'
       @file = nil
-    elsif params[:location] == 'drive'
+    elsif params[:location] == 'google'
       @file = nil
     else
       flash[:notice] = "No storage option"
