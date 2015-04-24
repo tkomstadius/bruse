@@ -21,11 +21,19 @@
             <a ng-if="file.filetype === 'bruse/url'" ng-href="{{file.url}}" target="_blank">
               {{file.name}}
             </a>
-            <span ng-if="file.filetype != 'bruse/url'" ng-click="download(file.identity.id, file)">
+            <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
+              {{file.name}}
+            </a>
+            <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0" ng-click="download(file.identity.id, file)">
               {{file.name}}
             </span>
           </td>
-          <td>.{{getFiletype(file.filetype)}}</td>
+          <td ng-if="file.filetype.indexOf('google-apps') > -1">
+            {{getFiletype(file.filetype).slice(16,end)}}
+          </td>
+          <td ng-if="file.filetype.indexOf('google-apps') < 0">
+            {{getFiletype(file.filetype)}}
+          </td>
           <td>
             <i class="fa fa-dropbox" ng-if="file.identity.service == 'dropbox_oauth2'"></i>
             <i class="fa fa-google" ng-if="file.identity.service == 'google_oauth2'"></i>

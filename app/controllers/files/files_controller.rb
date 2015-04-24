@@ -105,7 +105,7 @@ class Files::FilesController < ApplicationController
     #
     # Return safer parameters
     def file_params
-      params.require(:file).permit(:name, :foreign_ref, :filetype, :meta)
+      params.require(:file).permit(:name, :foreign_ref, :filetype, :meta, :link)
     end
 
     def text_params
