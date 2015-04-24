@@ -99,3 +99,4 @@ class Files::BrowseController < Files::FilesController
                     foreign_ref: fileref,
                     filetype: content[:type])
     end
+end
