@@ -174,7 +174,7 @@ class Identity < ActiveRecord::Base
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 
-  def upload_to_service(file)
+  def upload_to_dropbox(file)
     set_client
 
     response = @client.put_file("/#{file.original_filename}", file.tempfile)
@@ -182,6 +182,35 @@ class Identity < ActiveRecord::Base
     puts "uploaded:", response.inspect
 
     return response
+
+  end
+
+
+  def upload_to_google(localFile)
+    set_client
+
+    drive = @client.discovered_api('drive', 'v2')
+    file = drive.files.insert.request_schema.new({
+      'title' => localFile.original_filename.to_s.force_encoding("UTF-8"),
+      'description' => localFile.tempfile.to_s.force_encoding("UTF-8"),
+      'mimeType' => localFile.content_type.to_s.force_encoding("UTF-8")
+    })
+    # Set the parent folder.
+
+    file.parents = [{'id' => 'root'}]
+
+    media = Google::APIClient::UploadIO.new(localFile, localFile.content_type,localFile.original_filename )
+
+    result = @client.execute(
+      :api_method => drive.files.insert,
+      :body_object => file,
+      :media => media,
+      :parameters => {
+        'uploadType' => 'multipart',
+        'alt' => 'json'})
+
+
+      return result.data
 
   end
 
