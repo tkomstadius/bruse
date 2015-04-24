@@ -1,4 +1,4 @@
-@bruseApp = angular.module 'bruseApp', ['ngRoute']
+@bruseApp = angular.module 'bruseApp', ['ngRoute', 'jsTag']
 
 @bruseApp.config ['$routeProvider', '$locationProvider', ($routeProvider, $locationProvider)->
   $routeProvider.
