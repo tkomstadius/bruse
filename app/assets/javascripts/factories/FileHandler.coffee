@@ -91,6 +91,8 @@
           filetype: file.mimeType
           # send info whether or not this is a directory to server
           is_dir: file.is_dir
+          # set link
+          link: file.alternateLink
           # store some useful meta data
           meta:
             size: file.fileSize
