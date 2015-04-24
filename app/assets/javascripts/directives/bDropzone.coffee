@@ -52,6 +52,8 @@
               obj.data = reader.result.split(",")[1]
               scope.drop = true
               scope.theFiles.push obj
+              if file.type in ['image/jpeg', 'image/png']
+                scope.images.push evt.target.result
               return
           console.log file.type
           reader.readAsDataURL file

@@ -16,8 +16,10 @@
       <button ng-click="saveOpt('local')">Local</button>
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
-    <div ng-show="isSaved">
-      <img ng-if="imageFiles" ng-src="{{imageFiles}}"/>
+    <div ng-show="isSaved" ng-if="imageFiles != []">
+      <div ng-repeat="im in imageFiles"> 
+        <img ng-src="{{im}}"/>
+      </div>
       <span>{{message}}</span>
     </div>
   </div>
