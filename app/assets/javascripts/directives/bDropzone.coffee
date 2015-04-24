@@ -58,7 +58,10 @@
               if file.type in ['image/jpeg', 'image/png']
                 scope.images.push evt.target.result
               return
-          reader.readAsDataURL file
+          if file.type != ''
+            reader.readAsDataURL file
+          else
+            console.log file.name + " has no type"
         addFile(files[i])
         i++
         
