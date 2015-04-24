@@ -49,14 +49,23 @@
             <a ng-href="{{file.paths.add_tags}}" title="Add tags">
               <i class="fa fa-plus-square"></i>
             </a>
-            <span ng-repeat="tag in file.tags">
-              <a ng-href="{{tag.path}}">
-                #{{tag.name}}
-              </a>
-              <a ng-href="{{tag.destroy_path}}" data-method="delete">
-                <i class="fa fa-minus-square"></i>
-              </a>
+            <span ng-if="file.tagsEdit">
+              Edit!
+              <js-tag ng-if="file.tagsEdit" js-tag-options="file.jsTagOptions"></js-tag>
             </span>
+            <div class="file__taglist" ng-if="!file.tagsEdit">
+              <a ng-href="" title="Edit tags" ng-click="editTags(file)">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <span ng-repeat="tag in file.tags">
+                <a ng-href="{{tag.path}}">
+                  #{{tag.name}}
+                </a>
+                <a ng-href="{{tag.destroy_path}}" data-method="delete">
+                  <i class="fa fa-minus-square"></i>
+                </a>
+              </span>
+            </div>
           </td>
           <td>
             <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
