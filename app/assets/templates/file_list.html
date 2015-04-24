@@ -7,10 +7,10 @@
   </button>
 
   <div class="filter">
-    <label ng-repeat="identity in identities()">
-      <input type="checkbox" checked="1" ng-model="showIdentities[identity.name]" />
-      {{identity.name}}
-    </label>
+    Showing files from
+    <select ng-model="identity_filter.identity.id" ng-options="i.id as i.name for i in identities()">
+      <option value="">--All--</option>
+    </select>
   </div>
 
   <div ng-if="view_list">
@@ -24,13 +24,13 @@
         <th>&nbsp;</th>
       </tr>
       <!-- this should be added in the future: | IdentityFilter:showIdentities -->
-      <tr ng-repeat="file in files | orderBy : order_by : reverse">
+      <tr ng-repeat="file in files | filter: identity_filter | orderBy : order_by : reverse">
           <td>
             <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
               <i class="fa fa-external-link"></i> {{file.name}}
             </a>
             <span ng-if="!file.url">
-              <a href="#" ng-click="download(file.identity.id, file)">
+              <a href="" ng-click="download(file.identity.id, file)">
                 <i class="fa fa-download"></i>
               </a>
               {{file.name}}
