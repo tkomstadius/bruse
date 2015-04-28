@@ -52,10 +52,9 @@
             scope.$apply ->
               obj.data = reader.result.split(",")[1]
               scope.drop = true
-              scope.images = []
               scope.info = ''
               scope.theFiles.push obj
-              if file.type in ['image/jpeg', 'image/png']
+              if file.type in ['image/jpeg', 'image/png', 'image/tiff', 'image/gif']
                 scope.images.push evt.target.result
                 console.log scope.images
               return
