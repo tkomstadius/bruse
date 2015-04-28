@@ -57,6 +57,7 @@
               scope.theFiles.push obj
               if file.type in ['image/jpeg', 'image/png']
                 scope.images.push evt.target.result
+                console.log scope.images
               return
           if file.type != ''
             reader.readAsDataURL file
