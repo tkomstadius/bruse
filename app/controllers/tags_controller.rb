@@ -49,6 +49,11 @@ class TagsController < ApplicationController
         @file.tags.delete(@tag)
     end
 
+    # If tag has no file relation, remove
+    if !@tag.bruse_files[0]
+      @tag.delete
+    end
+
     respond_to do |format|
       format.html { redirect_to bruse_files_url, notice: 'Deleted tag: ' + @tag.name.to_s}
       format.json { head :no_content }
