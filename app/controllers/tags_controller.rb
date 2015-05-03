@@ -50,7 +50,7 @@ class TagsController < ApplicationController
     end
 
     # If tag has no file relation, remove
-    if !@tag.bruse_files[0]
+    if @tag.bruse_files.empty?
       @tag.delete
     end
 
