@@ -1,9 +1,9 @@
 json.name file.name
 json.filetype file.filetype
-json.date file.created_at.strftime("%F %R")
+json.date file.created_at.strftime('%F %R')
 json.id file.id
 json.url file.link if file.link?
-json.url file.foreign_ref if file.filetype == "bruse/url"
+json.url file.foreign_ref if file.filetype == 'bruse/url'
 json.add_tags_path
 json.paths do
   json.file file_path(file.identity, file)

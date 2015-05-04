@@ -27,8 +27,19 @@
           if data.length >= limit && offset < absoluteLimit
             offset += limit
             recursiveCollect()
-          # append every file to the list of files
+          # iterate over all the collected files
           data.map((file) ->
+            # extract tag names
+            onlyTags = _.pluck(file.tags, 'name')
+            # append jsTag stuff to every file
+            file.unsavedTags = new JSTagsCollection(onlyTags)
+            # TODO: use some sort of default for bruse jsTags here?
+            file.jsTagOptions =
+              breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
+              tags: file.unsavedTags
+              texts:
+                inputPlaceHolder: "Tag"
+            # append every file to the list of files
             $scope.files.push file
             )
           )
@@ -42,16 +53,12 @@
         win = window.open('/'+data.url, '_self')
         )
 
-  $scope.editTags = (file) ->
-    onlyTags = _.pluck(file.tags, 'name')
-    file.unsavedTags = new JSTagsCollection();
-    file.jsTagOptions =
-      "defaultTags": onlyTags
-      texts:
-        inputPlaceHolder: "Tag"
-      tags: file.unsavedTags
-      breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-    file.tagsEdit = true
+  $scope.saveTags = (file) ->
+    tagsToSave = file.unsavedTags.getTagValues()
+    TagHandler.put(file.id, tagsToSave).then((data) ->
+      file.tags = data.tags
+      file.editTags = false
+      )
 
   $scope.identities = ->
     return [] unless $scope.hasFiles()

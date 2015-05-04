@@ -532,11 +532,7 @@ jsTag.controller('JSTagMainCtrl', ['$attrs', '$scope', 'InputService', 'TagsInpu
 
   // Use user defined options
   if (userOptions !== undefined) {
-    for (var key in options) {
-      if(userOptions[key]) {
-        options[key] = userOptions[key];
-      }
-    }
+    angular.extend(options, userOptions);
   }
 
   $scope.options = options;

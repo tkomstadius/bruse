@@ -25,53 +25,56 @@
       </tr>
       <!-- this should be added in the future: | IdentityFilter:showIdentities -->
       <tr ng-repeat="file in files | filter: identity_filter | orderBy : order_by : reverse">
-          <td>
-            <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
-              <i class="fa fa-external-link"></i> {{file.name}}
+        <td>
+          <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
+            <i class="fa fa-external-link"></i> {{file.name}}
+          </a>
+          <span ng-if="!file.url">
+            <a href="" ng-click="download(file.identity.id, file)">
+              <i class="fa fa-download"></i>
             </a>
-            <span ng-if="!file.url">
-              <a href="" ng-click="download(file.identity.id, file)">
-                <i class="fa fa-download"></i>
+            {{file.name}}
+          </span>
+        </td>
+        <td>
+          {{file.filetype.indexOf('google-apps') > -1 ? getFiletype(file.filetype).slice(16,end) : getFiletype(file.filetype)}}
+        </td>
+        <td>
+          <i class="fa fa-dropbox" ng-if="file.identity.service == 'dropbox_oauth2'"></i>
+          <i class="fa fa-google" ng-if="file.identity.service == 'google_oauth2'"></i>
+          {{file.identity.name}}
+        </td>
+        <td>{{file.date}}</td>
+        <td>
+          <a ng-href="{{file.paths.add_tags}}" title="Add tags">
+            <i class="fa fa-plus-square"></i>
+          </a>
+          <span ng-show="file.editTags">
+            <js-tag js-tag-options="file.jsTagOptions"></js-tag>
+            <button ng-click="saveTags(file)">
+              <i class="fa fa-check-circle"></i>
+              Save
+            </button>
+          </span>
+          <div class="file__taglist" ng-hide="file.editTags">
+            <a ng-href="" title="Edit tags" ng-click="file.editTags = true">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <span ng-repeat="tag in file.tags">
+              <a ng-href="{{tag.path}}">
+                #{{tag.name}}
               </a>
-              {{file.name}}
-            </span>
-          </td>
-          <td>
-            {{file.filetype.indexOf('google-apps') > -1 ? getFiletype(file.filetype).slice(16,end) : getFiletype(file.filetype)}}
-          </td>
-          <td>
-            <i class="fa fa-dropbox" ng-if="file.identity.service == 'dropbox_oauth2'"></i>
-            <i class="fa fa-google" ng-if="file.identity.service == 'google_oauth2'"></i>
-            {{file.identity.name}}
-          </td>
-          <td>{{file.date}}</td>
-          <td>
-            <a ng-href="{{file.paths.add_tags}}" title="Add tags">
-              <i class="fa fa-plus-square"></i>
-            </a>
-            <span ng-if="file.tagsEdit">
-              Edit!
-              <js-tag ng-if="file.tagsEdit" js-tag-options="file.jsTagOptions"></js-tag>
-            </span>
-            <div class="file__taglist" ng-if="!file.tagsEdit">
-              <a ng-href="" title="Edit tags" ng-click="editTags(file)">
-                <i class="fa fa-pencil"></i>
+              <a ng-href="{{tag.destroy_path}}" data-method="delete">
+                <i class="fa fa-minus-square"></i>
               </a>
-              <span ng-repeat="tag in file.tags">
-                <a ng-href="{{tag.path}}">
-                  #{{tag.name}}
-                </a>
-                <a ng-href="{{tag.destroy_path}}" data-method="delete">
-                  <i class="fa fa-minus-square"></i>
-                </a>
-              </span>
-            </div>
-          </td>
-          <td>
-            <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
-              <i class="fa fa-trash"></i>
-            </a>
-          </td>
+            </span>
+          </div>
+        </td>
+        <td>
+          <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
+            <i class="fa fa-trash"></i>
+          </a>
+        </td>
       </tr>
      </table>
   </div>

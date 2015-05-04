@@ -16,20 +16,20 @@ class TagsController < ApplicationController
   def create
     if current_user.id == @file.identity.user_id
       params[:tags].each do |tag|
-        @tag = Tag.find_or_create_by(:name => tag)
+        @tag = Tag.find_or_create_by(name: tag)
         @tag.bruse_files << @file
       end
     end
 
-     respond_to do |format|
-        if @tag.save
-          format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
-          format.json { render json: {:success => true}, status: :ok }
-        else
-          format.html { render :new, notice: 'Something went wrong' }
-          format.json { render json: {:errors => @tag.errors, :success => false}, status: :unprocessable_entity }
-        end
-     end
+    respond_to do |format|
+      if @tag.save
+        format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
+        format.json { render json: { success: true, tags: @file.tags }, status: :ok }
+      else
+        format.html { render :new, notice: 'Something went wrong' }
+        format.json { render json: { errors: @tag.errors, success: false }, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
@@ -40,7 +40,7 @@ class TagsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to bruse_files_url, notice: 'Deleted tag: ' + @tag.name.to_s}
+      format.html { redirect_to bruse_files_url, notice: 'Deleted tag: ' + @tag.name.to_s }
       format.json { head :no_content }
     end
   end
