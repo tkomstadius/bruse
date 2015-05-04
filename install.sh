@@ -27,6 +27,7 @@ promptForDropbox(){
   echo "Enter your DROPBOX_SECRET: "
   read db_secret
   export DROPBOX_SECRET=$db_secret
+  thirdParty=true
 }
 while true; do
   read -p "Do you want to use Dropbox? (y/n)" yn
@@ -44,6 +45,7 @@ promptForDrive(){
   echo "Enter your DRIVE_SECRET: "
   read d_secret
   export DRIVE_SECRET=$d_secret
+  thirdParty=true
 }
 while true; do
   read -p "Do you want to use Google Drive? (y/n)" yn
@@ -53,5 +55,9 @@ while true; do
     * ) echo "Please answer yes or no.";;
   esac
 done
+
+if [ "$thirdParty" = true ] ; then
+  echo "You can allways change your codes by editing the config/application.yml."
+fi
 
 rails s -e production
