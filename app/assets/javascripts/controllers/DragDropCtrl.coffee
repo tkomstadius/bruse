@@ -18,6 +18,7 @@
 
         # send object to server
         $http.post('/upload_drop.json', $scope.dataObjects).then((response) ->
+          # why is this empty?
           console.log response.data.files
           if response.data.error != []
             $scope.isSaved = true

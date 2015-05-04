@@ -36,12 +36,8 @@
       if event?
         event.preventDefault()
       files = event.originalEvent.dataTransfer.files
-      i = 0
-      temp = []
-      scope.images = []
-      scope.saved = false
-      while i < files.length
-        addFile = (file) ->
+      
+      addFile = (file) ->
           obj = {}
           obj.name = file.name
           obj.type = file.type
@@ -58,13 +54,18 @@
               scope.theFiles.push obj
               if file.type in ['image/jpeg', 'image/png', 'image/tiff', 'image/gif']
                 scope.images.push evt.target.result
-                console.log scope.images
               return
           if file.type != ''
             reader.readAsDataURL file
           else
             console.log file.name + " has no type"
+
+      i = 0
+      temp = []
+      scope.images = []
+      scope.saved = false
+      while i < files.length
         addFile(files[i])
         i++
-        
+
       return false
