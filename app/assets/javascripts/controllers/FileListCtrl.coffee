@@ -59,6 +59,10 @@
       file.tags = data.tags
       file.editTags = false
       )
+
+  ###*
+   * Remove tag with id tag_id from file
+  ###
   $scope.cutTag = (file, tag_id) ->
     TagHandler.cut(file.id, tag_id).then((data) ->
       file.tags = data.tags

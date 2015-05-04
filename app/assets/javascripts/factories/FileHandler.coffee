@@ -5,6 +5,7 @@
     # Collect saved BruseFiles from this identity or all
     #
     collect: ({identity, path, limit, offset} = {}) ->
+      # default params
       path ?= '/files.json'
       offset ?= 0
 

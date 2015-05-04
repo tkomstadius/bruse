@@ -21,6 +21,7 @@
           response
           )
 
+    # collect all files belonging to tag
     collectFiles: (tag_id) ->
       promise = $http.get("/tags/#{tag_id}.json")
         .then((response) ->
@@ -30,6 +31,7 @@
           console.error "An error occured."
           )
 
+    # delete a specific tag from a file's list of tags
     cut: (file_id, tag_id) ->
       promise = $http.delete("/files/#{file_id}/tag/delete/#{tag_id}.json")
         .then((response) ->
