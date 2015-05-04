@@ -22,11 +22,19 @@
       absoluteLimit = 100
 
       recursiveCollect = ->
+        # show loading indicator
+        NProgress.start()
         FileHandler.collect(path: attrs.path, limit: limit, offset: offset).then((data) ->
+          # tick loading indicator!
+          NProgress.inc()
           # check if we should load more?
           if data.length >= limit && offset < absoluteLimit
             offset += limit
             recursiveCollect()
+          else
+            # hide loading indicator
+            NProgress.done()
+
           # iterate over all the collected files
           data.map((file) ->
             # extract tag names
