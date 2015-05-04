@@ -5,10 +5,6 @@
 
   $scope.files = $rootScope.new_files
 
-  # Creates a new function for retreiving the tags
-  JSTagsCollection.prototype.getTags = ->
-    _.map(_.values(this.tags), (tag) -> tag.value)
-
   # Some jsTag options
   $scope.tags = new JSTagsCollection();
   $scope.jsTagOptions = {
@@ -45,7 +41,7 @@
     return
 
   $scope.save = ->
-    tagsForAll = _.compact($scope.tags.getTags())
+    tagsForAll = _.compact($scope.tags.getTagValues())
     ###
     For each file, split the input field by space into an array.
     Remove empty strings with the _.compact method.
@@ -53,7 +49,7 @@
     ###
     i = 0
     while i < $scope.files.length
-      tagsForFile = _.compact $scope.files[i].tags.getTags()
+      tagsForFile = _.compact $scope.files[i].tags.getTagValues()
       $scope.files[i].new_tags = tagsForFile.concat tagsForAll
       if $scope.files[i].new_tags.length == 0
         $scope.files.splice i, 1
