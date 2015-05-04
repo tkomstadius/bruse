@@ -37,28 +37,29 @@
         event.preventDefault()
       files = event.originalEvent.dataTransfer.files
       
+      #
       addFile = (file) ->
-          obj = {}
-          obj.name = file.name
-          obj.type = file.type
-          
-          reader = new FileReader()
-          reader.onload = (evt) ->
-            # TODO: add some security checks?
-            #if event.originalEvent.dataTransfer.files[0].type in validMimeTypes
-            # update bindings
-            scope.$apply ->
-              obj.data = reader.result.split(",")[1]
-              scope.drop = true
-              scope.info = ''
-              scope.theFiles.push obj
-              if file.type in ['image/jpeg', 'image/png', 'image/tiff', 'image/gif']
-                scope.images.push evt.target.result
-              return
-          if file.type != ''
-            reader.readAsDataURL file
-          else
-            console.log file.name + " has no type"
+        obj = {}
+        obj.name = file.name
+        obj.type = file.type
+        
+        reader = new FileReader()
+        reader.onload = (evt) ->
+          # TODO: add some security checks?
+          #if event.originalEvent.dataTransfer.files[0].type in validMimeTypes
+          # update bindings
+          scope.$apply ->
+            obj.data = reader.result.split(",")[1]
+            scope.drop = true
+            scope.info = ''
+            scope.theFiles.push obj
+            if file.type in ['image/jpeg', 'image/png', 'image/tiff', 'image/gif']
+              scope.images.push evt.target.result
+            return
+        if file.type != ''
+          reader.readAsDataURL file
+        else
+          console.log file.name + " has no type"
 
       i = 0
       temp = []
