@@ -1,4 +1,3 @@
-
 @bruseApp.directive 'bDropzone', () ->
   # restriction to only match the attribute name
   restrict: 'A'
@@ -9,6 +8,7 @@
     theFiles: '='
     images: '='
     drop: '='
+    saved: '='
     info: '='
   }
   # use link when we want to modify the DOM
@@ -38,6 +38,8 @@
       files = event.originalEvent.dataTransfer.files
       i = 0
       temp = []
+      scope.images = []
+      scope.saved = false
       while i < files.length
         addFile = (file) ->
           obj = {}

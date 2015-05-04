@@ -61,7 +61,6 @@ class Files::BrowseController < Files::FilesController
       else
         # no file! not working!
         @results = []
-        render status :not_acceptable
       end
     elsif params[:location] == 'dropbox'
       @results = []
