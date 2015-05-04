@@ -1,9 +1,11 @@
 if type "rvm -v" > /dev/null 2>&1; then
-  echo "install ruby"
+  echo "Install ruby before continuing"
+  exit
 fi
 
 if type "psql -V" > /dev/null 2>&1; then
-  echo "install psql"
+  echo "Install psql before continuing"
+  exit
 fi
 
 # setup psql credentials
