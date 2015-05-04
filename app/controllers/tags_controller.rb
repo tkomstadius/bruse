@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show]
   before_action :set_file, only: [:new, :create, :destroy]
-  skip_before_action :verify_authenticity_token, only: :create
+  skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
   def index
   end
@@ -22,7 +22,7 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
-      format.json { render :create, status: :ok }
+      format.json { render partial: 'tags/file.json', status: :ok }
     end
   end
 
@@ -35,7 +35,7 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to bruse_files_url, notice: 'Deleted tag: ' + @tag.name.to_s }
-      format.json { head :no_content }
+      format.json { render partial: 'tags/file.json', status: :accepted }
     end
   end
 

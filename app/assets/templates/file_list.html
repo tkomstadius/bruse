@@ -64,7 +64,7 @@
               <a ng-href="{{tag.path}}">
                 #{{tag.name}}
               </a>
-              <a ng-href="{{tag.destroy_path}}" data-method="delete">
+              <a ng-click="cutTag(file, tag.id)">
                 <i class="fa fa-minus-square"></i>
               </a>
             </span>
