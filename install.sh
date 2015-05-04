@@ -24,9 +24,11 @@ promptForDropbox(){
   echo "Enter your DROPBOX_KEY: "
   read db_key
   export DROPBOX_KEY=$db_key
+  printf "DROPBOX_KEY: '$db_key'\n" >> config/application.yml
   echo "Enter your DROPBOX_SECRET: "
   read db_secret
   export DROPBOX_SECRET=$db_secret
+  printf "DROPBOX_SECRET: '$db_secret'\n" >> config/application.yml
   thirdParty=true
 }
 while true; do
@@ -42,9 +44,11 @@ promptForDrive(){
   echo "Enter your DRIVE_KEY: "
   read d_key
   export DRIVE_KEY=$d_key
+  printf "DRIVE_KEY: '$d_key'\n" >> config/application.yml
   echo "Enter your DRIVE_SECRET: "
   read d_secret
   export DRIVE_SECRET=$d_secret
+  printf "DRIVE_SECRET: '$d_secret'\n" >> config/application.yml
   thirdParty=true
 }
 while true; do
