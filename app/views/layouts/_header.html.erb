@@ -1,0 +1,11 @@
+<header id="header">
+  <% if current_user %>
+    <%= link_to 'Bruse', root_url, target: "_self" %>
+    <%= link_to 'My files', bruse_files_path, target: "_self" %>
+    <% current_user.identities.each do |identity| %>
+        <%= link_to "Add files (#{identity.name})", new_file_path(identity_id: identity.id), target: "_self" %>
+    <% end %>
+    <%= link_to 'Settings', profile_path, target: "_self" %>
+    <%= link_to 'Sign out user', destroy_user_session_path, method: :delete, target: "_self" %>
+  <% end %>
+</header>
