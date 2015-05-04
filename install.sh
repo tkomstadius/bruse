@@ -20,4 +20,38 @@ curl -L https://github.com/tkomstadius/bruse/archive/master.tar.gz | tar xz --st
 # Generate a random key
 export SECRET_KEY_BASE=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 
+promptForDropbox(){
+  echo "Enter your DROPBOX_KEY: "
+  read db_key
+  export DROPBOX_KEY=$db_key
+  echo "Enter your DROPBOX_SECRET: "
+  read db_secret
+  export DROPBOX_SECRET=$db_secret
+}
+while true; do
+  read -p "Do you want to use Dropbox? (y/n)" yn
+  case $yn in
+    [Yy]* ) promptForDropbox; break;;
+    [Nn]* ) break;;
+    * ) echo "Please answer yes or no.";;
+  esac
+done
+
+promptForDrive(){
+  echo "Enter your DRIVE_KEY: "
+  read d_key
+  export DRIVE_KEY=$d_key
+  echo "Enter your DRIVE_SECRET: "
+  read d_secret
+  export DRIVE_SECRET=$d_secret
+}
+while true; do
+  read -p "Do you want to use Google Drive? (y/n)" yn
+  case $yn in
+    [Yy]* ) promptForDrive; break;;
+    [Nn]* ) break;;
+    * ) echo "Please answer yes or no.";;
+  esac
+done
+
 rails s -e production
