@@ -14,21 +14,15 @@ class TagsController < ApplicationController
   end
 
   def create
-    if current_user.id == @file.identity.user_id
-      params[:tags].each do |tag|
-        @tag = Tag.find_or_create_by(name: tag)
-        @tag.bruse_files << @file
-      end
+    tags = []
+    params[:tags].each do |tag|
+      tags << Tag.find_or_create_by(name: tag)
     end
+    @file.tags.replace(tags)
 
     respond_to do |format|
-      if @tag.save
-        format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
-        format.json { render json: { success: true, tags: @file.tags }, status: :ok }
-      else
-        format.html { render :new, notice: 'Something went wrong' }
-        format.json { render json: { errors: @tag.errors, success: false }, status: :unprocessable_entity }
-      end
+      format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
+      format.json { render :create, status: :ok }
     end
   end
 
@@ -45,14 +39,18 @@ class TagsController < ApplicationController
     end
   end
 
-
   private
+
     def set_tag
       @tag = Tag.find(params[:id])
     end
 
     def set_file
       @file = BruseFile.find(params[:file_id])
+      unless current_user.id == @file.identity.user_id
+        flash[:alert] = 'Access denied'
+        redirect_to root
+      end
     end
 
     def tag_params
