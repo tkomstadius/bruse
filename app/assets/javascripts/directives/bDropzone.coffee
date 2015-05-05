@@ -62,15 +62,14 @@
       if event?
         event.preventDefault()
       items = event.originalEvent.dataTransfer.items
-      files = event.originalEvent.dataTransfer.files
       i = 0
       while i < items.length
         entry = items[i].webkitGetAsEntry()
         if entry.isFile
           console.log entry
-          console.log files
           addFile(entry.file)
-
+        else if entry.isDirectory
+          console.log entry
         i++
 
 ###
