@@ -9,10 +9,13 @@ if type "psql -V" > /dev/null 2>&1; then
 fi
 
 # setup psql credentials
-psql -c "CREATE USER bruse WITH PASSWORD 'kex2015'"
-psql -c "CREATE DATABASE bruse_production WITH OWNER bruse"
+PASSWORD=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+sudo su - postgres -c "psql -c \"CREATE USER bruse WITH PASSWORD '$PASSWORD'\""
+sudo su - postgres -c "psql -c \"CREATE DATABASE bruse_production WITH OWNER bruse\""
+curl -L https://github.com/tkomstadius/bruse/archive/develop.tar.gz | tar xz --strip-components=1
 
-curl -L https://github.com/tkomstadius/bruse/archive/master.tar.gz | tar xz --strip-components=1
+# Update the database config file
+printf "production:\n  <<: *default\n  username: cool_bruse\n  password: $PASSWORD\n  database: bruse_production" >> config/database.yml
 
 # run the setup file
 ./bin/setup
