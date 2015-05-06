@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', ($scope, $filter, FileHandler) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'MimeDictionary', ($scope, $filter, FileHandler, MimeDictionary) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this;
@@ -31,7 +31,7 @@
 
   # change mime to only filetype
   $scope.getFiletype = (mimetype) ->
-    mimetype.split("/")[1]
+    MimeDictionary.prettyType(mimetype)
 
   $scope.hasFiles = ->
     Array.isArray($scope.files) && $scope.files.length > 0
