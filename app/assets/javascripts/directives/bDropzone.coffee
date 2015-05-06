@@ -10,6 +10,7 @@
     drop: '='
     saved: '='
     info: '='
+    noType: '='
   }
   # use link when we want to modify the DOM
   # scope - angular scope object
@@ -47,7 +48,8 @@
       if file.type != ''
         reader.readAsDataURL file
       else
-        console.log file.name + " has no type"
+        scope.$apply ->
+          scope.noType = scope.noType + file.name + " has no type and can not be saved"
       return false
 
     # bind to events dragover and dragenter
@@ -62,6 +64,7 @@
         event.preventDefault()
       items = event.originalEvent.dataTransfer.items
       files = event.originalEvent.dataTransfer.files
+      scope.noType = ''
       console.log items
       console.log files
       i = 0
@@ -71,13 +74,13 @@
         entry = items[i].webkitGetAsEntry()
         
         if entry.isFile
-          # if it is not a folder, use the datatransfer files and add file one 
-          # at a time
+          # if it is not a folder, use the datatransfer files
           temp = []
           scope.images = []
           scope.saved = false
           addFile(files[i])
         else if entry.isDirectory
+          # use FileSystem API to traverse
           console.log entry
         i++
 

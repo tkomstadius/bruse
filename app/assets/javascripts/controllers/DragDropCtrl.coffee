@@ -6,11 +6,13 @@
     $scope.isDropped = false
     $scope.isSaved = false
     $scope.message = ''
+    $scope.notSaved = ''
 
     $scope.saveOpt = (location) ->
       if location == ''
         $scope.isDropped = false
         $scope.droppedFiles = []
+        $scope.notSaved = ''
       else
         $scope.isDropped = false
         $scope.dataObjects.objects = $scope.droppedFiles
@@ -18,13 +20,13 @@
 
         # send object to server
         $http.post('/upload_drop.json', $scope.dataObjects).then((response) ->
-          # why is this empty?
+          # WHY do I also get previous saves?
           console.log response.data.files
           if response.data.error != []
             $scope.isSaved = true
             $scope.message = "Saved to " + location;
             #$scope.message = $scope.message + response.data.files + ", "
-
+            # TODO? show add tags view for dropped files?
           else
             $scope.isSaved = false
             $scope.message = "Something went wrong"
@@ -34,5 +36,5 @@
           console.error "Couldn't save.."
           return
           )
-]
+] 
 
