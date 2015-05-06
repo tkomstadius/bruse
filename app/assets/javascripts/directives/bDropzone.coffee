@@ -30,7 +30,6 @@
       obj = {}
       obj.name = file.name
       obj.type = file.type
-      
       reader = new FileReader()
       reader.onload = (evt) ->
         # TODO: add some security checks?
@@ -57,26 +56,28 @@
 
     # bind to drop event on the element, trigger FileReader API
     # on drop events we stop browser and read the dropped file via the FileReader
-    # the resulting dropped file is bound to the image property of the scope of this directive
+    # the resulting dropped file is bound to the property of the scope of this directive
     element.bind 'drop', (event) ->
       if event?
         event.preventDefault()
       items = event.originalEvent.dataTransfer.items
+      files = event.originalEvent.dataTransfer.files
+      console.log items
+      console.log files
       i = 0
       while i < items.length
+        # webkit implementation of HTML5 API
+        # entry objects act as interfaces to access FileSystem API
         entry = items[i].webkitGetAsEntry()
+        
         if entry.isFile
-          console.log entry
-          addFile(entry.file)
+          # if it is not a folder, use the datatransfer files and add file one 
+          # at a time
+          temp = []
+          scope.images = []
+          scope.saved = false
+          addFile(files[i])
         else if entry.isDirectory
           console.log entry
         i++
-
-###
-      temp = []
-      scope.images = []
-      scope.saved = false
-      while i < files.length
-        addFile(files[i])
-        i++###
 
