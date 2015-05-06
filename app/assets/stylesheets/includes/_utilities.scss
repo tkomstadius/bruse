@@ -1,0 +1,32 @@
+/**
+ * Utility classes
+ *
+ * For example, we store clearfix, alignment and similar items here. The classes
+ * should be prefixed with u-, to make clear that they are simple,
+ * single-purpose classes.
+ */
+
+/* Make element full width */
+.u-full-width {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make sure elements don't run outside containers (great for images in columns) */
+.u-max-full-width {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Float either direction */
+.u-pull-right {
+  float: right;
+}
+.u-pull-left {
+  float: left;
+}
+
+.u-cf {
+  // use bourbons clearfix
+  @include clearfix;
+}
