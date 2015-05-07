@@ -26,17 +26,19 @@
       (event.originalEvent or event).dataTransfer.effectAllowed = 'move'
       false
 
-    # handle files
+    # handle files from datatransfer files
     addFile = (file) ->
       obj = {}
       obj.name = file.name
       obj.type = file.type
+      console.log file.type
       reader = new FileReader()
       
       reader.onload = (evt) ->
         # update bindings
         scope.$apply ->
           obj.data = reader.result.split(",")[1]
+          console.log obj
           scope.drop = true
           scope.info = ''
           scope.theFiles.push obj
@@ -51,6 +53,37 @@
         scope.$apply ->
           scope.noType = scope.noType + file.name + " has no type and can not be saved"
       return false
+
+    # handle files from directory?
+    # does not support wierder types such as .cpp and .xcf
+    addFileFromDir = (entry) ->
+      entry.file((file)->
+        obj = {}
+        obj.name = file.name
+        obj.type = file.type
+        console.log file.type
+        reader = new FileReader()
+        
+        reader.onload = (evt) ->
+          # update bindings
+          scope.$apply ->
+            obj.data = reader.result.split(",")[1]
+            console.log obj
+            scope.drop = true
+            scope.info = ''
+            scope.theFiles.push obj
+
+            if file.type in ['image/jpeg', 'image/png', 'image/tiff', 'image/gif']
+              scope.images.push evt.target.result
+            return
+
+        if file.type != ''
+          reader.readAsDataURL file
+        else
+          scope.$apply ->
+            scope.noType = scope.noType + file.name + " has no type and can not be saved"
+        return false
+      )
 
     # bind to events dragover and dragenter
     element.bind 'dragover', processDragOverOrEnter
@@ -83,7 +116,10 @@
 
         else if entry.isDirectory
           # use FileSystem API to traverse
-          console.log entry
-
+          entries = []
+          readEntries = (entry) ->
+            dirReader = entry.createReader()
+            dirReader.readEntries()
+            
         i++
 
