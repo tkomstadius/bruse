@@ -37,7 +37,7 @@
           </span>
         </td>
         <td>
-          {{file.filetype.indexOf('google-apps') > -1 ? getFiletype(file.filetype).slice(16,end) : getFiletype(file.filetype)}}
+          {{getFiletype(file.filetype)}}
         </td>
         <td>
           <i class="fa fa-dropbox" ng-if="file.identity.service == 'dropbox_oauth2'"></i>
