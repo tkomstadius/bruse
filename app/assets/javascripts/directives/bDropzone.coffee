@@ -85,6 +85,26 @@
         return false
       )
 
+
+    addEntries = (entry) ->
+      console.log entry
+      if entry.isFile
+        addFileFromDir(entry)
+        console.log "file"
+      else if entry.isDirectory
+        console.log "dir"
+        dirReader = entry.createReader()
+        # call the reader.readEntries until no more results are returned
+        dirReader.readEntries((ent) ->
+          console.log ent
+          i = 0
+          console.log i
+          while i < ent.length
+            console.log ent[i]
+            addEntries(ent[i])
+            i++
+        )
+
     # bind to events dragover and dragenter
     element.bind 'dragover', processDragOverOrEnter
     element.bind 'dragenter', processDragOverOrEnter 
@@ -109,17 +129,15 @@
         
         if entry.isFile
           # if it is not a folder, use the datatransfer files
-          temp = []
           scope.images = []
           scope.saved = false
           addFile(files[i])
 
         else if entry.isDirectory
-          # use FileSystem API to traverse
-          entries = []
-          readEntries = (entry) ->
-            dirReader = entry.createReader()
-            dirReader.readEntries()
+          # uses entry to read files, cannot handle wierd types
+          scope.images = []
+          scope.saved = false
+          addEntries(entry)
             
         i++
 
