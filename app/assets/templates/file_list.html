@@ -21,6 +21,7 @@
             <a ng-if="file.filetype === 'bruse/url'" ng-href="{{file.url}}" target="_blank">
               {{file.name}}
             </a>
+            <a ng-click="previewFile(file)">Preview</a>
             <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
               {{file.name}}
             </a>

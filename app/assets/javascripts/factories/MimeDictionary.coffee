@@ -172,8 +172,7 @@
      * @return string             template name, or null if not found
     ###
     viewTemplate: (mimetype) ->
-      if _templateNames[mimetype]
-        return _templateNames[mimetype]
-      return null
+      # return template function name if there is any
+      if _templateNames[mimetype] then _templateNames[mimetype] else 'noTemplate'
   }
 ]
