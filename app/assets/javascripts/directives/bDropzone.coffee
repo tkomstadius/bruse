@@ -31,14 +31,12 @@
       obj = {}
       obj.name = file.name
       obj.type = file.type
-      console.log file.type
       reader = new FileReader()
       
       reader.onload = (evt) ->
         # update bindings
         scope.$apply ->
           obj.data = reader.result.split(",")[1]
-          console.log obj
           scope.drop = true
           scope.info = ''
           scope.theFiles.push obj
@@ -61,14 +59,12 @@
         obj = {}
         obj.name = file.name
         obj.type = file.type
-        console.log file.type
         reader = new FileReader()
         
         reader.onload = (evt) ->
           # update bindings
           scope.$apply ->
             obj.data = reader.result.split(",")[1]
-            console.log obj
             scope.drop = true
             scope.info = ''
             scope.theFiles.push obj
@@ -90,17 +86,12 @@
       console.log entry
       if entry.isFile
         addFileFromDir(entry)
-        console.log "file"
       else if entry.isDirectory
-        console.log "dir"
         dirReader = entry.createReader()
         # call the reader.readEntries until no more results are returned
         dirReader.readEntries((ent) ->
-          console.log ent
           i = 0
-          console.log i
           while i < ent.length
-            console.log ent[i]
             addEntries(ent[i])
             i++
         )
