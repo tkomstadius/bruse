@@ -40,8 +40,11 @@
           {{getFiletype(file.filetype)}}
         </td>
         <td>
-          <i class="fa fa-dropbox" ng-if="file.identity.service == 'dropbox_oauth2'"></i>
-          <i class="fa fa-google" ng-if="file.identity.service == 'google_oauth2'"></i>
+          <span ng-switch="file.identity.service">
+            <i class="fa fa-dropbox" ng-switch-when="dropbox_oauth2"></i>
+            <i class="fa fa-google" ng-switch-when="google_oauth2"></i>
+            <i ng-switch-default></i>
+          </span>
           {{file.identity.name}}
         </td>
         <td>{{file.date}}</td>
