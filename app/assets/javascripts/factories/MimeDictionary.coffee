@@ -73,6 +73,11 @@
     'application/x-iwork-keynote-sffkey': 'keynote presentation'
     'application/vnd.google-apps.document': 'google drive document'
     'application/vnd.google-apps.presentation': 'google drive presentation'
+    'application/vnd.google-apps.map': 'google drive map'
+    'application/vnd.google-apps.drawing': 'google drive drawing'
+    'application/vnd.google-apps.form': 'google drive form'
+    'application/vnd.google-apps.spreadsheet': 'google drive spreadsheet'
+    'application/vnd.google-apps.fusiontable': 'google drive fusiontable'
     # images
     'image/example': 'image file'
     'image/jpeg': 'jpeg image'
@@ -125,12 +130,16 @@
     'image/bmp': 'image'
     'image/svg+xml': 'image'
     'image/gif': 'image'
-    # text file
+    # text file & code
     'text/css': 'plaintext'
     'text/csv': 'plaintext'
     'text/x-c': 'plaintext'
     'text/plain': 'plaintext'
     'text/xml': 'plaintext'
+    'application/x-javascript': 'plaintext'
+    'application/x-latex': 'plaintext'
+    'application/x-www-form-urlencoded': 'plaintext'
+    'text/javascript': 'plaintext'
     # markdown
     'text/markdown': 'markdown'
     'text/x-markdown': 'markdown'
