@@ -83,7 +83,6 @@
 
 
     addEntries = (entry) ->
-      console.log entry
       if entry.isFile
         addFileFromDir(entry)
       else if entry.isDirectory
