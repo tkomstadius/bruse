@@ -29,6 +29,9 @@
         win = window.open('/'+data.url, '_self')
         )
 
+
+
+
   # change mime to only filetype
   $scope.getFiletype = (mimetype) ->
     mimetype.split("/")[1]
