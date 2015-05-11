@@ -55,9 +55,7 @@
     # handle files from directory?
     # does not support wierder types such as .cpp and .xcf
     addFileFromDir = (entry) ->
-      entry.file((file)->
-        addFile(file)
-        )
+      entry.file(addFile)
 
 
     addEntries = (entry) ->
