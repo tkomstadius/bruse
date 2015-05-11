@@ -56,30 +56,8 @@
     # does not support wierder types such as .cpp and .xcf
     addFileFromDir = (entry) ->
       entry.file((file)->
-        obj = {}
-        obj.name = file.name
-        obj.type = file.type
-        reader = new FileReader()
-        
-        reader.onload = (evt) ->
-          # update bindings
-          scope.$apply ->
-            obj.data = reader.result.split(",")[1]
-            scope.drop = true
-            scope.info = ''
-            scope.theFiles.push obj
-
-            if file.type in ['image/jpeg', 'image/png', 'image/tiff', 'image/gif']
-              scope.images.push evt.target.result
-            return
-
-        if file.type != ''
-          reader.readAsDataURL file
-        else
-          scope.$apply ->
-            scope.noType = scope.noType + file.name + " has no type and can not be saved"
-        return false
-      )
+        addFile(file)
+        )
 
 
     addEntries = (entry) ->
