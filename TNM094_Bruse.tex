@@ -1,0 +1,267 @@
+\documentclass[a4paper,12pt,oneside,final]{extbook}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{graphicx}
+\usepackage{times}
+\usepackage[english,swedish]{babel}
+
+\usepackage{geometry}
+
+\geometry{
+ margin=20mm
+} 
+
+\usepackage{fancyhdr}
+
+\usepackage{titling}
+\title{Bruse - en webbdatabas för filhantering\\Projektrapport, TNM094}
+\author{Grupp J\\Erik Olsson\\Ronja Grosz\\Klas Eskilson\\Daniel Rönnkvist\\Therése Komstadius}
+
+\frenchspacing
+\setlength{\parindent}{0pt}
+\parskip 5pt
+
+\usepackage{color}
+\definecolor{rltred}{rgb}{.5,0,0}
+\definecolor{rltgreen}{rgb}{0,.5,0}
+\definecolor{rltblue}{rgb}{0,0,1}
+
+\usepackage[pdftex,
+ colorlinks=true,
+ urlcolor=rltblue,       % \href{...}{...} external (URL)
+ filecolor=rltgreen,     % \href{...} local file
+ linkcolor=rltred,       % \ref{...} and \pageref{...}
+ citecolor=rltgreen,     % \cite{...}
+ pdftitle={},
+ pdfauthor={},
+ pdfsubject={Projektrapport, TNM094},
+ pdfkeywords={},
+ pdfpagemode=,
+ pdfstartview=FitH,
+ bookmarks=true,
+ bookmarksopen=false,
+ bookmarksnumbered=true
+        ]{hyperref}
+
+
+\begin{document}
+
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\frontmatter
+
+\maketitle
+
+\pagestyle{fancy}
+
+\chapter{Sammanfattning}
+Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i kursen Medietekninskt Kandidatprojekt, TNM094, på Linköpings universitet. Syftet med projektet var att gruppen skulle följa ett agilt arbetssätt för att uppnå kundens krav. Kundens främsta krav var att databasen skulle användas för att lagra och strukturera personlig information som dokument, bilder och musik. Dessa filer skulle sedan taggas med ett eller flera nyckelord för att kunna söka reda på informationen snabbare. Serversystemet utvecklades i ramverket Ruby on Rails och databasens klientsidan utvecklades i ramverket AngularJS.
+
+\tableofcontents
+
+\cleardoublepage
+% \phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+
+\cleardoublepage
+% \phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+\chapter{Typografiska konventioner}
+Här läggs de om de passar bäst i tabellform
+
+\mainmatter
+
+\chapter{Inledning}
+\label{ch:inledning}
+
+\section{Bakgrund}
+
+\section{Syfte}
+
+\section{Arbetsmetod}
+
+\section{Frågeställning}
+
+\begin{itemize}
+\item
+\item
+\item
+\item
+\end{itemize}
+
+\section{Avgränsningar}
+
+\section{Typografiska konventioner}
+Här ska de vara om de fungerar bäst i löpande text.
+
+\chapter{Relaterat arbete}
+
+\section{Taggar}
+
+\section{Gränssnitt}
+
+\subsection{Synlighet}
+
+\subsection{Återkoppling}
+
+\subsection{Begränsningar}
+
+\subsection{Mappning}
+
+\subsection{Konsekvens}
+
+\subsection{Affordans}
+
+\section{Databaserat filsystem}
+
+\chapter{Webbdatabas för hantering av filer}
+
+\section{Systemarkitektur}
+
+\subsection{Ruby och Ruby on rails}
+
+\subsection{Javascript och Angularjs}
+
+\section{Tredjepartsmjukvara}
+
+\section{Filhantering}
+
+\subsection{Dropbox}
+
+\subsection{Google drive}
+
+\subsection{Lokal fillagring}
+
+\section{Databasstruktur och databashantering}
+
+\subsection{Databasstruktur}
+
+\subsection{Databashantering}
+
+\section{Gränssnitt}
+
+\section{Testning}
+
+\section{Utvecklingsmetodik}
+
+\subsection{Sprint 1 - MVP}
+
+\subsection{Sprint 2 - Utveckla den tekniska funktionaliteten}
+
+\subsection{Sprint 3 - Tänka på användaren}
+
+\subsection{Sprint 4 - Färdig produkt}
+
+\section{Versionshantering och kodgranskning}
+
+\chapter{Resultat}
+
+\section{Installation av systemet}
+
+\section{Systemarkitektur}
+
+\subsection{Ruby on rails}
+
+\subsection{Angularjs}
+
+\section{Tredjepartsmjukvara}
+
+\section{Databasstruktur och databashantering}
+
+\section{Filhantering}
+
+\section{Gränssnitt}
+
+\section{Testning}
+
+\section{Utvecklingsmetodik}
+
+\section{Versionshantering och kodgranskning}
+
+\chapter{Analys och diskussion}
+
+\section{Metod}
+
+\subsection{Systemarkitektur}
+
+\subsection{Filhantering}
+
+\subsection{Databasstruktur och databashantering}
+
+\subsection{Gränssnitt}
+
+\subsection{Testning}
+
+\subsection{utvecklingsmetodik}
+
+\subsection{Versionshantering och kodgranskning}
+
+\section{Resultat}
+
+\subsection{Filhantering}
+
+\subsection{Tredjepartsverktyg}
+
+\section{Arbetet i ett vidare sammanhang}
+
+\subsection{Fildelning}
+
+\subsubsection{Filhantering}
+
+\subsubsection{Olagliga filer}
+
+\subsubsection{Personlig integritet}
+
+\chapter{Slutsatser}
+
+\section{Struktur på webbdatabas}
+
+\section{Säkerhet}
+
+\section{Databasbaserad filstruktur}
+
+\section{Användargränssnitt}
+
+\chapter{Framtida arbete}
+CHROME PLUGIN!!!
+
+
+
+
+
+
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{\bibname}
+  
+\bibitem{softwareeng}
+  Shari Lawrence Pfleeger och Joanne M. Atlee, \emph{Software Engineering, Fourth Edition, International Edition}, Pearson 2010
+
+\bibitem{scrumguide} K. Schwaber, J. Sutherland, \emph{Scrumguiden}, 2013-07, hämtad: 2015-05-13\newline http://www.scrumguides.org
+
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+\bibitem{}
+
+\end{thebibliography}
+
+
+\appendix
+
+\chapter{Bilaga}
+
+
+\end{document}
