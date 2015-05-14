@@ -11,7 +11,7 @@
 
 \geometry{
  margin=20mm
-}
+} 
 
 \usepackage{fancyhdr}
 
@@ -23,9 +23,7 @@
 \setlength{\parindent}{0pt}
 \parskip 5pt
 
-% set section numbering
 \setcounter{secnumdepth}{3}
-\setcounter{tocdepth}{4}
 
 \usepackage{color}
 \definecolor{rltred}{rgb}{.5,0,0}
@@ -77,45 +75,7 @@ Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i 
 \listoftables
 
 \chapter{Typografiska konventioner}
-Följande typografiska konventioner används i denna rapport.
-
-\begin{table}[h]
-  \begin{centering}
-    \begin{tabular}{|l|l|l|}
-    \hline
-    \textbf{Utseende} & \textbf{Förklaring} & \textbf{Exempel} \\
-    \hline
-    % krusiv
-    \emph{Kursiv text} & Engelska termer & Systemets \emph{models} används för... \\
-    \hline
-    % monospace
-    \texttt{Fast teckenbredd} & Klasser och tekniska komponenter & Systemets \emph{model} \texttt{Identity} används för... \\
-    \hline
-    \end{tabular}
-    \caption[Table caption text]{Typografiska konventioner i rapporten}
-    \label{table:type}
-  \end{centering}
-\end{table}
-
-\begin{table}[h]
-  \begin{centering}
-    \begin{tabular}{|l|l|l|}
-    \hline
-    \textbf{Förkortning} & \textbf{Förklaring} \\
-    \hline
-    API & Application Program Interface \\
-    \hline
-    CSS & Cascading Style Sheets \\
-    \hline
-    HTML & HyperText Markup Language \\
-    \hline
-    SDK & Software Development Kit \\
-    \hline
-    \end{tabular}
-    \caption[Table caption text]{Ofta användna förkortningar}
-    \label{table:abbr}
-  \end{centering}
-\end{table}
+Här läggs de om de passar bäst i tabellform
 
 \mainmatter
 
@@ -163,12 +123,12 @@ Här ska de vara om de fungerar bäst i löpande text.
 \section{Taggar}
 För att uppnå en effektiv sökstruktur på en databas finns det två olika metoder. Den första metoden kallas professionell indexering och är hierarkisk \cite{tagging}. Den andra metoden kallas folksonomi vilket bygger på att man sätter etiketter/taggar på innehållet utan någon särskild hierki\cite{tagging}. De två olika metoderna har både för och nackdelar men sammanfattat kan man beskriva det som \textit{“Indexering strävar efter precision medan taggning strävar efter hantering”} \cite{tagging}.
 
-Fördelarna med professionell indexering är att den är mer precis jämfört med folksonmoni eftersom det går att rama in den eftersökta informationen med huvudkategorier och underkategorier. Det går alltid att ta sig fram i databasens olika kataloger och till slut finner man den sökta filen. Till skillnad från folksnomi måste man ta sig fram via nyckelord (taggar) och det är inte alltid säkert att nyckelordet leder en rätt. Användare kan också ha olika uppfattning om vad basnivån är på innehållet vilket antingen gör att onödiga taggar läggs till eller att det finns brist på taggar. Om till exempel en Javascript-fil ska taggas är det kanske onödigt för en användare att tagga filen med “webb” medan det är nödvändigt för en annan. Därför kan ett traditionellt klassificerings system ge ett bättre resultat eftersom det är helt opersonligt.
+Fördelarna med professionell indexering är att den är mer precis jämfört med folksonmoni eftersom det går att rama in den eftersökta informationen med huvudkategorier och underkategorier. Det går alltid att ta sig fram i databasens olika kataloger och till slut finner man den sökta filen. Till skillnad från folksnomi måste man ta sig fram via nyckelord (taggar) och det är inte alltid säkert att nyckelordet leder en rätt. Användare kan också ha olika uppfattning om vad basnivån är på innehållet vilket antingen gör att onödiga taggar läggs till eller att det finns brist på taggar. Om till exempel en Javascript-fil ska taggas är det kanske onödigt för en användare att tagga filen med “webb” medan det är nödvändigt för en annan. Därför kan ett traditionellt klassificerings system ge ett bättre resultat eftersom det är helt opersonligt. 
 
 Trots att det inte finns någon stavningskontroll när taggen skrivs in kan detta vara en fördel eftersom användaren då kan använda sig av slanguttryck och dialekter som kan precisera innehållet. Fördelen med att låta användaren stava taggarna precis som denne vill gör det lättare för personer med samma intresse att söka rätt på innehåll. Det är också mindre kostsamt att använda sig av folksonomi till skillnad från professionell indexering. Professionell indexering kräver att det finns en noga genomtänkt katalogstruktur och regler för vart innhållet ska placeras. I ett taggningssystem krävs det inte alls lika mycket eftertanke från användaren gällande vilken katalog denne ska börja leta i. Det krävs bara att söka efter ett någorlunda passande nyckelord.
 
 \section{Gränssnitt}
-För att designa ett användavänligt gränssnitt bör man utgå från Normans principer\cite{norman} för att åstadkomma en viss användarupplevelse. Principerna grundar sig i hur en människa uppfattar och tar in information. Dessa utgår ifrån sex punkter: synlighet, återkoppling, begränsningar, mappning, konsekvens och affordans.
+För att designa ett användavänligt gränssnitt bör man utgå från Normans principer\cite{norman} för att åstadkomma en viss användarupplevelse. Principerna grundar sig i hur en människa uppfattar och tar in information. Dessa utgår ifrån sex punkter: synlighet, återkoppling, begränsningar, mappning, konsekvens och affordans. 
 
 \subsection{Synlighet}
 Det är viktigt att utforma en design som gör att användaren känner sig trygg i gränssnittet. Användaren ska helst kunna förutspå vad som händer när denne klickar på en ikon eller en rubrik. Ikoner ska tala för sig själv, till exempel en ikon med en soptunna betyder kasta och ett förstoringsglas betyder sök. För att göra det lättare för användaren att hitta det mest relevanta på sidan kan man använda mycket \textit{white space}\cite{whitespace}. \textit{White space} är grafiskt utrymme som inte innehåller någon typ av information, det är till för att skapa mer “luft” i gränssnittet. Detta gör att användares fokus begränsas kring ett visst område och det blir lättare att navigera, till exempel omringas sökfältet av mycket \textit{white space} eftersom sökfältet är det mest relevanta på startsidan.
@@ -180,7 +140,7 @@ Att ständigt ge återkoppling till vad som sker eller vad som har skett gör at
 För att användaren inte ska göra oönskade saker i systemet är det en bra idé att begränsa alternativen\cite{norman}. Till exempel går det inte att skapa mappar för att användaren ska ha en bättre överblick på filerna. För att koppla på ett externt konto måste det först godkännas av användaren för att säkerställa att det inte sker av misstag. Om användaren glömt bort sitt lösenord går det alltid att återskapa det. Därför finns det ingen risk att man aldrig lyckas logga in igen på grund av att inloggningsuppgifterna har glömts bort.
 
 \subsection{Mappning}
-Mappning innebär att man samlar liknade innehåll på samma plats för att hålla en god struktur\cite{norman}. Användare ska snabbt kunna hitta filens tillhörande funktioner. I Bruse samlas alla externa lagringtjänster vid sidan om varandra eftersom de fyller samma funktion.
+Mappning innebär att man samlar liknade innehåll på samma plats för att hålla en god struktur\cite{norman}. Användare ska snabbt kunna hitta filens tillhörande funktioner. I Bruse samlas alla externa lagringtjänster vid sidan om varandra eftersom de fyller samma funktion. 
 
 \subsection{Konsekvens}
 För att göra det lättare för användaren att minnas hur denne använder en funktion är det bra att ha en liknade design på hela hemsidan. Det blir lätt rörigt för användren om designen inte följer ett mönster. Att använda sig av samma teckensnitt och färgschema hjälper till att hålla sidan konsekvent\cite{norman}.
@@ -209,7 +169,7 @@ En mer överskådlig figur för hur data och interaktioner generellt sett färda
 
 \begin{figure}[!H]
 \centering
-\includegraphics[width=0.8\textwidth]{figures/mvc1.png}
+\includegraphics[width=0.8\textwidth]{mvc1.png}
 \caption{Visar på dataflödet i ett MVC-system}
 \label{fig:mvc1}
 \end{figure}
@@ -250,7 +210,7 @@ För att hantera tjänstens filer implementerades tre olika fillagringssätt. En
 Dropbox implementerades med hjälp av Dropbox SDK. SDK står för \textit{Software Development Kit} vilket är en uppsättning av utvecklingsverktyg för mjukvaruutveckling mot specifika ramverk eller programpaket, i det här fallet till utveckling mot Dropbox tjänster. Dropbox SDK ger verktyg för att utveckla nya tjänster som använder sig av Dropbox olika funktioner. Webbtjänsten som utvecklades använder sig av ned- och uppladdning av filer till och från Dropbox. För att nå användarens filer måste en autentisering till Dropbox ske, vilket görs med hjälp av Omniauth, en \textit{gem}. Med hjälp av Dropbox SDK hämtas metadata för filerna i rot-mappen för att sedan visas för användaren. Om en mapp sedan blir klickad på hämtas metadatan för filerna i den mappen med hjälp av sökvägen. En fil laddas också ned med hjälp av dess sökväg. För att ladda upp filer till Dropbox krävs det att de läggs till i en existerande mapp eller i rot-mappen. För att hålla filerna som laddats upp från tjänsten till Dropbox samlade, skapades först en mapp i Dropbox dit filerna laddades upp till.
 
 \subsection{Google drive}
-Likt Dropbox användes Google drives SDK för att kunna använda deras funktionalitet i systemet. För att nå användarens filer krävs en autentisering för att ansluta till användarens konto hos Google drive. Det här görs med hjälp av två \textit{gems}, Drive SDK samt Omniauth. Filhanteringen sker likt metoden för Dropbox förutom att Drive inte strukturerar sina filer med hjälp av sökvägar. Varje fil har istället en parameter för \textit{parent} och varje mapp har en parameter \textit{child}, där eventuella filer i mappen lagras. Om en fil ligger i en mapp är mappen filens \textit{parent} och filen är mappens \textit{child}. För att identifiera det här förhållandet kommer alla filer som ligger i samma mapp ha mappens id i dess \textit{parent} parameter. Liknande kommer mappens parameter \textit{child} innehålla alla id tillhörande filer som ligger i mappen.
+Likt Dropbox användes Google drives SDK för att kunna använda deras funktionalitet i systemet. För att nå användarens filer krävs en autentisering för att ansluta till användarens konto hos Google drive. Det här görs med hjälp av två \textit{gems}, Drive SDK samt Omniauth. Filhanteringen sker likt metoden för Dropbox förutom att Drive inte strukturerar sina filer med hjälp av sökvägar. Varje fil har istället en parameter för \textit{parent} och varje mapp har en parameter \textit{child}, där eventuella filer i mappen lagras. Om en fil ligger i en mapp är mappen filens \textit{parent} och filen är mappens \textit{child}. För att identifiera det här förhållandet kommer alla filer som ligger i samma mapp ha mappens id i dess \textit{parent} parameter. Liknande kommer mappens parameter \textit{child} innehålla alla id tillhörande filer som ligger i mappen, se figur \ref{fig:parentchild}.
 
 \begin{figure}[!H]
 \centering
@@ -260,6 +220,7 @@ Likt Dropbox användes Google drives SDK för att kunna använda deras funktiona
 \end{figure}
 
 \subsection{Lokal fillagring}
+Den lokala filhanteringen infördes för att ge användaren ett alternativ utan extern kostnad och utan filutrymmesbegränsningar från externa tjänster. För att sköta uppladdningen, som är en central del av den lokala filhanteringen i och med att det inte går att importera filer likt från Google Drive eller Dropbox, implementerades en så kallad drag och släpp-uppladdning. Detta innebär att användaren kan markera en eller flera filer på sin dator, och dra dem till webbläsarfönstret där systemet är öppet, och släppa dem där. Systemet tar där vid och laddar upp filerna. När servern har tagit emot all uppladdningsdata från webbläsaren får filen ett slumpat filnamn och placeras i en mapp på servern.
 
 \section{Hantering och strukturering av databaser}
 
@@ -364,17 +325,12 @@ Likt Dropbox användes Google drives SDK för att kunna använda deras funktiona
 \addcontentsline{toc}{chapter}{\bibname}
 
 \bibitem{gettingthingsdone}
-<<<<<<< HEAD:TNM094_Bruse.tex
   D. Allen, \emph{Getting Things Done: The Art of Stress-Free Productivity}, Penguin Books 2001
   
-=======
-  D. Allen, \emph{Getting Things Done: The Art of Stress-Free Productivity}, Penguin Books 2001, hämtad: 2015-05-14\newline http://transhumanism-russia.ru/documents/books/gtd/Getting\_Things\_Done\_-\_The\_Art\_Of\_Stress-Free\_Productivity.pdf
-
->>>>>>> 3dbbd69b2de3ec72da33f43331f1bc740cf7e4a6:report/TNM094_Bruse.tex
 \bibitem{softwareeng}
   Shari Lawrence Pfleeger och Joanne M. Atlee, \emph{Software Engineering, Fourth Edition, International Edition}, Pearson 2010
 
-\bibitem{tagging}
+\bibitem{tagging} 
   J. Granström, \emph{Social taggning}, Högskolan i Borås 2007, hämtad: 2015-04-08\newline http://bada.hb.se/bitstream/2320/2178/1/07-56.pdf
 
 \bibitem{norman}
