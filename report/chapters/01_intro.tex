@@ -8,7 +8,7 @@ Idén till detta projekt fick kunden av boken \textit{Getting things done} \cite
 \section{Syfte}
 Syftet med projektet är att gruppen ska utveckla en webbtjänst för lagring av filer som användaren snabbt ska kunna komma åt via ett sökfält. Sökningen begränsas genom att söka efter taggar eller metadata som den eftersökta filen innehåller. Tjänsten ska vara användarvänlig så att vem som helst ska kunna ha nytta av den. Det ska både gå att lagra sina lokala filer och synkronisera med andra lagringstjänster. Poängen med att synkronisera andra lagringstjänster till en webbtjänst är att användaren kan hantera alla sina uppladdade filer på ett och samma ställe.
 
-För att utveckla den önskade slutprodukten jobbade gruppen enligt utvecklingsmetodiken Scrum. Syftet med att använda Scrum var att tillämpa ett agilt arbetsmönster. Agil utveckling innebär att utvecklarna arbetar efter att ständigt ha en fungerande produkt, så att kontinuerlig återkoppling med kund kan ske. Detta för att säkerställa kundens nöjdhet och för att utveckla ett flexibelt system som förblir relevant. \cite{softwareeng}
+För att utveckla den önskade slutprodukten jobbade gruppen enligt utvecklingsmetodiken Scrum. Syftet med att använda Scrum var att tillämpa ett agilt arbetsmönster. Agil utveckling innebär att utvecklarna arbetar efter att ständigt ha en fungerande produkt, så att kontinuerlig återkoppling med kund kan ske. Detta för att säkerställa kundens nöjdhet och för att utveckla ett flexibelt system som ständigt förblir relevant. \cite{softwareeng}
 
 Denna rapport redogör för utvecklandet av detta projekt, dess framgångar och dess nederlag. Rapporten tar upp detaljer kring den tekniska implementationen, vad som genomförts och vad som skulle genomförts om mer tid funnits.
 
@@ -17,7 +17,7 @@ Arbetet med systemet och denna rapport har kretsat kring ett par centrala fråge
 
 \textbf{Hur ska en webbdatabas struktureras för att sökning efter sparade objekt ska kunna levereras enligt en användares förväntningar gällande hastighet och resultat för webbtjänster med liknande funktionalitet?}
 
-För ett databasfilsystem är sökning en central komponent. Användaren ska enkelt och utan att behöva vänta, hitta det denne letar efter. Då en databas växer utgör antalet rader i den ett potentiellt problem för sökningar - många rader kod skall gås igenom utav servern. Frågan handlar alltså om hur systemet kan utvecklas för att redan tidigt tackla detta. Hur går det att säkerställa att användarens sökord snabbt genererar resultat, oavsett hur komplex sökfrågan är? Och hur kan användarens söktext användas för att hitta filer utifrån exempelvis taggar och filtyper?
+För ett databasfilsystem är sökning en central komponent. Användaren ska enkelt och utan att behöva vänta hitta det denne letar efter. Då en databas växer utgör antalet rader i den ett potentiellt problem för sökningar – många rader kod skall gås igenom utav servern. Frågan handlar alltså om hur systemet kan utvecklas för att redan tidigt tackla detta. Hur går det att säkerställa att användarens sökord snabbt genererar resultat, oavsett hur komplex sökfrågan är? Och hur kan användarens söktext användas för att hitta filer utifrån exempelvis taggar och filtyper?
 
 \textbf{Hur går det att säkerställa att en användares information som lagras i en webbdatabas inte är tillgänglig för någon som inte är den specifika användaren eller har blivit  auktoriserad av den specifika användaren?}
 
