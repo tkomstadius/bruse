@@ -58,7 +58,7 @@
 \pagestyle{fancy}
 
 \chapter{Sammanfattning}
-Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i kursen Medietekninskt Kandidatprojekt, TNM094, på Linköpings universitet. Syftet med projektet var att gruppen skulle följa ett agilt arbetssätt för att uppnå kundens krav. Kundens främsta krav var att databasen skulle användas för att lagra och strukturera personlig information som dokument, bilder och musik. Dessa filer skulle sedan taggas med ett eller flera nyckelord för att kunna söka reda på informationen snabbare. Serversystemet utvecklades i ramverket Ruby on Rails och databasens klientsidan utvecklades i ramverket AngularJS.
+Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i kursen Medietekninskt Kandidatprojekt, TNM094, vid Linköpings universitet. Syftet med projektet var att gruppen skulle följa ett agilt arbetssätt för att uppnå kundens krav. Kundens främsta krav var att databasen skulle användas för att lagra och strukturera personlig information som dokument, bilder och musik. Dessa filer skulle sedan taggas med ett eller flera nyckelord för att kunna söka reda på informationen snabbare. Serversystemet utvecklades i ramverket Ruby on rails och databasens klientsida utvecklades i ramverket Angularjs.
 
 \tableofcontents
 
@@ -79,23 +79,38 @@ Här läggs de om de passar bäst i tabellform
 
 \chapter{Inledning}
 \label{ch:inledning}
+Eftersom mycket information idag finns i elektronisk form är det viktigt att kunna lagra denna information på ett bra sätt. Ofta används flera olika lagringstjänster och användaren har dålig översyn på var alla filer ligger och vad de heter. Därför är det önskvärt att skapa ett system där en användare kan få åtkomst till olika typer av filer, från olika lagringstjänster på ett snabbt och smidigt sätt.
 
 \section{Bakgrund}
+Idén till detta projekt fick kunden av boken \textit{Getting things done} \cite{gettingthingsdone}. I boken presenteras principer för att organisera filer på ett annorlunda sätt jämfört med den vanliga mappstrukturen. Kunden hade som önskemål att enkelt kunna sortera filer och skapa en egen hierarki med hjälp av att ge varje fil en eller flera taggar. Med taggar åsyftades ett eller flera ord som för användaren hade en koppling till filen. På detta sätt kunde användaren komma åt filerna med hjälp av en begränsande sökning istället för att behöva leta sig igenom en djup mappstruktur för att hitta önskat objekt.
 
 \section{Syfte}
+Syftet med projektet är att gruppen ska utveckla en webbtjänst för lagring av filer som användaren snabbt ska kunna komma åt via ett sökfält. Sökningen begränsas genom att söka efter taggar eller metadata som den eftersökta filen innehåller. Tjänsten ska vara användarvänlig så att vem som helst ska kunna ha nytta av den. Det ska både gå att lagra sina lokala filer och synkronisera med andra lagringstjänster. Poängen med att synkronisera andra lagringstjänster till en webbtjänst är att användaren kan hantera alla sina uppladdade filer på ett och samma ställe.
 
-\section{Arbetsmetod}
+För att utveckla den önskade slutprodukten jobbade gruppen enligt utvecklingsmetodiken Scrum. Syftet med att använda Scrum var att tillämpa ett agilt arbetsmönster. Agil utveckling innebär att utvecklarna arbetar efter att ständigt ha en fungerande produkt, så att kontinuerlig återkoppling med kund kan ske. Detta för att säkerställa kundens nöjdhet och för att utveckla ett flexibelt system som förblir relevant. \cite{softwareeng}
+
+Denna rapport redogör för utvecklandet av detta projekt, dess framgångar och dess nederlag. Rapporten tar upp detaljer kring den tekniska implementationen, vad som genomförts och vad som skulle genomförts om mer tid funnits.
 
 \section{Frågeställning}
 
-\begin{itemize}
-\item
-\item
-\item
-\item
-\end{itemize}
+\textbf{Hur ska en webbdatabas struktureras för att sökning efter sparade objekt ska kunna levereras enligt en användares förväntningar gällande hastighet och resultat för webbtjänster med liknande funktionalitet?}
+
+För ett databasfilsystem är sökning en central komponent. Användaren ska enkelt och utan att behöva vänta, hitta det denne letar efter. Då en databas växer utgör antalet rader i den ett potentiellt problem för sökningar - många rader kod skall gås igenom utav servern. Frågan handlar alltså om hur systemet kan utvecklas för att redan tidigt tackla detta. Hur går det att säkerställa att användarens sökord snabbt genererar resultat, oavsett hur komplex sökfrågan är? Och hur kan användarens söktext användas för att hitta filer utifrån exempelvis taggar och filtyper?
+
+\textbf{Hur går det att säkerställa att en användares information som lagras i en webbdatabas inte är tillgänglig för någon som inte är den specifika användaren eller har blivit  auktoriserad av den specifika användaren?}
+
+Säkerhet är ett ständigt känsligt ämne då webbtjänster diskuteras. Ämnet är dessutom extra känsligt då ett system ämnar att lagra en användares personliga och potentiellt känsliga uppgifter. Hur går det att säkerställa att ingen obehörig person får tillgång till användarens filer? Och hur kan systemet ge ett tryggt intryck?
+
+\textbf{Hur kan filer i en webbdatabas presenteras i en webbapplikation på ett sätt som gör de överskådliga, hanterbara och lättillgängliga för en användare, i en filstruktur utan kataloger eller annan hierarki?}
+
+Denna fråga handlar om hur databasbaserade filsystem på webben kan presenteras. Systemet ska gärna klara av användare som har flera hundra sparade filer, både ur prestanda- och användarvänlighetsperspektiv. Hur mycket information kan presenteras utan att det blir överväldigande?
+
+\textbf{På vilket sätt kan en webbtjänsts användargränssnitt utformas för att demonstrera all funktionalitet ett system besitter och göra det intuitivt för en användare?}
+
+Systemet ska göra som användaren förväntar sig, trots att filstrukturen kan vara något användaren är ovan vid. Hur går det att anpassa en webbtjänst till hur exempelvis filhanteringsprogrammet användaren är van vid beter sig?
 
 \section{Avgränsningar}
+Utgående från kundens krav riktar sig installation av systemet mot en användare som har tillräckligt stor teknisk kompetens för att kunna hantera ett UNIX baserat operativsystem. Vidare utvecklas systemet också för en slutanvändare med viss erfarenhet av liknande system. Det är alltså inte anpassat för ovana datoranvändare.
 
 \section{Typografiska konventioner}
 Här ska de vara om de fungerar bäst i löpande text.
@@ -138,7 +153,7 @@ Här ska de vara om de fungerar bäst i löpande text.
 
 \subsection{Lokal fillagring}
 
-\section{Databasstruktur och databashantering}
+\section{Hantering och strukturering av databaser}
 
 \subsection{Databasstruktur}
 
@@ -172,7 +187,7 @@ Här ska de vara om de fungerar bäst i löpande text.
 
 \section{Tredjepartsmjukvara}
 
-\section{Databasstruktur och databashantering}
+\section{Hantering och strukturering av databaser}
 
 \section{Filhantering}
 
@@ -192,7 +207,7 @@ Här ska de vara om de fungerar bäst i löpande text.
 
 \subsection{Filhantering}
 
-\subsection{Databasstruktur och databashantering}
+\subsection{Hantering och strukturering av databaser}
 
 \subsection{Gränssnitt}
 
@@ -238,6 +253,9 @@ CHROME PLUGIN!!!
 
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{\bibname}
+
+\bibitem{gettingthingsdone}
+  D. Allen, \emph{Getting Things Done: The Art of Stress-Free Productivity}, Penguin Books 2001, hämtad: 2015-05-14\newline http://transhumanism-russia.ru/documents/books/gtd/Getting\_Things\_Done\_-\_The\_Art\_Of\_Stress-Free\_Productivity.pdf
   
 \bibitem{softwareeng}
   Shari Lawrence Pfleeger och Joanne M. Atlee, \emph{Software Engineering, Fourth Edition, International Edition}, Pearson 2010
