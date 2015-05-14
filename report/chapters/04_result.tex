@@ -80,15 +80,15 @@ Carrierwave ger utvecklarna verktyg för att hantera uppladdningen av filer.
 Genom att endast specificera inställningar för var filen ska sparas och så
 vidare fås en modul som kan användas i de \emph{controller}-metoder som behövs.
 
-Fuzzily skapar för varje ny instans av specificerade models \emph{trigrams} över valda
-kolumner. \emph{Trigrams} delar upp ett ord och grupperar det tre tecken i
-taget[Gencosman, BC, Ozmutlu, HC, \& Ozmutlu, S 2014]. För varje ny gruppering
-förflyttas den ett steg vilket gör att det skapas flera olika kombinationer. För
-ett ord skulle det resultera i flera olika bokstavskombinationer av grundordet.
-Exempelvis skulle ordet “bruse” med hjälp av \emph{trigrams} bli [b, br, bru, rus, use,
-se, e]. Under implementationen av Fuzzily upptäcktes det att numeriska eller
-nordiska tecken inte sparades i \emph{trigrams}. Tack vare att Fuzzily är skrivet i
-öppen källkod kunde problemet åtgärdas genom att ändra koden.
+Fuzzily skapar för varje ny instans av specificerade models \emph{trigrams} över
+valda kolumner. \emph{Trigrams} delar upp ett ord och grupperar det tre tecken i
+taget\cite{n-grams}. För varje ny gruppering förflyttas den ett steg vilket gör
+att det skapas flera olika kombinationer. För ett ord skulle det resultera i
+flera olika bokstavskombinationer av grundordet. Exempelvis skulle ordet “bruse”
+med hjälp av \emph{trigrams} bli [b, br, bru, rus, use, se, e]. Under
+implementationen av Fuzzily upptäcktes det att numeriska eller nordiska tecken
+inte sparades i \emph{trigrams}. Tack vare att Fuzzily är skrivet i öppen
+källkod kunde problemet åtgärdas genom att ändra koden.
 
 Jstag är ett tillägg till Angularjs som konverterar användarens inskrivning utav
 taggar till visuella objekt för att tydliggöra för användaren hur dess
