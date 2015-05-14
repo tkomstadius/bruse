@@ -19,7 +19,7 @@ användaren vid installation. Stegen demonstreras i bild \ref{fig:installation}.
 
 \subsection{Ruby on rails}
 Följande modeller valdes att användas för systemet. Relationerna mellan de är
-specificerade i bild \ref{fig:models}. Modellen \emph{BruseFile} fick det namnet
+specificerade i bild \ref{fig:models}. Modellen \texttt{BruseFile} fick det namnet
 eftersom \emph{File} är ett reserverat ord i Ruby och lösningen blev då att
 lägga till \emph{bruse}.
 
@@ -30,26 +30,25 @@ lägga till \emph{bruse}.
 \label{fig:models}
 \end{figure}
 
-\emph{Identity} är en av  systemets viktigaste models. En \emph{Identity} är
-antingen en av tredjepartstjänsterna Google Drive eller Dropbox. Men även den
-egna filhantering hanteras som en \emph{Identity} för att hålla det konsekvent
-och modulärt.
+\texttt{Identity} är en av systemets viktigaste models. En \texttt{Identity} är en av
+tredjepartstjänsterna Google Drive eller Dropbox. Men även den egna filhantering
+hanteras som en \texttt{Identity} för att hålla det konsekvent och modulärt.
 
-För att kunna presentera en fil och dess taggar äger \emph{BruseFile} flera
+För att kunna presentera en fil och dess taggar äger \texttt{BruseFile} flera
 taggar, men för att även kunna lista filer beroende på en tagg äger varje tagg
-flera \emph{BruseFiles}. Rails löser relationen mellan dessa två genom att skapa
-en tabell som heter \emph{bruse\_files\_tags} enligt bild
+flera \texttt{BruseFiles}. Rails löser relationen mellan dessa två genom att skapa
+en tabell som heter \texttt{bruse\_files\_tags} enligt bild
 \ref{fig:bruse_files_tags}.
 
 \begin{figure}[!h]
 \centering
 \includegraphics[width=0.2\textwidth]{figures/bruse_files_tags.png}
-\caption{Relationen mellan \emph{BruseFiles} och \emph{tags} i databasen.}
+\caption{Relationen mellan \texttt{BruseFiles} och \texttt{Tags} i databasen.}
 \label{fig:bruse_files_tags}
 \end{figure}
 
 I systemet finns det flera \emph{controllers} för att hantera logiken. Varje
-\emph{model} har en \emph{controller}, men \emph{bruse\_file} delades upp i tre
+\emph{model} har en \emph{controller}, men \texttt{bruse\_file} delades upp i tre
 då den innehåller all logik kring uppladdning, nerladdning, visa filer, lista
 med mera.
 
@@ -60,14 +59,13 @@ De områden som styrs utav Angularjs är:
   \item Lägga till taggar till nyligen tillagda filer
   \item Söka efter filer
   \item Skapa filer från text
-  \item Dra och släppa-uppladdning
+  \item Dra och släpp-uppladdning
   \item Lista filer
 \end{itemize}
 
-För att inte behöva upprepa kod, för till exempel hämta information kring filer,
-skapades factories för att kunna delas utav flera \emph{controllers}, där finns
-logik och rätt parametrar för att kunna skicka en \emph{AJAX}-förfrågan till
-servern.
+För att inte behöva upprepa kod och istället återanvända logik för exempelvis
+hämta och spara information kring filer eller taggar, skapades funktioner som
+delas av flera av systemets komponenter.
 
 \section{Tredjepartsmjukvara}
 
@@ -82,15 +80,15 @@ Carrierwave ger utvecklarna verktyg för att hantera uppladdningen av filer.
 Genom att endast specificera inställningar för var filen ska sparas och så
 vidare fås en modul som kan användas i de \emph{controller}-metoder som behövs.
 
-Fuzzily skapar för varje ny instans av specificerade \emph{models}
-\emph{trigrams} över valda kolumner. \emph{Trigrams} delar upp en instans och
-grupperar dem tre i taget. För varje ny gruppering förflyttas den ett steg
-vilket gör att det skapas flera olika kombinationer. För ett ord skulle det
-resultera i flera olika bokstavskombinationer av grundordet. Exempelvis skulle
-ordet “bruse” med hjälp av \emph{trigrams} bli [b, br, bru, rus, use, se, e].
-Under implementationen av Fuzzily märktes att numeriska eller nordiska tecken
-inte blev till \emph{trigrams}. Men då Fuzzily är open source kunde problemet
-åtgärdas genom att ändra källkoden.
+Fuzzily skapar för varje ny instans av specificerade models \emph{trigrams} över
+valda kolumner. \emph{Trigrams} delar upp ett ord och grupperar det tre tecken i
+taget\cite{n-grams}. För varje ny gruppering förflyttas den ett steg vilket gör
+att det skapas flera olika kombinationer. För ett ord skulle det resultera i
+flera olika bokstavskombinationer av grundordet. Exempelvis skulle ordet “bruse”
+med hjälp av \emph{trigrams} bli [b, br, bru, rus, use, se, e]. Under
+implementationen av Fuzzily upptäcktes det att numeriska eller nordiska tecken
+inte sparades i \emph{trigrams}. Tack vare att Fuzzily är skrivet i öppen
+källkod kunde problemet åtgärdas genom att ändra koden.
 
 Jstag är ett tillägg till Angularjs som konverterar användarens inskrivning utav
 taggar till visuella objekt för att tydliggöra för användaren hur dess
@@ -113,7 +111,7 @@ Den första versionen av databasen hade följande struktur:
     \item service (sträng, till exempel “Dropbox”)
     \item token (sträng, nyckel som används för kontakt med extern API)
   \end{itemize}
-\item File
+\item BruseFile
   \begin{itemize}
     \item id (heltal, unik nyckel)
     \item identity\_id (heltal, referens till identity)
@@ -140,8 +138,8 @@ Då en fil lagrades i systemet är det två attribut som var centrala. Dels
 varifrån filen sparats – om den importerades från en extern tjänst som Google
 Drive eller Dropbox, eller om den lagrades i systemets lokala fillagring. Vidare
 sparas också en textsträng som motsvarar hur den aktuella tjänsten som filen
-tillhör håller koll på filen. Denna textsträng kallas i systemet för
-\emph{foreign\_ref}. För Google Drive är detta en slumpmässig bokstavs- och
+tillhör separerar filen från övriga filer . Denna textsträng kallas i systemet
+för \texttt{foreign\_ref}. För Google Drive är detta en slumpmässig bokstavs- och
 sifferkombination, för Dropbox är detta sökvägen till filen. För den lokala
 filhanteringen är detta namnet på filen efter att den sparats på servern, också
 detta en slumpad bokstavs- och sifferkombination.
@@ -157,10 +155,6 @@ enkla instruktioner, till exempel gå till startsidan och fyll
 inloggningsformuläret med dessa uppgifter och tryck sedan på logga in. Med dessa
 tester fås en helhetsblick och väldigt stor del av systemet testas i ett och
 samma test.
-
-För kunna testa viss funktionalitet krävs data i databasen, för detta har
-Minitest något som heter Fixtures. Det är data som man kan fejka och Minitest
-hanterar sedan dessa som databasinlägg.
 
 \section{Utvecklingsmetodik}
 
