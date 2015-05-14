@@ -1,0 +1,92 @@
+I"”(function() {
+  this.bruseApp.directive('bDropzone', function() {
+    return {
+      restrict: 'A',
+      scope: {
+        theFiles: '=',
+        images: '=',
+        drop: '=',
+        saved: '=',
+        info: '=',
+        noType: '='
+      },
+      link: function(scope, element, attrs) {
+        var addFile, processDragOverOrEnter;
+        processDragOverOrEnter = function(event) {
+          if (event != null) {
+            event.preventDefault();
+          }
+          (event.originalEvent || event).dataTransfer.effectAllowed = 'move';
+          return false;
+        };
+        addFile = function(file) {
+          var obj, reader;
+          obj = {};
+          obj.name = file.name;
+          obj.type = file.type;
+          reader = new FileReader();
+          reader.onload = function(evt) {
+            return scope.$apply(function() {
+              var ref;
+              obj.data = reader.result.split(",")[1];
+              scope.drop = true;
+              scope.info = '';
+              scope.theFiles.push(obj);
+              if ((ref = file.type) === 'image/jpeg' || ref === 'image/png' || ref === 'image/tiff' || ref === 'image/gif') {
+                scope.images.push(evt.target.result);
+              }
+            });
+          };
+          if (file.type !== '') {
+            reader.readAsDataURL(file);
+          } else {
+            scope.$apply(function() {
+              return scope.noType = scope.noType + file.name + " has no type and can not be saved";
+            });
+          }
+          return false;
+        };
+        element.bind('dragover', processDragOverOrEnter);
+        element.bind('dragenter', processDragOverOrEnter);
+        return element.bind('drop', function(event) {
+          var dirReader, entries, entry, files, i, items, readEntries, results1, temp;
+          if (event != null) {
+            event.preventDefault();
+          }
+          items = event.originalEvent.dataTransfer.items;
+          files = event.originalEvent.dataTransfer.files;
+          scope.noType = '';
+          i = 0;
+          results1 = [];
+          while (i < items.length) {
+            entry = items[i].webkitGetAsEntry();
+            if (entry.isFile) {
+              temp = [];
+              scope.images = [];
+              scope.saved = false;
+              addFile(files[i]);
+            } else if (entry.isDirectory) {
+              dirReader = entry.createReader();
+              entries = [];
+              readEntries = function() {
+                return dirReader.readEntries(function(results) {
+                  if (!results.length) {
+                    entries.push(entry);
+                    return console.log(entries);
+                  } else {
+                    return readEntries();
+                  }
+                });
+              };
+              readEntries();
+            }
+            results1.push(i++);
+          }
+          return results1;
+        });
+      }
+    };
+  });
+
+}).call(this);
+:ET
