@@ -1,1 +1,0 @@
-@bruseApp = angular.module 'bruseApp', []
