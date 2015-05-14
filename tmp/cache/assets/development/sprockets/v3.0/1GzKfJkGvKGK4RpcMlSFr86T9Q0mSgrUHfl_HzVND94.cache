@@ -1,0 +1,14 @@
+I"‡(function() {
+  this.bruseApp.directive('bFileList', function() {
+    return {
+      controller: 'FileListCtrl',
+      link: function(scope, element, attrs, FileListCtrl) {
+        return FileListCtrl.init(element, attrs);
+      },
+      restrict: 'E',
+      templateUrl: '/assets/file_list-6808804bd455ba5bf6319ee5974e5bd399a2145505ba1e35e8a4fb5f36aad953.html'
+    };
+  });
+
+}).call(this);
+:ET
