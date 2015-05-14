@@ -4,12 +4,62 @@
 
 \subsection{Struktur på webbdatabas}
 
+\textbf{Hur ska en webbdatabas struktureras för att sökning efter sparade objekt
+ska kunna levereras enligt en användares förväntningar om hastighet och
+resultat?}
+
+Genom att dela upp taggar för sig och filer för sig och skapa en relation mellan
+de två som förklaras i sektion. Användaren kan specificera om den vill söka på
+taggar, filer eller båda två. Om det specificeras vilken typ som söks efter
+kommer systemet att kunna leverera ett snabbare resultat.
+
 \subsection{Säkerhet}
+
+\textbf{Hur går det att säkerställa att en användares information som lagras i
+en webbdatabas inte är tillgänglig för någon som inte är den specifika
+användaren eller har blivit  auktoriserad av den specifika användaren?}
+
+Genom att arbeta med en säker sessionshantering på servern som gör att en
+användare inte kan mixtra med en serverförfrågan för att ändra inlogg. För att
+ingen ska kunna få ut någon annan användares information måste systemet
+försäkras om att rätt användare är inloggad och inte vara beroende på vilket id
+som skickas med i en serverförfrågan. På så sätt kan endast de inlägg i
+databasen som är kopplade till rätt användar-id säkert presenteras och .
 
 \subsection{Databasbaserad filstruktur}
 
+\textbf{Hur kan filer i en webbdatabas presenteras i en webbapplikation på ett
+sätt som gör de överskådliga,  hanterbara och lättillgängliga för en användare,
+i en filstruktur utan kataloger eller annan hierarki?}
+
+Filer i en webbdatabas kan presenteras genom en databasbaserad filstruktur i en
+webbapplikation. En databasbaserad filstruktur innebär att filerna visas
+vartefter de söks efter med hjälp av taggar eller metadata. På så sätt kan
+filerna lätt hittas, så länge användaren vet på ett ungefär vad den letar efter.
+Filer som stämmer överens med alla sökord genom en \emph{fuzzy search} visas.
+Användaren kan också redigera filens taggar till att passa sökningen bättre.
+
 \subsection{Användargränssnitt}
+
+\textbf{På vilket sätt kan en webbapplikations användargränssnitt designas för
+att demonstrera all funktionalitet ett system besitter och göra det intuitivt
+för en användare?}
 
 \section{Framtida arbete}
 
+I nästa version av rapporten, efter att den sista sprinten är klar, kommer
+användargränssnittet beskrivas då det inte är färdigt ännu.
+
+Den framtida visionen för systemet är att fler användare ska kunna interagera
+med varandra genom att dela filer, projekt eller mood boards med varandra.
+Systemet ska möjligtvis kunna användas genom ett Chrome plugin som gör det
+snabbare att söka efter filer.
+
+För att öka säkerheten och kunna lagra filer på ett effektivare sätt kan den
+framtida databashanteringen ske med hjälp av MongoDB.
+
+Box!
+
 \subsection{Slutgiltigt rapportförslag}
+Denna rapport tar inte upp någonting om systemets användargränssnitt. Det beror
+på att gränssnittet i skrivande stund ej var färdigutvecklat.
