@@ -4,13 +4,13 @@
 
 \subsection{Systemarkitektur}
 
-I projektets början diskuterades vilka programmeringsspråk och ramverk som kunde passa. De språk som ansågs vara lämpliga för en webbdatabas var Javascript, Googles Dart, Phyton, PHP och Ruby. För- och nackdelar mellan de olika språken diskuterades. Slutledningen blev att PHP gick bort ganska snabbt på grund av att det ansågs inte vara det optimala språket för användarhantering, PHP är inte ett fullständigt objektorienterat språk till skillnad från Ruby on Rails \cite{shiftdynamic}. Google Dart gick gick bort på grund av att det fanns en risk för att applikationen skulle bli för lik Google Drive. Av de kvarstående språken var det Ruby med ramverket Rails som var mest attraktivt eftersom det redan fanns kompetens inom det här språket i gruppen.
+I projektets början diskuterades vilka programmeringsspråk och ramverk som kunde passa. De språk som ansågs vara lämpliga för en webbdatabas var Javascript, Googles Dart, Phyton, PHP och Ruby. För- och nackdelar mellan de olika språken diskuterades. Slutledningen blev att PHP gick bort ganska snabbt på grund av att det ansågs inte vara det optimala språket för användarhantering, PHP är inte ett fullständigt objektorienterat språk till skillnad från Ruby on Rails \cite{shiftdynamic}. Google Dart gick gick bort på grund av att gruppen inte hade någon tidigare erfarenhet av språket. Av de kvarstående språken var det Ruby med ramverket Ruby on Rails som var mest attraktivt eftersom det redan fanns kompetens om det här språket i gruppen.
 
 \subsection{Filhantering}
 
 I inledningen av projektet utvecklades systemet endast med tanken att det skulle vara ett lager ovanpå Dropbox. Då kundens krav förtydligades efter insikten att Dropbox kräver kostnadsbelagda servertekniker (krypterad och certifierad anslutning) fyra veckor in i projektet var gruppen tvungna att göra en omvändning och prioritera om vad som skulle göras när. Istället för att fokusera på enbart Dropbox lades då fokus på Google Drive. Detta visade sig dock otillräckligt på grund av de begränsningar i lagringsutrymme Google Drive har. Det var först där efter som arbetet med den lokala filhanteringen inleddes. Det blev då tydligt att gruppen fokuserat på fel funktionalitet sett till kundens önskemål under flera veckor, vilket kan ha påverkat projektets utgång.
 
-Ett alternativ som övervägdes för att sköta filhanteringen var också MongoDB. Detta är en dokumentdatabas som istället för att lagra tabeller med information lagrar dokument med identifierade nycklar som indexeras av databasen. MongoDB har dessutom stöd för att ha en kolumn med fildata och inte bara siffror eller strängar. Denna kolumn med fildata skulle alltså användas för att lagra filerna, snarare än att skriva dem som filer på servern. Detta valdes dock bort för att minska insteget till att utveckla systemet samt för att hålla nere antalet mjukvaror som systemet berodde av.
+Ett alternativ som övervägdes för att sköta filhanteringen var Mongodb. Detta är en dokumentdatabas som istället för att lagra tabeller med information lagrar dokument med identifierade nycklar som indexeras av databasen. Mongodb har dessutom stöd för att ha en kolumn med fildata och inte bara siffror eller strängar. Denna kolumn med fildata skulle alltså användas för att lagra filerna, snarare än att skriva dem som filer på servern. Detta valdes dock bort för att minska insteget till att utveckla systemet samt för att hålla nere antalet mjukvaror som systemet berodde av.
 
 \subsection{Hantering och strukturering av databaser}
 
@@ -28,7 +28,7 @@ Under projektets början följdes planen att skriva tester efter varje funktions
 
 Det tog för lång tid att hitta en lösning för hur den nya sessionshanteringen skulle kunna testas så testning valdes att nerprioriteras. Tester togs bort och eftersom problemet aldrig löstes försvann testning från arbetsflödet och togs aldrig upp igen. \emph{Build}-servern var kvar under utvecklingen som fortsatt kontroll att inget i systemet kraschar.
 
-Testningen gav en bekräftelse vid kodgranskning att systemet och det nyligen utvecklade funktionerna inte förstörde något tidigare. Dock krävdes mycket tid för att få igång många system. Att testa Javascript med hjälp av Phantomjs var viktigt då stora delar av systemet byggs i javascript men det tog tid att installera. Även \emph{fixtures} tog tid att få igång på det sätt som fungerade för utvecklarna.
+Testningen gav en bekräftelse vid kodgranskning att systemet och det nyligen utvecklade funktionerna inte förstörde något tidigare. Dock krävdes mycket tid för att få igång många system. Att testa Javascript med hjälp av Phantomjs var viktigt då stora delar av systemet byggs i javascript men det tog tid att installera. Även \emph{fixtures} tog tid att få igång på det sätt som gjorde att systemets funktionalitet gick att testa.
 
 \subsection{Utvecklingsmetodik}
 
@@ -42,17 +42,17 @@ Fördelen med Scrum var att gruppen ständigt uppdaterade varandra om vad som va
 
 \subsection{Versionshantering och kodgranskning}
 
-Github har varit till fördel för utvecklarna genom möjligheten till versionshantering och kodgranskning. Varje utvecklare kunde arbeta på en egen komponent utan att grunden ändrades. Det här arbetssättet medförde dock att det ibland blev en konflikt då två utvecklare arbetat inom samma komponent, men i två olika förgreningar. Detta löstes med att grenarna antingen slogs ihop innan de sammanfogades med grunden eller att ena grenen sammanfogades med grunden först, så att den andra grenen redigerades till att stämma överens med den nya grunden.
+Github har varit till fördel för utvecklarna genom möjligheten till versionshantering och kodgranskning. Varje utvecklare kunde arbeta på en egen komponent utan att grunden ändrades. Det här arbetssättet medförde dock att det ibland blev en konflikt då två utvecklare arbetat inom samma komponent, men i två olika förgreningar. Detta löstes med att grenarna antingen slogs ihop innan de sammanfogades med grunden, eller att ena grenen sammanfogades med grunden först.
 
 Arbete genom förgrening kan också bli problematisk då en gren bygger på en annan. Detta gav mestadels problem för kodgranskningen, eftersom det var svårt att sätta sig in i den påbyggda grenen utan att ha granskat grenen den bygger på.
 
-Ett annat problem har varit när en gren har blivit för stor och därmed blivit svårgranskad på grund av dess omfattning. Det här har utvecklingsteamet försökt undvika genom att hålla grenarna relativt korta och kontinuerligt och ofta sammanfoga varje förgrening med grunden.
+Ett annat problem har varit när en gren har blivit för stor och därmed blivit svårgranskad på grund av dess omfattning. Det här har utvecklingsteamet försökt undvika genom att hålla förändringarna små samt kontinuerligt sammanfoga varje förgrening med grunden.
 
 \section{Resultat}
 
 \subsection{Filhantering}
 
-Som nämnts tidigare hade gruppen inledningsvis fel fokus vad gäller filhantering. Exempelvis kunde mer tid ha lagts på att utveckla den lokala fillagringen ytterligare. Istället för att skriva direkt till samma server som sköter systemets logik kunde en annan tjänst använts om mer tid hade funnits tillgänglig. Några exempel på detta är Mongodb, vilket tas upp i kapitel \ref{sec:local}, eller exempelvis Amazons \emph{Simple Storage Service}, som är en tjänst för att lagra stora volymer i molnet.
+Som nämnts tidigare hade gruppen inledningsvis fel fokus vad gäller filhantering. Exempelvis kunde mer tid ha lagts på att utveckla den lokala fillagringen ytterligare. Istället för att skriva direkt till samma server som sköter systemets logik kunde en annan tjänst använts om mer tid hade funnits. Några exempel på detta är Mongodb, vilket tas upp i kapitel \ref{sec:local}, eller exempelvis Amazons \emph{Simple Storage Service}, som är en tjänst för att lagra stora volymer i molnet.
 
 Vidare hade systemet kunnat göras effektivare genom att minimera det lagringsutrymme som krävs utav tjänsten. En metod för detta är att se till att en fil aldrig lagras av systemet mer än en gång. Säg till exempel att flera användare lagrar en textfil som innehåller texten ``Hej''. I dagsläget lagrar systemet denna fil för varje användare, istället för att lagra en referens till filen för alla. Genom att generera så kallade hashar för samtliga filer, textsträngar som beror på innehållet i en fil och skapas med hjälp av matematiska operationer [KÄLLA BEHÖVS], kan filers likhet konstateras. Detta skulle kunna användas för att se om användaren laddar upp en fil som redan har en identisk like i systemet.
 
@@ -60,7 +60,9 @@ En annan aspekt som kunde utvecklats ytterligare är säkerheten på den lokala 
 
 \subsection{Tredjepartsverktyg}
 
-Även om alla tillägg inte fungerade perfekt under utvecklandet ansågs det att den tid som lades på att åtgärda problem och jämföra olika tillägg var väl värt det då det var en relativt liten, jämfört med tilläggets storlek, som behövdes åtgärdas eller justeras.
+och bibliotek
+Även om alla tillägg inte fungerade perfekt under utvecklandet ansågs det att den tid som lades på att åtgärda problem och jämföra olika tillägg var väl värt det då det var en relativt liten, jämfört med tilläggets storlek, som behövdes åtgärdas eller justeras.   Användning av gems hjälpte till att öka funktionaliteten i systemet. Gems till exempel som carrierwave sparade mycket programmeringsarbete till skillnad från om funktionaliteten hade skrivits från grunden.
+Även om det var svårt att hantera vissa tillägg under utvecklandet ansågs det att den tid som lades på att förstå sig på tillägget var väl värt det. Detta eftersom det var en relativt liten ändring, jämfört med tilläggets storlek och totala funktion, som behövdes åtgärdas eller justeras.
 
 
 \section{Arbetet i ett vidare sammanhang}
