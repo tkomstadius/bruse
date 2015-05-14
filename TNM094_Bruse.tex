@@ -23,6 +23,8 @@
 \setlength{\parindent}{0pt}
 \parskip 5pt
 
+\setcounter{secnumdepth}{3}
+
 \usepackage{color}
 \definecolor{rltred}{rgb}{.5,0,0}
 \definecolor{rltgreen}{rgb}{0,.5,0}
@@ -92,6 +94,7 @@ För att utveckla den önskade slutprodukten jobbade gruppen enligt utvecklingsm
 Denna rapport redogör för utvecklandet av detta projekt, dess framgångar och dess nederlag. Rapporten tar upp detaljer kring den tekniska implementationen, vad som genomförts och vad som skulle genomförts om mer tid funnits.
 
 \section{Frågeställning}
+Arbetet med systemet och denna rapport har kretsat kring ett par centrala frågeställningar.
 
 \textbf{Hur ska en webbdatabas struktureras för att sökning efter sparade objekt ska kunna levereras enligt en användares förväntningar gällande hastighet och resultat för webbtjänster med liknande funktionalitet?}
 
@@ -118,28 +121,62 @@ Här ska de vara om de fungerar bäst i löpande text.
 \chapter{Relaterat arbete}
 
 \section{Taggar}
+För att uppnå en effektiv sökstruktur på en databas finns det två olika metoder. Den första metoden kallas professionell indexering och är hierarkisk \cite{tagging}. Den andra metoden kallas folksonomi vilket bygger på att man sätter etiketter/taggar på innehållet utan någon särskild hierki\cite{tagging}. De två olika metoderna har både för och nackdelar men sammanfattat kan man beskriva det som \textit{“Indexering strävar efter precision medan taggning strävar efter hantering”} \cite{tagging}.
+
+Fördelarna med professionell indexering är att den är mer precis jämfört med folksonmoni eftersom det går att rama in den eftersökta informationen med huvudkategorier och underkategorier. Det går alltid att ta sig fram i databasens olika kataloger och till slut finner man den sökta filen. Till skillnad från folksnomi måste man ta sig fram via nyckelord (taggar) och det är inte alltid säkert att nyckelordet leder en rätt. Användare kan också ha olika uppfattning om vad basnivån är på innehållet vilket antingen gör att onödiga taggar läggs till eller att det finns brist på taggar. Om till exempel en Javascript-fil ska taggas är det kanske onödigt för en användare att tagga filen med “webb” medan det är nödvändigt för en annan. Därför kan ett traditionellt klassificerings system ge ett bättre resultat eftersom det är helt opersonligt. 
+
+Trots att det inte finns någon stavningskontroll när taggen skrivs in kan detta vara en fördel eftersom användaren då kan använda sig av slanguttryck och dialekter som kan precisera innehållet. Fördelen med att låta användaren stava taggarna precis som denne vill gör det lättare för personer med samma intresse att söka rätt på innehåll. Det är också mindre kostsamt att använda sig av folksonomi till skillnad från professionell indexering. Professionell indexering kräver att det finns en noga genomtänkt katalogstruktur och regler för vart innhållet ska placeras. I ett taggningssystem krävs det inte alls lika mycket eftertanke från användaren gällande vilken katalog denne ska börja leta i. Det krävs bara att söka efter ett någorlunda passande nyckelord.
 
 \section{Gränssnitt}
+För att designa ett användavänligt gränssnitt bör man utgå från Normans principer\cite{norman} för att åstadkomma en viss användarupplevelse. Principerna grundar sig i hur en människa uppfattar och tar in information. Dessa utgår ifrån sex punkter: synlighet, återkoppling, begränsningar, mappning, konsekvens och affordans. 
 
 \subsection{Synlighet}
+Det är viktigt att utforma en design som gör att användaren känner sig trygg i gränssnittet. Användaren ska helst kunna förutspå vad som händer när denne klickar på en ikon eller en rubrik. Ikoner ska tala för sig själv, till exempel en ikon med en soptunna betyder kasta och ett förstoringsglas betyder sök. För att göra det lättare för användaren att hitta det mest relevanta på sidan kan man använda mycket \textit{white space}\cite{whitespace}. \textit{White space} är grafiskt utrymme som inte innehåller någon typ av information, det är till för att skapa mer “luft” i gränssnittet. Detta gör att användares fokus begränsas kring ett visst område och det blir lättare att navigera, till exempel omringas sökfältet av mycket \textit{white space} eftersom sökfältet är det mest relevanta på startsidan.
 
 \subsection{Återkoppling}
+Att ständigt ge återkoppling till vad som sker eller vad som har skett gör att användare känner sig tryggare i systemet. Dialogrutor, laddningssymboler och felmeddelanden är exempel på viktig återkoppling\cite{norman}. Utan en laddningssymbol får användaren känslan av att ingenting händer och kanske går tillbaka och upprepar steget vilket förstör hela processen.
 
 \subsection{Begränsningar}
+För att användaren inte ska göra oönskade saker i systemet är det en bra idé att begränsa alternativen\cite{norman}. Till exempel går det inte att skapa mappar för att användaren ska ha en bättre överblick på filerna. För att koppla på ett externt konto måste det först godkännas av användaren för att säkerställa att det inte sker av misstag. Om användaren glömt bort sitt lösenord går det alltid att återskapa det. Därför finns det ingen risk att man aldrig lyckas logga in igen på grund av att inloggningsuppgifterna har glömts bort.
 
 \subsection{Mappning}
+Mappning innebär att man samlar liknade innehåll på samma plats för att hålla en god struktur\cite{norman}. Användare ska snabbt kunna hitta filens tillhörande funktioner. I Bruse samlas alla externa lagringtjänster vid sidan om varandra eftersom de fyller samma funktion. 
 
 \subsection{Konsekvens}
+För att göra det lättare för användaren att minnas hur denne använder en funktion är det bra att ha en liknade design på hela hemsidan. Det blir lätt rörigt för användren om designen inte följer ett mönster. Att använda sig av samma teckensnitt och färgschema hjälper till att hålla sidan konsekvent\cite{norman}.
 
 \subsection{Affordans}
+Affordans betyder att ett objekt själv ska kunna beskriva vad det ska användas till. Till exempel är det tydligt att det går att hänga kläder på en klädkrok\cite{norman} ingen ytterligare beskrivning krävs. Samma sak gäller på en hemsida. Användaren ska inte behöva fundera över vad som kommer hända när denne klickar på exempelvis en papperskorg, något kommer raderas.
 
 \section{Databaserat filsystem}
+Ett databasbaserat filsystem använder sökning för att hitta filer genom metadata eller nyckelord. De flesta filsystem använder kataloglagring. Ett examensarbete på University of Twente i Nederländerna hade som uppgift att undersöka om ett databasbaserat filsystem kan ersätta filsystem med kataloglagring med avseende på användbarhet och förmåga att lära sig använda systemet \cite{twente}. Genom användartester drogs slutsatsen att ett databasbaserat filsystem presterade bättre utifrån dessa aspekter.
 
 \chapter{Webbdatabas för hantering av filer}
 
 \section{Systemarkitektur}
+I inledningen av projektet hölls en diskussion om hur systemet skulle utvecklas. Faktorer som språk och ramverk togs upp. Beslutet som fattades var att språket Ruby och ramverket Ruby on rails skulle användas som grundstomme i projektet. Vidare användes också Javascript och ramverket Angularjs för att göra upplevelsen av systemet snabbare för användaren.
 
 \subsection{Ruby och Ruby on rails}
+Ruby on rails är ett ramverk skrivet i språket Ruby \cite{rubylang}. Det är ett ramverk med öppen källkod som används utav flera stora tjänster på nätet, bland andra mikrobloggstjänsten Twitter, sammarbetsverktyget Github och boendeförmedlingstjänsten Airbnb. Ramverket är skrivet enligt designmönstret MVC. Detta står för \textit{model}, \textit{view}, \textit{controller} och är ett sätt att strukturera ett projekts logik på sådant vis att olika komponenter har sin egna tydliga plats och syfte.
+
+I Ruby on rails skapar utvecklaren \textit{models}. Detta är en samling klasser vars syfte är att hantera data som användaren eller systemet interagerar med, och fungerar som ett lager ovanpå databasen. Ett exempel på en \textit{model} kan vara en klass för användare eller filer. Genom dessa klasser hanteras all information om just användare respektive filer, och samtliga databasoperationer sker genom klassernas metoder.
+
+Den komponent som sköter interaktionen mellan användare och systemets \textit{models} är systemets \textit{controllers}. Här finns logik för att hantera användares handlingar och hämta data från systemets \textit{models}. Ett exempel kan vara att användaren klickar på en knapp i webbläsaren. Syftet med knappen är att visa en viss data. Användarens handling skickas till en \textit{controller} som tar emot vad det är för data som användaren efterfrågar och hämtar den datan från en \textit{model}. Här kan också logik för att hantera undantag, till exempel att datan saknas, finnas. Den \textit{controller} som anropats skickar sedan resultatet av användarens begäran vidare till användaren.
+
+Det som användaren i sin tur interagerar med är systemets \textit{views}, på svenska vyer. Här presenteras det som systemets \textit{controllers} producerat. Knappen som användaren trycker på i exemplet i stycket ovan skapas i en \textit{view}. Här kan också finnas länkar, texter, textfält och alla andra komponenter som utgör det som renderas av en webbläsare.
+
+En mer överskådlig figur för hur data och interaktioner generellt sett färdas genom ett MVC-system visas i figur \ref{fig:mvc1}. Data transporteras från \textit{models} till \textit{views} via \textit{controllers}. Interaktioner färdas mellan \textit{views} och \textit{models} via \textit{controllers} och direkt mellan \textit{controllers} och \textit{views} samt mellan \textit{controllers} och \textit{models}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{mvc1.png}
+\caption{Visar på dataflödet i ett MVC-system}
+\label{fig:mvc1}
+\end{figure}
+
+En annan figur som snarare fokuserar på MVC ur ett användarperspektiv visas i figuren nedan.
+
+BILD - referera till labeln i texten
 
 \subsection{Javascript och Angularjs}
 
@@ -235,19 +272,19 @@ Här ska de vara om de fungerar bäst i löpande text.
 
 \chapter{Slutsatser}
 
-\section{Struktur på webbdatabas}
+\section{Frågeställningar}
 
-\section{Säkerhet}
+\subsection{Struktur på webbdatabas}
 
-\section{Databasbaserad filstruktur}
+\subsection{Säkerhet}
 
-\section{Användargränssnitt}
+\subsection{Databasbaserad filstruktur}
 
-\chapter{Framtida arbete}
-CHROME PLUGIN!!!
+\subsection{Användargränssnitt}
 
+\section{Framtida arbete}
 
-
+\subsection{Slutgiltigt rapportförslag}
 
 
 
@@ -259,6 +296,23 @@ CHROME PLUGIN!!!
   
 \bibitem{softwareeng}
   Shari Lawrence Pfleeger och Joanne M. Atlee, \emph{Software Engineering, Fourth Edition, International Edition}, Pearson 2010
+
+\bibitem{tagging} 
+  J. Granström, \emph{Social taggning}, Högskolan i Borås 2007, hämtad: 2015-04-08\newline http://bada.hb.se/bitstream/2320/2178/1/07-56.pdf
+
+\bibitem{norman}
+  C. Kroner Grogarn, K. Olin, M. Sun Bursjö, \emph{Hur långt når Norman?}, Göteborgs universitet 2011, hämtad: 2015-05-14\newline https://gupea.ub.gu.se/bitstream/2077/26683/1/gupea\_2077\_26683\_1.pdf
+
+\bibitem{whitespace}
+  K. Lahtinen, \emph{Skapandet av en modern webbdesign}, Arcada 2014, hämtad: 2015-05-14\newline http://www.theseus.fi/handle/10024/73920
+
+\bibitem{twente}
+  O. Gorter, \emph{Database File System: An Alternative to Hierarchy Based File Systems}, University of Twente 2004, hämtad: 2015-05-14\newline https://www.sphinux.org/misc/docs/references/papers/dbfs.pdf (hämtad 2015-04-27)
+
+\bibitem{rubylang}
+  D. Flanagan, Y. Matsumoto, \emph{The ruby programming language}, O'Reilly Media, Inc. 2008
+
+
 
 \bibitem{scrumguide} K. Schwaber, J. Sutherland, \emph{Scrumguiden}, 2013-07, hämtad: 2015-05-13\newline http://www.scrumguides.org
 
