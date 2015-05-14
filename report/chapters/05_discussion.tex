@@ -1,34 +1,84 @@
-
 \chapter{Analys och diskussion}
 
 \section{Metod}
 
 \subsection{Systemarkitektur}
 
+I projektets början diskuterades vilka programmeringsspråk och ramverk som kunde passa. De språk som ansågs vara lämpliga för en webbdatabas var Javascript, Googles Dart, Phyton, PHP och Ruby. För- och nackdelar mellan de olika språken diskuterades. Slutledningen blev att PHP gick bort ganska snabbt på grund av att det ansågs inte vara det optimala språket för användarhantering, PHP är inte ett fullständigt objektorienterat språk till skillnad från Ruby on Rails \cite{shiftdynamic}. Google Dart gick gick bort på grund av att det fanns en risk för att applikationen skulle bli för lik Google Drive. Av de kvarstående språken var det Ruby med ramverket Rails som var mest attraktivt eftersom det redan fanns kompetens inom det här språket i gruppen.
+
 \subsection{Filhantering}
+
+I inledningen av projektet utvecklades systemet endast med tanken att det skulle vara ett lager ovanpå Dropbox. Då kundens krav förtydligades efter insikten att Dropbox kräver kostnadsbelagda servertekniker (krypterad och certifierad anslutning) fyra veckor in i projektet var gruppen tvungna att göra en omvändning och prioritera om vad som skulle göras när. Istället för att fokusera på enbart Dropbox lades då fokus på Google Drive. Detta visade sig dock otillräckligt på grund av de begränsningar i lagringsutrymme Google Drive har. Det var först där efter som arbetet med den lokala filhanteringen inleddes. Det blev då tydligt att gruppen fokuserat på fel funktionalitet sett till kundens önskemål under flera veckor, vilket kan ha påverkat projektets utgång.
+
+Ett alternativ som övervägdes för att sköta filhanteringen var också MongoDB. Detta är en dokumentdatabas som istället för att lagra tabeller med information lagrar dokument med identifierade nycklar som indexeras av databasen. MongoDB har dessutom stöd för att ha en kolumn med fildata och inte bara siffror eller strängar. Denna kolumn med fildata skulle alltså användas för att lagra filerna, snarare än att skriva dem som filer på servern. Detta valdes dock bort för att minska insteget till att utveckla systemet samt för att hålla nere antalet mjukvaror som systemet berodde av.
 
 \subsection{Hantering och strukturering av databaser}
 
+Systemet använder sig idag utav en relationell SQL-databas för dess data; användare, etiketter, filer lagras som rader i tabeller. Ett alternativ till relationella SQL-databaser av denna typ som övervägdes är så kallade NoSQL-databaser. Ofta står detta för \emph{Not only SQL} [KÄLLA, borde vara relativt lätt att hitta] och är en samlingsterm för databaser som inte nödvändigtvis är tabell-baserade.
+
+Exempel på typer som ingår i denna samling är dokument-baserade databaser (databasen lagrar indexerade filer) och nyckel-värde-lagringar (data lagras i listor med nyckelord som används för att komma åt dem). Gemensamt för denna samling databastyper är att de inte har en fast struktur och undviker relationer till andra databaser eller uppsättningar \cite{largedata}. Dessa typer av databaser valdes tidigt bort på grund av dess icke-relationella struktur, samt på grund av deras mindre utvecklade stöd för användning i en Ruby on Rails-applikationer.
+
 \subsection{Gränssnitt}
+
+...
 
 \subsection{Testning}
 
-\subsection{utvecklingsmetodik}
+Under projektets början följdes planen att skriva tester efter varje funktionsimplementering, men vid förändrade förutsättningar i sprint 2 uppstod problem med testningen. Då användarhanteringen byggdes om med hjälp av tredjeparts-biblioteket Devise förändrades hur sessioner hanterades av systemet och följderna blev att de redan skrivna testerna misslyckades.
+
+Det tog för lång tid att hitta en lösning för hur den nya sessionshanteringen skulle kunna testas så testning valdes att nerprioriteras. Tester togs bort och eftersom problemet aldrig löstes försvann testning från arbetsflödet och togs aldrig upp igen. \emph{Build}-servern var kvar under utvecklingen som fortsatt kontroll att inget i systemet kraschar.
+
+Testningen gav en bekräftelse vid kodgranskning att systemet och det nyligen utvecklade funktionerna inte förstörde något tidigare. Dock krävdes mycket tid för att få igång många system. Att testa Javascript med hjälp av Phantomjs var viktigt då stora delar av systemet byggs i javascript men det tog tid att installera. Även \emph{fixtures} tog tid att få igång på det sätt som fungerade för utvecklarna.
+
+\subsection{Utvecklingsmetodik}
+
+För att fungera som ett team är det en förutsättning att man fördelar ansvarsområdena så att alla får en roll i projektet. Enligt Scrum måste det finnas en Scrummästare och en produktägare . Utöver dessa roller utsågs en testansvarig, dokumetansvarig och kodansvarig. Scrummästaren hade lite svårt i början med att komma in i sin roll och se till så att mötena genomfördes enligt Scrumprinciperna men blev bättre med tiden.
+
+Det uppstod problem vid projektets början på grund av dålig kommunikation inom gruppen vilket gjorde att två personer började arbeta på samma funktion samtidigt. Det hade räckt att bara en person arbetade med funktionen och låtit den andra arbeta med något annat för att vara effektiva. Detta problemet togs upp på ett möte och det bestämdes att gruppen skulle prata mer med varandra och vara mer aktiva på Trello för att samma misstag inte skulle upprepas.
+
+Arbetsrutinerna var att arbeta ca 3 hela dagar varje vecka, motsvarande 60\% av en arbetsvecka. Hade någon inte möjlighet att närvara under bestämd tid fick denne ta igen arbetet under helgen. Mycket av tiden gick åt att sätta sig in i hur Ruby on Rails, AngularJS och Dropbox API fungerade. Det ledde till att många av våra egna idéer inte implementerades så som till exempel eposthantering och implementationen av mongoDB.
+
+Fördelen med Scrum var att gruppen ständigt uppdaterade varandra om vad som var gjort och vad som skulle göras så att var och en fick en uppfattning om hur gruppen låg till tidsmässigt.  Tack vare att gruppen följde Scrum fanns det alltid en fungerade produkt vilket var bra för att kunna diskutera olika lösningar för vidareutveckling.
 
 \subsection{Versionshantering och kodgranskning}
+
+Github har varit till fördel för utvecklarna genom möjligheten till versionshantering och kodgranskning. Varje utvecklare kunde arbeta på en egen komponent utan att grunden ändrades. Det här arbetssättet medförde dock att det ibland blev en konflikt då två utvecklare arbetat inom samma komponent, men i två olika förgreningar. Detta löstes med att grenarna antingen slogs ihop innan de sammanfogades med grunden eller att ena grenen sammanfogades med grunden först, så att den andra grenen redigerades till att stämma överens med den nya grunden.
+
+Arbete genom förgrening kan också bli problematisk då en gren bygger på en annan. Detta gav mestadels problem för kodgranskningen, eftersom det var svårt att sätta sig in i den påbyggda grenen utan att ha granskat grenen den bygger på.
+
+Ett annat problem har varit när en gren har blivit för stor och därmed blivit svårgranskad på grund av dess omfattning. Det här har utvecklingsteamet försökt undvika genom att hålla grenarna relativt korta och kontinuerligt och ofta sammanfoga varje förgrening med grunden.
 
 \section{Resultat}
 
 \subsection{Filhantering}
 
+Som nämnts tidigare hade gruppen inledningsvis fel fokus vad gäller filhantering. Exempelvis kunde mer tid ha lagts på att utveckla den lokala fillagringen ytterligare. Istället för att skriva direkt till samma server som sköter systemets logik kunde en annan tjänst använts om mer tid hade funnits tillgänglig. Några exempel på detta är Mongodb, vilket tas upp i kapitel \ref{sec:local}, eller exempelvis Amazons \emph{Simple Storage Service}, som är en tjänst för att lagra stora volymer i molnet.
+
+Vidare hade systemet kunnat göras effektivare genom att minimera det lagringsutrymme som krävs utav tjänsten. En metod för detta är att se till att en fil aldrig lagras av systemet mer än en gång. Säg till exempel att flera användare lagrar en textfil som innehåller texten ``Hej''. I dagsläget lagrar systemet denna fil för varje användare, istället för att lagra en referens till filen för alla. Genom att generera så kallade hashar för samtliga filer, textsträngar som beror på innehållet i en fil och skapas med hjälp av matematiska operationer [KÄLLA BEHÖVS], kan filers likhet konstateras. Detta skulle kunna användas för att se om användaren laddar upp en fil som redan har en identisk like i systemet.
+
+En annan aspekt som kunde utvecklats ytterligare är säkerheten på den lokala fillagringen. Filerna är idag inte publikt åtkomliga, endast systemet kan läsa och skriva till dem och de finns inte att komma åt från nätet direkt. Vidare döps filerna om till en slumpad kombination av siffror och bokstäver, vilket gör dem svårare att identifiera vid ett eventuellt intrång. För att veta vem en fil tillhör behövs således både databas och fil – fler pusselbitar behövs för att få hela bilden. Om någon obehörig person skulle få tag på en fil fanns det dock inget som hindrar denne person från att öppna den.
+
 \subsection{Tredjepartsverktyg}
+
+Även om alla tillägg inte fungerade perfekt under utvecklandet ansågs det att den tid som lades på att åtgärda problem och jämföra olika tillägg var väl värt det då det var en relativt liten, jämfört med tilläggets storlek, som behövdes åtgärdas eller justeras.
+
 
 \section{Arbetet i ett vidare sammanhang}
 
 \subsection{Fildelning}
 
+I dagens elektroniska samhälle är illegal fildelningen ett stort problem. Upphovsrättsskyddat material delas utan tillstånd från upphovsrättsinnehavaren. Samtidigt är det väldigt svårt att kontrollera illegal fildelning utan att inkräkta på användarens integritet. Därför är det upp till användaren att inte använda webbtjänsten till att dela upphovsrättsskyddade filer.
+
+Liknande tjänster som Dropbox eller Google Drive har större resurser för att motverka att användaren använder tjänsten på otillåtna sätt.
+
 \subsubsection{Filhantering}
+
+Det är viktigt att ha en applikation som hanterar filer på ett säkert sätt så att obehöriga inte kan få tillgång till dem. Därför är det viktigt som utvecklare att se till så att systemet inte har några säkerhetsbuggar som kan leda till att känslig information om eller från användaren kan nås.
 
 \subsubsection{Olagliga filer}
 
+Ansvaret för vad som laddas upp ligger enbart hos användaren. I Sverige är det olagligt att publicera information som bryter mot: hets mot folk grupp, uppvigling, barnpornografi samt olaga våldsskildring \cite{polisen}. Om det upptäcks att en användare sprider den här typen av information är det ett lagbrott vilket kommer leda till att polisen får utreda ärendet.
+
 \subsubsection{Personlig integritet}
+
+Då tjänsten är gjord för att kunna spara vilka filer som helst har ägaren utav servern där systemet körs en skyldighet att låta den informationen som sparas i databasen vara fortsatt hemlig för utomstående eller andra användare utav systemet. Koder för att komma åt användares Google Drive- och Dropbox-konton sparas i databasen. Även om dessa är temporära och databasen är skyddad med lösenord kan alltid ägaren av servern se innehållet i databasen.
