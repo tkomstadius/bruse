@@ -66,7 +66,7 @@ Likt Dropbox användes Google drives SDK för att kunna använda deras funktiona
 \label{fig:parentchild}
 \end{figure}
 
-\subsection{Lokal fillagring}
+\subsection{Lokal fillagring} \label{sec:local}
 Den lokala filhanteringen infördes för att ge användaren ett alternativ utan extern kostnad och utan filutrymmesbegränsningar från externa tjänster. För att sköta uppladdningen, som är en central del av den lokala filhanteringen i och med att det inte går att importera filer likt från Google drive eller Dropbox, implementerades en så kallad drag och släpp-uppladdning. Detta innebär att användaren kan markera en eller flera filer på sin dator, och dra dem till webbläsarfönstret där systemet är öppet, och släppa dem där. Systemet tar där vid och laddar upp filerna. När servern har tagit emot all uppladdningsdata från webbläsaren får filen ett slumpat filnamn och placeras i en mapp på servern.
 
 \section{Hantering och strukturering av databaser}
