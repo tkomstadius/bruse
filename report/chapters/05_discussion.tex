@@ -14,7 +14,7 @@ Ett alternativ som övervägdes för att sköta filhanteringen var också MongoD
 
 \subsection{Hantering och strukturering av databaser}
 
-Systemet använder sig idag utav en relationell SQL-databas för dess data; användare, etiketter, filer lagras som rader i tabeller. Ett alternativ till relationella SQL-databaser av denna typ som övervägdes är så kallade NoSQL-databaser. Ofta står detta för \emph{Not only SQL} [KÄLLA, borde vara relativt lätt att hitta] och är en samlingsterm för databaser som inte nödvändigtvis är tabell-baserade.
+Systemet använder sig idag utav en relationell SQL-databas för dess data; användare, etiketter, filer lagras som rader i tabeller. Ett alternativ till relationella SQL-databaser av denna typ som övervägdes är så kallade NoSQL-databaser. Ofta står detta för \emph{Not only SQL} \cite{nosql} och är en samlingsterm för databaser som inte nödvändigtvis är tabell-baserade.
 
 Exempel på typer som ingår i denna samling är dokument-baserade databaser (databasen lagrar indexerade filer) och nyckel-värde-lagringar (data lagras i listor med nyckelord som används för att komma åt dem). Gemensamt för denna samling databastyper är att de inte har en fast struktur och undviker relationer till andra databaser eller uppsättningar \cite{largedata}. Dessa typer av databaser valdes tidigt bort på grund av dess icke-relationella struktur, samt på grund av deras mindre utvecklade stöd för användning i en Ruby on Rails-applikationer.
 
