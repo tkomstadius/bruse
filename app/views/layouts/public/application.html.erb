@@ -8,7 +8,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body ng-app="bruseApp">
-  <%= render 'layouts/header' %>
+  <%= render 'layouts/public/header' %>
 
   <% flash.each do |key, value| %>
     <%= content_tag :div, value, class: "flash #{key}" %>
@@ -16,6 +16,6 @@
 
   <%= yield %>
 
-  <%= render 'layouts/footer' %>
+  <%= render 'layouts/public/footer' %>
 </body>
 </html>
