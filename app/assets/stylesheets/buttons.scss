@@ -26,6 +26,10 @@ input[type="button"] {
     outline: 0;
   }
 
+  &.wide {
+    @extend .u-full-width;
+  }
+
   // this gives us more colorful alternatives and makes it possible to combine
   // the buttons with a class to make it pop
   $names: primary, blue, green, red, gray;
