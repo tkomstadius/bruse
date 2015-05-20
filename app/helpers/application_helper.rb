@@ -8,8 +8,5 @@ module ApplicationHelper
     else
       return ''
     end
-
-    # return fa_icon('google') if identity.service.downcase.include? 'google'
-    # return fa_icon('dropbox') if identity.service.downcase.include? 'dropbox'
   end
 end
