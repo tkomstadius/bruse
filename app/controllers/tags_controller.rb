@@ -1,52 +1,36 @@
 class TagsController < ApplicationController
-	before_action :set_tag , only: [:show]
-  skip_before_action :verify_authenticity_token, only: :create
+  before_action :set_tag, only: [:show]
+  before_action :set_file, only: [:new, :create, :destroy]
+  skip_before_action :verify_authenticity_token, only: [:create, :destroy]
 
   def index
-
   end
 
-	def show
-
+  def show
   end
 
   def new
     @tag = Tag.new
-    @file = BruseFile.find(params[:file_id])
-
   end
 
   def create
-    @file = BruseFile.find_by(:id => params[:file_id])
-
-    if current_user.id == @file.identity.user_id
-      params[:tags].each do |tag|
-        @tag = Tag.find_or_create_by(:name => tag)
-        @tag.bruse_files << @file
-      end
+    tags = []
+    params[:tags].each do |tag|
+      tags << Tag.find_or_create_by(name: tag)
     end
+    @file.tags.replace(tags)
 
-     respond_to do |format|
-        if @tag.save
-          format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
-          format.json { render json: {:success => true}, status: :ok }
-        else
-          format.html { render :new, notice: 'Something went wrong' }
-          format.json { render json: {:errors => @tag.errors, :success => false}, status: :unprocessable_entity }
-        end
-     end
+    respond_to do |format|
+      format.html { redirect_to bruse_files_path, notice: 'Tag was successfully created.' }
+      format.json { render partial: 'tags/file.json', status: :ok }
+    end
   end
 
-
   def destroy
-
-    @file = BruseFile.find(params[:file_id])
-
     @tag = @file.tags.find(params[:id])
 
-
     if @tag
-        @file.tags.delete(@tag)
+      @file.tags.delete(@tag)
     end
 
     # If tag has no file relation, remove
@@ -55,20 +39,26 @@ class TagsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to bruse_files_url, notice: 'Deleted tag: ' + @tag.name.to_s}
-      format.json { head :no_content }
+      format.html { redirect_to bruse_files_url, notice: 'Deleted tag: ' + @tag.name.to_s }
+      format.json { render partial: 'tags/file.json', status: :accepted }
     end
   end
 
+  private
 
-private
+    def set_tag
+      @tag = Tag.find(params[:id])
+    end
 
-  def set_tag
-	  @tag = Tag.find(params[:id])
-	end
+    def set_file
+      @file = BruseFile.find(params[:file_id])
+      unless current_user.id == @file.identity.user_id
+        flash[:alert] = 'Access denied'
+        redirect_to root
+      end
+    end
 
-	def tag_params
+    def tag_params
       params.require(:tag).permit(:name, :file_id)
-  end
-
+    end
 end
