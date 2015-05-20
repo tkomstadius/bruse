@@ -10,10 +10,9 @@
   <div class="actions">
     <%= f.submit "Upload" %>
   </div>
-
   <% current_user.identities.each do |identity| %>
-    <%= radio_button_tag(:service, identity.id) %>
-    <%= label_tag(:service_dropbox, identity.name) %>
+    <%= radio_button_tag(:service, identity.id, check(identity, current_user)) %>  
+    <%= label_tag(:service, identity.name) %>
   <% end %>
 
 <% end %>
