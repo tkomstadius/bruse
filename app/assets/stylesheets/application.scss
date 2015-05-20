@@ -25,6 +25,11 @@
 @import "includes/_utilities";
 @import "includes/_mixins";
 
+// all the layout style sheets
+@import "layout/header";
+@import "layout/layout";
+@import "layout/footer";
+
 // all the child style sheets
 @import "common";
 @import "links";

@@ -1,0 +1,25 @@
+/**
+ * header css!
+ */
+
+.main-header {
+  width: 100%;
+  height: $header-height;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: $common-padding 0;
+  background-color: $b-gray;
+  border-bottom: 1px solid $gray;
+
+  a {
+    text-decoration: none;
+    color: $header-color;
+
+    &:hover {
+      color: $header-hover;
+    }
+  }
+}

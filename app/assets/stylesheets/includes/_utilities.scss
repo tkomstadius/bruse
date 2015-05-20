@@ -6,6 +6,10 @@
  * single-purpose classes.
  */
 
+* {
+  box-sizing: border-box;
+}
+
 /* Make element full width */
 .u-full-width {
   width: 100%;

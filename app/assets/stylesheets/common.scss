@@ -2,10 +2,18 @@
  * Common css stuff!
  */
 
+body {
+  font-size: $font-size;
+  font-family: $font-family;
+  color: $font-color;
+}
+
 // simple container-wrapper, sets a maximum width to things
 .container {
   width: 100%;
   max-width: $max-width;
   margin-left: auto;
-  margin-righ: auto;
+  margin-right: auto;
+  padding-left: $common-padding;
+  padding-right: $common-padding;
 }
