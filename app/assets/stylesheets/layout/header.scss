@@ -3,7 +3,7 @@
  */
 
 .main-header {
-  background-color: $b-gray;
+  background-color: $header-background;
   border-bottom: 1px solid $gray;
   width: 100%;
   height: $header-height;
@@ -43,19 +43,79 @@
     }
 
     // adjust margin on links when right-aligned
-    a, span {
+    a, span, .item {
       margin-right: 0;
       margin-left: $header-padding;
     }
   }
 
-  a, span {
+  a, span, .item {
     display: block;
     float: left;
     margin-right: $header-padding;
 
     .fa {
-      margin-right: 3px;
+      margin-right: .6 * $header-padding;
     }
   }
+}
+
+.main-header nav .expandable {
+  position: relative;
+
+  // when hovering or when toggled, show the sub-menu
+  &:hover, &--show {
+    .expandable__child {
+      opacity: 1;
+      display: block;
+      z-index: 11;
+    }
+  }
+
+  &__child {
+    // position it by the "parent"
+    position: absolute;
+    top: $font-size;
+    width: 200px;
+    // invisible as default
+    opacity: 0;
+    display: none;
+    padding-top: 6px;
+
+    // adjust
+    :first-of-type {
+      // rounded corners!
+      border-width: 1px 1px 0;
+      border-top-left-radius: 3px;
+    }
+    :last-of-type {
+      border-width: 0 1px 1px;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+
+    a, span, .item {
+      background: lighten($header-background, 1%);
+      border-style: solid;
+      border-color: $gray;
+      border-width: 0 1px;
+      padding: .6 * $header-padding;
+      margin: 0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        background: $blue;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// if the menu is left-aligned, adjust the expandable children's positions
+.main-header nav.right .expandable__child {
+  border-top-right-radius: 0;
+  right: 0;
 }

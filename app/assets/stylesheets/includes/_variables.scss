@@ -31,9 +31,6 @@ $black:  #111;
 $link-color:       $blue;
 $link-hover-color: darken($blue, 10%);
 
-// bruse!
-$b-gray: lighten($silver, 10%);
-
 // header
 $header-color: darken($gray, 10%);
 $header-hover: darken($header-color, 20%);
@@ -57,5 +54,6 @@ $input-padding: 7px 10px;
 $button-height: 15px;
 
 // header
+$header-background: lighten($silver, 10%);
 $header-padding: $common-padding;
 $header-height: $font-size + 2 * $header-padding;
