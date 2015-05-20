@@ -75,16 +75,16 @@ class Files::BrowseController < Files::FilesController
     # content   - the file content
     #
     # Returns a new BruseFile
-    def create_drop_file(content)
-      # generate file name
-      fileref = SecureRandom.uuid
-      local_file_name = Rails.root.join('usercontent', fileref)
+    def create_drop_file(content)      
       if content[:type] == 'text/uri-list'
         name = content[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
         BruseFile.new(name: name,
-                      foreign_ref: fileref,
+                      foreign_ref: content[:data],
                       filetype: content[:type])
       else
+        fileref = SecureRandom.uuid
+        # generate file name
+        local_file_name = Rails.root.join('usercontent', fileref)
         # create file
         decoded_content =  Base64.urlsafe_decode64(content[:data]).force_encoding('utf-8')
         IO.write(local_file_name, decoded_content)
