@@ -99,7 +99,6 @@
       types = event.originalEvent.dataTransfer.types
       url = []
       if "text/uri-list" in types
-        console.log types
         url = event.originalEvent.dataTransfer.getData("text/uri-list")
       else
         files = event.originalEvent.dataTransfer.files
@@ -117,7 +116,6 @@
         if url.length > 0
           scope.images = []
           scope.saved = false
-          console.log "hej"
           # make a file of the url
           addLink(url)
           break

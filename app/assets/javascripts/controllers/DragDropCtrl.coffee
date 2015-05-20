@@ -6,10 +6,9 @@
   $scope.isSaved = false
   $scope.message = ''
   $scope.notSaved = ''
-  console.log $scope.droppedFiles
+
   $scope.saveOpt = (location) ->
     if location == ''
-      console.log $scope.droppedFiles[0]
       $scope.isDropped = false
       $scope.droppedFiles = []
       $scope.notSaved = ''
@@ -22,7 +21,6 @@
       _.each $scope.droppedFiles, (file) ->
         $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
           # WHY do I also get previous saves?
-          console.log response.data.files
           if response.data.error != []
             $scope.isSaved = true
             $scope.message = "Saved to " + location
