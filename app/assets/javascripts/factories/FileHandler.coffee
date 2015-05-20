@@ -51,7 +51,7 @@
       promise = $http.get('/service/'+identity.id+'/files/browse.json?path=' + path)
         .then((response) ->
           console.log 'Collecting files...', path
-          data = response.data.file
+          data = response.data.files
           # Loop through data response and append the file's name to each child
           # of the array. Map loops through each element in the data array, and
           # sends it into a function. The function returns a modified version of
