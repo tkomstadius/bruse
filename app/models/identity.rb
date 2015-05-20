@@ -180,7 +180,7 @@ class Identity < ActiveRecord::Base
     self.user.default_identity_id = self.id
     self.user.save!
     
-    response = @client.put_file("/#{file.original_filename}", file.tempfile)
+    response = @client.put_file("/Bruse/#{file.original_filename}", file.tempfile)
 
     puts "uploaded:", response.inspect
 
@@ -194,7 +194,6 @@ class Identity < ActiveRecord::Base
     
     self.user.default_identity_id = self.id
     self.user.save!
-    
 
     drive = @client.discovered_api('drive', 'v2')
     file = drive.files.insert.request_schema.new({
