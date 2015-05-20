@@ -134,6 +134,7 @@
     'text/css': 'plaintext'
     'text/csv': 'plaintext'
     'text/x-c': 'plaintext'
+    'text/x-csrc': 'plaintext'
     'text/plain': 'plaintext'
     'text/xml': 'plaintext'
     'application/x-javascript': 'plaintext'
