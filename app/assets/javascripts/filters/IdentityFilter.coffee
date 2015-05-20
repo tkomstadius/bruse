@@ -1,7 +1,12 @@
 @bruseApp.filter 'IdentityFilter', ->
-  (files, identities) ->
-    _.map(files, (file) ->
-      obj = {}
-      obj[file.identity.name] = true
-      _.includes(identities, obj)
-      )
+  (files, identity_filter) ->
+    if identity_filter
+      filtered = []
+      i = 0
+      while i < files.length
+        if files[i].identity.id == identity_filter
+          filtered.push files[i]
+        i++
+      filtered
+    else
+      files
