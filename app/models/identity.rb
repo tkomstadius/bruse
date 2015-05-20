@@ -73,14 +73,14 @@ class Identity < ActiveRecord::Base
       # Get files depending on search path
       if(path == '/')
         @result = @client.execute(
-          api_method: @drive.files.list,
+          :api_method => @drive.files.list,
           :parameters => { 'maxResults' => '1000',
-              q: %('root' in parents and trashed=false) })
+              :q => %('root' in parents and trashed=false) })
       else
         @result = @client.execute(
-          api_method: @drive.files.list,
+          :api_method => @drive.files.list,
           :parameters => { 'maxResults' => '1000',
-            q: "'"+path+"'"+' in parents and trashed=false'
+            :q => "'"+path+"'"+' in parents and trashed=false'
             })
       end
 
@@ -185,7 +185,6 @@ class Identity < ActiveRecord::Base
     puts "uploaded:", response.inspect
 
     return response
-
   end
 
 
@@ -196,14 +195,41 @@ class Identity < ActiveRecord::Base
     self.user.save!
 
     drive = @client.discovered_api('drive', 'v2')
+
+    # Search for parent folder
+    folder = @client.execute(
+      :api_method => drive.files.list,
+      :parameters => {:q => %(title='Bruse' and 'root' in parents and 
+                mimeType contains 'folder' and trashed=false)})
+    
+    # Parent folder not found
+    if (folder.status != 200) || folder.data.items.empty?
+      f = drive.files.insert.request_schema.new({
+        'title' => 'Bruse',
+        'description' => 'Bruse files',
+        'mimeType' => 'application/vnd.google-apps.folder'
+      })
+      # Set the parent folder.
+      f.parents = [{'id' => 'root'}]
+
+      folder = @client.execute(
+      :api_method => drive.files.insert,
+      :body_object => f)
+
+      folder_id = folder.data.id
+    else
+      folder_id = folder.data.items[0].id
+    end
+
+    # Set file information
     file = drive.files.insert.request_schema.new({
       'title' => localFile.original_filename.to_s.force_encoding("UTF-8"),
       'description' => localFile.tempfile.to_s.force_encoding("UTF-8"),
       'mimeType' => localFile.content_type.to_s.force_encoding("UTF-8")
     })
-    # Set the parent folder.
 
-    file.parents = [{'id' => 'root'}]
+    # Set parent folder
+    file.parents = [{'id' => folder_id}]
     
     media = Google::APIClient::UploadIO.new(localFile, localFile.content_type,localFile.original_filename )
 
@@ -215,9 +241,7 @@ class Identity < ActiveRecord::Base
         'uploadType' => 'multipart',
         'alt' => 'json'})
 
-
       return result.data
-
   end
 
 
