@@ -1,4 +1,4 @@
-@bruseApp.controller 'DragDropCtrl', ['$scope', '$http', ($scope, $http) ->
+@bruseApp.controller 'DragDropCtrl', ['$scope', '$http', '$rootScope', '$location', ($scope, $http, $rootScope, $location) ->
   $scope.droppedFiles = []
   $scope.dataObjects = {}
   $scope.imageFiles = []
@@ -21,6 +21,10 @@
       _.each $scope.droppedFiles, (file) ->
         $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
           # WHY do I also get previous saves?
+          # WHY do I also get previous saves?
+          # need id for file to add tags
+          # $rootScope.new_files = the files that have been added
+          # $location.path('/service/'+$scope.identity.id+'/files/add/tag')
           console.log response.data.files
           if response.data.error != []
             $scope.isSaved = true

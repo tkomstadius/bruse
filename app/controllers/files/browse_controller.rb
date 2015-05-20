@@ -52,7 +52,7 @@ class Files::BrowseController < Files::FilesController
         # insert our file on the users local identity
         if current_user.local_identity.bruse_files << file
           # send response that everything is ok!
-          @results.push file.name
+          @results.push file
         else
           @errors.push "Could not save #{file.name}"
         end
