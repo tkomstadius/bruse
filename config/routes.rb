@@ -1,27 +1,26 @@
 Rails.application.routes.draw do
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
+  # root
   root 'pages#show', page: 'home'
-
-  resources :tags, except: :new
-
-  get '/tag/new/:file_id', to: 'tags#new', as: 'new_tag'
-  delete '/file/:file_id/tag/delete/:id', to: 'tags#destroy', as: 'destroy_tag'
 
   # User
   devise_for :users, controllers: { omniauth_callbacks: 'user/omniauth_callbacks',
-                                    registrations: 'user/registrations',
-                                    passwords: 'user/passwords' }
+                                    registrations:      'user/registrations',
+                                    passwords:          'user/passwords' }
   get '/user', to: 'user/users#show', as: 'profile'
   get '/users/terminate', to: 'user/users#terminate', as: 'terminate_user'
   delete '/users', to: 'user/users#destroy', as: 'destroy_user'
 
+  # Tags
+  resources :tags, except: [:new, :destroy]
+  delete '/files/:file_id/tag/delete/:id', to: 'tags#destroy', as: 'destroy_tag'
+  get '/tag/new/:file_id', to: 'tags#new', as: 'new_tag'
+
   # Provider
   delete '/provider/:id', to: 'identities#destroy', as: 'destroy_provider'
 
-  # all controllers located in the files folder
+  # all controllers/methods located in the files folder
   scope module: :files do
+    # all urls beginning with /service/number/...
     scope '/service/:identity_id' do
       # get folder contents
       get '/files/browse', to: 'browse#browse'
@@ -30,19 +29,19 @@ Rails.application.routes.draw do
       resources :files, except: :update, path_names: { new: 'add' }
       get '/files/add/tag', to: 'files#new'
     end
-    post '/create_file', to: 'files#create_from_text', defaults: { format: 'json' }
+
     # downloads a file
-    get '/get/:download_hash(/:name)', to: 'download#download', :via => :all
+    get '/get/:download_hash(/:name)', to: 'download#download', via: :all
 
+    # uploads
+    post '/create_file', to: 'files#create_from_text', defaults: { format: 'json' }
     post '/upload', to: 'browse#upload', as: 'upload'
-
     post '/upload_drop', to: 'browse#upload_from_base64', as: 'upload_drop'
 
+    # user file index
     get '/files', to: 'files#show_all', as: 'bruse_files'
-
   end
   # search
   post '/search', to: 'search#find', defaults: { format: 'json' }, as: 'search_find'
   get '/search', to: 'search#home', as: 'search'
-
 end

@@ -1,5 +1,5 @@
 /************************************************
-* jsTag JavaScript Library - Editing tags based on angularJS 
+* jsTag JavaScript Library - Editing tags based on angularJS
 * Git: https://github.com/eranhirs/jsTag/tree/master
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
 * Compiled At: 05/04/2015 15:27
@@ -48,7 +48,7 @@ jsTag.filter('toArray', function() {
       var value = input[key];
       objectsAsArray.push(value);
     }
-  
+
     return objectsAsArray;
   };
 });
@@ -60,7 +60,7 @@ jsTag.factory('JSTag', function() {
     this.value = value;
     this.id = id;
   }
-  
+
   return JSTag;
 });
 var jsTag = angular.module('jsTag');
@@ -315,7 +315,7 @@ jsTag.factory('InputService', ['$filter', function($filter) {
 
     } else {
       switch (keycode) {
-        case 9:	// Tab
+        case 9: // Tab
 
           break;
         case 37: // Left arrow
@@ -525,32 +525,31 @@ jsTag.controller('JSTagMainCtrl', ['$attrs', '$scope', 'InputService', 'TagsInpu
   } catch(e) {
     console.log("jsTag Error: Invalid user options, using defaults only");
   }
-  
+
   // Copy so we don't override original values
   var options = angular.copy(jsTagDefaults);
-  
+
   // Use user defined options
   if (userOptions !== undefined) {
-    userOptions.texts = angular.extend(options.texts, userOptions.texts || {});
     angular.extend(options, userOptions);
   }
-  
+
   $scope.options = options;
-  
+
   // Export handlers to view
   $scope.tagsInputService = new TagsInputService($scope.options);
   $scope.inputService = new InputService($scope.options);
-  
+
   // Export tagsCollection separately since it's used alot
   var tagsCollection = $scope.tagsInputService.tagsCollection;
   $scope.tagsCollection = tagsCollection;
-    
+
   // TODO: Should be inside inside tagsCollection.js
   // On every change to editedTags keep isThereAnEditedTag posted
   $scope.$watch('tagsCollection._editedTag', function(newValue, oldValue) {
     $scope.isThereAnEditedTag = newValue !== null;
   });
-  
+
   // TODO: Should be inside inside tagsCollection.js
   // On every change to activeTags keep isThereAnActiveTag posted
   $scope.$watchCollection('tagsCollection._activeTags', function(newValue, oldValue) {
@@ -581,7 +580,7 @@ jsTag.directive('ngBlur', ['$parse', function($parse) {
           // function name into an actual function
           var functionToCall = $parse(attrs.ngBlur);
           elem.bind('blur', function(event) {
-          
+
             // on the blur event, call my function
             scope.$apply(function() {
               functionToCall(scope, {$event:event});
@@ -603,11 +602,11 @@ jsTag.directive('focusMe', ['$parse', '$timeout', function($parse, $timeout) {
       scope.$watch(model, function(value) {
         if (value === true) {
           $timeout(function() {
-            element[0].focus(); 
+            element[0].focus();
           });
         }
       });
-      
+
       // to address @blesh's comment, set attribute value to 'false'
       // on blur event:
       element.bind('blur', function() {
@@ -636,9 +635,9 @@ jsTag.directive('autoGrow', ['$timeout', function($timeout) {
     link: function(scope, element, attr){
       var paddingLeft = element.css('paddingLeft'),
           paddingRight = element.css('paddingRight');
-   
+
       var minWidth = 60;
-   
+
       var $shadow = angular.element('<span></span>').css({
         'position': 'absolute',
         'top': '-10000px',
@@ -648,32 +647,32 @@ jsTag.directive('autoGrow', ['$timeout', function($timeout) {
         'white-space': 'pre'
       });
       element.after($shadow);
-   
+
       var update = function() {
         var val = element.val()
           .replace(/</g, '&lt;')
           .replace(/>/g, '&gt;')
           .replace(/&/g, '&amp;')
         ;
-        
+
         // If empty calculate by placeholder
         if (val !== "") {
           $shadow.html(val);
         } else {
           $shadow.html(element[0].placeholder);
         }
-        
+
         var newWidth = ($shadow[0].offsetWidth + 10) + "px";
         element.css('width', newWidth);
       }
-   
+
       var ngModel = element.attr('ng-model');
       if (ngModel) {
         scope.$watch(ngModel, update);
       } else {
         element.bind('keyup keydown', update);
       }
-      
+
       // Update on the first link
       // $timeout is needed because the value of element is updated only after the $digest cycle
       // TODO: Maybe on compile time if we call update we won't need $timeout
@@ -685,10 +684,10 @@ jsTag.directive('autoGrow', ['$timeout', function($timeout) {
 // Small directive for twitter's typeahead
 jsTag.directive('jsTagTypeahead', function () {
   return {
-    restrict: 'A', // Only apply on an attribute or class  
+    restrict: 'A', // Only apply on an attribute or class
     require: '?ngModel',  // The two-way data bound value that is returned by the directive
     link: function (scope, element, attrs, ngModel) {
-      
+
       element.bind('jsTag:breakcodeHit', function(event) {
 
         /* Do not clear typeahead input if typeahead option 'editable' is set to false
@@ -700,7 +699,7 @@ jsTag.directive('jsTagTypeahead', function () {
         // Tell typeahead to remove the value (after it was also removed in input)
         $(event.currentTarget).typeahead('val', '');
       });
-      
+
     }
   };
 });
@@ -814,5 +813,3 @@ angular.module("jsTag").run(["$templateCache", function($templateCache) {
   );
 
 }]);
-
-
