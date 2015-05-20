@@ -13,7 +13,7 @@
 <body ng-app="bruseApp">
   <%= render 'layouts/header' %>
 
-  <main class="content">
+  <main class="content container">
     <% flash.each do |key, value| %>
       <%= content_tag :div, value, class: "flash #{key}" %>
     <% end %>

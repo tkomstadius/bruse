@@ -3,16 +3,16 @@
  */
 
 .main-header {
+  background-color: $b-gray;
+  border-bottom: 1px solid $gray;
   width: 100%;
   height: $header-height;
+  line-height: $font-size;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10;
-  padding: $common-padding 0;
-  background-color: $b-gray;
-  border-bottom: 1px solid $gray;
 
   a {
     text-decoration: none;
@@ -20,6 +20,42 @@
 
     &:hover {
       color: $header-hover;
+    }
+  }
+}
+
+.main-header nav {
+  float: left;
+  padding: $header-padding;
+
+  &:first-of-type {
+    // remove padding on first nav
+    padding-left: 0;
+  }
+
+  // right-aliged navs in header
+  &.right {
+    float: right;
+
+    &:last-of-type {
+      // remove padding on last element
+      padding-right: 0;
+    }
+
+    // adjust margin on links when right-aligned
+    a, span {
+      margin-right: 0;
+      margin-left: $header-padding;
+    }
+  }
+
+  a, span {
+    display: block;
+    float: left;
+    margin-right: $header-padding;
+
+    .fa {
+      margin-right: 3px;
     }
   }
 }
