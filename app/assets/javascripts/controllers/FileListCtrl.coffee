@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'JSTagsCollection', 'MimeDictionary', ($scope, $filter, FileHandler, TagHandler, JSTagsCollection, MimeDictionary) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'JSTagsCollection', 'MimeDictionary', 'FilePreviewer', ($scope, $filter, FileHandler, TagHandler, JSTagsCollection, MimeDictionary, FilePreviewer) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
@@ -60,6 +60,11 @@
         # open the returned url in a new tab
         win = window.open('/'+data.url, '_self')
         )
+
+
+  $scope.previewFile = (file) ->
+    # call file previewer
+    FilePreviewer(file, { scope: $scope })
 
   $scope.saveTags = (file) ->
     tagsToSave = file.unsavedTags.getTagValues()
