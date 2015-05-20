@@ -86,12 +86,12 @@
     :first-of-type {
       // rounded corners!
       border-width: 1px 1px 0;
-      border-top-left-radius: 3px;
+      border-top-left-radius: $common-border-radius;
     }
     :last-of-type {
       border-width: 0 1px 1px;
-      border-bottom-right-radius: 3px;
-      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: $common-border-radius;
+      border-bottom-left-radius: $common-border-radius;
     }
 
     a, span, .item {

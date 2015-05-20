@@ -39,7 +39,7 @@ $header-hover: darken($header-color, 20%);
  * Fonts
  ******************************************************************************/
 $font-size: 16px;
-$font-color: $black;
+$font-color: #555;
 $font-family: Lato, sans-serif;
 
 /*******************************************************************************
@@ -47,6 +47,8 @@ $font-family: Lato, sans-serif;
  ******************************************************************************/
 $max-width: 1500px;
 $common-padding: 16px;
+// rounded corners?
+$common-border-radius: 3px;
 
 // inputs
 $input-height: 12px;
