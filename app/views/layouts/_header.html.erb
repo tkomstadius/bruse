@@ -8,7 +8,7 @@
       <% if current_user.identities.any? %>
         <div ng-class="{'expandable--show': import}" class="expandable item">
           <a href="#" ng-click="toggle($event, 'import')">
-            <%= fa_icon 'plus' %>Import
+            <%= fa_icon 'plus' %>Import files...
           </a>
           <div class="expandable__child">
             <% current_user.identities.each do |identity| %>
@@ -19,7 +19,7 @@
       <% end %>
       <div ng-class="{'expandable--show': person}" class="expandable item">
         <a href="#" ng-click="toggle($event, 'person')">
-          <%= fa_icon('user') + current_user.name %>
+          <%= fa_icon('user') + current_user.name %>...
         </a>
         <div class="expandable__child">
           <%= link_to fa_icon('cog') + 'Settings', profile_path, target: "_self" %>
