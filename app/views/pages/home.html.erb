@@ -6,18 +6,21 @@
   <%= render 'files/files/create_from_textbox' %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-dropzone file="fileObject" object="dataObject" image="imageFile" drop="isDropped">
+    <div b-dropzone the-files="droppedFiles" images="imageFiles" drop="isDropped" saved="isSaved" info="message" no-type="notSaved">
       <span>Put stuff here</span>
     </div>
     <div ng-show="isDropped">
       <!-- TODO: check strings for saving later -->
       <button ng-click="saveOpt('dropbox')">Dropbox</button>
-      <button ng-click="saveOpt('drive')">Drive</button>
+      <button ng-click="saveOpt('google')">Drive</button>
       <button ng-click="saveOpt('local')">Local</button>
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
-    <div ng-show="isSaved">
-      <img ng-if="imageFile" ng-src="{{imageFile}}"/>
+    <span>{{notSaved}}</span>
+    <div ng-show="isSaved" ng-if="imageFiles">
+      <div class="savedImages"ng-repeat="im in imageFiles"> 
+        <img ng-src="{{im}}"/>
+      </div>
       <span>{{message}}</span>
     </div>
   </div>
