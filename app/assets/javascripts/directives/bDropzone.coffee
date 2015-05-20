@@ -26,6 +26,20 @@
       (event.originalEvent or event).dataTransfer.effectAllowed = 'move'
       false
 
+    # handle a link
+    addLink = (file) ->
+      obj = {}
+      obj.name = "url"
+      obj.type = "text/uri-list"
+      scope.$apply ->
+        # update bindings
+        obj.data = file
+        scope.drop = true
+        scope.info = ''
+        scope.theFiles.push obj
+
+      return false
+
     # handle files from datatransfer files
     addFile = (file) ->
       obj = {}
@@ -52,7 +66,7 @@
           scope.noType = scope.noType + file.name + " has no type and can not be saved"
       return false
 
-    # handle files from directory?
+    # handle files from directory
     # does not support wierder types such as .cpp and .xcf
     addFileFromDir = (entry) ->
       entry.file(addFile)
@@ -105,6 +119,8 @@
           scope.saved = false
           console.log "hej"
           # make a file of the url
+          addLink(url)
+          break
         else if entry.isFile
           # if it is not a folder, use the datatransfer files
           scope.images = []

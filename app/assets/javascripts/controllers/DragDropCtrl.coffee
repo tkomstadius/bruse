@@ -6,9 +6,10 @@
   $scope.isSaved = false
   $scope.message = ''
   $scope.notSaved = ''
-
+  console.log $scope.droppedFiles
   $scope.saveOpt = (location) ->
     if location == ''
+      console.log $scope.droppedFiles[0]
       $scope.isDropped = false
       $scope.droppedFiles = []
       $scope.notSaved = ''
