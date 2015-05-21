@@ -23,16 +23,24 @@ class Files::BrowseController < Files::FilesController
 
   def upload
     identity = Identity.find(params[:service])
-    
+
     if params[:bruse_file].blank?
       flash[:notice] = "Choose a file"
       redirect_to bruse_files_path
     else
       if identity.name.downcase.include? "dropbox"
         response = identity.upload_to_dropbox(params[:bruse_file][:file])
+        file = BruseFile.create(name: params[:bruse_file][:file].original_filename,
+                                foreign_ref: response["path"],
+                                filetype: response["mime_type"],
+                                identity: identity)
 
       elsif identity.name.downcase.include? "google"
         response = identity.upload_to_google(params[:bruse_file][:file])
+        file = BruseFile.create(name: params[:bruse_file][:file].original_filename,
+                                foreign_ref: response["id"],
+                                filetype: response["mimeType"],
+                                identity: identity)
 
       elsif identity.name.downcase.include? "bruse"
         uploader = LocalFileUploader.new
@@ -43,11 +51,9 @@ class Files::BrowseController < Files::FilesController
                              foreign_ref: uploader.file.identifier,
                              filetype: uploader.content_type,
                              identity: current_user.local_identity)
-
-        response = file.save
       end
 
-      if response
+      if file.save!
         flash[:notice] = "#{params[:bruse_file][:file].original_filename} was saved in #{identity.name}"
         redirect_to bruse_files_path
       else
