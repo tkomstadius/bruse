@@ -4,6 +4,7 @@ json.date file.created_at.strftime('%F %R')
 json.id file.id
 json.url file.link if file.link? && file.filetype.downcase.include?('google-apps')
 json.url file.foreign_ref if file.filetype == 'bruse/url'
+json.url file.foreign_ref if file.filetype == 'text/uri-list'
 json.add_tags_path
 json.paths do
   json.file file_path(file.identity, file)
