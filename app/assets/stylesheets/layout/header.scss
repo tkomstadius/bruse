@@ -43,13 +43,17 @@
     }
 
     // adjust margin on links when right-aligned
-    a, span, .item {
+    a,
+    span,
+    .item {
       margin-right: 0;
       margin-left: $header-padding;
     }
   }
 
-  a, span, .item {
+  a,
+  span,
+  .item {
     display: block;
     float: left;
     margin-right: $header-padding;
@@ -64,7 +68,8 @@
   position: relative;
 
   // when hovering or when toggled, show the sub-menu
-  &:hover, &--show {
+  &:hover,
+  &--show {
     .expandable__child {
       opacity: 1;
       display: block;
@@ -94,7 +99,9 @@
       border-bottom-left-radius: $common-border-radius;
     }
 
-    a, span, .item {
+    a,
+    span,
+    .item {
       background: lighten($header-background, 1%);
       border-style: solid;
       border-color: $gray;

@@ -20,7 +20,8 @@ input[type="button"] {
   border: 1px solid $gray;
   cursor: pointer;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     border-color: darken($gray, 30%);
     color: darken($font-color, 20%);
     outline: 0;
@@ -41,9 +42,10 @@ input[type="button"] {
       border-color: #{$color};
       color: #fff;
 
-      &:hover, &:focus {
-        // check the lightness of the current color, darken or lighten the color
-        // based on that
+      &:hover,
+      &:focus {
+        // check the lightness of the current color, and then darken or lighten
+        // the color based on the result
         @if lightness($color) > .5 {
           background: darken($color, 10%);
           border-color: darken($color, 10%);
