@@ -54,28 +54,28 @@ class Files::BrowseController < Files::FilesController
 
 
   def upload_from_base64
-
+    @results = []
+    @errors = []
     if params[:location] == 'local'
       #check if user has local identity
       if current_user.local_identity
         # if so, create brusefile
-        @file = create_drop_file(params)
-
+        file = create_drop_file(params[:object])
         # insert our file on the users local identity
-        if current_user.local_identity.bruse_files << @file
+        if current_user.local_identity.bruse_files << file
           # send response that everything is ok!
+          @results.push file.name
         else
-          flash[:notice] = "nonono"
+          @errors.push "Could not save #{file.name}"
         end
       else
         # no file! not working!
-        @file = nil
-        render status :not_acceptable
+        @results = []
       end
     elsif params[:location] == 'dropbox'
-      flash[:notice] = "nonono, not yet"
-    elsif params[:location] == 'drive'
-      flash[:notice] = "nonono, maybe later"
+      @results = []
+    elsif params[:location] == 'google'
+      @results = []
     else
       flash[:notice] = "No storage option"
     end

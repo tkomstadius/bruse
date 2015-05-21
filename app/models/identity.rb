@@ -75,13 +75,12 @@ class Identity < ActiveRecord::Base
         @result = @client.execute(
           :api_method => @drive.files.list,
           :parameters => { 'maxResults' => '1000',
-              :q => %('root' in parents and trashed=false) })
+            :q => %('root' in parents and trashed=false)})
       else
         @result = @client.execute(
           :api_method => @drive.files.list,
           :parameters => { 'maxResults' => '1000',
-            :q => "'"+path+"'"+' in parents and trashed=false'
-            })
+            :q => "'"+path+"'"+' in parents and trashed=false'})
       end
 
       # Rename parameters for easy access
@@ -170,7 +169,7 @@ class Identity < ActiveRecord::Base
 
     # return file data
     return @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
-    return @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media') if service.downcase.include? "google"
+    return @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media').body if service.downcase.include? "google"
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 

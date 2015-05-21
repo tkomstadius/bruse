@@ -8,7 +8,7 @@
   $scope.identity = IDENTITY_PARAMS
 
   # load existing BruseFiles on page load
-  FileHandler.collect($scope.identity).then((data) ->
+  FileHandler.collect(identity: $scope.identity).then((data) ->
     $scope.bruse_files = data
 
     # when we have loaded BruseFiles, load root remote files
@@ -97,6 +97,7 @@
    * save all files to db
   ###
   $scope.save = ->
+    NProgress.start()
     $rootScope.new_files = $scope.new_files
     _.each $scope.new_files, (file, index) ->
       FileHandler.put($scope.identity, file).then((data) ->
@@ -107,6 +108,7 @@
         # remove file from lists of files to add
         if index is $scope.new_files.length
           # do something better here
+          NProgress.done()
           $location.path('/service/'+$scope.identity.id+'/files/add/tag')
           console.log "done!"
         )
