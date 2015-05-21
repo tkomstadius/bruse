@@ -52,7 +52,9 @@ $common-border-radius: 3px;
 
 // inputs
 $input-height: 38px;
-$input-padding: 7px 10px;
+$input-padding-top: 7px;
+$input-padding-side: 10px;
+$input-padding: $input-padding-top $input-padding-side;
 $button-height: $input-height;
 
 // header
