@@ -65,8 +65,17 @@ class Identity < ActiveRecord::Base
   def browse(path)
     # set the client
     set_client
+
     # is it a dropbox service? return requested path!
-    return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
+    if service.downcase.include? "dropbox"
+      begin
+        response = @client.metadata(path)['contents']
+      rescue
+        return nil
+      end
+      # Success!
+      return response
+    end
 
     # is it a google service? Get files and return items
     if service.downcase.include? "google"
@@ -98,7 +107,9 @@ class Identity < ActiveRecord::Base
 
         return @result.data.items if service.downcase.include? "google"
       else
-        # ERROR!!!
+        puts "An error occurred: #{result.data['error']['message']}"
+        return nil
+      end
     end
   end
 
@@ -172,8 +183,20 @@ class Identity < ActiveRecord::Base
     set_client
 
     # return file data
-    return @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
-    return @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media').body if service.downcase.include? "google"
+    if service.downcase.include? "dropbox"
+      begin
+        response = @client.get_file(foreign_ref)
+      rescue
+        return nil
+      end
+      return response
+    end
+
+    if service.downcase.include? "google"
+      response = @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media').body
+      return response == 200 ? response : nil
+    end
+
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
 
@@ -182,8 +205,13 @@ class Identity < ActiveRecord::Base
 
     self.user.default_identity_id = self.id
     self.user.save!
-    
-    response = @client.put_file("/Bruse/#{file.original_filename}", file.tempfile)
+
+    begin
+      response = @client.put_file("/Bruse/#{file.original_filename}", file.tempfile)
+    rescue
+      # In case something went wrong
+      return nil
+    end
 
     puts "uploaded:", response.inspect
 
@@ -243,8 +271,12 @@ class Identity < ActiveRecord::Base
       :parameters => {
         'uploadType' => 'multipart',
         'alt' => 'json'})
-
+    if result.status == 200
       return result.data
+    else
+      puts "An error occurred: #{result.data['error']['message']}"
+      return nil
+    end
   end
 
 
