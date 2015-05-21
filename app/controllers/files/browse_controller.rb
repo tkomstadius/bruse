@@ -23,7 +23,10 @@ class Files::BrowseController < Files::FilesController
 
   def upload
     identity = Identity.find(params[:service])
-
+    if(params[:file].blank?)
+      flash[:notice] = "Choose a file"
+      redirect_to bruse_files_path
+    else
       if identity.name.downcase.include? "dropbox"
         response = identity.upload_to_dropbox(params[:bruse_file][:file])
 
@@ -50,6 +53,7 @@ class Files::BrowseController < Files::FilesController
         flash[:notice] = "Could not save the file!"
         redirect_to bruse_files_path
       end
+    end
   end
 
 
