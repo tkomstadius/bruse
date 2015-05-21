@@ -1,4 +1,4 @@
-@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'JSTagsCollection', ($scope, $http, JSTagsCollection) ->
+@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'JSTagsCollection', 'MimeDictionary', ($scope, $http, JSTagsCollection, MimeDictionary) ->
   $scope.search = ""
   $scope.actualSearch = ""
   searchString = ""
@@ -36,6 +36,7 @@
           # send search object to server
           $http.post('/search', searchObject).then((response) ->
             _.each(response.data.files, (file) ->
+              file.prettyFiletype = MimeDictionary.prettyType(file.filetype)
               # extract tag names
               onlyTags = _.pluck(file.tags, 'name')
               # append jsTag stuff to every file

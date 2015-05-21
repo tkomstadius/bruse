@@ -18,3 +18,51 @@
     }
   }
 }
+
+.filelist {
+  width: 100%;
+  table-layout: fixed;
+
+  &__header {
+    text-align: left;
+    border-bottom: 1px solid $silver;
+  }
+
+  &__file {
+    border-bottom: 1px solid $header-background;
+
+    &:hover {
+      background: $header-background;
+    }
+  }
+
+  td, th {
+    padding: .5 * $file-list-padding;
+  }
+
+  // column widths
+  // file name
+  .col-1 {
+    width: 22%;
+  }
+  // tools
+  .col-2 {
+    width: 5%;
+  }
+  // filetype
+  .col-3 {
+    width: 10%;
+  }
+  // date
+  .col-4 {
+    width: 10%;
+  }
+  // identity
+  .col-5 {
+    width: 15%;
+  }
+  // tags
+  .col-6 {
+    width: 35%;
+  }
+}

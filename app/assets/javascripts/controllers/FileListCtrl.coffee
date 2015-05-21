@@ -7,6 +7,8 @@
   $scope.files = []
   $scope.view_list = true
   $scope.showIdentities = []
+  $scope.order_by = 'date'
+  $scope.reverse = true
 
   # this function gets called from the directive
   this.init = (element, attrs) ->
@@ -35,6 +37,7 @@
 
           # iterate over all the collected files
           _.each(data, (file) ->
+            file.prettyFiletype = MimeDictionary.prettyType(file.filetype)
             # extract tag names
             onlyTags = _.pluck(file.tags, 'name')
             # append jsTag stuff to every file
