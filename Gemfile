@@ -41,6 +41,8 @@ gem 'font-awesome-sass'
 gem 'bourbon'
 # normalize!
 gem 'normalize-rails'
+# improve support for retarded browsers!
+gem 'html5shiv-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -76,9 +78,12 @@ gem 'dropbox-sdk'
 # Drive ruby sdk
 gem 'google-api-client'
 
+
 # File uploading
 gem 'carrierwave'
 
+# Delay work
+gem 'delayed_job_active_record'
 
 gem 'magnific-popup-rails', '~> 0.9.9.1'
 

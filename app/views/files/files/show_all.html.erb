@@ -1,4 +1,3 @@
-
 <h1>Welcome <%= current_user.name %></h1>
 
 <h1>Listing Files</h1>
@@ -8,6 +7,10 @@
     <%= f.label :file %>
     <%= f.file_field :file %>
   </div>
+  <% current_user.identities.each do |identity| %>
+    <%= radio_button_tag(:service, identity.id, check(identity, current_user)) %>
+    <%= label_tag(:service, identity.name) %>
+  <% end %>
   <div class="actions">
     <%= f.submit "Upload" %>
   </div>

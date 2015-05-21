@@ -1,0 +1,54 @@
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea,
+select,
+.jt-editor {
+  height: $input-height;
+  padding: $input-padding;
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: $common-border-radius;
+  box-shadow: none;
+  box-sizing: border-box;
+
+  &:focus,
+  .focus-true {
+    border: 1px solid #33C3F0;
+    outline: 0;
+  }
+
+  /* Removes awkward default styles on some inputs for iOS */
+  &:not(select) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  &.wide {
+    @extend .u-full-width;
+  }
+}
+textarea {
+  min-height: 65px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+label,
+legend {
+  display: block;
+  margin-bottom: .5rem;
+  font-weight: 600;
+}
+fieldset {
+  padding: 0;
+  border-width: 0;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline;
+}

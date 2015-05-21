@@ -65,8 +65,17 @@ class Identity < ActiveRecord::Base
   def browse(path)
     # set the client
     set_client
+
     # is it a dropbox service? return requested path!
-    return @client.metadata(path)['contents'] if service.downcase.include? "dropbox"
+    if service.downcase.include? "dropbox"
+      begin
+        response = @client.metadata(path)['contents']
+      rescue
+        return nil
+      end
+      # Success!
+      return response
+    end
 
     # is it a google service? Get files and return items
     if service.downcase.include? "google"
@@ -83,18 +92,24 @@ class Identity < ActiveRecord::Base
             :q => "'"+path+"'"+' in parents and trashed=false'})
       end
 
-      # Rename parameters for easy access
-      @result.data.items.each do |f| 
-        if f.mime_type.include? "folder"
-          f["is_dir"] = true
-        else
-          f["is_dir"] = false
+      # Success!
+      if @result.status == 200
+        # Rename parameters for easy access
+        @result.data.items.each do |f|
+          if f.mime_type.include? "folder"
+            f["is_dir"] = true
+          else
+            f["is_dir"] = false
+          end
         end
-      end
-      @result.data.items.map{ |f| f["name"] = f["title"] }
-      @result.data.items.map{ |f| f["path"] = f["id"] }
+        @result.data.items.map{ |f| f["name"] = f["title"] }
+        @result.data.items.map{ |f| f["path"] = f["id"] }
 
-      return @result.data.items if service.downcase.include? "google"
+        return @result.data.items
+      else
+        puts "An error occurred: #{result.data['error']['message']}"
+        return nil
+      end
     end
   end
 
@@ -168,10 +183,102 @@ class Identity < ActiveRecord::Base
     set_client
 
     # return file data
-    return @client.get_file(foreign_ref) if service.downcase.include? "dropbox"
-    return @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media').body if service.downcase.include? "google"
+    if service.downcase.include? "dropbox"
+      begin
+        response = @client.get_file(foreign_ref)
+      rescue
+        return nil
+      end
+      return response
+    end
+
+    if service.downcase.include? "google"
+      response = @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media').body
+      return response == 200 ? response : nil
+    end
+
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"
   end
+
+  def upload_to_dropbox(file)
+    set_client
+
+    self.user.default_identity_id = self.id
+    self.user.save!
+
+    begin
+      response = @client.put_file("/Bruse/#{file.original_filename}", file.tempfile)
+    rescue
+      # In case something went wrong
+      return nil
+    end
+
+    puts "uploaded:", response.inspect
+
+    return response
+  end
+
+
+  def upload_to_google(localFile)
+    set_client
+    
+    self.user.default_identity_id = self.id
+    self.user.save!
+
+    drive = @client.discovered_api('drive', 'v2')
+
+    # Search for parent folder
+    folder = @client.execute(
+      :api_method => drive.files.list,
+      :parameters => {:q => %(title='Bruse' and 'root' in parents and 
+                mimeType contains 'folder' and trashed=false)})
+    
+    # Parent folder not found
+    if (folder.status != 200) || folder.data.items.empty?
+      f = drive.files.insert.request_schema.new({
+        'title' => 'Bruse',
+        'description' => 'Bruse files',
+        'mimeType' => 'application/vnd.google-apps.folder'
+      })
+      # Set the parent folder.
+      f.parents = [{'id' => 'root'}]
+
+      folder = @client.execute(
+      :api_method => drive.files.insert,
+      :body_object => f)
+
+      folder_id = folder.data.id
+    else
+      folder_id = folder.data.items[0].id
+    end
+
+    # Set file information
+    file = drive.files.insert.request_schema.new({
+      'title' => localFile.original_filename.to_s.force_encoding("UTF-8"),
+      'description' => localFile.tempfile.to_s.force_encoding("UTF-8"),
+      'mimeType' => localFile.content_type.to_s.force_encoding("UTF-8")
+    })
+
+    # Set parent folder
+    file.parents = [{'id' => folder_id}]
+    
+    media = Google::APIClient::UploadIO.new(localFile, localFile.content_type,localFile.original_filename )
+
+    result = @client.execute(
+      :api_method => drive.files.insert,
+      :body_object => file,
+      :media => media,
+      :parameters => {
+        'uploadType' => 'multipart',
+        'alt' => 'json'})
+    if result.status == 200
+      return result.data
+    else
+      puts "An error occurred: #{result.data['error']['message']}"
+      return nil
+    end
+  end
+
 
   private
     # Private: Get the file handling client from the identity
@@ -186,7 +293,7 @@ class Identity < ActiveRecord::Base
     # Returns the client
     def set_client
       @client ||= DropboxClient.new(token) if service.downcase.include? "dropbox"
-      
+
       if service.downcase.include? "google"
         @result = Array.new{Array.new}
         @client ||= Google::APIClient.new(

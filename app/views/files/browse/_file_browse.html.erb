@@ -10,7 +10,7 @@
   Save files!
 </button>
 
-<ul class="c-filelist">
-  <li ng-repeat="file in files" ng-include="'fileTree'" class="c-filelist__file"
-    ng-class="{'c-filelist__file--folder': file.is_dir}"></li>
+<ul class="browse">
+  <li ng-repeat="file in files" ng-include="'fileTree'" class="browse__file"
+    ng-class="{'browse__file--folder': file.is_dir}"></li>
 </ul>

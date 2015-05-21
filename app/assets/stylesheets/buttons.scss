@@ -1,0 +1,90 @@
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  background-color: transparent;
+  border-radius: $common-border-radius;
+  border: 1px solid $gray;
+  color: $font-color;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  height: $button-height;
+  line-height: 38px;
+  letter-spacing: .1rem;
+  padding: 0 2 * $common-padding;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover,
+  &:focus {
+    border-color: darken($gray, 30%);
+    color: darken($font-color, 20%);
+    outline: 0;
+  }
+
+  &.wide {
+    @extend .u-full-width;
+  }
+
+  // disabled buttons
+  &[disabled],
+  .disabled {
+    background: $silver;
+    color: lighten($font-color, 10%);
+    cursor: not-allowed;
+    &:hover,
+    &:focus {
+      border-color: darken($gray, 10%);
+    }
+  }
+
+  // allows buttons to be grouped together nicely
+  .button-group & {
+    border-radius: 0;
+    display: block;
+    float: left;
+    margin: 0;
+    border-left-width: 0;
+
+    &:first-of-type {
+      border-left-width: 1px;
+      border-top-left-radius: $common-border-radius;
+      border-bottom-left-radius: $common-border-radius;
+    }
+    &:last-of-type {
+      border-top-right-radius: $common-border-radius;
+      border-bottom-right-radius: $common-border-radius;
+    }
+  }
+
+  // this gives us more colorful alternatives and makes it possible to combine
+  // the buttons with a class to make it pop
+  $names: primary, blue, green, red, gray;
+  $colors: $aqua, $blue, $green, $red, $gray;
+  @for $i from 1 through length($names) {
+    $color: nth($colors, $i);
+    &.#{nth($names, $i)} {
+      background: #{$color};
+      border-color: #{$color};
+      color: #fff;
+
+      &:hover,
+      &:focus {
+        // check the lightness of the current color, and then darken or lighten
+        // the color based on the result
+        @if lightness($color) > .5 {
+          background: darken($color, 10%);
+          border-color: darken($color, 10%);
+        } @else {
+          background: lighten($color, 10%);
+          border-color: lighten($color, 10%);
+        }
+      }
+    }
+  }
+}

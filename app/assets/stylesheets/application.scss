@@ -7,18 +7,49 @@
  */
 
 // our own variables with some settings and such
-@import "variables";
+@import "includes/_variables";
 
 // some css/sass libs
 @import "bourbon";
+// grid system
+@import "jeet/index";
+// icons
 @import "font-awesome-sprockets";
 @import "font-awesome";
+// progress bar
 @import "nprogress";
 @import "nprogress-bootstrap";
+// the tags
 @import "jsTag";
 
+// bruse utilities, tools and mixins
+@import "includes/_utilities";
+@import "includes/_mixins";
+@import "includes/_fonts";
+
+// all the layout style sheets
+@import "layout/header";
+@import "layout/layout";
+@import "layout/footer";
+
 // all the child style sheets
+@import "common";
+@import "links";
+@import "buttons";
+@import "inputs";
 @import "files";
+
 
 //image viewer
 @import "magnific-popup";
+
+
+/**
+ * !!!!!!!!!!!!!!!!!
+ *
+ * Avoid writing styles in this file, use child stylesheets specific for each
+ * component/group instead
+ *
+ * !!!!!!!!!!!!!!!!!
+ */
+
