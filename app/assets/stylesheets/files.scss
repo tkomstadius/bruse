@@ -1,17 +1,12 @@
-$list-padding: 15px;
-
-.c-filelist {
+.browse {
   list-style-type: none;
   padding-left: 0;
 
   &__file {
-    padding-left: $list-padding;
+    padding-left: $file-list-padding;
     background-color: white;
 
-    &:nth-child(even) {
-      background-color: lighten($silver, 8%);
-    }
-    &--folder {
+    &--folder > &__file__name {
       color: gray;
     }
 

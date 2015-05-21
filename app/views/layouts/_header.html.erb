@@ -1,9 +1,31 @@
-<header id="header">
-  <%= link_to 'Bruse', root_url, target: "_self" %>
-  <%= link_to 'My files', bruse_files_path, target: "_self" %>
-  <% current_user.identities.each do |identity| %>
-      <%= link_to "Add files (#{identity.name})", new_file_path(identity_id: identity.id), target: "_self" %>
-  <% end %>
-  <%= link_to 'Settings', profile_path, target: "_self" %>
-  <%= link_to 'Sign out user', destroy_user_session_path, method: :delete, target: "_self" %>
+<header class="main-header" ng-controller="HeaderCtrl">
+  <div class="container">
+    <nav>
+      <%= link_to 'Bruse', root_url, target: "_self" %>
+      <%= link_to 'My files', bruse_files_path, target: "_self" %>
+    </nav>
+    <nav class="right">
+      <% if current_user.identities.any? %>
+        <div ng-class="{'expandable--show': import}" class="expandable item">
+          <a href="#" ng-click="toggle($event, 'import')">
+            <%= fa_icon 'plus' %>Import files...
+          </a>
+          <div class="expandable__child">
+            <% current_user.identities.each do |identity| %>
+              <%= link_to identity_icon(identity) + identity.name, new_file_path(identity_id: identity.id), target: "_self" unless identity.service == 'local' %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div ng-class="{'expandable--show': person}" class="expandable item">
+        <a href="#" ng-click="toggle($event, 'person')">
+          <%= fa_icon('user') + current_user.name %>...
+        </a>
+        <div class="expandable__child">
+          <%= link_to fa_icon('cog') + 'Settings', profile_path, target: "_self" %>
+          <%= link_to fa_icon('sign-out') + 'Sign out', destroy_user_session_path, method: :delete, target: "_self" %>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>

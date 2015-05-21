@@ -1,0 +1,128 @@
+/**
+ * header css!
+ */
+
+.main-header {
+  background-color: $header-background;
+  border-bottom: 1px solid $gray;
+  width: 100%;
+  height: $header-height;
+  line-height: $font-size;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  a {
+    text-decoration: none;
+    color: $header-color;
+
+    &:hover {
+      color: $header-hover;
+    }
+  }
+}
+
+.main-header nav {
+  float: left;
+  padding: $header-padding;
+
+  &:first-of-type {
+    // remove padding on first nav
+    padding-left: 0;
+  }
+
+  // right-aliged navs in header
+  &.right {
+    float: right;
+
+    &:last-of-type {
+      // remove padding on last element
+      padding-right: 0;
+    }
+
+    // adjust margin on links when right-aligned
+    a,
+    span,
+    .item {
+      margin-right: 0;
+      margin-left: $header-padding;
+    }
+  }
+
+  a,
+  span,
+  .item {
+    display: block;
+    float: left;
+    margin-right: $header-padding;
+
+    .fa {
+      margin-right: .6 * $header-padding;
+    }
+  }
+}
+
+.main-header nav .expandable {
+  position: relative;
+
+  // when hovering or when toggled, show the sub-menu
+  &:hover,
+  &--show {
+    .expandable__child {
+      opacity: 1;
+      display: block;
+      z-index: 11;
+    }
+  }
+
+  &__child {
+    // position it by the "parent"
+    position: absolute;
+    top: $font-size;
+    width: 200px;
+    // invisible as default
+    opacity: 0;
+    display: none;
+    padding-top: 6px;
+
+    // adjust
+    :first-of-type {
+      // rounded corners!
+      border-width: 1px 1px 0;
+      border-top-left-radius: $common-border-radius;
+    }
+    :last-of-type {
+      border-width: 0 1px 1px;
+      border-bottom-right-radius: $common-border-radius;
+      border-bottom-left-radius: $common-border-radius;
+    }
+
+    a,
+    span,
+    .item {
+      background: lighten($header-background, 1%);
+      border-style: solid;
+      border-color: $gray;
+      border-width: 0 1px;
+      padding: .6 * $header-padding;
+      margin: 0;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        background: $blue;
+        color: #fff;
+      }
+    }
+  }
+}
+
+// if the menu is left-aligned, adjust the expandable children's positions
+.main-header nav.right .expandable__child {
+  border-top-right-radius: 0;
+  right: 0;
+}
