@@ -4,7 +4,7 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"] {
   display: inline-block;
-  height: 38px;
+  height: $button-height;
   padding: 0 2 * $common-padding;
   color: $font-color;
   text-align: center;
