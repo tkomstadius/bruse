@@ -1,0 +1,66 @@
+/*******************************************************************************
+ * Colors!
+ * neat colors from https://github.com/mrmrs/colors/
+ ******************************************************************************/
+// Cool
+$aqua:  #7FDBFF;
+$blue:  #0074D9;
+$navy:  #001F3F;
+$teal:  #39CCCC;
+$green: #2ECC40;
+$olive: #3D9970;
+$lime:  #01FF70;
+
+// Warm
+$yellow:  #FFDC00;
+$orange:  #FF851B;
+$red:     #FF4136;
+$fuchsia: #F012BE;
+$purple:  #B10DC9;
+$maroon:  #85144B;
+
+// Gray Scale
+$white:  #fff;
+$silver: #ddd;
+$gray:   #aaa;
+$black:  #111;
+
+/*******************************************************************************
+ * Color variables!
+ ******************************************************************************/
+$link-color:       $blue;
+$link-hover-color: darken($blue, 10%);
+
+// header
+$header-color: darken($gray, 10%);
+$header-hover: darken($header-color, 20%);
+
+/*******************************************************************************
+ * Fonts
+ ******************************************************************************/
+$font-size: 16px;
+$font-color: #555;
+$font-family: Lato, sans-serif;
+
+/*******************************************************************************
+ * Metrics
+ ******************************************************************************/
+$max-width: 1500px;
+$common-padding: 16px;
+// rounded corners?
+$common-border-radius: 3px;
+
+// inputs
+$input-height: 38px;
+$input-padding-top: 7px;
+$input-padding-side: 10px;
+$input-padding: $input-padding-top $input-padding-side;
+$button-height: $input-height;
+
+// header
+$header-background: lighten($silver, 10%);
+$header-padding: $common-padding;
+$header-height: $font-size + 2 * $header-padding;
+
+// file stuff
+$file-list-padding: $common-padding;
