@@ -83,18 +83,22 @@ class Identity < ActiveRecord::Base
             :q => "'"+path+"'"+' in parents and trashed=false'})
       end
 
-      # Rename parameters for easy access
-      @result.data.items.each do |f|
-        if f.mime_type.include? "folder"
-          f["is_dir"] = true
-        else
-          f["is_dir"] = false
+      # Success!
+      if @result.status == 200
+        # Rename parameters for easy access
+        @result.data.items.each do |f|
+          if f.mime_type.include? "folder"
+            f["is_dir"] = true
+          else
+            f["is_dir"] = false
+          end
         end
-      end
-      @result.data.items.map{ |f| f["name"] = f["title"] }
-      @result.data.items.map{ |f| f["path"] = f["id"] }
+        @result.data.items.map{ |f| f["name"] = f["title"] }
+        @result.data.items.map{ |f| f["path"] = f["id"] }
 
-      return @result.data.items if service.downcase.include? "google"
+        return @result.data.items if service.downcase.include? "google"
+      else
+        # ERROR!!!
     end
   end
 
