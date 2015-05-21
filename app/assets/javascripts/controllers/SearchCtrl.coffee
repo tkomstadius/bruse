@@ -14,8 +14,8 @@
         return
 
       setTimeout((->
-        console.log "'#{searchString}' == '#{newSearch}' : ", searchString == newSearch
         if searchString == newSearch
+          console.log "Searching for '#{searchString}'"
           $scope.actualSearch = newSearch
           temp = $scope.search.split(" ")
           hashTags = []
@@ -41,5 +41,5 @@
             console.error "Couldn't search..", response
             )
 
-        ), 1000)
+        ), 500)
 ]
