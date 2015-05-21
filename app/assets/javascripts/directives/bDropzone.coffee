@@ -109,7 +109,6 @@
 
         entry = items[i].webkitGetAsEntry()
         if url.length > 0
-          scope.images = []
           scope.saved = false
           # make a file of the url
           addLink(url)
