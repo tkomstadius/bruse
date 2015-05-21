@@ -1,5 +1,7 @@
 class Files::DownloadController < Files::FilesController
   skip_before_filter :set_identity
+  before_filter :set_file, only: :download_url
+
   # Public: generates a secure download url only accessable for
   # the owner.
   #
