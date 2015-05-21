@@ -1,30 +1,36 @@
-# TODO: create modal for save option?
 @bruseApp.controller 'DragDropCtrl', ['$scope', '$http', ($scope, $http) ->
-    $scope.fileObject = null
-    $scope.dataObject = {location:''}
-    $scope.imageFile = null
-    $scope.isDropped = false
-    $scope.isSaved = false
-    $scope.file = []
-    $scope.message = ''
+  $scope.droppedFiles = []
+  $scope.dataObjects = {}
+  $scope.imageFiles = []
+  $scope.isDropped = false
+  $scope.isSaved = false
+  $scope.message = ''
+  $scope.notSaved = ''
 
-    $scope.saveOpt = (location) ->
+  $scope.saveOpt = (location) ->
+    if location == ''
       $scope.isDropped = false
-      $scope.dataObject.location = location
+      $scope.droppedFiles = []
+      $scope.notSaved = ''
+    else
+      $scope.isDropped = false
+      $scope.dataObjects.objects = $scope.droppedFiles
+      $scope.dataObjects.location = location
 
-      if location != ''
-        # send object to server
-        $http.post('/upload_drop.json', $scope.dataObject).then((response) ->
-          $scope.file = response.data.file;
-          if $scope.file.id != null
+      # send object to server
+      _.each $scope.droppedFiles, (file) ->
+        $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
+          # WHY do I also get previous saves?
+          if response.data.error != []
             $scope.isSaved = true
-            $scope.message = response.data.file.name + " was saved"
+            $scope.message = "Saved to " + location
           else
-            $scope.file = []
             $scope.isSaved = false
+            $scope.message = "Something went wrong"
           )
         .catch((response) ->
           console.error "Couldn't save.."
+          return
           )
-]
+] 
 
