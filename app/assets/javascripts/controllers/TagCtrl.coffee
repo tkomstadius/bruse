@@ -7,24 +7,17 @@
 
   # Some jsTag options
   $scope.tags = new JSTagsCollection();
-  $scope.jsTagOptions = {
-    "texts": {
-      "inputPlaceHolder": "Tag"
-    },
-    "tags": $scope.tags,
+  $scope.jsTagOptions =
+    texts:
+      inputPlaceHolder: "Tags..."
+      removeSymbol: String.fromCharCode(215)
+    tags: $scope.tags
     breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-  };
 
   # Initiate the tags variable for each file
   $scope.files.forEach((file) ->
     file.tags = new JSTagsCollection();
-    file.jsTagOptions = {
-      texts: {
-        inputPlaceHolder: "Tag"
-      },
-      tags: file.tags,
-      breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-    }
+    file.jsTagOptions = angular.copy($scope.jsTagOptions)
     return
     )
 

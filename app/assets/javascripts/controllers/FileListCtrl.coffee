@@ -47,6 +47,7 @@
               tags: file.unsavedTags
               texts:
                 inputPlaceHolder: "Tag"
+                removeSymbol: String.fromCharCode(215)
             # append every file to the list of files
             $scope.files.push file
             )
