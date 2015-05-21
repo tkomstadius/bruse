@@ -64,7 +64,7 @@
 
   $scope.previewFile = (file) ->
     # call file previewer
-    FilePreviewer(file, { scope: $scope })
+    FilePreviewer(file, { files: $scope.files })
 
   $scope.saveTags = (file) ->
     tagsToSave = file.unsavedTags.getTagValues()
