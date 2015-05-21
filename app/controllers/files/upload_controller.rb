@@ -53,11 +53,12 @@ class Files::UploadController < Files::FilesController
   def upload_from_base64
     @results = []
     @errors = []
+    identity = Identity.find(params[:service])
+    file = create_drop_file(params[:object])
     if params[:location] == 'local'
       #check if user has local identity
       if current_user.local_identity
         # if so, create brusefile
-        file = create_drop_file(params[:object])
         # insert our file on the users local identity
         if current_user.local_identity.bruse_files << file
           # send response that everything is ok!
@@ -70,9 +71,17 @@ class Files::UploadController < Files::FilesController
         @results = []
       end
     elsif params[:location] == 'dropbox'
-      @results = []
+      response = identity.upload_to_dropbox(file)
+      b_file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
+                           foreign_ref: response["path"],
+                           filetype: response["mime_type"],
+                           identity: identity)
+      if b_file.save!
+        @results.push file
+      else
+        @errors.push "Could not save #{file.name}"
+      end 
     elsif params[:location] == 'google'
-      @results = []
     else
       flash[:notice] = "No storage option"
     end
