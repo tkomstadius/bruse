@@ -7,6 +7,7 @@
   $scope.notSaved = ''
   $scope.addedFile = []
   $scope.savedFiles = []
+  $scope.numFiles = 0
 
   $scope.saveOpt = (location) ->
     if location == ''
@@ -16,6 +17,7 @@
     else
       $scope.isDropped = false
       $scope.dataObjects.objects = $scope.droppedFiles
+      $scope.numFiles = $scope.droppedFiles.length
       $scope.dataObjects.location = location
       $scope.addedFile = []
 
@@ -39,9 +41,7 @@
 
   $scope.getSavedFiles = ->
     $scope.savedFiles = $scope.addedFile
-    if $scope.savedFiles.length > 0
-      console.log Array.isArray($scope.savedFiles)
-      console.log $scope.savedFiles.length
+    if $scope.savedFiles.length == $scope.numFiles
       return true
     else
       return false

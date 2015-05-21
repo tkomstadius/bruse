@@ -19,7 +19,7 @@
     <span>{{notSaved}}</span>
     <div ng-show="isSaved" ng-if="getSavedFiles()">
       <span>{{message}}</span>
-      <b-file-list files=savedFiles></b-file-list>
+      <b-file-list files={{savedFiles}}></b-file-list>
       </div>
     </div>
   </div>
