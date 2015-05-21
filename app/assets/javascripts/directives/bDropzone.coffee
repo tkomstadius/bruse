@@ -25,6 +25,20 @@
       (event.originalEvent or event).dataTransfer.effectAllowed = 'move'
       false
 
+    # handle a link
+    addLink = (file) ->
+      obj = {}
+      obj.name = "url"
+      obj.type = "text/uri-list"
+      scope.$apply ->
+        # update bindings
+        obj.data = file
+        scope.drop = true
+        scope.info = ''
+        scope.theFiles.push obj
+
+      return false
+
     # handle files from datatransfer files
     addFile = (file) ->
       obj = {}
@@ -47,7 +61,7 @@
           scope.noType = scope.noType + file.name + " has no type and can not be saved"
       return false
 
-    # handle files from directory?
+    # handle files from directory
     # does not support wierder types such as .cpp and .xcf
     addFileFromDir = (entry) ->
       entry.file(addFile)
@@ -77,8 +91,14 @@
       if event?
         event.preventDefault()
       # get both items and files for different use case
+      types = event.originalEvent.dataTransfer.types
+      url = []
+      if "text/uri-list" in types
+        url = event.originalEvent.dataTransfer.getData("text/uri-list")
+      else
+        files = event.originalEvent.dataTransfer.files
       items = event.originalEvent.dataTransfer.items
-      files = event.originalEvent.dataTransfer.files
+      
       
       scope.noType = ''
       i = 0
@@ -86,9 +106,15 @@
       while i < items.length
         # webkit implementation of HTML5 API
         # entry objects act as interfaces to access FileSystem API
+
         entry = items[i].webkitGetAsEntry()
-        
-        if entry.isFile
+        if url.length > 0
+          scope.images = []
+          scope.saved = false
+          # make a file of the url
+          addLink(url)
+          break
+        else if entry.isFile
           # if it is not a folder, use the datatransfer files
           scope.saved = false
           addFile(files[i])

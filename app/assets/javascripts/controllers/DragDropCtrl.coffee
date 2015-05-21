@@ -22,9 +22,7 @@
       # send object to server
       _.each $scope.droppedFiles, (file) ->
         $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
-          # need id for file to add tags
-          # $rootScope.new_files = the files that have been added
-          # 
+
           if response.data.error != []
             $scope.isSaved = true
             $scope.message = "Saved to " + location
