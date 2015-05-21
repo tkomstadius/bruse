@@ -7,7 +7,7 @@
   padding: 6px 12px 5px 12px;
   display: block;
   height: auto;
-  
+
   vertical-align: middle;
   font-size: 14px;
   line-height: 1.428571429;
@@ -29,14 +29,14 @@
   border: 1px solid #949494;
   padding: 0px 0px 20px 2px;
   cursor: default;
-  
+
   display: inline-block;
   -webkit-border-radius: 2px 3px 3px 2px;
   -moz-border-radius: 2px 3px 3px 2px;
   border-radius: 2px 3px 3px 2px;
   height: 22px;
 }
-  
+
 /* Because bootstrap uses it and we don't want that if bootstrap is not included to look different */
 .jt-tag {
   box-sizing: border-box;
