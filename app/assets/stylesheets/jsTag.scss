@@ -1,0 +1,72 @@
+/*
+  * Container *
+  Explaining some of the CSS:
+  # background-color: #FFFFFF; | To simulate an input box - in case background of the whole page is different
+*/
+.jt-editor {
+  height: auto;
+  min-height: $input-height;
+  cursor: text;
+}
+
+// Tag
+.jt-tag {
+  background: $blue;
+  border: 0px solid darken($aqua, 30%);
+  border-radius: 2px 3px 3px 2px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: default;
+  display: inline-block;
+  height: 22px;
+  padding: 0 0 20px 2px;
+
+  &:hover {
+    background: lighten($blue, 10%);
+  }
+  // Tag when active
+  &.active-true {
+    border-color: lighten($blue, 20%);
+  }
+  // Value inside jt-tag
+  .value {
+    padding-left: 4px;
+  }
+  // Tag remove button ('x')
+  .remove-button {
+    cursor: pointer;
+    padding-right: 4px;
+
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}
+
+// New tag input & Edit tag input
+.jt-tag-new,
+.jt-tag-edit {
+  border-width: 0 !important;
+  height: $input-height - 2 * $input-padding-top !important;
+  line-height: $input-height - 2 * $input-padding-top !important;
+  padding: 0 !important;
+  outline: 0;
+  min-width: 50px; // Will keep autogrow from lowering width more than 60
+}
+
+// New tag input & Edit tag input & Tag
+.jt-tag-new,
+.jt-tag-edit,
+.jt-tag {
+  float: left;
+  margin: 1px $input-padding-side 1px 0;
+}
+
+// Should not be displayed, only used to capture keydown
+.jt-fake-input {
+  float: left;
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  border: 0;
+}

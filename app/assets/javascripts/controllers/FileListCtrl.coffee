@@ -11,10 +11,8 @@
   # this function gets called from the directive
   this.init = (element, attrs) ->
     self.$element = element
-    if attrs.files
-      # if file is provided through the directive attributes, use those...
-      $scope.files = attrs.files
-    else
+    # if files are provided through the directive attribute, use those files...
+    unless attrs.files
       # ... or use the path provided to the directive...
       # ... otherwise collect them from server
       offset = 0
@@ -36,7 +34,7 @@
             NProgress.done()
 
           # iterate over all the collected files
-          data.map((file) ->
+          _.each(data, (file) ->
             # extract tag names
             onlyTags = _.pluck(file.tags, 'name')
             # append jsTag stuff to every file
@@ -46,7 +44,8 @@
               breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
               tags: file.unsavedTags
               texts:
-                inputPlaceHolder: "Tag"
+                inputPlaceHolder: "Tags..."
+                removeSymbol: String.fromCharCode(215)
             # append every file to the list of files
             $scope.files.push file
             )
