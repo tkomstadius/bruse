@@ -16,7 +16,7 @@ class BruseFile < ActiveRecord::Base
   validates :name, :foreign_ref, :filetype, :identity_id, presence: true
 
   # Fuzzy search for :name
-  fuzzily_searchable :name
+  fuzzily_searchable :name, async: true
 
   def self.find_from_search(query, current_user_id)
     results = []
