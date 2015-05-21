@@ -14,6 +14,7 @@
 #= require angular-route
 #= require_tree ./vendor
 #= require lodash
+#= require magnific-popup
 #= require main
 #= require_tree ./factories
 #= require_tree ./controllers

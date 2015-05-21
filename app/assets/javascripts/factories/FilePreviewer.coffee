@@ -1,4 +1,4 @@
-@bruseApp.factory 'FilePreviewer', ['MimeDictionary', (MimeDictionary) ->
+@bruseApp.factory 'FilePreviewer', ['MimeDictionary', 'FileHandler', (MimeDictionary, FileHandler) ->
   # all our previewers
   _previewers =
     ###*
@@ -8,7 +8,18 @@
      * @return nothing
     ###
     image: (file, params) ->
-      console.log "Displaying image ", file.name
+      console.log "Displaying imagefile ", file.filetype
+      FileHandler.download(file.identity, file.id).then((data) ->
+        # open the returned url in a new tab
+        $.magnificPopup.open({
+                items:{
+                  src: data.url
+                },
+                type: 'image'
+              }, 0)
+        )
+
+
 
     ###*
      * display an image popup
@@ -16,8 +27,17 @@
      * @param  object params optional file parameters
      * @return nothing
     ###
-    plaintext: (file, params) ->
-      console.log "Displaying textfile ", file.name
+    iframe: (file, params) ->
+      console.log "Displaying textfile ", file.filetype
+      FileHandler.download(file.identity, file.id).then((data) ->
+        # open the returned url in a new tab
+        $.magnificPopup.open({
+                items:{
+                  src: data.url
+                },
+                type: 'iframe'
+              }, 0)
+        )
 
     ###*
      * display an image popup
@@ -25,8 +45,8 @@
      * @param  object params optional file parameters
      * @return nothing
     ###
-    pdf: (file, params) ->
-      console.log "Displaying pdf ", file.name
+
+
 
     ###*
      * display default error that there is no preview for this file
@@ -46,4 +66,6 @@
     templateName = MimeDictionary.viewTemplate(file.filetype)
     # call template function
     _previewers[templateName](file, params)
+
+
 ]
