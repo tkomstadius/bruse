@@ -8,7 +8,7 @@
 
   <div class="filter">
     Showing files from
-    <select ng-model="identity_filter.identity.id" ng-options="i.id as i.name for i in identities()">
+    <select ng-model="identity_filter" ng-options="i.id as i.name for i in identities()">
       <option value="">--All--</option>
     </select>
   </div>
@@ -24,7 +24,7 @@
         <th>&nbsp;</th>
       </tr>
       <!-- this should be added in the future: | IdentityFilter:showIdentities -->
-      <tr ng-repeat="file in files | filter: identity_filter | orderBy : order_by : reverse">
+      <tr ng-repeat="file in files | IdentityFilter : identity_filter">
         <td>
           <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
             <i class="fa fa-external-link"></i> {{file.name}}

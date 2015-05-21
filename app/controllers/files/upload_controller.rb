@@ -8,21 +8,44 @@ class Files::UploadController < Files::FilesController
   require 'base64'
 
   def upload
-    uploader = LocalFileUploader.new
+    identity = Identity.find(params[:service])
 
-    uploader.store!(params[:bruse_file][:file])
-
-    file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
-                         foreign_ref: uploader.file.identifier,
-                         filetype: uploader.content_type,
-                         identity: current_user.local_identity)
-
-    if file.save #file.identity.bruse_files << file
-        flash[:notice] = "#{file.name} was saved!"
-        redirect_to bruse_files_path
+    if params[:bruse_file].blank?
+      flash[:notice] = "Choose a file"
+      redirect_to bruse_files_path
     else
-      flash[:notice] = "you must log in to your bruse acount!"
+      if identity.name.downcase.include? "dropbox"
+        response = identity.upload_to_dropbox(params[:bruse_file][:file])
+        file = BruseFile.create(name: params[:bruse_file][:file].original_filename,
+                                foreign_ref: response["path"],
+                                filetype: response["mime_type"],
+                                identity: identity)
+
+      elsif identity.name.downcase.include? "google"
+        response = identity.upload_to_google(params[:bruse_file][:file])
+        file = BruseFile.create(name: params[:bruse_file][:file].original_filename,
+                                foreign_ref: response["id"],
+                                filetype: response["mimeType"],
+                                identity: identity)
+
+      elsif identity.name.downcase.include? "bruse"
+        uploader = LocalFileUploader.new
+
+        uploader.store!(params[:bruse_file][:file])
+
+        file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
+                             foreign_ref: uploader.file.identifier,
+                             filetype: uploader.content_type,
+                             identity: current_user.local_identity)
+      end
+
+      if file.save!
+        flash[:notice] = "#{params[:bruse_file][:file].original_filename} was saved in #{identity.name}"
         redirect_to bruse_files_path
+      else
+        flash[:notice] = "Could not save the file!"
+        redirect_to bruse_files_path
+      end
     end
   end
 
@@ -62,15 +85,22 @@ class Files::UploadController < Files::FilesController
     #
     # Returns a new BruseFile
     def create_drop_file(content)
-      # generate file name
-      fileref = SecureRandom.uuid
-      local_file_name = Rails.root.join('usercontent', fileref)
-      # create file
-      decoded_content =  Base64.urlsafe_decode64(content[:data]).force_encoding('utf-8')
-      IO.write(local_file_name, decoded_content)
-      # return new BruseFile
-      BruseFile.new(name: content[:name],
-                    foreign_ref: fileref,
-                    filetype: content[:type])
+      if content[:type] == 'text/uri-list'
+        name = content[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
+        BruseFile.new(name: name,
+                      foreign_ref: content[:data],
+                      filetype: content[:type])
+      else
+        fileref = SecureRandom.uuid
+        # generate file name
+        local_file_name = Rails.root.join('usercontent', fileref)
+        # create file
+        decoded_content =  Base64.urlsafe_decode64(content[:data]).force_encoding('utf-8')
+        IO.write(local_file_name, decoded_content)
+        # return new BruseFile
+        BruseFile.new(name: content[:name],
+                      foreign_ref: fileref,
+                      filetype: content[:type])
+      end
     end
 end
