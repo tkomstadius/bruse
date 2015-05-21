@@ -4,7 +4,7 @@
 [![Test Coverage](https://codeclimate.com/repos/54ef681a6956806ad40003cc/badges/3ced46e71c97f5a488c1/coverage.svg)](https://codeclimate.com/repos/54ef681a6956806ad40003cc/feed)
 [![Build Status](https://travis-ci.org/tkomstadius/bruse.svg?branch=develop)](https://travis-ci.org/tkomstadius/bruse)
 
-Multi-purpose personal file database.
+Multi-purpose personal file database. The application is dependent on some background jobs, i.e. an extra process is needed. So in a new terminal window run `rake jobs:work` to start that process. Also there is a _Procfile_ which tells a process manager like Foreman to run both processes on the command `foreman start` if you don't want to have two different windows open.
 
 ## Setup
 
