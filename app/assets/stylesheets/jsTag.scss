@@ -11,22 +11,22 @@
 
 // Tag
 .jt-tag {
-  background: $aqua;
-  border: 1px solid darken($aqua, 30%);
+  background: $blue;
+  border: 0px solid darken($aqua, 30%);
+  border-radius: 2px 3px 3px 2px;
   box-sizing: border-box;
-  padding: 0 0 20px 2px;
+  color: #fff;
   cursor: default;
   display: inline-block;
-  border-radius: 2px 3px 3px 2px;
   height: 22px;
+  padding: 0 0 20px 2px;
 
   &:hover {
-    border-color: darken($aqua, 20%);
-    background: lighten($aqua, 10%);
+    background: lighten($blue, 10%);
   }
   // Tag when active
   &.active-true {
-    border-color: rgba(82, 168, 236, 0.8);
+    border-color: lighten($blue, 20%);
   }
   // Value inside jt-tag
   .value {
