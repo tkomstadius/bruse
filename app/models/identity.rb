@@ -105,7 +105,7 @@ class Identity < ActiveRecord::Base
         @result.data.items.map{ |f| f["name"] = f["title"] }
         @result.data.items.map{ |f| f["path"] = f["id"] }
 
-        return @result.data.items if service.downcase.include? "google"
+        return @result.data.items
       else
         puts "An error occurred: #{result.data['error']['message']}"
         return nil
