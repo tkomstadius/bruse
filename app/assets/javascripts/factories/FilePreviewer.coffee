@@ -19,14 +19,6 @@
               }, 0)
         )
 
-
-
-    ###*
-     * display an image popup
-     * @param  object file   the file object
-     * @param  object params optional file parameters
-     * @return nothing
-    ###
     iframe: (file, params) ->
       console.log "Displaying textfile ", file.filetype
       FileHandler.download(file.identity, file.id).then((data) ->
@@ -39,21 +31,6 @@
               }, 0)
         )
 
-    ###*
-     * display an image popup
-     * @param  object file   the file object
-     * @param  object params optional file parameters
-     * @return nothing
-    ###
-
-
-
-    ###*
-     * display default error that there is no preview for this file
-     * @param  object file   the file object
-     * @param  object params optional file parameters
-     * @return nothing
-    ###
     noTemplate: (file, params) ->
       # display something about not beeing able to display that file
       console.warn "Template for filetype '#{file.filetype}' not found."
@@ -66,6 +43,5 @@
     templateName = MimeDictionary.viewTemplate(file.filetype)
     # call template function
     _previewers[templateName](file, params)
-
 
 ]
