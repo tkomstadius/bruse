@@ -23,7 +23,8 @@ class Files::BrowseController < Files::FilesController
 
   def upload
     identity = Identity.find(params[:service])
-    if(params[:file].blank?)
+    
+    if params[:bruse_file].blank?
       flash[:notice] = "Choose a file"
       redirect_to bruse_files_path
     else
