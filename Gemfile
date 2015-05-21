@@ -79,6 +79,8 @@ gem 'google-api-client'
 # File uploading
 gem 'carrierwave'
 
+# Delay work
+gem 'delayed_job_active_record'
 
 ## Developtment tools
 group :development, :test do

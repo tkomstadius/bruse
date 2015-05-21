@@ -25,5 +25,8 @@ module Bruse
 
     # Add templates to assets handling
     config.assets.paths << Rails.root.join("app", "assets", "templates")
+
+    # delayed_job queue
+    config.active_job.queue_adapter = :delayed_job
   end
 end
