@@ -3,7 +3,7 @@
   <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
-  <%= render 'files/files/create_from_textbox' %>
+  <%= render 'files/create_text/create_from_textbox' %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
     <div b-dropzone the-files="droppedFiles" images="imageFiles" drop="isDropped" saved="isSaved" info="message" no-type="notSaved">
@@ -18,7 +18,7 @@
     </div>
     <span>{{notSaved}}</span>
     <div ng-show="isSaved" ng-if="imageFiles">
-      <div class="savedImages"ng-repeat="im in imageFiles"> 
+      <div class="savedImages"ng-repeat="im in imageFiles">
         <img ng-src="{{im}}"/>
       </div>
       <span>{{message}}</span>
