@@ -2,10 +2,13 @@
 
 <h3>Linked accounts</h3>
 <% current_user.identities.each do |id| %>
-  <p><%= id.name %> - <%= link_to('unlink', destroy_provider_path(id.id), :method => 'delete') if id.service != 'local' %></p>
+  <% if id.service != "local" %>
+  <p><%= id.name %> - <%= link_to('unlink', destroy_provider_path(id.id), :method => 'delete')%></p>
+  <% end %>
 <% end %>
-<p><%= link_to 'Add Dropbox account', user_omniauth_authorize_path('dropbox_oauth2') %></p>
-<p><%= link_to "Add Google account", user_omniauth_authorize_path('google_oauth2') %></p>
+<% User.nice_omniauth_providers.each do |provider| %>
+  <p><%= link_to "Add #{provider[:name].to_s} account", user_omniauth_authorize_path(provider[:id]) %></p>
+<% end %>
 
 <% if !current_user.own_password %>
   <p>Would you like to add a password to your account?</p>

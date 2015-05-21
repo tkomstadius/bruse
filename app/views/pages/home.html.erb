@@ -1,6 +1,7 @@
 <% if current_user.nil? %>
-  <%= link_to 'Sign in with Dropbox', user_omniauth_authorize_path('dropbox_oauth2') %><br>
-  <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
+  <% User.nice_omniauth_providers.each do |provider| %>
+    <%= link_to "Sign in with #{provider[:name].to_s.titleize}", user_omniauth_authorize_path(provider[:id]) %><br />
+  <% end %>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
   <%= render 'files/files/create_from_textbox' %>
@@ -11,18 +12,18 @@
     </div>
     <div ng-show="isDropped">
       <!-- TODO: check strings for saving later -->
-      <button ng-click="saveOpt('dropbox')">Dropbox</button>
-      <button ng-click="saveOpt('google')">Drive</button>
+      <%- User.nice_omniauth_providers.each do |provider| %>
+        <button ng-click="saveOpt('<%= provider[:name].to_s.downcase %>')"><%= provider[:id].to_s.titleize %></button>
+      <% end -%>
       <button ng-click="saveOpt('local')">Local</button>
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
     <span>{{notSaved}}</span>
     <div ng-show="isSaved" ng-if="imageFiles">
-      <div class="savedImages"ng-repeat="im in imageFiles"> 
+      <div class="savedImages"ng-repeat="im in imageFiles">
         <img ng-src="{{im}}"/>
       </div>
       <span>{{message}}</span>
     </div>
   </div>
 <% end %>
-

@@ -68,6 +68,17 @@ class User < ActiveRecord::Base
     identities.find_by(service: "local")
   end
 
+  def self.nice_omniauth_providers
+    providers = self.omniauth_providers
+    providers.map do |provider|
+      name = (provider.to_s.downcase.include? "dropbox") ? "Dropbox" : "Google"
+      {
+        :id => provider,
+        :name => name
+      }
+    end
+  end
+
   protected
     # Protected: Delete all the identities atteched to this user
     def delete_identities
