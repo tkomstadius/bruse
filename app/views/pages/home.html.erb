@@ -6,7 +6,7 @@
   <%= render 'files/files/create_from_textbox' %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-dropzone the-files="droppedFiles" images="imageFiles" drop="isDropped" saved="isSaved" info="message" no-type="notSaved">
+    <div b-dropzone the-files="droppedFiles" drop="isDropped" saved="isSaved" info="message" no-type="notSaved">
       <span>Put stuff here</span>
     </div>
     <div ng-show="isDropped">
@@ -17,11 +17,10 @@
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
     <span>{{notSaved}}</span>
-    <div ng-show="isSaved" ng-if="imageFiles">
-      <div class="savedImages"ng-repeat="im in imageFiles"> 
-        <img ng-src="{{im}}"/>
-      </div>
+    <div ng-show="isSaved" ng-if="getSavedFiles()">
       <span>{{message}}</span>
+      <b-file-list files=savedFiles></b-file-list>
+      </div>
     </div>
   </div>
 <% end %>

@@ -1,4 +1,4 @@
-@bruseApp.directive 'bDropzone', () ->
+@bruseApp.directive 'bDropzone', ->
   # restriction to only match the attribute name
   restrict: 'A'
   # create an isolate scope to map the outer scope to our directives inner scope
@@ -6,7 +6,6 @@
     # use = when the attribute name is the same as the value in directive
     # used as: file="", else use var: '=file'
     theFiles: '='
-    images: '='
     drop: '='
     saved: '='
     info: '='
@@ -40,10 +39,6 @@
           scope.drop = true
           scope.info = ''
           scope.theFiles.push obj
-
-          if file.type in ['image/jpeg', 'image/png', 'image/tiff', 'image/gif']
-            scope.images.push evt.target.result
-          return
 
       if file.type != ''
         reader.readAsDataURL file
@@ -95,13 +90,11 @@
         
         if entry.isFile
           # if it is not a folder, use the datatransfer files
-          scope.images = []
           scope.saved = false
           addFile(files[i])
 
         else if entry.isDirectory
           # uses entry to read files, cannot handle wierd types
-          scope.images = []
           scope.saved = false
           addEntries(entry)
             
