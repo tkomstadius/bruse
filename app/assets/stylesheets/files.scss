@@ -1,11 +1,9 @@
-$list-padding: 15px;
-
 .browse {
   list-style-type: none;
   padding-left: 0;
 
   &__file {
-    padding-left: $list-padding;
+    padding-left: $file-list-padding;
     background-color: white;
 
     &--folder > &__file__name {
