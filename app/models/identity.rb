@@ -262,7 +262,9 @@ class Identity < ActiveRecord::Base
     # Set parent folder
     file.parents = [{'id' => folder_id}]
 
-    media = Google::APIClient::UploadIO.new(localFile, localFile[:content_type],localFile[:original_filename] )
+    media = Google::APIClient::UploadIO.new(localFile,
+                                            localFile[:content_type].to_s.force_encoding("UTF-8"),
+                                            localFile[:original_filename].to_s.force_encoding("UTF-8"))
 
     result = @client.execute(
       :api_method => drive.files.insert,

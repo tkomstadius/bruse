@@ -63,7 +63,7 @@ class Files::UploadController < Files::FilesController
   end
 
   private
-    # Private: Decode file conten
+    # Private: Decode file content
     #
     # file - the file content
     #
@@ -76,7 +76,7 @@ class Files::UploadController < Files::FilesController
     #
     # content   - the file content
     #
-    # Returns a new BruseFile
+    # Returns a BruseFile parameters
     def create_local_file
       if @file[:type] == 'text/uri-list'
         name = @file[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
