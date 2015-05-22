@@ -10,6 +10,10 @@ class Files::UploadController < Files::FilesController
   def upload
     identity = Identity.find(params[:service])
 
+    # Set default identity id
+    identity.user.default_identity_id = identity.id
+    identity.user.save!
+
     if params[:bruse_file].blank?
       flash[:notice] = "Choose a file"
       redirect_to bruse_files_path
