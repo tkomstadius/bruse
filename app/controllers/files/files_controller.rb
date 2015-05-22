@@ -7,7 +7,7 @@ class Files::FilesController < ApplicationController
   # params from rails isn't passed along.
   # http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
   skip_before_action :verify_authenticity_token, only: :destroy
-  before_filter :set_identity, except: :show_all
+  before_filter :set_identity, except: [:show_all, :update]
   before_filter :set_file, only: :destroy
 
   require 'dropbox_sdk'
@@ -67,7 +67,7 @@ class Files::FilesController < ApplicationController
     if @file.update(file_update_params)
       new_tags = []
       params[:tags].each do |tag_name|
-        new_tags.push Tag.find_or_create_by(tag_name)
+        new_tags.push Tag.find_or_create_by(name: tag_name)
       end
       @file.tags = new_tags
 
