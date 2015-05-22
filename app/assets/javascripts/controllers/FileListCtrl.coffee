@@ -100,13 +100,12 @@
       file.tags = newFile.tags
     )
 
-  ###*
-   * Remove tag with id tag_id from file
-  ###
-  $scope.cutTag = (file, tag_id) ->
-    TagHandler.cut(file.id, tag_id).then((data) ->
-      file.tags = data.tags
-      )
+  $scope.deleteFile = ($event, file) ->
+    $event.preventDefault()
+    if window.confirm "Are you sure?"
+      FileHandler.delete(file.identity, file).then((data) ->
+        _.pull($scope.files, file)
+        )
 
   $scope.loadMore = ->
     $scope.absoluteLimit += $scope.limit

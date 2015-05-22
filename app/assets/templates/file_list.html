@@ -102,7 +102,7 @@
               <a ng-click="previewFile(file)" title="Preview file...">
                 <i class="fa fa-eye"></i>
               </a>
-              <a ng-href="{{file.paths.file}}" title="Delete file..." data-method="delete" data-confirm="Are you sure?">
+              <a ng-href="{{file.paths.file}}" title="Delete file..." ng-click="deleteFile($event, file)">
                 <i class="fa fa-trash"></i>
               </a>
             </span>

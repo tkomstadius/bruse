@@ -31,14 +31,16 @@ class Files::FilesController < ApplicationController
     # make sure file belongs to current identity and delete file
     if @file.identity == @identity && @identity.user == current_user && @file.destroy
       if @file.destroy
-        flash[:notice] = "#{@file.name} was deleted!"
+        respond_to do |format|
+          format.html { redirect_to bruse_files_path, notice: 'File was successfully deleted.' }
+          format.json { render json: { message: 'ok' } , status: :ok }
+        end
       else
-        flash[:notice] = "#{@file.name} was not deleted!"
+        respond_to do |format|
+          format.html { redirect_to bruse_files_path, notice: 'File could not be successfully deleted.' }
+          format.json { render json: { message: 'file not deleted' } , status: :unauthorized }
+        end
       end
-      redirect_to bruse_files_url
-    else
-      flash[:notice] = "Could not delete file!"
-      @message = "Could not delete file!"
     end
   end
 
