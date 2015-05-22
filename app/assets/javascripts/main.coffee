@@ -20,3 +20,10 @@
     })
   $locationProvider.html5Mode(true)
 ]
+
+@bruseApp.constant 'defaults',
+  jsTagOptions:
+    breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
+    texts:
+      inputPlaceHolder: "Tags..."
+      removeSymbol: String.fromCharCode(215)
