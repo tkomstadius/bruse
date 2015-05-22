@@ -44,7 +44,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="file in files | IdentityFilter : identity_filter | orderBy : order_by : reverse" class="filelist__file">
+        <tr
+          ng-repeat="file in files | IdentityFilter : identity_filter | orderBy : order_by : reverse"
+          class="filelist__file"
+          ng-dblclick="previewFile(file)">
           <td class="filelist__file__name" ng-attr-title="{{file.name}}">
             <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
               <i class="fa fa-external-link"></i> {{file.name}}
