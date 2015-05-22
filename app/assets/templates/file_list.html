@@ -1,5 +1,4 @@
 <div class="files">
-
   <div class="button-group">
     <button ng-click="view_list = true" ng-disabled="view_list">
       List
@@ -17,78 +16,97 @@
   </div>
 
   <div ng-if="view_list">
-    <table ng-if="hasFiles()">
-      <tr>
-        <th><a href="" ng-click="reverse = !reverse; order_by = 'name';">Filename</a></th>
-        <th>Filetype</th>
-        <th><a href="" ng-click="reverse = !reverse; order_by = 'identity.name';">Identity</a></th>
-        <th><a href="" ng-click="reverse = !reverse; order_by = 'date';">Date</a></th>
-        <th>Tags</th>
-        <th>&nbsp;</th>
-      </tr>
-      <!-- this should be added in the future: | IdentityFilter:showIdentities -->
-      <tr ng-repeat="file in files | IdentityFilter : identity_filter">
-        <td>
-          <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
-            <i class="fa fa-external-link"></i> {{file.name}}
-          </a>
-          <span ng-if="!file.url">
-            <a href="" ng-click="download(file.identity.id, file)">
+    <table ng-if="hasFiles()" class="filelist">
+      <colgroup>
+        <col class="col-1">
+        <col class="col-2">
+        <col class="col-3">
+        <col class="col-4">
+        <col class="col-5">
+        <col class="col-6">
+      </colgroup>
+      <thead>
+        <tr class="filelist__header">
+          <th>
+            <a href="" ng-click="reverse = !reverse; order_by = 'name';">Filename</a>
+          </th>
+          <th>&nbsp;</th>
+          <th>
+            <a href="" ng-click="reverse = !reverse; order_by = 'prettyFiletype';">Filetype</a>
+          </th>
+          <th>
+            <a href="" ng-click="reverse = !reverse; order_by = 'date';">Date</a>
+          </th>
+          <th>
+            <a href="" ng-click="reverse = !reverse; order_by = 'identity.name';">Identity</a>
+          </th>
+          <th>Tags</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          ng-repeat="file in files | IdentityFilter : identity_filter | orderBy : order_by : reverse"
+          class="filelist__file"
+          ng-dblclick="previewFile(file)">
+          <td class="filelist__file__name" ng-attr-title="{{file.name}}">
+            <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
+              <i class="fa fa-external-link"></i> {{file.name}}
+            </a>
+            <span ng-if="!file.url">
+              <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
+                {{file.name}}
+              </a>
+              <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0">
+                {{file.name}}
+              </span>
+            </span>
+          </td>
+          <td class="filelist__file__tools">
+            <a ng-if="!file.url" href="" ng-click="download(file.identity.id, file)">
               <i class="fa fa-download"></i>
             </a>
-            <a ng-click="previewFile(file)">Preview</a>
-            <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
-              {{file.name}}
+            <a ng-click="previewFile(file)">
+              <i class="fa fa-eye"></i>
             </a>
-            <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0" ng-click="download(file.identity.id, file)">
-              {{file.name}}
-            </span>
-          </span>
-        </td>
-        <td>
-          {{getFiletype(file.filetype)}}
-        </td>
-        <td>
-          <span ng-switch="file.identity.service">
-            <i class="fa fa-dropbox" ng-switch-when="dropbox_oauth2"></i>
-            <i class="fa fa-google" ng-switch-when="google_oauth2"></i>
-            <i ng-switch-default></i>
-          </span>
-          {{file.identity.name}}
-        </td>
-        <td>{{file.date}}</td>
-        <td>
-          <a ng-href="{{file.paths.add_tags}}" title="Add tags">
-            <i class="fa fa-plus-square"></i>
-          </a>
-          <span ng-show="file.editTags">
-            <js-tag js-tag-options="file.jsTagOptions"></js-tag>
-            <button ng-click="saveTags(file)">
-              <i class="fa fa-check-circle"></i>
-              Save
-            </button>
-          </span>
-          <div class="file__taglist" ng-hide="file.editTags">
-            <a ng-href="" title="Edit tags" ng-click="file.editTags = true">
-              <i class="fa fa-pencil"></i>
+            <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
+              <i class="fa fa-trash"></i>
             </a>
-            <span ng-repeat="tag in file.tags">
-              <a ng-href="{{tag.path}}">
-                #{{tag.name}}
-              </a>
-              <a ng-click="cutTag(file, tag.id)">
-                <i class="fa fa-minus-square"></i>
-              </a>
+          </td>
+          <td ng-attr-title="{{file.prettyFiletype}}">
+            {{file.prettyFiletype}}
+          </td>
+          <td ng-attr-title="{{file.date}}">{{file.date}}</td>
+          <td ng-attr-title="{{file.identity.name}}">
+            <span ng-switch="file.identity.service">
+              <i class="fa fa-dropbox" ng-switch-when="dropbox_oauth2"></i>
+              <i class="fa fa-google" ng-switch-when="google_oauth2"></i>
+              <i ng-switch-default></i>
             </span>
-          </div>
-        </td>
-        <td>
-          <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
-            <i class="fa fa-trash"></i>
-          </a>
-        </td>
-      </tr>
-     </table>
+            {{file.identity.name}}
+          </td>
+          <td>
+            <!-- <a ng-href="{{file.paths.add_tags}}" title="Add tags">
+              <i class="fa fa-plus-square"></i>
+            </a> -->
+            <span ng-show="file.editTags">
+              <js-tag js-tag-options="file.jsTagOptions"></js-tag>
+              <button ng-click="saveTags(file)">
+                <i class="fa fa-check-circle"></i>
+                Save
+              </button>
+            </span>
+            <div class="file__taglist" ng-hide="file.editTags">
+              <a ng-href="" title="Edit tags" ng-click="file.editTags = true">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <span ng-repeat="tag in file.tags">
+                <a ng-href="{{tag.path}}">#{{tag.name}}</a>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div ng-if="!view_list && hasFiles()">
@@ -99,5 +117,11 @@
         <div ng-repeat="tag in file.tags">{{tag.name}}</div>
       </div>
     </div>
+  </div>
+
+  <div class="files__more" ng-if="moreAvailable">
+    <button class="green" ng-click="loadMore()">
+      Load more...
+    </button>
   </div>
 </div>
