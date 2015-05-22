@@ -16,7 +16,7 @@
   </div>
 
   <div ng-if="view_list">
-    <table ng-if="hasFiles()" class="filelist">
+    <table ng-if="hasFiles()" class="filelist" ng-class="{'filelist--editing': editing()}">
       <colgroup>
         <col class="col-1">
         <col class="col-2">
@@ -91,8 +91,8 @@
               </span>
             </div>
           </td>
-          <td>
-            <div class="filelist__file__tools" ng-if="!file.editFile">
+          <td class="filelist__file__tools">
+            <span ng-if="!file.editFile">
               <a ng-href="" title="Edit tags" ng-click="file.editFile = true">
                 <i class="fa fa-pencil"></i>
               </a>
@@ -105,12 +105,13 @@
               <a ng-href="{{file.paths.file}}" title="Delete file..." data-method="delete" data-confirm="Are you sure?">
                 <i class="fa fa-trash"></i>
               </a>
-            </div>
+            </span>
             <div ng-if="file.editFile">
               <button ng-click="saveFile(file)">
                 <i class="fa fa-check-circle"></i>
                 Save
               </button>
+              <a href="" ng-click="file.editFile = false">Cancel</a>
             </div>
           </td>
         </tr>

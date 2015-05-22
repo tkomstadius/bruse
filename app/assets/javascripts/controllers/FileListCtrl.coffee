@@ -123,4 +123,7 @@
 
   $scope.hasFiles = ->
     Array.isArray($scope.files) && $scope.files.length > 0
+
+  $scope.editing = ->
+    _.any($scope.files, 'editFile': true)
 ]

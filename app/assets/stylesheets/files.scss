@@ -40,6 +40,9 @@
     &__name {
       color: $font-color;
     }
+    &__tools {
+      text-align: right;
+    }
   }
 
   td, th {
@@ -50,7 +53,8 @@
     text-overflow: ellipsis;
   }
 
-  td.filelist__file__tags {
+  td.filelist__file__tags,
+  td.filelist__file__tools {
     white-space: normal;
   }
 
@@ -79,8 +83,18 @@
   .col-6 {
     width: 6%;
   }
+  // adjust column width when editing
+  &--editing {
+    .col-5 {
+      width: 29%;
+    }
+    .col-6 {
+      width: 12%;
+    }
+  }
 }
 
+// more files
 .files {
   &__more {
     text-align: center;
