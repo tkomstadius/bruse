@@ -30,7 +30,6 @@
           <th>
             <a href="" ng-click="reverse = !reverse; order_by = 'name';">Filename</a>
           </th>
-          <th>&nbsp;</th>
           <th>
             <a href="" ng-click="reverse = !reverse; order_by = 'prettyFiletype';">Filetype</a>
           </th>
@@ -41,6 +40,7 @@
             <a href="" ng-click="reverse = !reverse; order_by = 'identity.name';">Identity</a>
           </th>
           <th>Tags</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
       <tbody>
@@ -61,17 +61,6 @@
               </span>
             </span>
           </td>
-          <td class="filelist__file__tools">
-            <a ng-if="!file.url" href="" ng-click="download(file.identity.id, file)">
-              <i class="fa fa-download"></i>
-            </a>
-            <a ng-click="previewFile(file)">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
-              <i class="fa fa-trash"></i>
-            </a>
-          </td>
           <td ng-attr-title="{{file.prettyFiletype}}">
             {{file.prettyFiletype}}
           </td>
@@ -84,7 +73,7 @@
             </span>
             {{file.identity.name}}
           </td>
-          <td>
+          <td class="filelist__file__tags">
             <!-- <a ng-href="{{file.paths.add_tags}}" title="Add tags">
               <i class="fa fa-plus-square"></i>
             </a> -->
@@ -96,13 +85,24 @@
               </button>
             </span>
             <div class="file__taglist" ng-hide="file.editTags">
-              <a ng-href="" title="Edit tags" ng-click="file.editTags = true">
-                <i class="fa fa-pencil"></i>
-              </a>
               <span ng-repeat="tag in file.tags">
                 <a ng-href="{{tag.path}}">#{{tag.name}}</a>
               </span>
             </div>
+          </td>
+          <td class="filelist__file__tools">
+            <a ng-href="" title="Edit tags" ng-click="file.editTags = true">
+              <i class="fa fa-pencil"></i>
+            </a>
+            <a ng-if="!file.url" title="Download..." href="" ng-click="download(file.identity.id, file)">
+              <i class="fa fa-download"></i>
+            </a>
+            <a ng-click="previewFile(file)" title="Preview file...">
+              <i class="fa fa-eye"></i>
+            </a>
+            <a ng-href="{{file.paths.file}}" title="Delete file..." data-method="delete" data-confirm="Are you sure?">
+              <i class="fa fa-trash"></i>
+            </a>
           </td>
         </tr>
       </tbody>

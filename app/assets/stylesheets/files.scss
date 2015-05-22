@@ -50,30 +50,34 @@
     text-overflow: ellipsis;
   }
 
+  td.filelist__file__tags {
+    white-space: normal;
+  }
+
   // column widths
   // file name
   .col-1 {
     width: 22%;
   }
-  // tools
-  .col-2 {
-    width: 5%;
-  }
   // filetype
-  .col-3 {
+  .col-2 {
     width: 10%;
   }
   // date
-  .col-4 {
+  .col-3 {
     width: 10%;
   }
   // identity
-  .col-5 {
-    width: 15%;
+  .col-4 {
+    width: 12%;
   }
   // tags
-  .col-6 {
+  .col-5 {
     width: 35%;
+  }
+  // tools
+  .col-6 {
+    width: 6%;
   }
 }
 
