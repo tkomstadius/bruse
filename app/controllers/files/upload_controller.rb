@@ -11,26 +11,19 @@ class Files::UploadController < Files::FilesController
       flash[:notice] = "Choose a file"
       redirect_to bruse_files_path
     else
+      @file = params[:bruse_file][:file]
       if @identity.name.downcase.include? "dropbox"
-        response = @identity.upload_to_dropbox(params[:bruse_file][:file])
-        file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
-                             foreign_ref: response["path"],
-                             filetype: response["mime_type"],
-                             identity: @identity)
+        file = BruseFile.new(upload_to_dropbox)
 
       elsif @identity.name.downcase.include? "google"
-        response = @identity.upload_to_google(params[:bruse_file][:file])
-        file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
-                             foreign_ref: response["id"],
-                             filetype: response["mimeType"],
-                             identity: @identity)
+        file = BruseFile.new(upload_to_google)
 
       elsif @identity.name.downcase.include? "bruse"
         uploader = LocalFileUploader.new
 
-        uploader.store!(params[:bruse_file][:file])
+        uploader.store!(@file)
 
-        file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
+        file = BruseFile.new(name: @file.original_filename,
                              foreign_ref: uploader.file.identifier,
                              filetype: uploader.content_type,
                              identity: current_user.local_identity)
@@ -50,62 +43,101 @@ class Files::UploadController < Files::FilesController
   def upload_from_base64
     @results = []
     @errors = []
-    file = create_drop_file(params[:object])
-    if @identity.service.include? 'local'
-      #check if user has local identity
-      if current_user.local_identity
-        # if so, create brusefile
-        # insert our file on the users local identity
-        if current_user.local_identity.bruse_files << file
-          # send response that everything is ok!
-          @results.push file.name
-        else
-          @errors.push "Could not save #{file.name}"
-        end
-      else
-        # no file! not working!
-        @results = []
-      end
-    elsif @identity.service.include? 'dropbox'
-      response = identity.upload_to_dropbox(file)
-      b_file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
-                           foreign_ref: response["path"],
-                           filetype: response["mime_type"],
-                           identity: identity)
-      if b_file.save!
-        @results.push file
-      else
-        @errors.push "Could not save #{file.name}"
-      end
-    elsif @identity.service.include? 'google'
+    params[:object][:data] = decode_file(params[:object][:data])
+    @file = params[:object]
+    if @identity.service.downcase.include? 'local'
+      new_file = BruseFile.new(create_local_file)
+    elsif @identity.service.downcase.include? 'dropbox'
+      new_file = BruseFile.new(upload_to_dropbox)
+    elsif @identity.service.downcase.include? 'google'
+      new_file = BruseFile.new(upload_to_google)
+    end
+
+    # insert our file on the users local identity
+    if @identity.bruse_files << new_file
+      # send response that everything is ok!
+      @results.push new_file.name
     else
-      flash[:notice] = "No storage option"
+      @errors.push "Could not save #{new_file.name}"
     end
   end
 
   private
+    # Private: Decode file conten
+    #
+    # file - the file content
+    #
+    # Returns decoded file
+    def decode_file(file)
+      Base64.urlsafe_decode64(file).force_encoding('utf-8')
+    end
+
     # Private: Create a file containing dropped content
     #
     # content   - the file content
     #
     # Returns a new BruseFile
-    def create_drop_file(content)
-      if content[:type] == 'text/uri-list'
-        name = content[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
+    def create_local_file
+      if @file[:type] == 'text/uri-list'
+        name = @file[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
         BruseFile.new(name: name,
-                      foreign_ref: content[:data],
-                      filetype: content[:type])
+                      foreign_ref: @file[:data],
+                      filetype: @file[:type])
       else
         fileref = SecureRandom.uuid
         # generate file name
         local_file_name = Rails.root.join('usercontent', fileref)
         # create file
-        decoded_content =  Base64.urlsafe_decode64(content[:data]).force_encoding('utf-8')
-        IO.write(local_file_name, decoded_content)
-        # return new BruseFile
-        BruseFile.new(name: content[:name],
-                      foreign_ref: fileref,
-                      filetype: content[:type])
+        IO.write(local_file_name, @file[:data])
+        return {
+          name: @file[:name],
+          foreign_ref: fileref,
+          filetype: @file[:type],
+          identity: @identity
+        }
+      end
+    end
+
+    # Private: Uploads the file to dropbox
+    #
+    # file - the file that's being uploaded
+    #
+    # returns BruseFile parameters
+    def upload_to_dropbox
+      response = @identity.upload_to_dropbox(identity_friendly_params)
+      return {
+        name: identity_friendly_params[:original_filename],
+        foreign_ref: response["path"],
+        filetype: response["mime_type"],
+        identity: @identity
+      }
+    end
+
+    # Private: Uploads the file to google drive
+    #
+    # file - the file that's being uploaded
+    #
+    # returns BruseFile parameters
+    def upload_to_google
+      response = @identity.upload_to_google(identity_friendly_params)
+      return {
+        name: identity_friendly_params[:original_filename],
+        foreign_ref: response["id"],
+        filetype: response["mimeType"],
+        identity: @identity
+      }
+    end
+
+    # Params suitable for the identity functions
+    def identity_friendly_params
+      begin
+        Hash[:original_filename => @file[:name],
+             :tempfile => @file[:data],
+             :content_type => @file[:type]]
+      rescue
+        Hash[:original_filename => @file.original_filename,
+             :tempfile => @file.tempfile,
+             :content_type => @file.content_type]
       end
     end
 end
