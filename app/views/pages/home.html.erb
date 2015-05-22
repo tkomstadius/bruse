@@ -12,7 +12,7 @@
     <div ng-show="isDropped">
       <!-- TODO: check strings for saving later -->
       <% current_user.identities.each do |identity| %>
-        <button ng-click="saveOpt('<%= identity.id %>')"><%= identity.name %></button>
+        <button ng-click="saveOpt({id:'<%= identity.id %>', name: '<%= identity.name %>'})"><%= identity.name %></button>
       <% end %>
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
