@@ -30,6 +30,11 @@
   float: left;
 }
 
+/* text centering */
+.u-center-text {
+  text-align: center;
+}
+
 .u-cf {
   // use bourbons clearfix
   @include clearfix;

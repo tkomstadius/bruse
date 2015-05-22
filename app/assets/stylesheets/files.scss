@@ -76,3 +76,10 @@
     width: 35%;
   }
 }
+
+.files {
+  &__more {
+    text-align: center;
+    padding: $common-padding 0;
+  }
+}
