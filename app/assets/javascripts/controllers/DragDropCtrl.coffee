@@ -32,4 +32,6 @@
           console.error "Couldn't save.."
           return
           )
+
+      $scope.droppedFiles = []
 ]
