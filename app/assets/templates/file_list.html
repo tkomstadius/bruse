@@ -44,22 +44,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr
+        <tr class="filelist__file"
           ng-repeat="file in files | IdentityFilter : identity_filter | orderBy : order_by : reverse"
-          class="filelist__file"
           ng-dblclick="previewFile(file)">
           <td class="filelist__file__name" ng-attr-title="{{file.name}}">
-            <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
-              <i class="fa fa-external-link"></i> {{file.name}}
-            </a>
-            <span ng-if="!file.url">
-              <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
-                {{file.name}}
+            <div ng-if="file.editFile">
+              <input type="text" class="wide" ng-model="file.name"
+                placeholder="File name..." ng-submit="saveFile(file)" autofocus>
+            </div>
+            <div ng-if="!file.editFile">
+              <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
+                <i class="fa fa-external-link"></i> {{file.name}}
               </a>
-              <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0">
-                {{file.name}}
+              <span ng-if="!file.url">
+                <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
+                  {{file.name}}
+                </a>
+                <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0">
+                  {{file.name}}
+                </span>
               </span>
-            </span>
+            </div>
           </td>
           <td ng-attr-title="{{file.prettyFiletype}}">
             {{file.prettyFiletype}}
@@ -77,32 +82,36 @@
             <!-- <a ng-href="{{file.paths.add_tags}}" title="Add tags">
               <i class="fa fa-plus-square"></i>
             </a> -->
-            <span ng-show="file.editTags">
+            <span ng-show="file.editFile">
               <js-tag js-tag-options="file.jsTagOptions"></js-tag>
-              <button ng-click="saveTags(file)">
-                <i class="fa fa-check-circle"></i>
-                Save
-              </button>
             </span>
-            <div class="file__taglist" ng-hide="file.editTags">
+            <div class="file__taglist" ng-hide="file.editFile">
               <span ng-repeat="tag in file.tags">
                 <a ng-href="{{tag.path}}">#{{tag.name}}</a>
               </span>
             </div>
           </td>
-          <td class="filelist__file__tools">
-            <a ng-href="" title="Edit tags" ng-click="file.editTags = true">
-              <i class="fa fa-pencil"></i>
-            </a>
-            <a ng-if="!file.url" title="Download..." href="" ng-click="download(file.identity.id, file)">
-              <i class="fa fa-download"></i>
-            </a>
-            <a ng-click="previewFile(file)" title="Preview file...">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a ng-href="{{file.paths.file}}" title="Delete file..." data-method="delete" data-confirm="Are you sure?">
-              <i class="fa fa-trash"></i>
-            </a>
+          <td>
+            <div class="filelist__file__tools" ng-if="!file.editFile">
+              <a ng-href="" title="Edit tags" ng-click="file.editFile = true">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <a ng-if="!file.url" title="Download..." href="" ng-click="download(file.identity.id, file)">
+                <i class="fa fa-download"></i>
+              </a>
+              <a ng-click="previewFile(file)" title="Preview file...">
+                <i class="fa fa-eye"></i>
+              </a>
+              <a ng-href="{{file.paths.file}}" title="Delete file..." data-method="delete" data-confirm="Are you sure?">
+                <i class="fa fa-trash"></i>
+              </a>
+            </div>
+            <div ng-if="file.editFile">
+              <button ng-click="saveFile(file)">
+                <i class="fa fa-check-circle"></i>
+                Save
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

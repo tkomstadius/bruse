@@ -130,5 +130,22 @@
         .catch((response) ->
           console.error response
           )
+
+    #
+    # Update file
+    #
+    update: (file) ->
+      data =
+        bruse_file:
+          id: file.id
+          name: file.name
+        tags: file.unsavedTags.getTagValues()
+      promise = $http.put('/files/update.json', data)
+        .then((response) ->
+          response.data
+          )
+        .catch((response) ->
+          console.error response
+          )
   }
 ]
