@@ -11,44 +11,54 @@ class Files::UploadController < Files::FilesController
       flash[:notice] = "Choose a file"
       redirect_to bruse_files_path
     else
-      if params[:bruse_file][:file]
-        @file = params[:bruse_file][:file]
+      if params[:bruse_file][:type] == 'text/uri-list'
+        name = params[:bruse_file][:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
+        @file = BruseFile.new(
+          name: name,
+          foreign_ref: params[:bruse_file][:data],
+          filetype: params[:bruse_file][:type],
+          identity: @identity
+        )
       else
-        # create a tempfile from drag and drop upload
-        file_data = Tempfile.new(params[:bruse_file][:name])
-        file_data.binmode
-        file_data.write Base64.decode64(params[:bruse_file][:data])
+        if params[:bruse_file][:file]
+          @file = params[:bruse_file][:file]
+        else
+          # create a tempfile from drag and drop upload
+          file_data = Tempfile.new(params[:bruse_file][:name])
+          file_data.binmode
+          file_data.write Base64.decode64(params[:bruse_file][:data])
 
-        # mimic an uploadfile to be able to continue with the upload
-        @file = ActionDispatch::Http::UploadedFile.new({
-          :filename => params[:bruse_file][:name],
-          :content_type => params[:bruse_file][:type],
-          :tempfile => file_data
-        })
+          # mimic an uploadfile to be able to continue with the upload
+          @file = ActionDispatch::Http::UploadedFile.new({
+            :filename => params[:bruse_file][:name],
+            :content_type => params[:bruse_file][:type],
+            :tempfile => file_data
+          })
+        end
+
+        # Determine where to store the file
+        if @identity.name.downcase.include? "dropbox"
+          upload_to_dropbox
+        elsif @identity.name.downcase.include? "google"
+          upload_to_google
+        elsif @identity.name.downcase.include? "bruse"
+          create_local_file
+        end
       end
-      if @identity.name.downcase.include? "dropbox"
-        upload_to_dropbox
-      elsif @identity.name.downcase.include? "google"
-        upload_to_google
-      elsif @identity.name.downcase.include? "bruse"
-        uploader = LocalFileUploader.new
 
-        uploader.store!(@file)
-
-        @file = BruseFile.new(name: @file.original_filename,
-                              foreign_ref: uploader.file.identifier,
-                              filetype: uploader.content_type,
-                              identity: current_user.local_identity)
-      end
-
+      # Make a good response
       respond_to do |format|
-        if @file.save!
+        begin
+          @file.save!
           flash[:notice] = "#{@file.name} was saved in #{@identity.name}"
           format.html { redirect_to bruse_files_path }
           format.json { render :upload }
-        else
-          @error = ["Could not save the file!"]
-          flash[:notice] = "Could not save the file!"
+        rescue ActiveRecord::RecordInvalid => e
+          @error = []
+          e.record.errors.messages.each do |k, v|
+            @error += v
+          end
+          flash[:notice] = @error.first
           format.html { redirect_to bruse_files_path }
           format.json { render :upload }
         end
@@ -65,23 +75,23 @@ class Files::UploadController < Files::FilesController
     def create_local_file
       if @file.content_type == 'text/uri-list'
         name = @file[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
-        return {
+        @file = BruseFile.new(
           name: name,
-          foreign_ref: @file[:data],
-          filetype: @file[:type],
+          foreign_ref: @file.data,
+          filetype: @file.content_type,
           identity: @identity
-        }
+        )
       else
         uploader = LocalFileUploader.new
 
         uploader.store!(@file)
 
-        return {
+        @file = BruseFile.new(
           name: @file.original_filename,
           foreign_ref: uploader.file.identifier,
           filetype: @file.content_type,
           identity: @identity
-        }
+        )
       end
     end
 
