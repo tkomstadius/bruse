@@ -1,4 +1,4 @@
-@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'JSTagsCollection', 'MimeDictionary', ($scope, $http, JSTagsCollection, MimeDictionary) ->
+@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'JSTagsCollection', 'MimeDictionary', 'defaults', ($scope, $http, JSTagsCollection, MimeDictionary, defaults) ->
   $scope.search = ""
   $scope.actualSearch = ""
   searchString = ""
@@ -41,13 +41,10 @@
               onlyTags = _.pluck(file.tags, 'name')
               # append jsTag stuff to every file
               file.unsavedTags = new JSTagsCollection(onlyTags)
-              # TODO: use some sort of default for bruse jsTags here?
-              file.jsTagOptions =
-                breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-                tags: file.unsavedTags
-                texts:
-                  inputPlaceHolder: "Tags..."
-                  removeSymbol: String.fromCharCode(215)
+              # load global default for jsTagOptions
+              file.jsTagOptions = angular.copy(defaults.jsTagOptions)
+              # append unsaved tags
+              file.jsTagOptions.tags = file.unsavedTags
               # append every file to the list of files
               $scope.files.push file
               )

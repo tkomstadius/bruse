@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'JSTagsCollection', 'MimeDictionary', 'FilePreviewer', ($scope, $filter, FileHandler, TagHandler, JSTagsCollection, MimeDictionary, FilePreviewer) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'JSTagsCollection', 'MimeDictionary', 'FilePreviewer', 'defaults', ($scope, $filter, FileHandler, TagHandler, JSTagsCollection, MimeDictionary, FilePreviewer, defaults) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
@@ -42,13 +42,10 @@
             onlyTags = _.pluck(file.tags, 'name')
             # append jsTag stuff to every file
             file.unsavedTags = new JSTagsCollection(onlyTags)
-            # TODO: use some sort of default for bruse jsTags here?
-            file.jsTagOptions =
-              breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-              tags: file.unsavedTags
-              texts:
-                inputPlaceHolder: "Tags..."
-                removeSymbol: String.fromCharCode(215)
+            # load global default for jsTagOptions
+            file.jsTagOptions = angular.copy(defaults.jsTagOptions)
+            # append unsaved tags
+            file.jsTagOptions.tags = file.unsavedTags
             # append every file to the list of files
             $scope.files.push file
             )
