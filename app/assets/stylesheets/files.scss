@@ -22,6 +22,7 @@
 .filelist {
   width: 100%;
   table-layout: fixed;
+  color: lighten($font-color, 20%);
 
   &__header {
     text-align: left;
@@ -33,11 +34,20 @@
 
     &:hover {
       background: $header-background;
+      color: $font-color;
+    }
+
+    &__name {
+      color: $font-color;
     }
   }
 
   td, th {
     padding: .5 * $file-list-padding;
+    // replace overflowing texts with "..."
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   // column widths

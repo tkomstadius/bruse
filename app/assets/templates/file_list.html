@@ -45,15 +45,15 @@
       </thead>
       <tbody>
         <tr ng-repeat="file in files | IdentityFilter : identity_filter | orderBy : order_by : reverse" class="filelist__file">
-          <td>
-            <a ng-if="file.url" ng-href="{{file.url}}" target="_blank" class="filelist__file__name">
+          <td class="filelist__file__name" ng-attr-title="{{file.name}}">
+            <a ng-if="file.url" ng-href="{{file.url}}" target="_blank">
               <i class="fa fa-external-link"></i> {{file.name}}
             </a>
             <span ng-if="!file.url">
-              <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank" class="filelist__file__name">
+              <a ng-if="file.filetype.indexOf('google-apps') > -1" ng-href="{{file.link}}" target="_blank">
                 {{file.name}}
               </a>
-              <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0" class="filelist__file__name">
+              <span ng-if="file.filetype != 'bruse/url' && file.filetype.indexOf('google-apps') < 0">
                 {{file.name}}
               </span>
             </span>
@@ -97,12 +97,7 @@
                 <i class="fa fa-pencil"></i>
               </a>
               <span ng-repeat="tag in file.tags">
-                <a ng-href="{{tag.path}}">
-                  #{{tag.name}}
-                </a>
-                <a ng-click="cutTag(file, tag.id)">
-                  <i class="fa fa-minus-square"></i>
-                </a>
+                <a ng-href="{{tag.path}}">#{{tag.name}}</a>
               </span>
             </div>
           </td>
