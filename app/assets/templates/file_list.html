@@ -15,6 +15,14 @@
     </select>
   </div>
 
+  <pre>
+    absoluteLimit: {{absoluteLimit}}
+    offset: {{offset}}
+    files.length: {{files.length}}
+    limit: {{limit}}
+    moreAvailable: {{moreAvailable}}
+  </pre>
+
   <div ng-if="view_list">
     <table ng-if="hasFiles()" class="filelist">
       <colgroup>
@@ -69,11 +77,11 @@
               <i class="fa fa-trash"></i>
             </a>
           </td>
-          <td>
+          <td ng-attr-title="{{file.prettyFiletype}}">
             {{file.prettyFiletype}}
           </td>
-          <td>{{file.date}}</td>
-          <td>
+          <td ng-attr-title="{{file.date}}">{{file.date}}</td>
+          <td ng-attr-title="{{file.identity.name}}">
             <span ng-switch="file.identity.service">
               <i class="fa fa-dropbox" ng-switch-when="dropbox_oauth2"></i>
               <i class="fa fa-google" ng-switch-when="google_oauth2"></i>
@@ -103,7 +111,7 @@
           </td>
         </tr>
       </tbody>
-     </table>
+    </table>
   </div>
 
   <div ng-if="!view_list && hasFiles()">
@@ -114,5 +122,11 @@
         <div ng-repeat="tag in file.tags">{{tag.name}}</div>
       </div>
     </div>
+  </div>
+
+  <div class="files__more" ng-if="moreAvailable">
+    <button class="green" ng-click="loadMore()">
+      Load more!
+    </button>
   </div>
 </div>
