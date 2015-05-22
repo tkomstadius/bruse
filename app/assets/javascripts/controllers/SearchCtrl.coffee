@@ -1,4 +1,4 @@
-@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'JSTagsCollection', ($scope, $http, JSTagsCollection) ->
+@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'FilePreparer', ($scope, $http, FilePreparer) ->
   $scope.search = ""
   $scope.actualSearch = ""
   searchString = ""
@@ -36,19 +36,8 @@
           # send search object to server
           $http.post('/search', searchObject).then((response) ->
             _.each(response.data.files, (file) ->
-              # extract tag names
-              onlyTags = _.pluck(file.tags, 'name')
-              # append jsTag stuff to every file
-              file.unsavedTags = new JSTagsCollection(onlyTags)
-              # TODO: use some sort of default for bruse jsTags here?
-              file.jsTagOptions =
-                breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-                tags: file.unsavedTags
-                texts:
-                  inputPlaceHolder: "Tags..."
-                  removeSymbol: String.fromCharCode(215)
-              # append every file to the list of files
-              $scope.files.push file
+              # append every prepared file to the list of files
+              $scope.files.push FilePreparer(file)
               )
             )
           .catch((response) ->

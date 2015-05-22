@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'JSTagsCollection', 'MimeDictionary', 'FilePreviewer', '$parse', ($scope, $filter, FileHandler, TagHandler, JSTagsCollection, MimeDictionary, FilePreviewer, $parse) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'MimeDictionary', 'FilePreviewer', '$parse', 'FilePreparer', ($scope, $filter, FileHandler, TagHandler, MimeDictionary, FilePreviewer, $parse, FilePreparer) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
@@ -13,8 +13,10 @@
     self.$element = element
     # if files are provided through the directive attribute, use those files...
     if attrs.files
-      $scope.files = $parse(attrs.files)($scope)
-    else 
+      tempFiles = $parse(attrs.files)($scope.files)
+      tempFiles.map(FilePreparer)
+      $scope.files = tempFiles
+    else
       # ... or use the path provided to the directive...
       # ... otherwise collect them from server
       offset = 0
@@ -37,19 +39,8 @@
 
           # iterate over all the collected files
           _.each(data, (file) ->
-            # extract tag names
-            onlyTags = _.pluck(file.tags, 'name')
-            # append jsTag stuff to every file
-            file.unsavedTags = new JSTagsCollection(onlyTags)
-            # TODO: use some sort of default for bruse jsTags here?
-            file.jsTagOptions =
-              breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-              tags: file.unsavedTags
-              texts:
-                inputPlaceHolder: "Tags..."
-                removeSymbol: String.fromCharCode(215)
             # append every file to the list of files
-            $scope.files.push file
+            $scope.files.push FilePreparer(file)
             )
           )
       recursiveCollect()

@@ -37,7 +37,7 @@
         .catch((response) ->
           console.error "Couldn't save.."
           return
-          ) 
+          )
 
   $scope.getSavedFiles = ->
     $scope.savedFiles = $scope.addedFile
@@ -45,6 +45,6 @@
       return true
     else
       return false
-]   
+]
 
 
