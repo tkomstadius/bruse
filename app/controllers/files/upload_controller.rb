@@ -80,9 +80,12 @@ class Files::UploadController < Files::FilesController
     def create_local_file
       if @file[:type] == 'text/uri-list'
         name = @file[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
-        BruseFile.new(name: name,
-                      foreign_ref: @file[:data],
-                      filetype: @file[:type])
+        return {
+          name: name,
+          foreign_ref: @file[:data],
+          filetype: @file[:type],
+          identity: @identity
+        }
       else
         fileref = SecureRandom.uuid
         # generate file name
