@@ -83,3 +83,20 @@
     padding: $common-padding 0;
   }
 }
+
+.filter {
+  @extend .u-cf;
+  background: $silver;
+  padding: $common-padding;
+
+  &__view,
+  &__identity {
+    display: inline-block;
+  }
+  &__view {
+
+  }
+  &__identity {
+    float: right;
+  }
+}

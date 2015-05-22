@@ -1,18 +1,24 @@
 <div class="files">
-  <div class="button-group">
-    <button ng-click="view_list = true" ng-disabled="view_list">
-      List
-    </button>
-    <button ng-click="view_list = false" ng-disabled="!view_list">
-      Block
-    </button>
-  </div>
-
   <div class="filter">
-    Showing files from
-    <select ng-model="identity_filter" ng-options="i.id as i.name for i in identities()">
-      <option value="">--All--</option>
-    </select>
+    <div class="filter__view button-group">
+      <button class="bg" ng-click="view_list = true" ng-disabled="view_list">
+        <i class="fa fa-th-list"></i>
+        List
+      </button>
+      <button class="bg" ng-click="view_list = false" ng-disabled="!view_list">
+        <i class="fa fa-th"></i>
+        Block
+      </button>
+    </div>
+
+    <div class="filter__identity">
+      <span class="u-small-caps">
+        Show files from
+      </span>
+      <select ng-model="identity_filter" ng-options="i.id as i.name for i in identities()">
+        <option value="">--All--</option>
+      </select>
+    </div>
   </div>
 
   <div ng-if="view_list">

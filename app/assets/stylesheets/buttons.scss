@@ -3,21 +3,18 @@ button,
 input[type="submit"],
 input[type="reset"],
 input[type="button"] {
+  @extend .u-small-caps;
   background-color: transparent;
   border-radius: $common-border-radius;
   border: 1px solid $gray;
   color: $font-color;
   cursor: pointer;
   display: inline-block;
-  font-size: 11px;
   font-weight: 600;
   height: $button-height;
   line-height: 38px;
-  letter-spacing: .1rem;
   padding: 0 2 * $common-padding;
   text-align: center;
-  text-transform: uppercase;
-  text-decoration: none;
   white-space: nowrap;
 
   &:hover,
@@ -29,6 +26,10 @@ input[type="button"] {
 
   &.wide {
     @extend .u-full-width;
+  }
+
+  &.bg {
+    background-color: #fff;
   }
 
   // disabled buttons

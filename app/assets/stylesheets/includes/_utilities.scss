@@ -35,6 +35,13 @@
   text-align: center;
 }
 
+.u-small-caps {
+  font-size: 11px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
 .u-cf {
   // use bourbons clearfix
   @include clearfix;
