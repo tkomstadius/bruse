@@ -41,6 +41,8 @@ gem 'font-awesome-sass'
 gem 'bourbon'
 # normalize!
 gem 'normalize-rails'
+# improve support for retarded browsers!
+gem 'html5shiv-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
@@ -80,6 +82,8 @@ gem 'google-api-client'
 # File uploading
 gem 'carrierwave'
 
+# Delay work
+gem 'delayed_job_active_record'
 
 ## Developtment tools
 group :development, :test do
@@ -121,4 +125,9 @@ group :test do
   gem 'rack_session_access'
   # test coverage
   gem 'codeclimate-test-reporter', require: nil
+end
+
+group :production do
+  # nice webserver
+  gem "puma"
 end
