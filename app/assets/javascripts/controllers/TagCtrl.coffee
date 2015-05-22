@@ -1,4 +1,4 @@
-@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'TagHandler', 'JSTagsCollection', ($scope, $rootScope, $location, $routeParams, TagHandler, JSTagsCollection) ->
+@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'TagHandler', 'JSTagsCollection', 'defaults', ($scope, $rootScope, $location, $routeParams, TagHandler, JSTagsCollection, defaults) ->
   # Redirect if no files are present
   if !$rootScope.new_files || !$rootScope.new_files.length
     $location.path('/service/'+$routeParams.identity_id+'/files/add')
@@ -7,12 +7,8 @@
 
   # Some jsTag options
   $scope.tags = new JSTagsCollection();
-  $scope.jsTagOptions =
-    texts:
-      inputPlaceHolder: "Tags..."
-      removeSymbol: String.fromCharCode(215)
-    tags: $scope.tags
-    breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
+  $scope.jsTagOptions = angular.copy(defaults.jsTagOptions)
+  $scope.jsTagOptions.tags = $scope.tags
 
   # Initiate the tags variable for each file
   $scope.files.forEach((file) ->
