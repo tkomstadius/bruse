@@ -82,6 +82,8 @@ gem 'google-api-client'
 # File uploading
 gem 'carrierwave'
 
+# Delay work
+gem 'delayed_job_active_record'
 
 ## Developtment tools
 group :development, :test do
@@ -123,4 +125,9 @@ group :test do
   gem 'rack_session_access'
   # test coverage
   gem 'codeclimate-test-reporter', require: nil
+end
+
+group :production do
+  # nice webserver
+  gem "puma"
 end

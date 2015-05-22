@@ -31,6 +31,9 @@ Rails.application.routes.draw do
       get '/files/add/tag', to: 'create#new'
     end
 
+    # update file
+    put '/files/update', to: 'files#update', as: 'update_file'
+
     # downloads a file
     get '/get/:download_hash(/:name)', to: 'download#download', via: :all
 
