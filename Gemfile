@@ -126,3 +126,8 @@ group :test do
   # test coverage
   gem 'codeclimate-test-reporter', require: nil
 end
+
+group :production do
+  # nice webserver
+  gem "puma"
+end
