@@ -12,7 +12,9 @@
   this.init = (element, attrs) ->
     self.$element = element
     # if files are provided through the directive attribute, use those files...
-    unless attrs.files
+    if attrs.files
+      $scope.files = $parse(attrs.files)($scope)
+    else 
       # ... or use the path provided to the directive...
       # ... otherwise collect them from server
       offset = 0
