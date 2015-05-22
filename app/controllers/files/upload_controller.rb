@@ -3,32 +3,30 @@ class Files::UploadController < Files::FilesController
   # this could be a serius problem in security?
   skip_before_filter :verify_authenticity_token, only: :upload_from_base64
   skip_before_filter :set_file
-  skip_before_filter :set_identity
+  skip_before_filter :set_identity, only: :upload_from_base64
 
   require 'base64'
 
   def upload
-    identity = Identity.find(params[:service])
-
     if params[:bruse_file].blank?
       flash[:notice] = "Choose a file"
       redirect_to bruse_files_path
     else
-      if identity.name.downcase.include? "dropbox"
-        response = identity.upload_to_dropbox(params[:bruse_file][:file])
+      if @identity.name.downcase.include? "dropbox"
+        response = @identity.upload_to_dropbox(params[:bruse_file][:file])
         file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
                              foreign_ref: response["path"],
                              filetype: response["mime_type"],
-                             identity: identity)
+                             identity: @identity)
 
-      elsif identity.name.downcase.include? "google"
-        response = identity.upload_to_google(params[:bruse_file][:file])
+      elsif @identity.name.downcase.include? "google"
+        response = @identity.upload_to_google(params[:bruse_file][:file])
         file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
                              foreign_ref: response["id"],
                              filetype: response["mimeType"],
-                             identity: identity)
+                             identity: @identity)
 
-      elsif identity.name.downcase.include? "bruse"
+      elsif @identity.name.downcase.include? "bruse"
         uploader = LocalFileUploader.new
 
         uploader.store!(params[:bruse_file][:file])
@@ -40,7 +38,7 @@ class Files::UploadController < Files::FilesController
       end
 
       if file.save!
-        flash[:notice] = "#{params[:bruse_file][:file].original_filename} was saved in #{identity.name}"
+        flash[:notice] = "#{params[:bruse_file][:file].original_filename} was saved in #{@identity.name}"
         redirect_to bruse_files_path
       else
         flash[:notice] = "Could not save the file!"
@@ -80,7 +78,7 @@ class Files::UploadController < Files::FilesController
         @results.push file
       else
         @errors.push "Could not save #{file.name}"
-      end 
+      end
     elsif params[:location] == 'google'
     else
       flash[:notice] = "No storage option"
