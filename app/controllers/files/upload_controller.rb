@@ -3,7 +3,6 @@ class Files::UploadController < Files::FilesController
   # this could be a serius problem in security?
   skip_before_filter :verify_authenticity_token, only: :upload_from_base64
   skip_before_filter :set_file
-  skip_before_filter :set_identity, only: :upload_from_base64
 
   require 'base64'
 
@@ -51,9 +50,8 @@ class Files::UploadController < Files::FilesController
   def upload_from_base64
     @results = []
     @errors = []
-    identity = Identity.find(params[:service])
     file = create_drop_file(params[:object])
-    if params[:location] == 'local'
+    if @identity.service.include? 'local'
       #check if user has local identity
       if current_user.local_identity
         # if so, create brusefile
@@ -68,7 +66,7 @@ class Files::UploadController < Files::FilesController
         # no file! not working!
         @results = []
       end
-    elsif params[:location] == 'dropbox'
+    elsif @identity.service.include? 'dropbox'
       response = identity.upload_to_dropbox(file)
       b_file = BruseFile.new(name: params[:bruse_file][:file].original_filename,
                            foreign_ref: response["path"],
@@ -79,7 +77,7 @@ class Files::UploadController < Files::FilesController
       else
         @errors.push "Could not save #{file.name}"
       end
-    elsif params[:location] == 'google'
+    elsif @identity.service.include? 'google'
     else
       flash[:notice] = "No storage option"
     end

@@ -19,7 +19,7 @@
 
       # send object to server
       _.each $scope.droppedFiles, (file) ->
-        $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
+        $http.post('/upload_drop.json', {object: file, identity_id: location}).then((response) ->
           # WHY do I also get previous saves?
           if response.data.error != []
             $scope.isSaved = true
@@ -32,5 +32,4 @@
           console.error "Couldn't save.."
           return
           )
-] 
-
+]
