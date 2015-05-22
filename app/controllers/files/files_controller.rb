@@ -48,6 +48,38 @@ class Files::FilesController < ApplicationController
     @files = @identity.bruse_files
   end
 
+  # PUT
+  #
+  # params:
+  #   :bruse_file =>
+  #     :id:integer
+  #     :name:string
+  #   :tags =>
+  #     :names:string[]
+  #
+  # returns:
+  #   :bruse_file =>
+  #     partial files/files/_files.json
+  #   :error:string if @error =>
+  #
+  def update
+    @file = BruseFile.find(params[:bruse_file][:id])
+    if @file.update(file_update_params)
+      new_tags = []
+      params[:tags].each do |tag_name|
+        new_tags.push Tag.find_or_create_by(tag_name)
+      end
+      @file.tags = new_tags
+
+      # save the changes
+      unless @file.save!
+        @error = "Error saving tags"
+      end
+    else
+      @error = "Couldn't update file"
+    end
+  end
+
   protected
     # Protected: Set current identity from request parameters.
     def set_identity
@@ -62,5 +94,10 @@ class Files::FilesController < ApplicationController
     # Protected: Set file from request parameters
     def set_file
       @file = BruseFile.find(params[:id])
+    end
+
+  private
+    def file_update_params
+      params.require(:bruse_file).permit(:name)
     end
 end
