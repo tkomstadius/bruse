@@ -34,10 +34,10 @@
             <a href="" ng-click="reverse = !reverse; order_by = 'prettyFiletype';">Filetype</a>
           </th>
           <th>
-            <a href="" ng-click="reverse = !reverse; order_by = 'date';">Date</a>
+            <a href="" ng-click="reverse = !reverse; order_by = 'date';">Date added</a>
           </th>
           <th>
-            <a href="" ng-click="reverse = !reverse; order_by = 'identity.name';">Identity</a>
+            <a href="" ng-click="reverse = !reverse; order_by = 'identity.name';">Location</a>
           </th>
           <th>Tags</th>
           <th>&nbsp;</th>
@@ -93,7 +93,7 @@
           </td>
           <td class="filelist__file__tools">
             <span ng-if="!file.editFile">
-              <a ng-href="" title="Edit tags" ng-click="file.editFile = true">
+              <a ng-href="" title="Edit tags" ng-click="file.editFile = true; file.oldName = file.name">
                 <i class="fa fa-pencil"></i>
               </a>
               <a ng-if="!file.url" title="Download..." href="" ng-click="download(file.identity.id, file)">
@@ -111,7 +111,7 @@
                 <i class="fa fa-check-circle"></i>
                 Save
               </button>
-              <a href="" ng-click="file.editFile = false">Cancel</a>
+              <a href="" ng-click="file.editFile = false; file.name = file.oldName">Cancel</a>
             </div>
           </td>
         </tr>
