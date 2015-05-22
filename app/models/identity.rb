@@ -207,7 +207,7 @@ class Identity < ActiveRecord::Base
     self.user.save!
 
     begin
-      response = @client.put_file("/Bruse/#{file[:original_filename]}", file[:tempfile])
+      response = @client.put_file("/Bruse/#{file.original_filename}", file.tempfile)
     rescue
       # In case something went wrong
       return nil
@@ -254,17 +254,17 @@ class Identity < ActiveRecord::Base
 
     # Set file information
     file = drive.files.insert.request_schema.new({
-      'title' => localFile[:original_filename].to_s.force_encoding("UTF-8"),
-      'description' => localFile[:tempfile].to_s.force_encoding("UTF-8"),
-      'mimeType' => localFile[:content_type].to_s.force_encoding("UTF-8")
+      'title' => localFile.original_filename.to_s.force_encoding("UTF-8"),
+      'description' => localFile.tempfile.to_s.force_encoding("UTF-8"),
+      'mimeType' => localFile.content_type.to_s.force_encoding("UTF-8")
     })
 
     # Set parent folder
     file.parents = [{'id' => folder_id}]
 
     media = Google::APIClient::UploadIO.new(localFile,
-                                            localFile[:content_type].to_s.force_encoding("UTF-8"),
-                                            localFile[:original_filename].to_s.force_encoding("UTF-8"))
+                                            localFile.content_type,
+                                            localFile.original_filename)
 
     result = @client.execute(
       :api_method => drive.files.insert,
