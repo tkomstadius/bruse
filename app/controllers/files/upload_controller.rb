@@ -41,6 +41,10 @@ class Files::UploadController < Files::FilesController
         end
       end
 
+      # Set default identity id
+      @identity.user.default_identity_id = @identity.id
+      @identity.user.save!
+
       # Make a good response
       respond_to do |format|
         # Try to save the file

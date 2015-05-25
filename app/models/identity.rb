@@ -203,9 +203,6 @@ class Identity < ActiveRecord::Base
   def upload_to_dropbox(file)
     set_client
 
-    self.user.default_identity_id = self.id
-    self.user.save!
-
     begin
       response = @client.put_file("/Bruse/#{file.original_filename}", file.tempfile)
     rescue
@@ -221,9 +218,6 @@ class Identity < ActiveRecord::Base
 
   def upload_to_google(localFile)
     set_client
-
-    self.user.default_identity_id = self.id
-    self.user.save!
 
     drive = @client.discovered_api('drive', 'v2')
 
