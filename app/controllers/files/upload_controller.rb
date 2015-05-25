@@ -23,28 +23,12 @@ class Files::UploadController < Files::FilesController
     else
       # Is the uploaded file a URL?
       if params[:bruse_file][:type] == 'text/uri-list'
-        name = params[:bruse_file][:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
-        @file = BruseFile.new(
-          name: name,
-          foreign_ref: params[:bruse_file][:data],
-          filetype: params[:bruse_file][:type],
-          identity: @identity
-        )
+        create_url_file
       else
         if params[:bruse_file][:file]
           @file = params[:bruse_file][:file]
         else
-          # create a tempfile from drag and drop upload
-          file_data = Tempfile.new(params[:bruse_file][:name])
-          file_data.binmode
-          file_data.write Base64.decode64(params[:bruse_file][:data])
-
-          # mimic an uploadfile to be able to continue with the upload
-          @file = ActionDispatch::Http::UploadedFile.new({
-            :filename => params[:bruse_file][:name],
-            :content_type => params[:bruse_file][:type],
-            :tempfile => file_data
-          })
+          decode_base64
         end
 
         # Determine where to store the file
@@ -85,6 +69,36 @@ class Files::UploadController < Files::FilesController
   end
 
   private
+    # Private: decode base64 to a tempfile object
+    #
+    # Creates @file object
+    def decode_base64
+      # create a tempfile from drag and drop upload
+      file_data = Tempfile.new(params[:bruse_file][:name])
+      file_data.binmode
+      file_data.write Base64.decode64(params[:bruse_file][:data])
+
+      # mimic an uploadfile to be able to continue with the upload
+      @file = ActionDispatch::Http::UploadedFile.new({
+        :filename => params[:bruse_file][:name],
+        :content_type => params[:bruse_file][:type],
+        :tempfile => file_data
+      })
+    end
+
+    # Private: creates a url brusefile
+    #
+    # Creates @file object
+    def create_url_file
+      name = params[:bruse_file][:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
+      @file = BruseFile.new(
+        name: name,
+        foreign_ref: params[:bruse_file][:data],
+        filetype: params[:bruse_file][:type],
+        identity: @identity
+      )
+    end
+
     # Private: Create a file containing dropped content
     #
     # content   - the file content
