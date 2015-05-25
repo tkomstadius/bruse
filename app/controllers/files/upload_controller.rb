@@ -6,11 +6,22 @@ class Files::UploadController < Files::FilesController
 
   require 'base64'
 
+  # POST
+  #
+  # The file thats being posted can either be a tempfile, base64 encoded or a
+  # url file.
+  #
+  # params:
+  #   :identity_id:integer
+  #   :bruse_file[]
+  #
+  # returns a bruse_file object
   def upload
     if params[:bruse_file].blank?
       flash[:notice] = "Choose a file"
       redirect_to bruse_files_path
     else
+      # Is the uploaded file a URL?
       if params[:bruse_file][:type] == 'text/uri-list'
         name = params[:bruse_file][:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
         @file = BruseFile.new(
@@ -48,18 +59,25 @@ class Files::UploadController < Files::FilesController
 
       # Make a good response
       respond_to do |format|
+        # Try to save the file
         begin
           @file.save!
-          flash[:notice] = "#{@file.name} was saved in #{@identity.name}"
-          format.html { redirect_to bruse_files_path }
+          format.html {
+            flash[:notice] = "#{@file.name} was saved in #{@identity.name}"
+            redirect_to bruse_files_path
+          }
           format.json { render :upload }
-        rescue ActiveRecord::RecordInvalid => e
+        rescue ActiveRecord::RecordInvalid => e # pass in the error variable
           @error = []
           e.record.errors.messages.each do |k, v|
+            # add all the errors to the @error array
             @error += v
           end
-          flash[:notice] = @error.first
-          format.html { redirect_to bruse_files_path }
+          puts e.record.errors.messages
+          format.html {
+            flash[:notice] = @error.first
+            redirect_to bruse_files_path
+          }
           format.json { render :upload }
         end
       end
@@ -73,26 +91,16 @@ class Files::UploadController < Files::FilesController
     #
     # Returns a BruseFile parameters
     def create_local_file
-      if @file.content_type == 'text/uri-list'
-        name = @file[:data].gsub(/(https?|s?ftp):\/\//, "").gsub(/(\/.*)*/, "")
-        @file = BruseFile.new(
-          name: name,
-          foreign_ref: @file.data,
-          filetype: @file.content_type,
-          identity: @identity
-        )
-      else
-        uploader = LocalFileUploader.new
+      uploader = LocalFileUploader.new
 
-        uploader.store!(@file)
+      uploader.store!(@file)
 
-        @file = BruseFile.new(
-          name: @file.original_filename,
-          foreign_ref: uploader.file.identifier,
-          filetype: @file.content_type,
-          identity: @identity
-        )
-      end
+      @file = BruseFile.new(
+        name: @file.original_filename,
+        foreign_ref: uploader.file.identifier,
+        filetype: @file.content_type,
+        identity: @identity
+      )
     end
 
     # Private: Uploads the file to dropbox
