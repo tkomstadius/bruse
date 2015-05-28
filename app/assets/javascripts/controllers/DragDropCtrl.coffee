@@ -24,15 +24,15 @@
       # send object to server
       _.each $scope.droppedFiles, (file) ->
         $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
-
-          if response.data.error != []
+          
+          if response.data.error 
             $scope.isSaved = true
             $scope.message = "Saved to " + location
             $scope.droppedFiles = []
             $scope.addedFile.push response.data.files[0]
           else
-            $scope.isSaved = false
             $scope.message = "Something went wrong"
+            console.error "Something went wrong"
           )
         .catch((response) ->
           console.error "Couldn't save.."
