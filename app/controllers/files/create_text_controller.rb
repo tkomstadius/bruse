@@ -1,6 +1,6 @@
 class Files::CreateTextController < Files::CreateController
   skip_before_action :verify_authenticity_token, only: :create_from_text
-  skip_before_filter :set_identity, except: :create_from_text
+  skip_before_filter :set_identity, only: :create_from_text
 
   # Public: Create a file from a text string
   def create_from_text
