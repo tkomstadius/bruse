@@ -25,7 +25,7 @@
       _.each $scope.droppedFiles, (file) ->
         $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
           
-          if response.data.error 
+          if response.data.error == []
             $scope.isSaved = true
             $scope.message = "Saved to " + location
             $scope.droppedFiles = []
