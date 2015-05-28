@@ -4,7 +4,6 @@
   $scope.isDropped = false
   $scope.isSaved = false
   $scope.message = ''
-  $scope.notSaved = ''
   $scope.addedFile = []
   $scope.savedFiles = []
   $scope.numFiles = 0
@@ -13,7 +12,6 @@
     if location == ''
       $scope.isDropped = false
       $scope.droppedFiles = []
-      $scope.notSaved = ''
     else
       $scope.isDropped = false
       $scope.dataObjects.objects = $scope.droppedFiles
@@ -25,13 +23,12 @@
       _.each $scope.droppedFiles, (file) ->
         $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
           
-          if response.data.error == []
+          if response.data.files != []
             $scope.isSaved = true
             $scope.message = "Saved to " + location
             $scope.droppedFiles = []
             $scope.addedFile.push response.data.files[0]
           else
-            $scope.message = "Something went wrong"
             console.error "Something went wrong"
           )
         .catch((response) ->
