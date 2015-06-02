@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'FilePreparer', 'MimeDictionary', 'FilePreviewer', 'defaults', '$parse',($scope, $filter, FileHandler, TagHandler, FilePreparer, MimeDictionary, FilePreviewer, defaults, $parse) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', 'FileHandler', 'FilePreparer', 'FilePreviewer', 'defaults', '$parse', 'JSTagsCollection', ($scope, FileHandler, FilePreparer, FilePreviewer, defaults, $parse, JSTagsCollection) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
@@ -72,13 +72,6 @@
     # call file previewer
     FilePreviewer(file, { scope: $scope })
 
-  $scope.saveTags = (file) ->
-    tagsToSave = file.unsavedTags.getTagValues()
-    TagHandler.put(file.id, tagsToSave).then((data) ->
-      file.tags = data.tags
-      file.editFile = false
-      )
-
   $scope.saveFile = (file) ->
     FileHandler.update(file).then((data) ->
       newFile = data.file
@@ -93,6 +86,12 @@
       # append unsaved tags
       file.jsTagOptions.tags = file.unsavedTags
       file.tags = newFile.tags
+      # # re-create our file, but maintain what angular knows about it
+      # fileangular.merge(file, FilePreparer(data.file))
+      # # _f = FilePreparer(data.file)
+      # file.editFile = false
+      # debugger
+      # # return _f
     )
 
   $scope.deleteFile = ($event, file) ->
@@ -110,10 +109,6 @@
     return [] unless $scope.hasFiles()
     uniqueIdentities = _.uniq($scope.files, 'identity.name')
     _.pluck(uniqueIdentities, 'identity')
-
-  # change mime to only filetype
-  $scope.getFiletype = (mimetype) ->
-    MimeDictionary.prettyType(mimetype)
 
   $scope.hasFiles = ->
     Array.isArray($scope.files) && $scope.files.length > 0
