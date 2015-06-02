@@ -149,6 +149,41 @@
     # pdf
     'application/pdf': 'pdf'
 
+  _iconNames =
+    # common
+    'image': 'picture-o'
+    'text': 'file-text-o'
+    # specific
+    'application/pdf': 'file-pdf-o'
+    'application/vnd.ms-word': 'file-word-o'
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'file-word-o'
+    'application/zip': 'file-archive-o'
+    'application/x-zip-compressed': 'file-archive-o'
+    'application/x-compress': 'file-archive-o'
+    'multipart/x-zip': 'file-archive-o'
+    'application/gzip': 'file-archive-o'
+    'application/x-stuffit': 'file-archive-o'
+    'application/x-tar': 'file-archive-o'
+    'application/x-rar-compressed': 'file-archive-o'
+    'application/x-7z-compressed': 'file-archive-o'
+    'audio/example': 'file-audio-o'
+    'audio/basic': 'file-audio-o'
+    'audio/L24': 'file-audio-o'
+    'audio/mp4': 'file-audio-o'
+    'audio/mpeg': 'file-audio-o'
+    'audio/ogg': 'file-audio-o'
+    'audio/flac': 'file-audio-o'
+    'audio/opus': 'file-audio-o'
+    'audio/vorbis': 'file-audio-o'
+    'audio/vnd.rn-realaudio': 'file-audio-o'
+    'audio/vnd.wave': 'file-audio-o'
+    'audio/webm': 'file-audio-o'
+    'audio/x-aac': 'file-audio-o'
+    'audio/x-caf': 'file-audio-o'
+    'image/x-xcf': 'file-audio-o'
+
+
+
   return {
     ###*
      * find a nice, readable file type from a mime type
@@ -176,5 +211,19 @@
     viewTemplate: (mimetype) ->
       # return template function name if there is any
       if _templateNames[mimetype] then _templateNames[mimetype] else 'noTemplate'
+
+    ###*
+     * find icon name from mimetype. If there is no exact match, it looks for
+     * an icon matching the leading word (before "/") in the mime type
+     * @param  string mimetype the mimetype
+     * @return string          font awesome icon name
+    ###
+    fileIcon: (mimetype) ->
+      if _iconNames[mimetype]
+        return _iconNames[mimetype]
+      else if _iconNames[mimetype.split("/")[0]]
+        return _iconNames[mimetype.split("/")[0]]
+      else
+        return 'file-o'
   }
 ]
