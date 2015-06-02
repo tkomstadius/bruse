@@ -29,7 +29,7 @@ gem 'jquery-turbolinks'
 # Loading indicator for turbolinks
 gem 'nprogress-rails'
 # Use Angular for nice dom manipulation
-gem 'angularjs-rails'
+gem 'angularjs-rails', '~> 1.4.0'
 # Lodash is a nice javascript toolbelt
 gem 'lodash-rails'
 
