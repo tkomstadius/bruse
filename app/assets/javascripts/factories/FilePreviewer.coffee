@@ -13,7 +13,7 @@
       $.magnificPopup.open({
               items:{
                   src: '/preview/'+file.id
-                  title: 'Titel'
+                  title: file.name
                 }
               gallery: enabled: true
               type: 'image'
