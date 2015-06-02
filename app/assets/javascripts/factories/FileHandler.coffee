@@ -22,7 +22,7 @@
           )
         .catch((response) ->
           alert "Failed to collect exsiting files!"
-          console.log response
+          console.error response
           )
 
     #
@@ -31,16 +31,14 @@
     delete: (identity, file) ->
       # post it to our backend!
       # promise gets returned
-      promise = $http.delete('/service/'+identity.id+'/files/'+file.bruse_file.id+'.json')
+      promise = $http.delete('/service/'+identity.id+'/files/'+file.id+'.json')
         .then((response) ->
-          # file should have been deleted, return what the server says about
-          # this file
-          response.data.file
+          response.data
           )
         .catch((response) ->
           # some error occured! notify user and log the accident.
-          alert "Could not un-save file!"
-          console.log response
+          alert "Could not delete file!"
+          console.error response
           )
 
     #
@@ -69,7 +67,7 @@
         .catch((response) ->
           # some error occured! notify user and log the accident.
           alert "Could not load files!"
-          console.log response
+          console.error response
           )
 
     #
@@ -116,7 +114,7 @@
         .catch((response) ->
           # some error occured! notify user and log the accident.
           alert "Could not save file!"
-          console.log response
+          console.error response
           )
 
     #
@@ -124,6 +122,23 @@
     #
     download: (identity, file_id) ->
       promise = $http.get('/service/'+identity.id+'/files/download/'+file_id+'.json')
+        .then((response) ->
+          response.data
+          )
+        .catch((response) ->
+          console.error response
+          )
+
+    #
+    # Update file
+    #
+    update: (file) ->
+      data =
+        bruse_file:
+          id: file.id
+          name: file.name
+        tags: file.unsavedTags.getTagValues()
+      promise = $http.put('/files/update.json', data)
         .then((response) ->
           response.data
           )

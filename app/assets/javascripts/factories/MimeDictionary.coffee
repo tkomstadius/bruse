@@ -122,6 +122,8 @@
     'video/x-matroska': 'matroska video'
     'video/x-ms-wmv': 'windows video'
     'video/x-flv': 'flash video'
+    # url
+    'text/uri-list': 'url'
 
   _templateNames =
     # images
