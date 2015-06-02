@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     # downloads a file
     get '/get/:download_hash(/:name)', to: 'download#download', via: :all
 
+    # previews a file
+    get '/preview/:id', to: 'download#preview', via: :all
+
     # uploads
     post '/create_file', to: 'create_text#create_from_text', defaults: { format: 'json' }
     post '/upload', to: 'upload#upload', as: 'upload'

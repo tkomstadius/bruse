@@ -9,30 +9,26 @@
     ###
     image: (file, params) ->
       console.log "Displaying image ", file.name
-      FileHandler.download(file.identity, file.id).then((data) ->
-        # open the returned url in a new tab
-        $.magnificPopup.open({
-                items:{
-                    src: data.url
-                    title: 'Titel'
-                  }
-                gallery: enabled: true
-                type: 'image'
-              }, 0)
-        )
+      # open the returned url in a new tab
+      $.magnificPopup.open({
+              items:{
+                  src: '/preview/'+file.id
+                  title: 'Titel'
+                }
+              gallery: enabled: true
+              type: 'image'
+            }, 0)
 
 
     iframe: (file, params) ->
       console.log "Displaying iframe-file ", file.name
-      FileHandler.download(file.identity, file.id).then((data) ->
-        # open the returned url in a new tab
-        $.magnificPopup.open({
-                items:{
-                  src: data.url
-                },
-                type: 'iframe'
-              }, 0)
-        )
+      # open the returned url in a new tab
+      $.magnificPopup.open({
+              items:{
+                src: '/preview/'+file.id
+              },
+              type: 'iframe'
+            }, 0)
 
 
 
