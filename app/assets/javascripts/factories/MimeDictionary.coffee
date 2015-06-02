@@ -149,7 +149,6 @@
     # pdf
     'application/pdf': 'pdf'
 
-
   return {
     ###*
      * find a nice, readable file type from a mime type

@@ -1,4 +1,4 @@
-@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$rootScope', '$location', (FileHandler, $scope, $rootScope, $location) ->
+@bruseApp.controller 'ImportCtrl', ['FileHandler', '$scope', '$rootScope', '$location', (FileHandler, $scope, $rootScope, $location) ->
   $scope.files = []
   $scope.bruse_files = []
   $scope.new_files = []
