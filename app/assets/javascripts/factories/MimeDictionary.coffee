@@ -182,8 +182,6 @@
     'audio/x-caf': 'file-audio-o'
     'image/x-xcf': 'file-audio-o'
 
-
-
   return {
     ###*
      * find a nice, readable file type from a mime type
@@ -218,10 +216,10 @@
      * @param  string mimetype the mimetype
      * @return string          font awesome icon name
     ###
-    fileIcon: (mimetype) ->
-      if _iconNames[mimetype]
+    iconName: (mimetype) ->
+      if mimetype && _iconNames[mimetype]
         return _iconNames[mimetype]
-      else if _iconNames[mimetype.split("/")[0]]
+      else if mimetype && _iconNames[mimetype.split("/")[0]]
         return _iconNames[mimetype.split("/")[0]]
       else
         return 'file-o'

@@ -1,20 +1,41 @@
-.browse {
+.tree {
   list-style-type: none;
   padding-left: 0;
 
-  &__file {
+  // nested trees = expanded folders
+  .tree {
     padding-left: $file-list-padding;
-    background-color: white;
+  }
 
-    &--folder > &__file__name {
-      color: gray;
+  &__file {
+    background-color: white;
+    border-bottom: 1px solid $header-background;
+
+    &--added {
+      background-color: lighten($aqua, 15%);
+
+      &:hover {
+        background-color: lighten($aqua, 10%) !important;
+      }
     }
 
     &__tools {
       opacity: 0;
     }
-    &:hover > &__tools {
+    &__content {
+      padding: .5 * $file-list-padding;
+    }
+    &__details {
+      color: lighten($font-color, 40%);
+      font-size: 90%;
+    }
+
+    &:hover > &__content > &__tools {
       opacity: 1;
+    }
+    &:hover > &__content {
+      background: $header-background;
+      color: $font-color;
     }
   }
 }
