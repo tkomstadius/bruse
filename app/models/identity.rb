@@ -107,7 +107,7 @@ class Identity < ActiveRecord::Base
 
         return @result.data.items
       else
-        puts "An error occurred: #{result.data['error']['message']}"
+        puts "An error occurred: #{@result.data['error']['message']}"
         return nil
       end
     end
