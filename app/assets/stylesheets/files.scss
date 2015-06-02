@@ -101,3 +101,26 @@
     padding: $common-padding 0;
   }
 }
+
+.filter {
+  @extend .u-cf;
+  background: $silver;
+  padding: $common-padding;
+
+  &__title {
+    @extend .u-small-caps;
+    margin-bottom: 5px;
+  }
+
+  &__group {
+    @include column($ratios: 1/4);
+
+    @include phone {
+      @include stack();
+    }
+
+    &--identity {
+      @include column($ratios: 1/4, $offset: 2/4);
+    }
+  }
+}

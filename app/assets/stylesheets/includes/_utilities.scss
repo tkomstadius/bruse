@@ -30,9 +30,19 @@
   float: left;
 }
 
-/* text centering */
+/* text alignment */
 .u-center-text {
   text-align: center;
+}
+.u-right-text {
+  text-align: right;
+}
+
+.u-small-caps {
+  font-size: 11px;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  text-decoration: none;
 }
 
 .u-cf {
