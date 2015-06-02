@@ -65,7 +65,7 @@
             <a ng-if="!file.url" href="" ng-click="download(file.identity.id, file)">
               <i class="fa fa-download"></i>
             </a>
-            <a ng-click="previewFile(file)">
+            <a ng-click="previewFile($index)" class="gallery-item">
               <i class="fa fa-eye"></i>
             </a>
             <a ng-href="{{file.paths.file}}" data-method="delete" data-confirm="Are you sure?">
