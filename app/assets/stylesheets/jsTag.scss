@@ -4,7 +4,8 @@
   # background-color: #FFFFFF; | To simulate an input box - in case background of the whole page is different
 */
 .jt-editor {
-  height: auto;
+  @extend .u-cf;
+  height: auto !important;
   min-height: $input-height;
   cursor: text;
 }

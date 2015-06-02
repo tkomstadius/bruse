@@ -73,7 +73,6 @@
         win = window.open('/'+data.url, '_self')
         )
 
-
   $scope.previewFile = (file) ->
     # call file previewer
     FilePreviewer(file, { scope: $scope })
@@ -82,16 +81,31 @@
     tagsToSave = file.unsavedTags.getTagValues()
     TagHandler.put(file.id, tagsToSave).then((data) ->
       file.tags = data.tags
-      file.editTags = false
+      file.editFile = false
       )
 
-  ###*
-   * Remove tag with id tag_id from file
-  ###
-  $scope.cutTag = (file, tag_id) ->
-    TagHandler.cut(file.id, tag_id).then((data) ->
-      file.tags = data.tags
-      )
+  $scope.saveFile = (file) ->
+    FileHandler.update(file).then((data) ->
+      newFile = data.file
+      file.editFile = false
+      file.name = newFile.name
+      # extract tag names
+      onlyTags = _.pluck(newFile.tags, 'name')
+      # append jsTag stuff to every file
+      file.unsavedTags = new JSTagsCollection(onlyTags)
+      # load global default for jsTagOptions
+      file.jsTagOptions = angular.copy(defaults.jsTagOptions)
+      # append unsaved tags
+      file.jsTagOptions.tags = file.unsavedTags
+      file.tags = newFile.tags
+    )
+
+  $scope.deleteFile = ($event, file) ->
+    $event.preventDefault()
+    if window.confirm "Are you sure?"
+      FileHandler.delete(file.identity, file).then((data) ->
+        _.pull($scope.files, file)
+        )
 
   $scope.loadMore = ->
     $scope.absoluteLimit += $scope.limit
@@ -108,4 +122,7 @@
 
   $scope.hasFiles = ->
     Array.isArray($scope.files) && $scope.files.length > 0
+
+  $scope.editing = ->
+    _.any($scope.files, 'editFile': true)
 ]
