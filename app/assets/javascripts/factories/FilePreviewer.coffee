@@ -1,4 +1,10 @@
 @bruseApp.factory 'FilePreviewer', ['MimeDictionary', 'FileHandler', (MimeDictionary, FileHandler) ->
+  error_html = (file) ->
+    string = '<div class="white-popup">' + file.name + 'could not be displayed...'
+    if file.url
+      string += "<a href='"+file.url+"' target='_blank'><button class='u-center-text'>Open in a new tab!</button></a>"
+    string+="</div>"
+    return string
   # return function to call from external resources
   return (index, files) ->
     # Create a suitable array for the popup
@@ -11,7 +17,7 @@
         }
       else
         return {
-          src: '<div class="white-popup">'+file.name+' could not be displayed...</div>'
+          src: error_html(file)
           type: 'inline'
         }
       )
