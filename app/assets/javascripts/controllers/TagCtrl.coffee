@@ -1,7 +1,7 @@
-@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'TagHandler', 'JSTagsCollection', 'defaults', ($scope, $rootScope, $location, $routeParams, TagHandler, JSTagsCollection, defaults) ->
+@bruseApp.controller 'TagCtrl', ['$scope', '$rootScope', '$location', '$routeParams', 'TagHandler', 'JSTagsCollection', 'defaults', 'MimeDictionary', ($scope, $rootScope, $location, $routeParams, TagHandler, JSTagsCollection, defaults, MimeDictionary) ->
   # Redirect if no files are present
   if !$rootScope.new_files || !$rootScope.new_files.length
-    $location.path('/service/'+$routeParams.identity_id+'/files/add')
+    $location.path('/service/' + $routeParams.identity_id + '/files/add')
 
   $scope.files = $rootScope.new_files
 
@@ -45,4 +45,11 @@
       else
         i++
     putTags($scope.files[0].bruse_file.id, $scope.files[0].new_tags, 0)
+
+
+  # mime dictionary helpers
+  $scope.prettyType = (mimetype) ->
+    return MimeDictionary.prettyType(mimetype)
+  $scope.iconName = (mimetype) ->
+    return MimeDictionary.iconName(mimetype)
 ]

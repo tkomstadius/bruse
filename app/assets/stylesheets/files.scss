@@ -1,3 +1,6 @@
+/*******************************************************************************
+ * file importing tree
+ ******************************************************************************/
 .tree {
   list-style-type: none;
   padding-left: 0;
@@ -11,6 +14,7 @@
     background-color: white;
     border-bottom: 1px solid $header-background;
 
+    // when files have been chosen
     &--added {
       background-color: lighten($aqua, 15%);
 
@@ -19,11 +23,16 @@
       }
     }
 
-    &__tools {
-      opacity: 0;
+    // when files already have been imported
+    &--imported {
+      color: lighten($font-color, 25%);
     }
+
     &__content {
       padding: .5 * $file-list-padding;
+    }
+    &__tools {
+      opacity: 0;
     }
     &__details {
       color: lighten($font-color, 40%);
@@ -40,6 +49,40 @@
   }
 }
 
+.import__tags {
+  @extend .u-cf;
+  padding: 5px 0;
+  border-bottom: 1px solid $header-background;
+
+  &--last {
+    margin: $common-padding 0;
+  }
+
+  &__file, &__tags {
+    @include column(1/2);
+
+    @include phone() {
+      @include stack();
+    }
+  }
+
+  &__file {
+    line-height: $input-height;
+
+    &__details {
+      color: lighten($font-color, 40%);
+      font-size: 90%;
+    }
+  }
+}
+
+.import__save {
+  margin: $common-padding 0;
+}
+
+/*******************************************************************************
+ * file list
+ ******************************************************************************/
 .filelist {
   width: 100%;
   table-layout: fixed;

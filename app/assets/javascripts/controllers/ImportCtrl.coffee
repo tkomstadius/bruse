@@ -117,6 +117,7 @@
         )
       $scope.new_files = _.without $scope.new_files, file
 
+  # mime dictionary helpers
   $scope.prettyType = (mimetype) ->
     return MimeDictionary.prettyType(mimetype)
   $scope.iconName = (mimetype) ->

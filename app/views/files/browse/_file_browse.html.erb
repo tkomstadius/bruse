@@ -1,8 +1,18 @@
-<button ng-if="new_files.length > 0" ng-click="save()">
-  Save files!
-</button>
+<div class="import__save" ng-if="new_files.length > 0">
+  <button class="green" ng-click="save()">
+    <i class="fa fa-check-circle"></i>
+    Import {{new_files.length}} file{{new_files.length > 1 ? 's' : ''}}
+  </button>
+</div>
 
 <div class="tree">
   <div ng-repeat="file in files" ng-include="'fileTree'" class="tree__file"
     ng-class="{'tree__file--folder': file.is_dir}"></div>
+</div>
+
+<div class="import__save" ng-if="new_files.length > 0">
+  <button class="green" ng-click="save()">
+    <i class="fa fa-check-circle"></i>
+    Import {{new_files.length}} file{{new_files.length > 1 ? 's' : ''}}
+  </button>
 </div>
