@@ -40,6 +40,9 @@
     &__name {
       color: $font-color;
     }
+    &__tools {
+      text-align: right;
+    }
   }
 
   td, th {
@@ -50,33 +53,48 @@
     text-overflow: ellipsis;
   }
 
+  td.filelist__file__tags,
+  td.filelist__file__tools {
+    white-space: normal;
+  }
+
   // column widths
   // file name
   .col-1 {
     width: 22%;
   }
-  // tools
-  .col-2 {
-    width: 5%;
-  }
   // filetype
-  .col-3 {
+  .col-2 {
     width: 10%;
   }
   // date
-  .col-4 {
+  .col-3 {
     width: 10%;
   }
   // identity
-  .col-5 {
-    width: 15%;
+  .col-4 {
+    width: 12%;
   }
   // tags
+  .col-5 {
+    width: 34%;
+  }
+  // tools
   .col-6 {
-    width: 35%;
+    width: 7%;
+  }
+  // adjust column width when editing
+  &--editing {
+    .col-5 {
+      width: 29%;
+    }
+    .col-6 {
+      width: 175px;
+    }
   }
 }
 
+// more files
 .files {
   &__more {
     text-align: center;

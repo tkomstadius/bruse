@@ -19,22 +19,20 @@
   <%= render 'files/create_text/create_from_textbox' %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
-    <div b-dropzone the-files="droppedFiles" images="imageFiles" drop="isDropped" saved="isSaved" info="message" no-type="notSaved">
+    <div b-dropzone the-files="droppedFiles" drop="isDropped" saved="isSaved" info="message" no-type="notSaved">
       <span>Put stuff here</span>
     </div>
     <div ng-show="isDropped">
       <!-- TODO: check strings for saving later -->
-      <button ng-click="saveOpt('dropbox')">Dropbox</button>
-      <button ng-click="saveOpt('google')">Drive</button>
-      <button ng-click="saveOpt('local')">Local</button>
+      <% current_user.identities.each do |identity| %>
+        <button ng-click="saveOpt({id:'<%= identity.id %>', name: '<%= identity.name %>'})"><%= identity.name %></button>
+      <% end %>
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
     <span>{{notSaved}}</span>
-    <div ng-show="isSaved" ng-if="imageFiles">
-      <div class="savedImages"ng-repeat="im in imageFiles">
-        <img ng-src="{{im}}"/>
-      </div>
+    <div ng-show="isSaved" ng-if="getSavedFiles()">
       <span>{{message}}</span>
+      <b-file-list files={{savedFiles}}></b-file-list>
     </div>
   </div>
 <% end %>

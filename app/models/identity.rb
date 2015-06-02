@@ -107,7 +107,7 @@ class Identity < ActiveRecord::Base
 
         return @result.data.items
       else
-        puts "An error occurred: #{result.data['error']['message']}"
+        puts "An error occurred: #{@result.data['error']['message']}"
         return nil
       end
     end
@@ -224,9 +224,9 @@ class Identity < ActiveRecord::Base
     # Search for parent folder
     folder = @client.execute(
       :api_method => drive.files.list,
-      :parameters => {:q => %(title='Bruse' and 'root' in parents and 
+      :parameters => {:q => %(title='Bruse' and 'root' in parents and
                 mimeType contains 'folder' and trashed=false)})
-    
+
     # Parent folder not found
     if (folder.status != 200) || folder.data.items.empty?
       f = drive.files.insert.request_schema.new({
@@ -255,8 +255,10 @@ class Identity < ActiveRecord::Base
 
     # Set parent folder
     file.parents = [{'id' => folder_id}]
-    
-    media = Google::APIClient::UploadIO.new(localFile, localFile.content_type,localFile.original_filename )
+
+    media = Google::APIClient::UploadIO.new(localFile,
+                                            localFile.content_type,
+                                            localFile.original_filename)
 
     result = @client.execute(
       :api_method => drive.files.insert,

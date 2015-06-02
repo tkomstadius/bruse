@@ -18,13 +18,14 @@
 // progress bar
 @import "nprogress";
 @import "nprogress-bootstrap";
-// the tags
-@import "jsTag";
 
 // bruse utilities, tools and mixins
 @import "includes/_utilities";
 @import "includes/_mixins";
 @import "includes/_fonts";
+
+// the tags
+@import "jsTag";
 
 // all the layout style sheets
 @import "layout/header";
