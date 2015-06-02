@@ -76,10 +76,7 @@
     FileHandler.update(file).then((data) ->
       # re-create our file, but maintain what angular knows about it
       file = angular.merge(file, FilePreparer(data.file))
-      # _f = FilePreparer(data.file)
       file.editFile = false
-      debugger
-      # return _f
     )
 
   $scope.deleteFile = ($event, file) ->
