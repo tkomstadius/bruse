@@ -74,24 +74,12 @@
 
   $scope.saveFile = (file) ->
     FileHandler.update(file).then((data) ->
-      newFile = data.file
-      file.editFile = false
-      file.name = newFile.name
-      # extract tag names
-      onlyTags = _.pluck(newFile.tags, 'name')
-      # append jsTag stuff to every file
-      file.unsavedTags = new JSTagsCollection(onlyTags)
-      # load global default for jsTagOptions
-      file.jsTagOptions = angular.copy(defaults.jsTagOptions)
-      # append unsaved tags
-      file.jsTagOptions.tags = file.unsavedTags
-      file.tags = newFile.tags
       # # re-create our file, but maintain what angular knows about it
-      # fileangular.merge(file, FilePreparer(data.file))
-      # # _f = FilePreparer(data.file)
-      # file.editFile = false
-      # debugger
-      # # return _f
+      file = angular.merge(file, FilePreparer(data.file))
+      # _f = FilePreparer(data.file)
+      file.editFile = false
+      debugger
+      # return _f
     )
 
   $scope.deleteFile = ($event, file) ->
