@@ -148,7 +148,9 @@
     'application/pdf': 'iframe'
     # audio
     'audio/mpeg': 'iframe'
-
+    'audio/mp3': 'iframe'
+    # video
+    'video/mp4' : 'iframe'
 
   return {
     ###*

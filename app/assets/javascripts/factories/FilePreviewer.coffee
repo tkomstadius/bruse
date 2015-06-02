@@ -35,6 +35,12 @@
     noTemplate: (file, params) ->
       # display something about not beeing able to display that file
       console.warn "Template for filetype '#{file.filetype}' not found."
+      $.magnificPopup.open({
+            items: {
+            src: '<div class="white-popup">Filetype not found</div>'
+            },
+            type: 'inline'
+      }, 0)
 
   # return function to call from external resources
   return (file, params) ->
