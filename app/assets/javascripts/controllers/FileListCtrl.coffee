@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'JSTagsCollection', 'MimeDictionary', 'FilePreviewer', 'defaults', ($scope, $filter, FileHandler, TagHandler, JSTagsCollection, MimeDictionary, FilePreviewer, defaults) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'FilePreparer', 'MimeDictionary', 'FilePreviewer', 'defaults', '$parse',($scope, $filter, FileHandler, TagHandler, FilePreparer, MimeDictionary, FilePreviewer, defaults, $parse) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
@@ -20,7 +20,11 @@
   this.init = (element, attrs) ->
     self.$element = element
     # if files are provided through the directive attribute, use those files...
-    unless attrs.files
+    if attrs.files
+      tempFiles = $parse(attrs.files)($scope.files)
+      tempFiles.map(FilePreparer)
+      $scope.files = tempFiles
+    else
       # ... or use the path provided to the directive...
       # ... otherwise collect them from server
       _recursiveCollect(attrs)
@@ -51,17 +55,8 @@
 
       # iterate over all the collected files
       _.each(data, (file) ->
-        file.prettyFiletype = MimeDictionary.prettyType(file.filetype)
-        # extract tag names
-        onlyTags = _.pluck(file.tags, 'name')
-        # append jsTag stuff to every file
-        file.unsavedTags = new JSTagsCollection(onlyTags)
-        # load global default for jsTagOptions
-        file.jsTagOptions = angular.copy(defaults.jsTagOptions)
-        # append unsaved tags
-        file.jsTagOptions.tags = file.unsavedTags
         # append every file to the list of files
-        $scope.files.push file
+        $scope.files.push FilePreparer(file)
         )
       )
 
