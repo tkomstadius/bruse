@@ -85,7 +85,7 @@ class Files::UploadController < Files::FilesController
       # mimic an uploadfile to be able to continue with the upload
       @file = ActionDispatch::Http::UploadedFile.new({
         :filename => params[:bruse_file][:name],
-        :content_type => params[:bruse_file][:type],
+        :type => params[:bruse_file][:type],
         :tempfile => file_data
       })
     end
