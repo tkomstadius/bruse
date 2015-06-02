@@ -15,26 +15,24 @@
     else
       $scope.isDropped = false
       $scope.dataObjects.objects = $scope.droppedFiles
-      $scope.numFiles = $scope.droppedFiles.length
-      $scope.dataObjects.location = location
-      $scope.addedFile = []
+      $scope.dataObjects.location = location.id
 
       # send object to server
       _.each $scope.droppedFiles, (file) ->
-        $http.post('/upload_drop.json', {object: file, location: location}).then((response) ->
-          
-          if response.data.files != []
+        $http.post('/upload.json', {bruse_file: file, identity_id: location.id}).then((response) ->
+          # WHY do I also get previous saves?
+          if response.data.error != []
             $scope.isSaved = true
-            $scope.message = "Saved to " + location
-            $scope.droppedFiles = []
-            $scope.addedFile.push response.data.files[0]
+            $scope.message = "Saved " + response.data.file.name + " to " + response.data.file.identity.name
           else
-            console.error "Something went wrong"
+            $scope.isSaved = false
+            $scope.message = response.data.error[0]
           )
         .catch((response) ->
           console.error "Couldn't save.."
           return
           )
+      $scope.droppedFiles = []
 
   $scope.getSavedFiles = ->
     $scope.savedFiles = $scope.addedFile
@@ -43,5 +41,3 @@
     else
       return false
 ]
-
-

@@ -11,9 +11,9 @@
     </div>
     <div ng-show="isDropped">
       <!-- TODO: check strings for saving later -->
-      <button ng-click="saveOpt('dropbox')">Dropbox</button>
-      <button ng-click="saveOpt('google')">Drive</button>
-      <button ng-click="saveOpt('local')">Local</button>
+      <% current_user.identities.each do |identity| %>
+        <button ng-click="saveOpt({id:'<%= identity.id %>', name: '<%= identity.name %>'})"><%= identity.name %></button>
+      <% end %>
       <button ng-click="saveOpt('')">Cancel</button>
     </div>
     <span>{{notSaved}}</span>
