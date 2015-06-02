@@ -115,4 +115,6 @@
 
   $scope.editing = ->
     _.any($scope.files, 'editFile': true)
+
+  return
 ]
