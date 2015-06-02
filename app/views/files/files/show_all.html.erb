@@ -8,8 +8,8 @@
     <%= f.file_field :file %>
   </div>
   <% current_user.identities.each do |identity| %>
-    <%= radio_button_tag(:service, identity.id, check(identity, current_user)) %>
-    <%= label_tag(:service, identity.name) %>
+    <%= radio_button_tag(:identity_id, identity.id, check(identity, current_user)) %>
+    <%= label_tag(:identity_id, identity.name) %>
   <% end %>
   <div class="actions">
     <%= f.submit "Upload" %>

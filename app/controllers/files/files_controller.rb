@@ -6,7 +6,7 @@ class Files::FilesController < ApplicationController
   # using javascript. If we didn't do this, we'd get problems since the CSRF
   # params from rails isn't passed along.
   # http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
-  skip_before_action :verify_authenticity_token, only: :destroy
+  skip_before_action :verify_authenticity_token, only: [:destroy, :update]
   before_filter :set_identity, except: [:show_all, :update]
   before_filter :set_file, only: :destroy
 
@@ -31,14 +31,16 @@ class Files::FilesController < ApplicationController
     # make sure file belongs to current identity and delete file
     if @file.identity == @identity && @identity.user == current_user && @file.destroy
       if @file.destroy
-        flash[:notice] = "#{@file.name} was deleted!"
+        respond_to do |format|
+          format.html { redirect_to bruse_files_path, notice: 'File was successfully deleted.' }
+          format.json { render json: { message: 'ok' } , status: :ok }
+        end
       else
-        flash[:notice] = "#{@file.name} was not deleted!"
+        respond_to do |format|
+          format.html { redirect_to bruse_files_path, notice: 'File could not be successfully deleted.' }
+          format.json { render json: { message: 'file not deleted' } , status: :unauthorized }
+        end
       end
-      redirect_to bruse_files_url
-    else
-      flash[:notice] = "Could not delete file!"
-      @message = "Could not delete file!"
     end
   end
 
@@ -63,7 +65,7 @@ class Files::FilesController < ApplicationController
   #   :error:string if @error =>
   #
   def update
-    @file = BruseFile.find(params[:bruse_file][:id])
+    @file = current_user.bruse_files.find(params[:bruse_file][:id])
     if @file.update(file_update_params)
       new_tags = []
       params[:tags].each do |tag_name|

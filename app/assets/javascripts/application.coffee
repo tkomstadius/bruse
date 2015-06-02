@@ -16,6 +16,7 @@
 #= require lodash
 #= require magnific-popup
 #= require main
+# make sure our coffee files are loaded in the correct order
 #= require_tree ./factories
 #= require_tree ./controllers
 #= require_tree .

@@ -62,6 +62,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'devise'
 # Use omniauth for session handling
 gem 'omniauth'
+
+#Certified CAs
+gem 'certified'
+
 # dropbox omniauth strategy
 gem 'omniauth-dropbox-oauth2'
 # Drive omniauth strategy

@@ -78,6 +78,7 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
+    certified (1.0.0)
     cliver (0.3.2)
     codeclimate-test-reporter (0.4.7)
       simplecov (>= 0.7.1, < 1.0.0)
@@ -328,6 +329,7 @@ DEPENDENCIES
   byebug
   capybara-angular
   carrierwave
+  certified
   codeclimate-test-reporter
   coffee-rails (~> 4.1.0)
   coffee-rails-source-maps

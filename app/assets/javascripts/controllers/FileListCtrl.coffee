@@ -1,5 +1,5 @@
 # This provides the bFileList directive with some power
-@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'JSTagsCollection', 'MimeDictionary', 'FilePreviewer', 'defaults', ($scope, $filter, FileHandler, TagHandler, JSTagsCollection, MimeDictionary, FilePreviewer, defaults) ->
+@bruseApp.controller 'FileListCtrl', ['$scope', '$filter', 'FileHandler', 'TagHandler', 'FilePreparer', 'MimeDictionary', 'FilePreviewer', 'defaults', '$parse',($scope, $filter, FileHandler, TagHandler, FilePreparer, MimeDictionary, FilePreviewer, defaults, $parse) ->
   # since we use 'this' in some function below, we need to make sure they are
   # use the the controller as the 'this', and not the function
   self = this
@@ -20,7 +20,11 @@
   this.init = (element, attrs) ->
     self.$element = element
     # if files are provided through the directive attribute, use those files...
-    unless attrs.files
+    if attrs.files
+      tempFiles = $parse(attrs.files)($scope.files)
+      tempFiles.map(FilePreparer)
+      $scope.files = tempFiles
+    else
       # ... or use the path provided to the directive...
       # ... otherwise collect them from server
       _recursiveCollect(attrs)
@@ -51,17 +55,8 @@
 
       # iterate over all the collected files
       _.each(data, (file) ->
-        file.prettyFiletype = MimeDictionary.prettyType(file.filetype)
-        # extract tag names
-        onlyTags = _.pluck(file.tags, 'name')
-        # append jsTag stuff to every file
-        file.unsavedTags = new JSTagsCollection(onlyTags)
-        # load global default for jsTagOptions
-        file.jsTagOptions = angular.copy(defaults.jsTagOptions)
-        # append unsaved tags
-        file.jsTagOptions.tags = file.unsavedTags
         # append every file to the list of files
-        $scope.files.push file
+        $scope.files.push FilePreparer(file)
         )
       )
 
@@ -73,7 +68,6 @@
         win = window.open('/'+data.url, '_self')
         )
 
-
   $scope.previewFile = (index) ->
     # call file previewer
     FilePreviewer(index, $scope.files)
@@ -82,16 +76,31 @@
     tagsToSave = file.unsavedTags.getTagValues()
     TagHandler.put(file.id, tagsToSave).then((data) ->
       file.tags = data.tags
-      file.editTags = false
+      file.editFile = false
       )
 
-  ###*
-   * Remove tag with id tag_id from file
-  ###
-  $scope.cutTag = (file, tag_id) ->
-    TagHandler.cut(file.id, tag_id).then((data) ->
-      file.tags = data.tags
-      )
+  $scope.saveFile = (file) ->
+    FileHandler.update(file).then((data) ->
+      newFile = data.file
+      file.editFile = false
+      file.name = newFile.name
+      # extract tag names
+      onlyTags = _.pluck(newFile.tags, 'name')
+      # append jsTag stuff to every file
+      file.unsavedTags = new JSTagsCollection(onlyTags)
+      # load global default for jsTagOptions
+      file.jsTagOptions = angular.copy(defaults.jsTagOptions)
+      # append unsaved tags
+      file.jsTagOptions.tags = file.unsavedTags
+      file.tags = newFile.tags
+    )
+
+  $scope.deleteFile = ($event, file) ->
+    $event.preventDefault()
+    if window.confirm "Are you sure?"
+      FileHandler.delete(file.identity, file).then((data) ->
+        _.pull($scope.files, file)
+        )
 
   $scope.loadMore = ->
     $scope.absoluteLimit += $scope.limit
@@ -108,4 +117,7 @@
 
   $scope.hasFiles = ->
     Array.isArray($scope.files) && $scope.files.length > 0
+
+  $scope.editing = ->
+    _.any($scope.files, 'editFile': true)
 ]

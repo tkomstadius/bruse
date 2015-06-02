@@ -43,7 +43,6 @@ Rails.application.routes.draw do
     # uploads
     post '/create_file', to: 'create_text#create_from_text', defaults: { format: 'json' }
     post '/upload', to: 'upload#upload', as: 'upload'
-    post '/upload_drop', to: 'upload#upload_from_base64', as: 'upload_drop'
 
     # user file index
     get '/files', to: 'files#show_all', as: 'bruse_files'
