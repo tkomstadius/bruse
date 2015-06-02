@@ -1,17 +1,17 @@
-@bruseApp.controller 'DragDropCtrl', ['$scope', '$http', ($scope, $http) ->
+@bruseApp.controller 'DragDropCtrl', ['$scope', '$http', '$rootScope', '$location', ($scope, $http, $rootScope, $location) ->
   $scope.droppedFiles = []
   $scope.dataObjects = {}
-  $scope.imageFiles = []
   $scope.isDropped = false
   $scope.isSaved = false
   $scope.message = ''
-  $scope.notSaved = ''
+  $scope.addedFile = []
+  $scope.savedFiles = []
+  $scope.numFiles = 0
 
   $scope.saveOpt = (location) ->
     if location == ''
       $scope.isDropped = false
       $scope.droppedFiles = []
-      $scope.notSaved = ''
     else
       $scope.isDropped = false
       $scope.dataObjects.objects = $scope.droppedFiles
@@ -32,6 +32,12 @@
           console.error "Couldn't save.."
           return
           )
-
       $scope.droppedFiles = []
+
+  $scope.getSavedFiles = ->
+    $scope.savedFiles = $scope.addedFile
+    if $scope.savedFiles.length == $scope.numFiles
+      return true
+    else
+      return false
 ]

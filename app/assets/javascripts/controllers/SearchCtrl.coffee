@@ -1,4 +1,4 @@
-@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'JSTagsCollection', 'MimeDictionary', 'defaults', ($scope, $http, JSTagsCollection, MimeDictionary, defaults) ->
+@bruseApp.controller 'SearchCtrl', ['$scope', '$http', 'FilePreparer', ($scope, $http, FilePreparer) ->
   $scope.search = ""
   $scope.actualSearch = ""
   searchString = ""
@@ -36,17 +36,8 @@
           # send search object to server
           $http.post('/search', searchObject).then((response) ->
             _.each(response.data.files, (file) ->
-              file.prettyFiletype = MimeDictionary.prettyType(file.filetype)
-              # extract tag names
-              onlyTags = _.pluck(file.tags, 'name')
-              # append jsTag stuff to every file
-              file.unsavedTags = new JSTagsCollection(onlyTags)
-              # load global default for jsTagOptions
-              file.jsTagOptions = angular.copy(defaults.jsTagOptions)
-              # append unsaved tags
-              file.jsTagOptions.tags = file.unsavedTags
-              # append every file to the list of files
-              $scope.files.push file
+              # append every prepared file to the list of files
+              $scope.files.push FilePreparer(file)
               )
             )
           .catch((response) ->
