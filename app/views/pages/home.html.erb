@@ -3,7 +3,7 @@
   <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
-  <%= form_for(@bruse_file, url: upload_path) do |f| %>
+  <%= form_for(BruseFile.new, url: upload_path) do |f| %>
     <div class="field">
       <%= f.label :file %>
       <%= f.file_field :file %>
