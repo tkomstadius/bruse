@@ -44,16 +44,18 @@ input[type="button"] {
     }
   }
 
+  &.active {
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.50);;
+  }
+
   // allows buttons to be grouped together nicely
   .button-group & {
     border-radius: 0;
     display: block;
     float: left;
     margin: 0;
-    border-left-width: 0;
 
     &:first-of-type {
-      border-left-width: 1px;
       border-top-left-radius: $common-border-radius;
       border-bottom-left-radius: $common-border-radius;
     }

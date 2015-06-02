@@ -107,14 +107,20 @@
   background: $silver;
   padding: $common-padding;
 
-  &__view,
-  &__identity {
-    display: inline-block;
+  &__title {
+    @extend .u-small-caps;
+    margin-bottom: 5px;
   }
-  &__view {
 
-  }
-  &__identity {
-    float: right;
+  &__group {
+    @include column($ratios: 1/4);
+
+    @include phone {
+      @include stack();
+    }
+
+    &--identity {
+      @include column($ratios: 1/4, $offset: 2/4);
+    }
   }
 }
