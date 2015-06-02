@@ -3,11 +3,17 @@
   return (index, files) ->
     # Create a suitable array for the popup
     files = _.map(files, (file) ->
-      {
-        src: '/preview/'+file.id
-        title: file.name
-        type: MimeDictionary.viewTemplate(file.filetype)
-      }
+      if MimeDictionary.viewTemplate(file.filetype) != 'noTemplate'
+        return {
+          src: '/preview/'+file.id
+          title: file.name
+          type: MimeDictionary.viewTemplate(file.filetype)
+        }
+      else
+        return {
+          src: '<div class="white-popup">'+file.name+' could not be displayed...</div>'
+          type: 'inline'
+        }
       )
     # open the returned url in a new tab
     $.magnificPopup.open({
