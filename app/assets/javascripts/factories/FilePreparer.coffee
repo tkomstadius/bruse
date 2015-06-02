@@ -1,16 +1,15 @@
-@bruseApp.factory 'FilePreparer', ['JSTagsCollection', (JSTagsCollection) ->
+@bruseApp.factory 'FilePreparer', ['JSTagsCollection', 'MimeDictionary', 'defaults', (JSTagsCollection, MimeDictionary, defaults) ->
   return (file) ->
     _f = file
     # extract tag names
     onlyTags = _.pluck(file.tags, 'name')
+    # add pretty file type
+    _f.prettyFiletype = MimeDictionary.prettyType(file.filetype)
     # append jsTag stuff to every file
     _f.unsavedTags = new JSTagsCollection(onlyTags)
-    # TODO: use some sort of default for bruse jsTags here?
-    _f.jsTagOptions =
-      breakCodes: [32, 13, 9, 44] #space, enter, tab, comma
-      tags: _f.unsavedTags
-      texts:
-        inputPlaceHolder: "Tags..."
-        removeSymbol: String.fromCharCode(215)
+    # load global default for jsTagOptions
+    _f.jsTagOptions = angular.copy(defaults.jsTagOptions)
+    # append unsaved tags
+    _f.jsTagOptions.tags = _f.unsavedTags
     return _f
 ]

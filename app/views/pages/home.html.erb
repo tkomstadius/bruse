@@ -3,6 +3,19 @@
   <%= link_to 'Sign in with Google', user_omniauth_authorize_path('google_oauth2') %><br>
   <%= link_to 'Sign in', new_user_session_path %>
 <% else %>
+  <%= form_for(BruseFile.new, url: upload_path) do |f| %>
+    <div class="field">
+      <%= f.label :file %>
+      <%= f.file_field :file %>
+    </div>
+    <% current_user.identities.each do |identity| %>
+      <%= radio_button_tag(:service, identity.id, check(identity, current_user)) %>
+      <%= label_tag(:service, identity.name) %>
+    <% end %>
+    <div class="actions">
+      <%= f.submit "Upload" %>
+    </div>
+  <% end %>
   <%= render 'files/create_text/create_from_textbox' %>
   <%= render 'search/home' %>
   <div style="border:solid" ng-controller="DragDropCtrl">
