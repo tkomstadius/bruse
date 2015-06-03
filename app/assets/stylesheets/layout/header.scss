@@ -64,7 +64,7 @@
   }
 }
 
-.main-header nav .expandable {
+.main-header .expandable {
   position: relative;
 
   // when hovering or when toggled, show the sub-menu
@@ -86,6 +86,14 @@
     opacity: 0;
     display: none;
     padding-top: 6px;
+
+    &--content {
+      width: 300px;
+      background: lighten($header-background, 1%);
+      border: 1px solid $gray;
+      padding: $small-padding;
+      border-radius: $common-border-radius;
+    }
 
     // adjust
     :first-of-type {
