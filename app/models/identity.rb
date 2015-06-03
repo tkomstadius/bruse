@@ -34,9 +34,12 @@ class Identity < ActiveRecord::Base
                               :token   => auth_hash[:credentials][:token],
                               :service => auth_hash[:provider],
                               :name    => "#{provider} - #{auth_hash[:info][:name]}")
+      identity.refresh_token = auth_hash[:credentials][:refresh_token] unless auth_hash[:credentials][:refresh_token].nil?
     else
       identity.token = auth_hash[:credentials][:token]
+      identity.refresh_token = auth_hash[:credentials][:refresh_token] unless auth_hash[:credentials][:refresh_token].nil?
     end
+    byebug
     identity.save!
     identity # return identity
   end
@@ -297,8 +300,12 @@ class Identity < ActiveRecord::Base
           :application_version => '1.0.0'
           )
         @drive = @client.discovered_api('drive', 'v2')
+        auth = @client.authorization.dup
+        auth.update_token!(:access_token => token,
+                           :refresh_token => refresh_token)
+        self.token = auth.access_token
         # Get authorization for drive
-        @client.authorization.access_token = token
+        @client.authorization.access_token = self.token
       end
     end
 
