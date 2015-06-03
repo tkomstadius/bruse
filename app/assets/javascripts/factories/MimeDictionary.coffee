@@ -134,7 +134,6 @@
     'image/gif': 'image'
     # text file & code
     'text/css': 'iframe'
-    'text/html': 'iframe'
     'text/csv': 'iframe'
     'text/x-c': 'iframe'
     'text/plain': 'iframe'
