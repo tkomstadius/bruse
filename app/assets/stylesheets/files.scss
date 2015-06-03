@@ -169,7 +169,7 @@
 }
 
 .mfp-iframe-holder .mfp-content {
-  max-width: 1200px;
+  max-width: $max-width - 200px;;
 }
 
 .mfp-iframe-scaler iframe {
