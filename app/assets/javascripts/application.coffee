@@ -14,6 +14,7 @@
 #= require angular-route
 #= require vendor_tree
 #= require lodash
+#= require magnific-popup
 #= require main
 # make sure our coffee files are loaded in the correct order
 #= require_tree ./factories

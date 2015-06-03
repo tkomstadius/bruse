@@ -89,6 +89,9 @@ gem 'carrierwave'
 # Delay work
 gem 'delayed_job_active_record'
 
+gem 'magnific-popup-rails', '~> 0.9.9.1'
+
+
 ## Developtment tools
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,49 +1,46 @@
-@bruseApp.factory 'FilePreviewer', ['MimeDictionary', (MimeDictionary) ->
-  # all our previewers
-  _previewers =
-    ###*
-     * display an image popup
-     * @param  object file   the file object
-     * @param  object params optional file parameters
-     * @return nothing
-    ###
-    image: (file, params) ->
-      console.log "Displaying image ", file.name
-
-    ###*
-     * display an image popup
-     * @param  object file   the file object
-     * @param  object params optional file parameters
-     * @return nothing
-    ###
-    plaintext: (file, params) ->
-      console.log "Displaying textfile ", file.name
-
-    ###*
-     * display an image popup
-     * @param  object file   the file object
-     * @param  object params optional file parameters
-     * @return nothing
-    ###
-    pdf: (file, params) ->
-      console.log "Displaying pdf ", file.name
-
-    ###*
-     * display default error that there is no preview for this file
-     * @param  object file   the file object
-     * @param  object params optional file parameters
-     * @return nothing
-    ###
-    noTemplate: (file, params) ->
-      # display something about not beeing able to display that file
-      console.warn "Template for filetype '#{file.filetype}' not found."
-
+@bruseApp.factory 'FilePreviewer', ['MimeDictionary', 'FileHandler', (MimeDictionary, FileHandler) ->
+  error_html = (file) ->
+    string = '<div class="white-popup">' + file.name + ' could not be displayed...'
+    if file.url
+      string += "<a href='"+file.url+"' target='_blank'><button class='u-center-text'>Open in a new tab!</button></a>"
+    string+="</div>"
+    return string
   # return function to call from external resources
-  return (file, params) ->
-    # default params value
-    params ?= {}
-    # get template function name
-    templateName = MimeDictionary.viewTemplate(file.filetype)
-    # call template function
-    _previewers[templateName](file, params)
+  return (index, files) ->
+    # Create a suitable array for the popup
+    files = _.map(files, (file) ->
+      if MimeDictionary.viewTemplate(file.filetype) != 'noTemplate'
+        return {
+          src: '/preview/'+file.id
+          title: file.name
+          type: MimeDictionary.viewTemplate(file.filetype)
+        }
+      else
+        console.log "Could not preview " + file.filetype
+        return {
+          src: error_html(file)
+          type: 'inline'
+        }
+      )
+    # open the returned url in a new tab
+    $.magnificPopup.open({
+            items: files
+            gallery: {
+              enabled: true
+              preload: [0,2]
+            }
+            iframe: {
+               markup: '<div class="mfp-iframe-scaler">'+
+                          '<div class="mfp-close"></div>'+
+                          '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
+                          '<div class="mfp-title"></div>'+
+                        '</div>'
+            }
+            callbacks: {
+              markupParse: (template, values, item) ->
+                values.title = item.data.title;
+            }
+            type: 'image'
+          }, index)
+
 ]

@@ -133,21 +133,26 @@
     'image/svg+xml': 'image'
     'image/gif': 'image'
     # text file & code
-    'text/css': 'plaintext'
-    'text/csv': 'plaintext'
-    'text/x-c': 'plaintext'
-    'text/x-csrc': 'plaintext'
-    'text/plain': 'plaintext'
-    'text/xml': 'plaintext'
-    'application/x-javascript': 'plaintext'
-    'application/x-latex': 'plaintext'
-    'application/x-www-form-urlencoded': 'plaintext'
-    'text/javascript': 'plaintext'
+    'text/css': 'iframe'
+    'text/csv': 'iframe'
+    'text/x-c': 'iframe'
+    'text/plain': 'iframe'
+    'text/x-csrc': 'iframe'
+    'text/xml': 'iframe'
+    'application/x-javascript': 'iframe'
+    'application/x-latex': 'iframe'
+    'application/x-www-form-urlencoded': 'iframe'
+    'text/javascript': 'iframe'
     # markdown
-    'text/markdown': 'markdown'
-    'text/x-markdown': 'markdown'
+    'text/markdown': 'iframe'
+    'text/x-markdown': 'iframe'
     # pdf
-    'application/pdf': 'pdf'
+    'application/pdf': 'iframe'
+    # audio
+    'audio/mpeg': 'iframe'
+    'audio/mp3': 'iframe'
+    # video
+    'video/mp4' : 'iframe'
 
   _iconNames =
     # common

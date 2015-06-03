@@ -2,6 +2,7 @@
  * Bruse is so stylish!
  *
  *= require normalize-rails
+ *= require magnific-popup
  *= require_self
  */
 
@@ -18,6 +19,8 @@
 // progress bar
 @import "nprogress";
 @import "nprogress-bootstrap";
+//image viewer
+@import "magnific-popup";
 
 // bruse utilities, tools and mixins
 @import "includes/_utilities";
@@ -41,7 +44,6 @@
 @import "components";
 @import "messages";
 
-
 /**
  * !!!!!!!!!!!!!!!!!
  *
@@ -50,3 +52,4 @@
  *
  * !!!!!!!!!!!!!!!!!
  */
+

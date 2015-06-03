@@ -193,8 +193,8 @@ class Identity < ActiveRecord::Base
     end
 
     if service.downcase.include? "google"
-      response = @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media').body
-      return response == 200 ? response : nil
+      response = @client.execute(:uri => 'https://www.googleapis.com/drive/v2/files/'+foreign_ref+'?alt=media')
+      return response.status == 200 ? response.body : nil
     end
 
     return File.read(Rails.root.join('usercontent', foreign_ref)) if service == "local"

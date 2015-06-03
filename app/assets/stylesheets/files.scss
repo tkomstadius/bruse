@@ -158,6 +158,28 @@
   }
 }
 
+// style for popup error messages
+.white-popup {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.mfp-iframe-holder .mfp-content {
+  max-width: $max-width - 200px;;
+}
+
+.mfp-iframe-scaler iframe {
+  background: white;
+}
+
+.mfp-title {
+  position:absolute;
+}
+
 // more files
 .files {
   &__more {

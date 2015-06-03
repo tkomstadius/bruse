@@ -68,9 +68,9 @@
         win = window.open('/'+data.url, '_self')
         )
 
-  $scope.previewFile = (file) ->
+  $scope.previewFile = (index) ->
     # call file previewer
-    FilePreviewer(file, { scope: $scope })
+    FilePreviewer(index, $scope.files)
 
   $scope.saveFile = (file) ->
     FileHandler.update(file).then((data) ->
