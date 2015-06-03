@@ -4,10 +4,34 @@ class Files::DownloadController < Files::FilesController
 
   def preview
     if @file.identity.user == current_user
-      # send the file to the user
-      send_data @file.identity.get_file(@file.foreign_ref), disposition: 'inline',
-                                                            filename: @file.name,
-                                                            type: @file.filetype
+      # save preview file name
+      filename = Rails.root.join('tmp', 'bruse-previews', "prev-#{@file.id}")
+
+      # check file if preview tmp folder exists
+      unless File.directory?(Rails.root.join('tmp', 'bruse-previews'))
+        Dir.mkdir(Rails.root.join('tmp', 'bruse-previews'))
+      end
+
+      # check if preview file exists, else download it
+      if File.file?(filename)
+        send_file filename,
+                  disposition: 'inline',
+                  filename: @file.name,
+                  type: @file.filetype,
+                  status: :not_modified
+      else
+        # save file data
+        data = @file.identity.get_file(@file.foreign_ref)
+        File.open(filename, 'wb') do |file|
+          file.write(data)
+        end
+        # IO.write(filename, data)
+        # send the file to the user
+        send_data data,
+                  disposition: 'inline',
+                  filename: @file.name,
+                  type: @file.filetype
+      end
     end
   end
 

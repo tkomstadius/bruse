@@ -58,7 +58,7 @@
       <tbody>
         <tr class="filelist__file"
           ng-repeat="file in files | IdentityFilter : identity_filter | orderBy : order_by : reverse"
-          ng-dblclick="previewFile(file)">
+          ng-dblclick="previewFile($index)">
           <td class="filelist__file__name" ng-attr-title="{{file.name}}">
             <div ng-if="file.editFile">
               <input type="text" class="wide" ng-model="file.name"
