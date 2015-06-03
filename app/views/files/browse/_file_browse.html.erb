@@ -1,16 +1,18 @@
-<h1>
-  Hi, <%= current_user["name"] %>!
-</h1>
+<div class="import__save" ng-if="new_files.length > 0">
+  <button class="green" ng-click="save()">
+    <i class="fa fa-check-circle"></i>
+    Import {{new_files.length}} file{{new_files.length > 1 ? 's' : ''}}
+  </button>
+</div>
 
-<h2>
-  Files <span ng-if="loading">Loading...</span>
-</h2>
+<div class="tree">
+  <div ng-repeat="file in files" ng-include="'fileTree'" class="tree__file"
+    ng-class="{'tree__file--folder': file.is_dir}"></div>
+</div>
 
-<button ng-if="new_files.length > 0" ng-click="save()">
-  Save files!
-</button>
-
-<ul class="browse">
-  <li ng-repeat="file in files" ng-include="'fileTree'" class="browse__file"
-    ng-class="{'browse__file--folder': file.is_dir}"></li>
-</ul>
+<div class="import__save" ng-if="new_files.length > 0">
+  <button class="green" ng-click="save()">
+    <i class="fa fa-check-circle"></i>
+    Import {{new_files.length}} file{{new_files.length > 1 ? 's' : ''}}
+  </button>
+</div>
