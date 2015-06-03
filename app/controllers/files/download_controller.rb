@@ -15,6 +15,7 @@ class Files::DownloadController < Files::FilesController
       # check if preview file exists, else download it
       if File.file?(filename)
         send_file filename,
+                  disposition: 'inline',
                   filename: @file.name,
                   type: @file.filetype,
                   status: :not_modified
