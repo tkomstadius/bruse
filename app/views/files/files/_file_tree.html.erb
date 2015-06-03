@@ -1,18 +1,37 @@
 <!-- template for our file list -->
-{{file.name}}
-<a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
+<div class="tree__file__content" ng-class="{'tree__file--added': file.added, 'tree__file--imported': file.bruse_file}">
+  <!-- display file/folder icon -->
+  <i ng-if="!file.is_dir" class="fa" ng-class="'fa-' + iconName(file.mimetype)"></i>
+  <i ng-if="file.is_dir" class="fa" ng-class="file.expand ? 'fa-folder-open-o' : 'fa-folder-o'"></i>
 
-<i class="fa fa-circle-o-notch fa-spin" ng-if="file.loading"></i>
-<span class="browse__file__tools" ng-if="!file.bruse_file">
-  <a href="#" ng-click="add(file)" class="tool" ng-if="!file.added">
-    <%= fa_icon 'plus-square-o' %>
-  </a>
-  <a href="#" ng-click="remove(file)" class="tool" ng-if="file.added">
-    <%= fa_icon 'minus-square-o' %>
-  </a>
-</span>
+  {{file.name}}
 
-<ul ng-if="file.is_dir && file.expand && file.contents" class="browse">
-  <li ng-repeat="file in file.contents" ng-include="'fileTree'" class="browse__file"
-    ng-class="{'browse__file--folder': file.is_dir}"></li>
-</ul>
+  <a href="#" ng-click="expand(file)" ng-if="file.is_dir">{{file.expand ? 'collapse' : 'expand'}}</a>
+
+  <span class="tree__file__details">
+    <span ng-if="!file.is_dir">
+      {{prettyType(file.mimetype)}}
+    </span>
+    <span ng-if="file.is_dir">
+      folder
+    </span>
+    <span ng-if="file.bruse_file">
+      (already imported)
+    </span>
+  </span>
+
+  <i class="fa fa-circle-o-notch fa-spin" ng-if="file.loading"></i>
+  <span class="tree__file__tools" ng-if="!file.bruse_file">
+    <a href="#" ng-click="add(file)" class="tool" ng-if="!file.added">
+      <%= fa_icon 'plus-square-o' %>
+    </a>
+    <a href="#" ng-click="remove(file)" class="tool" ng-if="file.added">
+      <%= fa_icon 'minus-square-o' %>
+    </a>
+  </span>
+
+</div>
+<div ng-if="file.is_dir && file.expand && file.contents" class="tree">
+  <div ng-repeat="file in file.contents" ng-include="'fileTree'" class="tree__file"
+    ng-class="{'tree__file--folder': file.is_dir}"></div>
+</div>

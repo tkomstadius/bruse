@@ -5,6 +5,16 @@
       <%= link_to 'My files', bruse_files_path, target: "_self" %>
     </nav>
     <nav class="right">
+      <% if current_user.local_identity %>
+        <div ng-class="{'expandable--show': paste}" class="expandable item">
+          <a href="#" ng-click="toggle($event, 'paste')">
+            <%= fa_icon 'plus' %>Link...
+          </a>
+          <div class="expandable__child expandable__child--content">
+            <%= render 'files/create_text/create_from_textbox' %>
+          </div>
+        </div>
+      <% end %>
       <% if current_user.identities.any? %>
         <div ng-class="{'expandable--show': import}" class="expandable item">
           <a href="#" ng-click="toggle($event, 'import')">
