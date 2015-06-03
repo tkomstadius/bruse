@@ -1,8 +1,9 @@
-@bruseApp.controller 'FileCtrl', ['FileHandler', '$scope', '$rootScope', '$location', (FileHandler, $scope, $rootScope, $location) ->
+@bruseApp.controller 'ImportCtrl', ['FileHandler', '$scope', '$rootScope', '$location', 'MimeDictionary', (FileHandler, $scope, $rootScope, $location, MimeDictionary) ->
   $scope.files = []
   $scope.bruse_files = []
   $scope.new_files = []
-  $scope.loading = true
+
+  NProgress.start()
 
   # get identity information from add view
   $scope.identity = IDENTITY_PARAMS
@@ -10,6 +11,7 @@
   # load existing BruseFiles on page load
   FileHandler.collect(identity: $scope.identity).then((data) ->
     $scope.bruse_files = data
+    NProgress.set(.5)
 
     # when we have loaded BruseFiles, load root remote files
     FileHandler.get($scope.identity, '/').then((data) ->
@@ -17,8 +19,10 @@
       $scope.files = data
       # append BruseFile info to our file list
       _.map $scope.files, (remote_file) ->
+        remote_file.mimetype = if remote_file.mime_type then remote_file.mime_type else remote_file.mimeType
         findFile $scope.bruse_files, remote_file
-      $scope.loading = false
+
+      NProgress.done()
       )
     )
 
@@ -37,6 +41,7 @@
         file.contents = data
         # find all the already added files!
         _.map data, (remote_file) ->
+          remote_file.mimetype = if remote_file.mime_type then remote_file.mime_type else remote_file.mimeType
           findFile $scope.bruse_files, remote_file
         file.loading = false
         )
@@ -114,7 +119,11 @@
         )
       $scope.new_files = _.without $scope.new_files, file
 
-
+  # mime dictionary helpers
+  $scope.prettyType = (mimetype) ->
+    return MimeDictionary.prettyType(mimetype)
+  $scope.iconName = (mimetype) ->
+    return MimeDictionary.iconName(mimetype)
 
   ###*
   # Callback for _.map functions. Search through list_of_files, looking for

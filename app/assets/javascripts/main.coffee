@@ -5,7 +5,7 @@
     when('/service/:identity_id/files/add', {
       path: 'file',
       templateUrl: 'fileBrowse',
-      controller: 'FileCtrl'
+      controller: 'ImportCtrl'
     }).
     when('/service/:identity_id/files/add/tag', {
       path: 'tag',
