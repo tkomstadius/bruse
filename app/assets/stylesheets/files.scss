@@ -1,24 +1,88 @@
-.browse {
+/*******************************************************************************
+ * file importing tree
+ ******************************************************************************/
+.tree {
   list-style-type: none;
   padding-left: 0;
 
-  &__file {
+  // nested trees = expanded folders
+  .tree {
     padding-left: $file-list-padding;
-    background-color: white;
+  }
 
-    &--folder > &__file__name {
-      color: gray;
+  &__file {
+    background-color: white;
+    border-bottom: 1px solid $header-background;
+
+    // when files have been chosen
+    &--added {
+      background-color: lighten($aqua, 15%);
+
+      &:hover {
+        background-color: lighten($aqua, 10%) !important;
+      }
     }
 
+    // when files already have been imported
+    &--imported {
+      color: lighten($font-color, 25%);
+    }
+
+    &__content {
+      padding: .5 * $file-list-padding;
+    }
     &__tools {
       opacity: 0;
     }
-    &:hover > &__tools {
+    &__details {
+      color: lighten($font-color, 40%);
+      font-size: 90%;
+    }
+
+    &:hover > &__content > &__tools {
       opacity: 1;
+    }
+    &:hover > &__content {
+      background: $header-background;
+      color: $font-color;
     }
   }
 }
 
+.import__tags {
+  @extend .u-cf;
+  padding: 5px 0;
+  border-bottom: 1px solid $header-background;
+
+  &--last {
+    margin: $common-padding 0;
+  }
+
+  &__file, &__tags {
+    @include column(1/2);
+
+    @include phone() {
+      @include stack();
+    }
+  }
+
+  &__file {
+    line-height: $input-height;
+
+    &__details {
+      color: lighten($font-color, 40%);
+      font-size: 90%;
+    }
+  }
+}
+
+.import__save {
+  margin: $common-padding 0;
+}
+
+/*******************************************************************************
+ * file list
+ ******************************************************************************/
 .filelist {
   width: 100%;
   table-layout: fixed;
@@ -104,6 +168,17 @@
   margin: 20px auto;
 }
 
+.mfp-iframe-holder .mfp-content {
+  max-width: $max-width - 200px;;
+}
+
+.mfp-iframe-scaler iframe {
+  background: white;
+}
+
+.mfp-title {
+  position:absolute;
+}
 
 // more files
 .files {

@@ -1,6 +1,39 @@
-<div ng-repeat="file in files">
-  {{file.name}} <js-tag js-tag-options="file.jsTagOptions"></js-tag>
+<div class="import__save">
+  <button class="green" ng-click="save()">
+    <i class="fa fa-check-circle"></i>
+    Save tags
+  </button>
 </div>
-<label for="tags">Tags for all:</label>
-<js-tag js-tag-options="jsTagOptions"></js-tag>
-<button ng-click="save()">save</button>
+
+<div ng-repeat="file in files" class="import__tags">
+  <div class="import__tags__file">
+    <i ng-if="!file.is_dir" class="fa" ng-class="'fa-' + iconName(file.mime_type)"></i>
+    <i ng-if="file.is_dir" class="fa" ng-class="file.expand ? 'fa-folder-open-o' : 'fa-folder-o'"></i>
+
+    {{file.name}}
+
+    <span class="import__tags__file__details">
+      <span ng-if="!file.is_dir">
+        {{prettyType(file.mime_type)}}
+      </span>
+      <span ng-if="file.is_dir">
+        folder
+      </span>
+    </span>
+  </div>
+  <div class="import__tags__tags">
+    <js-tag js-tag-options="file.jsTagOptions"></js-tag>
+  </div>
+</div>
+
+<div class="import__tags import__tags--last">
+  <label for="tags">Tags for all files</label>
+  <js-tag js-tag-options="jsTagOptions"></js-tag>
+</div>
+
+<div class="import__save">
+  <button class="green" ng-click="save()">
+    <i class="fa fa-check-circle"></i>
+    Save tags
+  </button>
+</div>
