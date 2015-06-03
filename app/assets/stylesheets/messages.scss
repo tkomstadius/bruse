@@ -1,0 +1,12 @@
+.notice, .message {
+  border-radius: $common-border-radius;
+  background: lighten($aqua, 20%);
+  border: 1px solid $aqua;
+  padding: $common-padding;
+  margin: $common-padding 0;
+
+  &--success {
+    background: lighten($green, 20%);
+    border: 1px solid $green;
+  }
+}

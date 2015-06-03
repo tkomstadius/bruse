@@ -7,10 +7,10 @@
     # regex is afwul but useful, look here to understand what it does: http://www.regexr.com/3aqpu
     urlPattern = new RegExp('(https?|s?ftp):\/\/[\w-]*(\.[\w-]*)+([\w.,@?^=%&amp;:/~+#-]*[\w@?^=%&amp;/~+#-])?')
     # this regex matches any ws char
-    spacePattern = new RegExp('\s')
+    spacePattern = new RegExp('\\s', 'g')
 
     # create as url if there is an url in the field and no ws chars
-    if urlPattern.test($scope.text) && !spacePattern.test(newText)
+    if urlPattern.test(newText) && !spacePattern.test(newText)
       $scope.url = true
     else
       $scope.url = false
@@ -26,6 +26,7 @@
         $scope.message = 'Created file'
         $scope.loading = false
       .error (data, status) ->
+        $scope.message = 'Could not create file. Perhaps it already exists?'
         console.log 'Could not create file. Error: ', status
         $scope.loading = false
 ]

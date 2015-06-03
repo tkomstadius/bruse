@@ -1,13 +1,11 @@
-<% if current_user.local_identity %>
-  <div ng-controller="CreateFromTextCtrl">
-    <form ng-submit="save()">
-      <div class="notice" ng-if="message">{{message}}</div>
-      <div class="notice" ng-if="url">It looks to us as if you're about to save a link.</div>
-      <textarea placeholder="Paste/write your text here..." ng-model="text" ng-disabled="{{loading}}"></textarea>
-      <button class="green">
-        <%= fa_icon 'check' %>
-        Save
-      </button>
-    </form>
-  </div>
-<% end %>
+<div ng-controller="CreateFromTextCtrl" class="c-fromtext">
+  <form ng-submit="save()">
+    <div class="message" ng-if="message">{{message}}</div>
+    <div class="message" ng-if="url">It looks to us as if you're about to save a link.</div>
+    <textarea placeholder="Paste/write your text here..." ng-model="text" class="wide" ng-disabled="{{loading}}"></textarea>
+    <button class="wide green">
+      <i class="fa" ng-class="{'fa-check-circle': !loading, 'fa-circle-o-notch fa-spin': loading}"></i>
+      Save
+    </button>
+  </form>
+</div>

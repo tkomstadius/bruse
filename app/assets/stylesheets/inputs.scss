@@ -43,6 +43,12 @@ legend {
   display: block;
   margin-bottom: .5rem;
   font-weight: 600;
+
+  // make sure labels next to radio buttons are properly aligned
+  input[type="checkbox"] + &,
+  input[type="radio"] + & {
+    display: inline;
+  }
 }
 fieldset {
   padding: 0;
