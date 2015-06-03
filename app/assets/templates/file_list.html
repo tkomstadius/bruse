@@ -105,7 +105,7 @@
           </td>
           <td class="filelist__file__tools">
             <span ng-if="!file.editFile">
-              <a ng-href="" title="Edit tags" ng-click="file.editFile = true; file.oldName = file.name">
+              <a ng-href="" title="Edit file..." ng-click="file.editFile = true; file.oldName = file.name">
                 <i class="fa fa-pencil"></i>
               </a>
               <a ng-if="!file.url" title="Download..." href="" ng-click="download(file.identity.id, file)">
