@@ -108,6 +108,14 @@
   max-width: 1200px;
 }
 
+.mfp-iframe-scaler iframe {
+  background: white;
+}
+
+.mfp-title {
+  position:absolute;
+}
+
 // more files
 .files {
   &__more {
