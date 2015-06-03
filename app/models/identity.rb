@@ -35,9 +35,11 @@ class Identity < ActiveRecord::Base
                               :service => auth_hash[:provider],
                               :name    => "#{provider} - #{auth_hash[:info][:name]}")
       identity.refresh_token = auth_hash[:credentials][:refresh_token] unless auth_hash[:credentials][:refresh_token].nil?
+      identity.expires_at = auth_hash[:credentials][:expires_at] unless auth_hash[:credentials][:expires_at].nil?
     else
       identity.token = auth_hash[:credentials][:token]
       identity.refresh_token = auth_hash[:credentials][:refresh_token] unless auth_hash[:credentials][:refresh_token].nil?
+      identity.expires_at = auth_hash[:credentials][:expires_at] unless auth_hash[:credentials][:expires_at].nil?
     end
     identity.save!
     identity # return identity
@@ -299,15 +301,17 @@ class Identity < ActiveRecord::Base
           :application_version => '1.0.0'
           )
         @drive = @client.discovered_api('drive', 'v2')
-        data = {
-          :client_id => ENV['DRIVE_KEY'],
-          :client_secret => ENV['DRIVE_SECRET'],
-          :refresh_token => self.refresh_token,
-          :grant_type => "refresh_token"
-        }
-        response = ActiveSupport::JSON.decode(RestClient.post("https://www.googleapis.com/oauth2/v3/token", data))
-        self.token = response["access_token"] unless response["access_token"].nil?
-        self.save!
+        if(Time.now > Time.at(self.expires_at))
+          data = {
+            :client_id => ENV['DRIVE_KEY'],
+            :client_secret => ENV['DRIVE_SECRET'],
+            :refresh_token => self.refresh_token,
+            :grant_type => "refresh_token"
+          }
+          response = ActiveSupport::JSON.decode(RestClient.post("https://www.googleapis.com/oauth2/v3/token", data))
+          self.token = response["access_token"] unless response["access_token"].nil?
+          self.save!
+        end
         # Get authorization for drive
         @client.authorization.access_token = self.token
       end
