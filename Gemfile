@@ -70,6 +70,8 @@ gem 'certified'
 gem 'omniauth-dropbox-oauth2'
 # Drive omniauth strategy
 gem "omniauth-google-oauth2"
+# simple http requests
+gem 'rest-client'
 
 # Fuzzy search for activerecord models
 gem 'fuzzily', :git => 'https://github.com/danielronnkvist/fuzzily.git'

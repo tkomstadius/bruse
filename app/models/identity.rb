@@ -39,7 +39,6 @@ class Identity < ActiveRecord::Base
       identity.token = auth_hash[:credentials][:token]
       identity.refresh_token = auth_hash[:credentials][:refresh_token] unless auth_hash[:credentials][:refresh_token].nil?
     end
-    byebug
     identity.save!
     identity # return identity
   end
@@ -300,10 +299,15 @@ class Identity < ActiveRecord::Base
           :application_version => '1.0.0'
           )
         @drive = @client.discovered_api('drive', 'v2')
-        auth = @client.authorization.dup
-        auth.update_token!(:access_token => token,
-                           :refresh_token => refresh_token)
-        self.token = auth.access_token
+        data = {
+          :client_id => ENV['DRIVE_KEY'],
+          :client_secret => ENV['DRIVE_SECRET'],
+          :refresh_token => self.refresh_token,
+          :grant_type => "refresh_token"
+        }
+        response = ActiveSupport::JSON.decode(RestClient.post("https://www.googleapis.com/oauth2/v3/token", data))
+        self.token = response["access_token"] unless response["access_token"].nil?
+        self.save!
         # Get authorization for drive
         @client.authorization.access_token = self.token
       end
