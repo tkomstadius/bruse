@@ -1,7 +1,7 @@
 <!-- template for our file list -->
 <div class="tree__file__content" ng-class="{'tree__file--added': file.added, 'tree__file--imported': file.bruse_file}">
   <!-- display file/folder icon -->
-  <i ng-if="!file.is_dir" class="fa" ng-class="'fa-' + iconName(file.mime_type)"></i>
+  <i ng-if="!file.is_dir" class="fa" ng-class="'fa-' + iconName(file.mimetype)"></i>
   <i ng-if="file.is_dir" class="fa" ng-class="file.expand ? 'fa-folder-open-o' : 'fa-folder-o'"></i>
 
   {{file.name}}
@@ -10,7 +10,7 @@
 
   <span class="tree__file__details">
     <span ng-if="!file.is_dir">
-      {{prettyType(file.mime_type)}}
+      {{prettyType(file.mimetype)}}
     </span>
     <span ng-if="file.is_dir">
       folder

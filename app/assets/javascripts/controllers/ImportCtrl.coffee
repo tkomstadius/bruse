@@ -19,6 +19,7 @@
       $scope.files = data
       # append BruseFile info to our file list
       _.map $scope.files, (remote_file) ->
+        remote_file.mimetype = if remote_file.mime_type then remote_file.mime_type else remote_file.mimeType
         findFile $scope.bruse_files, remote_file
 
       NProgress.done()
@@ -40,6 +41,7 @@
         file.contents = data
         # find all the already added files!
         _.map data, (remote_file) ->
+          remote_file.mimetype = if remote_file.mime_type then remote_file.mime_type else remote_file.mimeType
           findFile $scope.bruse_files, remote_file
         file.loading = false
         )
