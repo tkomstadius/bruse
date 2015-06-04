@@ -34,13 +34,17 @@ class Identity < ActiveRecord::Base
                               :token   => auth_hash[:credentials][:token],
                               :service => auth_hash[:provider],
                               :name    => "#{provider} - #{auth_hash[:info][:name]}")
-      identity.refresh_token = auth_hash[:credentials][:refresh_token] unless auth_hash[:credentials][:refresh_token].nil?
-      identity.expires_at = auth_hash[:credentials][:expires_at] unless auth_hash[:credentials][:expires_at].nil?
     else
       identity.token = auth_hash[:credentials][:token]
-      identity.refresh_token = auth_hash[:credentials][:refresh_token] unless auth_hash[:credentials][:refresh_token].nil?
-      identity.expires_at = auth_hash[:credentials][:expires_at] unless auth_hash[:credentials][:expires_at].nil?
     end
+    
+    # Save credentials for reauthentication
+    unless auth_hash[:credentials][:refresh_token].nil? &&
+           auth_hash[:credentials][:expires_at].nil?
+      identity.refresh_token = auth_hash[:credentials][:refresh_token]
+      identity.expires_at = auth_hash[:credentials][:expires_at]
+    end
+    
     identity.save!
     identity # return identity
   end
