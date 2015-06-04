@@ -60,7 +60,9 @@
 \pagestyle{fancy}
 
 \chapter{Sammanfattning}
-Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i kursen Medietekninskt Kandidatprojekt, TNM094, på Linköpings universitet. Syftet med projektet var att gruppen skulle följa ett agilt arbetssätt för att uppnå kundens krav. Kundens främsta krav var att databasen skulle användas för att lagra och strukturera personlig information som dokument, bilder och musik. Dessa filer skulle sedan taggas med ett eller flera nyckelord för att kunna söka reda på informationen snabbare. Serversystemet utvecklades i ramverket Ruby on Rails och databasens klientsida utvecklades i ramverket Angularjs.
+Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i kursen Medietekniskt Kandidatprojekt, TNM094, på Linköpings universitet. Den presenterar arbetsprocessen och de tekniska lösningar som applicerats. 
+
+Syftet med projektet var att gruppen skulle följa ett agilt arbetssätt för att utveckla ett önskat system beställt av en kund med specifika krav. Produkten som kunden önskade beskrevs som en databas för att kunna lagra och strukturera personlig information som dokument, bilder och musik. Dessa filer skulle sedan taggas med ett eller flera nyckelord för att kunna söka reda på önskad information på ett effektivt sätt. Serversystemet utvecklades i ramverket Ruby on Rails och databasens klientsida utvecklades i ramverket Angularjs. Resultatet är ett system, Bruse, som innehar den prioriterade funktionalitet som kunden önskat. 
 
 \tableofcontents
 
@@ -133,7 +135,16 @@ Följande typografiska konventioner används i denna rapport.
   D. Allen, \emph{Getting Things Done: The Art of Stress-Free Productivity}, Penguin Books 2001
 
 \bibitem{softwareeng}
-  Shari Lawrence Pfleeger och Joanne M. Atlee, \emph{Software Engineering, Fourth Edition, International Edition}, Pearson 2010
+  S. Lawrence Pfleeger och J. M. Atlee, \emph{Software Engineering, Fourth Edition, International Edition}, Pearson 2010
+
+\bibitem{scrumguide}
+  K. Schwaber, J. Sutherland, \emph{Scrumguiden}, 2013-07, hämtad: 2015-05-13\newline http://www.scrumguides.org
+
+\bibitem{rubylang}
+  D. Flanagan, Y. Matsumoto, \emph{The ruby programming language}, O'Reilly Media, Inc. 2008
+
+\bibitem{angularjs}
+  R. Branas, \emph{AngularJS Essentials}, Packt Publishing Ltd. 2014
 
 \bibitem{tagging}
   J. Granström, \emph{Social taggning}, Högskolan i Borås 2007, hämtad: 2015-04-08\newline http://bada.hb.se/bitstream/2320/2178/1/07-56.pdf
@@ -147,30 +158,36 @@ Följande typografiska konventioner används i denna rapport.
 \bibitem{twente}
   O. Gorter, \emph{Database File System: An Alternative to Hierarchy Based File Systems}, University of Twente 2004, hämtad: 2015-05-14\newline https://www.sphinux.org/misc/docs/references/papers/dbfs.pdf (hämtad 2015-04-27)
 
-\bibitem{rubylang}
-  D. Flanagan, Y. Matsumoto, \emph{The ruby programming language}, O'Reilly Media, Inc. 2008
-
-\bibitem{angularjs}
-  R. Branas, \emph{AngularJS Essentials}, Packt Publishing Ltd. 2014
-
 \bibitem{sqlenc}
   Encyclopædia Britannica. Encyclopædia Britannica Online. Encyclopædia Britannica Inc., 2015. Web. 12 maj. 2015 <http://global.britannica.com/EBchecked/topic/569684/SQL>.
 
 \bibitem{objrel}
-  Płuciennik-Psota, E. \emph{Object relational interfaces survey}. Studia Informatica, 2012.
+  E. Płuciennik-Psota, \emph{Object relational interfaces survey}. Studia Informatica, 2012.
 
 \bibitem{proar}
-  Pytel, C., Yurek, J., och Marshall, K.. \emph{Pro Active Record: Databases with Ruby and Rails}. Apress, 2007.
+  C. Pytel, Yurek, J., och Marshall, K.. \emph{Pro Active Record: Databases with Ruby and Rails}. Apress, 2007.
 
 \bibitem{indexes}
-  Aoki, P. M. \emph{Implementation of extended indexes in POSTGRES.} SIGIR Forum, vol. 25, no. 1, ACM, 1991.
+  P. M. Aoki, \emph{Implementation of extended indexes in POSTGRES.} SIGIR Forum, vol. 25, no. 1, ACM, 1991.
+
+\bibitem{coffee}
+  J. Ashkenas, \emph{A Little Book on CoffeeScript}, 2012
+
+\bibitem{angularwebb}
+    \emph{Angularjs.org}, hämtad 2015-06-04
+    \newline https://docs.angularjs.org/guide/providers
 
 \bibitem{rubychangelog}
-  Minitest in Ruby, hämtad 2015-05-14.
-  \newline<http://svn.ruby-lang.org/repos/ruby/tags/v1\_9\_1\_0/NEWS>.
+  \emph{Minitest in Ruby}, hämtad 2015-05-14.
+  \newline http://svn.ruby-lang.org/repos/ruby/tags/v1\_9\_1\_0/NEWS
 
-\bibitem{scrumguide}
-  K. Schwaber, J. Sutherland, \emph{Scrumguiden}, 2013-07, hämtad: 2015-05-13\newline http://www.scrumguides.org
+\bibitem{scrumboard}
+  L. Pries-Heje, \emph{Why Scrum Works}, 2011, hämtad 2015-06-04
+  \newline http://ieeexplore.ieee.org/xpls/abs\_all.jsp?arnumber=6005502&tag=1
+
+\bibitem{mvp}
+  \emph{Minimal Viable Product}, hämtad 2015-06-04
+  \newline http://www.techopedia.com/definition/27809/minimum-viable-product-mvp
 
 \bibitem{progit}
   S. Chacon och B. Straub, \emph{Pro Git}, 2nd ed., 2014
@@ -197,7 +214,9 @@ Följande typografiska konventioner används i denna rapport.
 
 \appendix
 
-\chapter{Bilaga}
+\chapter{Involverade i projektet}
+\chapter{Projektplan}
+\includepdf[pages=-]{appendix/projektplan.pdf}
 
 
 \end{document}
