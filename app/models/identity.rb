@@ -37,6 +37,14 @@ class Identity < ActiveRecord::Base
     else
       identity.token = auth_hash[:credentials][:token]
     end
+    
+    # Save credentials for reauthentication
+    unless auth_hash[:credentials][:refresh_token].nil? &&
+           auth_hash[:credentials][:expires_at].nil?
+      identity.refresh_token = auth_hash[:credentials][:refresh_token]
+      identity.expires_at = auth_hash[:credentials][:expires_at]
+    end
+    
     identity.save!
     identity # return identity
   end
@@ -297,9 +305,25 @@ class Identity < ActiveRecord::Base
           :application_version => '1.0.0'
           )
         @drive = @client.discovered_api('drive', 'v2')
+
+        request_new_token if Time.now > Time.at(self.expires_at)
+
         # Get authorization for drive
-        @client.authorization.access_token = token
+        @client.authorization.access_token = self.token
       end
+    end
+
+    # Sends a Post request to the google api to retrieve a new access_token
+    def request_new_token
+      data = {
+        :client_id => ENV['DRIVE_KEY'],
+        :client_secret => ENV['DRIVE_SECRET'],
+        :refresh_token => self.refresh_token,
+        :grant_type => "refresh_token"
+      }
+      response = ActiveSupport::JSON.decode(RestClient.post("https://www.googleapis.com/oauth2/v3/token", data))
+      self.token = response["access_token"] unless response["access_token"].nil?
+      self.save!
     end
 
     # Extract BruseFile params from pristine file object from service
