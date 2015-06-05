@@ -47,6 +47,26 @@
  bookmarksnumbered=true
         ]{hyperref}
 
+% pdf appendices
+\usepackage{pdfpages}
+% custom captions
+\usepackage{caption}
+
+% this can be used to force images to be at a proper position
+%
+% Example:
+%
+% \begin{Figure}
+%   % center it!
+%   \centering
+%     % adjust width as you like, include image from optional folder
+%     \includegraphics[width=0.7\linewidth]{./images/myimg.png}
+%     % caption! change the label ref to what you want
+%     \captionof{figure}{\emph{Figure text..}\label{fig:figureref}}
+% \end{Figure}
+\newenvironment{Figure}
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
 
 \begin{document}
 
@@ -60,9 +80,9 @@
 \pagestyle{fancy}
 
 \chapter{Sammanfattning}
-Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i kursen Medietekniskt Kandidatprojekt, TNM094, på Linköpings universitet. Den presenterar arbetsprocessen och de tekniska lösningar som applicerats. 
+Den här rapporten beskriver hur en webbdatabas för filhantering utvecklades i kursen Medietekniskt Kandidatprojekt, TNM094, på Linköpings universitet. Den presenterar arbetsprocessen och de tekniska lösningar som applicerats.
 
-Syftet med projektet var att gruppen skulle följa ett agilt arbetssätt för att utveckla ett önskat system beställt av en kund med specifika krav. Produkten som kunden önskade beskrevs som en databas för att kunna lagra och strukturera personlig information som dokument, bilder och musik. Dessa filer skulle sedan taggas med ett eller flera nyckelord för att kunna söka reda på önskad information på ett effektivt sätt. Serversystemet utvecklades i ramverket Ruby on Rails och databasens klientsida utvecklades i ramverket Angularjs. Resultatet är ett system, Bruse, som innehar den prioriterade funktionalitet som kunden önskat. 
+Syftet med projektet var att gruppen skulle följa ett agilt arbetssätt för att utveckla ett önskat system beställt av en kund med specifika krav. Produkten som kunden önskade beskrevs som en databas för att kunna lagra och strukturera personlig information som dokument, bilder och musik. Dessa filer skulle sedan taggas med ett eller flera nyckelord för att kunna söka reda på önskad information på ett effektivt sätt. Serversystemet utvecklades i ramverket Ruby on Rails och databasens klientsida utvecklades i ramverket Angularjs. Resultatet är ett system, Bruse, som innehar den prioriterade funktionalitet som kunden önskat.
 
 \tableofcontents
 
@@ -183,7 +203,7 @@ Följande typografiska konventioner används i denna rapport.
 
 \bibitem{scrumboard}
   L. Pries-Heje, \emph{Why Scrum Works}, 2011, hämtad 2015-06-04
-  \newline http://ieeexplore.ieee.org/xpls/abs\_all.jsp?arnumber=6005502&tag=1
+  \newline http://ieeexplore.ieee.org/xpls/abs\_all.jsp?arnumber=6005502\&tag=1
 
 \bibitem{mvp}
   \emph{Minimal Viable Product}, hämtad 2015-06-04
@@ -211,6 +231,15 @@ Följande typografiska konventioner används i denna rapport.
 \bibitem{n-grams}
   Gencosman, BC., Ozmutlu, HC., \emph{Character n-gram application for automatic new topic identification},
   Information Processing and Management vol. 50, 2014.
+
+\bibitem{base64}
+  Josefsson, S. \emph{The base16, base32, and base64 data encodings.}
+  Internet Engineering Task Force, 2006. Hämtad 2015-06-05. http://tools.ietf.org/html/rfc4648/
+
+\bibitem{mime}
+  Freed, N., Borenstein, N.
+  \emph{Multipurpose Internet Mail Extensions (MIME) Part Two}.
+  Internet Engineering Task Force, 1996. Hämtad 2015-06-05.  https://tools.ietf.org/html/rfc2046
 
 \end{thebibliography}
 
