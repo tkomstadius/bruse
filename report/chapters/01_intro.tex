@@ -1,35 +1,53 @@
 \chapter{Inledning}
 \label{ch:inledning}
-Eftersom mycket information idag finns i elektronisk form är det viktigt att kunna lagra denna information på ett bra sätt. Ofta används flera olika lagringstjänster och användaren har dålig översyn på var alla filer ligger och vad de heter. Därför är det önskvärt att skapa ett system där en användare kan få åtkomst till olika typer av filer, från olika lagringstjänster på ett snabbt och smidigt sätt.
+Eftersom mycket information idag finns i elektronisk form är det viktigt att kunna lagra denna data på ett enkelt vis. Ofta används flera olika lagringstjänster och användaren har dålig översyn på var alla filer ligger och vad de heter. Därför är det önskvärt att skapa ett system där en användare kan få åtkomst till olika typer av filer, från olika lagringstjänster på ett snabbt och smidigt sätt.
 
 \section{Bakgrund}
-Idén till detta projekt fick kunden av boken \textit{Getting things done} \cite{gettingthingsdone}. I boken presenteras principer för att organisera filer på ett annorlunda sätt jämfört med den vanliga mappstrukturen. Kunden hade som önskemål att enkelt kunna sortera filer och skapa en egen hierarki med hjälp av att ge varje fil en eller flera taggar. Med taggar åsyftades ett eller flera ord som för användaren hade en koppling till filen. På detta sätt kunde användaren komma åt filerna med hjälp av en begränsande sökning istället för att behöva leta sig igenom en djup mappstruktur för att hitta önskat objekt.
+Idén till detta projekt fick kunden av boken \textit{Getting things done} \cite{gettingthingsdone}. I boken presenteras principer för att organisera pappersdokumet genom att kategorisera dem i tillstånd (klart, påbörjat, ej påbörjat) istället för indelning enligt ämne (fakturor, kontrakt och så vidare). Inspirerad av detta hade kunden som önskemål att enkelt kunna sortera digitala filer och skapa en egen struktur med hjälp av att ge varje fil en eller flera taggar. Med taggar åsyftades ett eller flera nyckelord som för användaren hade en koppling till filen. På detta sätt kunde användaren komma åt filerna med hjälp av en begränsande sökning istället för att behöva leta igenom en djup mappstruktur för att hitta önskat objekt.
+
+Kravspecifikationen från kunden var 
+\begin{itemize}
+\item en webbdatabas som kan hantera lokal fillagring
+\item en teknisk kunnig ska kunna installera systemet
+\item filer ska kunna lagras och sökas efter med hjälp av taggar
+\item ett enkelt GUI som framhäver sökningen
+\item filerna ska kunna öppnas i webbläsaren
+\item spara filer och länkar genom en drag och släppa-metod.
+\end{itemize}
+
+Krav med lägre prioritet var
+\begin{itemize}
+\item e-post ska kunna sparas
+\item systemet ska fungera på olika enheter
+\item välja mellan olika vyer för filvisning.
+\end{itemize}
 
 \section{Syfte}
-Syftet med projektet är att gruppen ska utveckla en webbtjänst för lagring av filer som användaren snabbt ska kunna komma åt via ett sökfält. Sökningen begränsas genom att söka efter taggar eller metadata som den eftersökta filen innehåller. Tjänsten ska vara användarvänlig så att vem som helst ska kunna ha nytta av den. Det ska både gå att lagra sina lokala filer och synkronisera med andra lagringstjänster. Poängen med att synkronisera andra lagringstjänster till en webbtjänst är att användaren kan hantera alla sina uppladdade filer på ett och samma ställe.
+Syftet med projektet är att gruppen ska utveckla en webbtjänst för lagring av filer som användaren ska kunna komma åt via ett sökfält. Sökningen begränsas genom att söka efter taggar eller metadata som den eftersökta filen innehåller. Tjänsten ska vara användarvänlig så att vem som helst ska kunna ha nytta av den. Det ska både gå att lagra lokala filer och filer från externa lagringstjänster. Poängen med att synkronisera externa lagringstjänster till webbtjänsten är att användaren kan hantera alla sina uppladdade filer på ett och samma ställe.
 
-För att utveckla den önskade slutprodukten jobbade gruppen enligt utvecklingsmetodiken Scrum. Syftet med att använda Scrum var att tillämpa ett agilt arbetsmönster. Agil utveckling innebär att utvecklarna arbetar efter att ständigt ha en fungerande produkt, så att kontinuerlig återkoppling med kund kan ske. Detta för att säkerställa kundens nöjdhet och för att utveckla ett flexibelt system som ständigt förblir relevant. \cite{softwareeng}
+Förutom att utveckla en produkt åt kunden var syftet med projektet att tillämpa en agil utvecklingsmetodik. Agil utveckling innebär att utvecklarna arbetar efter att ständigt ha en fungerande produkt, så att kontinuerlig återkoppling med kund kan ske. Detta för att säkerställa kundens belåtenhet och för att utveckla ett flexibelt system som ständigt förblir relevant \cite{softwareeng}.
 
-Denna rapport redogör för utvecklandet av detta projekt, dess framgångar och dess nederlag. Rapporten tar upp detaljer kring den tekniska implementationen, vad som genomförts och vad som skulle genomförts om mer tid funnits.
+Denna rapport redogör för utvecklandet av detta projekt, dess framgångar och dess motgångar. Rapporten tar upp detaljer kring den tekniska implementationen, vad som verkställts och vad som skulle ha genomförts om mer tid funnits. 
 
 \section{Frågeställning}
-Arbetet med systemet och denna rapport har kretsat kring ett par centrala frågeställningar.
+Arbetet med systemet och denna rapport har kretsat kring ett par centrala frågor.
 
 \textbf{Hur ska en webbdatabas struktureras för att sökning efter sparade objekt ska kunna levereras enligt en användares förväntningar gällande hastighet och resultat för webbtjänster med liknande funktionalitet?}
 
-För ett databasfilsystem är sökning en central komponent. Användaren ska enkelt och utan att behöva vänta hitta det denne letar efter. Då en databas växer utgör antalet rader i den ett potentiellt problem för sökningar – många rader kod skall gås igenom utav servern. Frågan handlar alltså om hur systemet kan utvecklas för att redan tidigt tackla detta. Hur går det att säkerställa att användarens sökord snabbt genererar resultat, oavsett hur komplex sökfrågan är? Och hur kan användarens söktext användas för att hitta filer utifrån exempelvis taggar och filtyper?
+För ett databasfilsystem är sökning en central komponent. Användaren ska enkelt och utan att behöva vänta hitta det denne letar efter. Då en databas växer utgör antalet rader i den ett potentiellt problem för sökningar – många rader i tabellen skall sökas igenom utav servern. Frågan handlar alltså om hur systemet kan utvecklas för att tidigt lösa problemet gällande hastighet och resultat. Hur går det att säkerställa att användarens sökord snabbt genererar resultat, oavsett hur komplex sökfrågan är eller databasens omfattning? Och hur kan användarens söktext användas för att hitta filer utifrån exempelvis taggar och filtyper?
 
 \textbf{Hur går det att säkerställa att en användares information som lagras i en webbdatabas inte är tillgänglig för någon som inte är den specifika användaren eller har blivit  auktoriserad av den specifika användaren?}
 
-Säkerhet är ett ständigt känsligt ämne då webbtjänster diskuteras. Ämnet är dessutom extra känsligt då ett system ämnar att lagra en användares personliga och potentiellt känsliga uppgifter. Hur går det att säkerställa att ingen obehörig person får tillgång till användarens filer? Och hur kan systemet ge ett tryggt intryck?
+Säkerhet är ett ständigt aktuellt ämne då webbtjänster diskuteras. Ämnet är dessutom känsligt då ett system ämnar att lagra en användares personliga och potentiellt känsliga uppgifter. Hur går det att säkerställa att ingen obehörig person får tillgång till användarens filer? Och hur kan systemet ge ett tryggt intryck?
 
-\textbf{Hur kan filer i en webbdatabas presenteras i en webbapplikation på ett sätt som gör de överskådliga, hanterbara och lättillgängliga för en användare, i en filstruktur utan kataloger eller annan hierarki?}
+\textbf{Hur kan filer i en webbdatabas presenteras i en webbtjänst på ett sätt som gör de överskådliga, hanterbara och lättillgängliga för en användare, i en filstruktur utan kataloger eller annan hierarki?}
 
-Denna fråga handlar om hur databasbaserade filsystem på webben kan presenteras. Systemet ska gärna klara av användare som har flera hundra sparade filer, både ur prestanda- och användarvänlighetsperspektiv. Hur mycket information kan presenteras utan att det blir överväldigande?
+Denna fråga handlar om hur databasbaserade filsystem på webben kan presenteras. Systemet bör klara av användare som har flera hundra sparade filer, både ur prestanda- och användarvänlighetsperspektiv. Hur mycket information kan presenteras utan att det blir överväldigande?
 
 \textbf{På vilket sätt kan en webbtjänsts användargränssnitt utformas för att demonstrera all funktionalitet ett system besitter och göra det intuitivt för en användare?}
 
 Systemet ska göra som användaren förväntar sig, trots att filstrukturen kan vara något användaren är ovan vid. Hur går det att anpassa en webbtjänst till hur exempelvis filhanteringsprogrammet användaren är van vid beter sig?
 
 \section{Avgränsningar}
-Utgående från kundens krav riktar sig installation av systemet mot en användare som har tillräckligt stor teknisk kompetens för att kunna hantera ett UNIX baserat operativsystem. Vidare utvecklas systemet också för en slutanvändare med viss erfarenhet av liknande system. Det är alltså inte anpassat för ovana datoranvändare.
+Utgående från kundens krav riktar sig installation av systemet mot en användare som har tillräckligt stor teknisk kompetens för att kunna hantera ett UNIX-baserat operativsystem. Vidare utvecklas systemet också för en slutanvändare med viss erfarenhet av liknande system. Det är alltså inte anpassat för ovana datoranvändare.
+
