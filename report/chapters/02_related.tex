@@ -4,7 +4,7 @@ I projektet har metoder och ramverk för såväl arbete som mjukvara använts. N
 \section{Scrum}
 Scrum är ett ramverk som innefattar olika roller, aktiviteter och tekniker för att förenkla utvecklingsprocessen. Det finns nyckelroller inom teamet för att se till att alla delar ses över utan att lägga allt ansvar på en individ. Det finns även en rad förutbestämda möten och uppdateringar som är till för att ge hela gruppen bra överblick och en chans att påverka arbetet.
 
-Inom Scrum delas hela utvecklingsperioden upp i tidsrutor, så kallade sprintar. Dessa är förutbestämda tidsperioder som strukturmässigt är uppbyggda på samma sätt varje omgång. De inleds med ett planeringsmöte där fokus och mål för förestående sprint bestäms. Inför varje ny arbetsdag hålls ett kort scrummöte där alla i teamet får presentera det de gjort sen senast och vad de ska göra kommande arbetsdag. Detta för att alla ska få en bra bild över hur arbetet ligger till tidsmässigt och om det finns några problem som måste lösas. 
+Inom Scrum delas hela utvecklingsperioden upp i tidsrutor, så kallade sprintar. Dessa är förutbestämda tidsperioder som strukturmässigt är uppbyggda på samma sätt varje omgång. De inleds med ett planeringsmöte där fokus och mål för förestående sprint bestäms. Inför varje ny arbetsdag hålls ett kort scrummöte där alla i teamet får presentera det de gjort sen senast och vad de ska göra kommande arbetsdag. Detta för att alla ska få en bra bild över hur arbetet ligger till tidsmässigt och om det finns några problem som måste lösas.
 
 I slutet av varje sprint hålls två möten. En sprintgranskning och en sprintåterblick. Sprintgranskningen går ut på att alla i utvecklingsteamet sätter sig ned, eventuellt även med kund, och går igenom vad som åstadkommits under senaste sprint. Arbetet demonstreras och utvecklarna svarar på eventuella frågor, presenterar problem och hur dessa har lösts. Detta möte är till för att utvärdera de tekniska lösningar som applicerats. Sprintåterblicken är ett internt möte för utvecklingsteamet. Även här ska senaste arbetet utvärderas men ur ett socialt perspektiv istället för ett tekniskt. Här ska gruppens relationer diskuteras, hur användandet av valda verktyg fungerat och det finns även tillfälle för alla enskilda individer att utvärdera egen arbetsinsats.
 
@@ -24,38 +24,42 @@ Det som användaren i sin tur interagerar med är systemets \textit{views}. Här
 
 En mer överskådlig figur för hur data och interaktioner generellt sett färdas genom ett MVC-system visas i figuren nedan. Data transporteras från \textit{models} till \textit{views} via \textit{controllers}. Interaktioner färdas mellan \textit{views} och \textit{models} via \textit{controllers} och direkt mellan \textit{controllers} och \textit{views} samt mellan \textit{controllers} och \textit{models}, se figur \ref{fig:mvc1}.
 
-\begin{figure}[!H]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/mvc1.png}
-\caption{MVC-systemets struktur.}
-\label{fig:mvc1}
-\end{figure}
+\begin{Figure}
+  % center it!
+  \centering
+    % adjust width as you like, include image from optional folder
+    \includegraphics[width=0.8\textwidth]{figures/mvc1.pdf}
+    % caption! change the label ref to what you want
+    \captionof{figure}{\emph{MVC-systemets struktur.}\label{fig:mvc1}}
+\end{Figure}
 
 En annan figur som snarare fokuserar på MVC ur ett användarperspektiv visas i figur \ref{fig:mvc2}.
 
-\begin{figure}[!H]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/mvc_user.png}
-\caption{MVC ur ett användarperspektiv.}
-\label{fig:mvc1}
-\end{figure}
+\begin{Figure}
+  % center it!
+  \centering
+    % adjust width as you like, include image from optional folder
+    \includegraphics[width=0.5\textwidth]{figures/mvc2.png}
+    % caption! change the label ref to what you want
+    \captionof{figure}{\emph{MVC ur ett användarperspektiv.}\label{fig:mvc2}}
+\end{Figure}
 
 \subsection{Angularjs}
-Angularjs är ett så kallat MVW-ramverk, vilket står för \textit{Model}-\textit{View}-\textit{Whatever} \cite{angularjs}. För att effektivt använda detta ramverk bör även systemet byggas upp efter den designen. Då \textit{whatever} innebär att det finns flera olika typer av sätt att kontrollera eller manipulera data på, kan varje komponent i systemet få specialanpassade lösningar. 
+Angularjs är ett så kallat MVW-ramverk, vilket står för \textit{Model}-\textit{View}-\textit{Whatever} \cite{angularjs}. För att effektivt använda detta ramverk bör även systemet byggas upp efter den designen. Då \textit{whatever} innebär att det finns flera olika typer av sätt att kontrollera eller manipulera data på, kan varje komponent i systemet få specialanpassade lösningar.
 
 I Angularjs finns så kallade \textit{factories}. Detta är en samling hjälpfunktioner vars syfte är att undvika kodupprepning och göra det enkelt för koden att återanvändas på flera platser i systemet.
 
 \section{Övrig tredjepartsmjukvara}
-Då Ruby on Rails och Angularjs är mjukvara med öppen källkod har det bildats globala nätverk kring dessa ramverk. Många tillägg, verktyg och bibliotek har skrivits för att underlätta utvecklandet i dessa ramverk. 
+Då Ruby on Rails och Angularjs är mjukvara med öppen källkod har det bildats globala nätverk kring dessa ramverk. Många tillägg, verktyg och bibliotek har skrivits för att underlätta utvecklandet i dessa ramverk.
 
-För att underlätta för utvecklare har Ruby on rails byggts med en mängd olika verktyg. Möjligheten finns även för utvecklare att bygga egna verktyg som kallas för \textit{gems} och är ofta fria att använda och även de skrivna med öppen källkod. 
+För att underlätta för utvecklare har Ruby on rails byggts med en mängd olika verktyg. Möjligheten finns även för utvecklare att bygga egna verktyg som kallas för \textit{gems} och är ofta fria att använda och även de skrivna med öppen källkod.
 
 För att fortsätta bidra till detta nätverk kring Ruby on Rails och Angularjs utvecklades även projektet med öppen källkod, för att kunna dela de lösningar som tagits fram.
 
 \section{Taggar och sökning}
 För att uppnå en effektiv sökstruktur i en databas finns det två olika metoder. Den första metoden kallas professionell indexering och är hierarkisk. Den andra metoden kallas folksonomi vilket bygger på att taggar sätts på innehållet utan någon särskild hierarki. Sammanfattat kan de beskrivas som “\emph{Indexering strävar efter precision medan taggning strävar efter hantering}” \cite{tagging}.
 
-Genom professionell indexering ramas den eftersökta informationen in med hjälp av huvudkategorier och underkategorier. Det går alltid att ta sig fram i databasens olika kataloger och till slut hitta den sökta filen. Folksonomi går ut på att hitta den eftersökta filen genom taggar. Nyckelorden behöver inte följa någon speciell hierarki eller struktur sinsemellan.  
+Genom professionell indexering ramas den eftersökta informationen in med hjälp av huvudkategorier och underkategorier. Det går alltid att ta sig fram i databasens olika kataloger och till slut hitta den sökta filen. Folksonomi går ut på att hitta den eftersökta filen genom taggar. Nyckelorden behöver inte följa någon speciell hierarki eller struktur sinsemellan.
 
 \section{Gränssnitt}
 För att designa ett användavänligt gränssnitt kan Normans Principer\cite{norman} tillämpas för att åstadkomma en god användarupplevelse. Dessa utgår ifrån sex punkter: synlighet, återkoppling, begränsningar, mappning, konsekvens och affordans.
@@ -67,10 +71,10 @@ Det är viktigt att utforma en design som gör att användaren känner sig trygg
 Att ständigt ge återkoppling till vad som sker eller vad som har skett gör att användare känner sig tryggare i systemet. Dialogrutor, laddningssymboler och felmeddelande är exempel på viktig återkoppling \cite{whitespace}. Utan en laddningssymbol kan användaren få känslan av att ingenting händer och går därför kanske tillbaka och upprepar steget, vilket förstör hela processen.
 
 \subsection{Begränsningar}
-För att användaren inte ska göra oönskade saker i systemet eller ha för många alternativ, är det en bra idé att begränsa alternativen \cite{whitespace}. Till exempel förvirrar för många menyalternativ på en hemsida. 
+För att användaren inte ska göra oönskade saker i systemet eller ha för många alternativ, är det en bra idé att begränsa alternativen \cite{whitespace}. Till exempel förvirrar för många menyalternativ på en hemsida.
 
 \subsection{Mappning}
-Mappning innebär att liknande innehåll samlas på samma plats för att hålla en god struktur \cite{whitespace}. Användare ska snabbt kunna hitta filens tillhörande funktioner. Detta kan åstadkommas genom att visa alternativen i anslutning till filerna. 
+Mappning innebär att liknande innehåll samlas på samma plats för att hålla en god struktur \cite{whitespace}. Användare ska snabbt kunna hitta filens tillhörande funktioner. Detta kan åstadkommas genom att visa alternativen i anslutning till filerna.
 
 \subsection{Konsekvens}
 För att göra det lättare för användaren att minnas hur denne använde en funktion är det bra att ha en liknade design på hela hemsidan. Det blir lätt rörigt för användren om designen inte följer ett mönster. Att använda sig av samma teckensnitt och färgschema hjälper till att hålla sidan konsekvent \cite{whitespace}.
