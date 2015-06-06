@@ -173,6 +173,15 @@ när en fil hade uppdaterats och vad resultatet blev.
 
 \subsection{Sökning}
 
+\begin{Figure}
+  % center it!
+  \centering
+    % adjust width as you like, include image from optional folder
+    \includegraphics[width=0.9\linewidth]{figures/search.pdf}
+    % caption! change the label ref to what you want
+    \captionof{figure}{\emph{Flöde över sökning.}\label{fig:search}}
+\end{Figure}
+
 För att låta en användare söka efter filer i systemet på ett enkelt och
 effektivt sätt delades denna funktion upp så att både servern och klienten
 användes för att hantera användarens önskemål. Hos klienten skrev användaren in
@@ -183,7 +192,8 @@ samling som generella ord att söka efter, taggar att söka efter samt filtyper
 att söka efter. Då en användare skrev söktermen ``hej \#hälsning .txt'' sökte
 alltså servern efter filer och taggar som innehöll ordet ``hej'' i sitt namn,
 hade taggen hälsning och var en textfil. Resultatet presenterades sedan för
-användaren utav klienten.
+användaren utav klienten. Figur \ref{fig:search} visar en översikt över
+sökningen.
 
 \section{Tredjepartsmjukvara}
 

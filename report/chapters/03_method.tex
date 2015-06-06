@@ -14,12 +14,14 @@ Systemet använder sig utav en SQL-databas, där SQL står för \textit{Structur
 \subsection{Databasstruktur}
 Inledningvis togs en grundläggande databastruktur fram. Databasen innehöll användare, användares olika externa konton (till exempel Dropbox eller Google Drive), filer och taggar, se figur \ref{fig:relations}.
 
-\begin{figure}[!H]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/relations.jpg}
-\caption{Visar strukturen för parametrarna \textit{parent} och \textit{child} i Google drive.}
-\label{fig:relations}
-\end{figure}
+\begin{Figure}
+  % center it!
+  \centering
+    % adjust width as you like, include image from optional folder
+    \includegraphics[width=0.8\linewidth]{figures/relations.jpg}
+    % caption! change the label ref to what you want
+    \captionof{figure}{\emph{Inledande databasstruktur.}\label{fig:relations}}
+\end{Figure}
 
 \subsection{Databashantering}
 En stor komponent utav Ruby on Rails är modulen som heter \texttt{ActiveRecord}. Detta är en modul vars syfte är att förenkla databashantering \cite{objrel} och skapades efter ett designmönster med samma namn \cite{proar}. Istället för att skriva databasfrågor manuellt kan en utvecklare använda systemets \texttt{ActiveRecord}-\textit{models} för att förenkla arbetet. Rent praktiskt kan detta innebära att ersätta SQL-frågan “\texttt{SELECT * FROM table WHERE column1=’value’}” med “\texttt{Table.where(column1: ‘value’)}”.
@@ -60,12 +62,14 @@ Med hjälp av Dropbox SDK hämtas metadata för filerna i rot-mappen för att se
 \subsection{Google drive}
 Likt Dropbox användes Google Drive SDK för att kunna använda deras funktionalitet i systemet. För att nå användarens filer krävs en autentisering för att ansluta till användarens konto hos Google Drive. Det här görs med hjälp av två \textit{gems}, Drive SDK samt Omniauth. Filhanteringen sker likt metoden för Dropbox, förutom att Drive inte strukturerar sina filer med hjälp av sökvägar. Varje fil har istället en parameter för \textit{parent} och varje mapp har en parameter \textit{child}, där eventuella filer i mappen lagras. Om en fil ligger i en mapp är mappen filens \textit{parent} och filen är mappens \textit{child}, se figur \ref{fig:parentchild}. För att identifiera det här förhållandet kommer alla filer som ligger i samma mapp ha mappens id i dess parent parameter. Liknande kommer mappens parameter child innehålla alla id tillhörande filer som ligger i mappen.
 
-\begin{figure}[!H]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/pcarent2.png}
-\caption{Visar strukturen för parametrarna \textit{parent} och \textit{child} i Google drive.}
-\label{fig:parentchild}
-\end{figure}
+\begin{Figure}
+  % center it!
+  \centering
+    % adjust width as you like, include image from optional folder
+    \includegraphics[width=0.5\linewidth]{figures/pcarent2.png}
+    % caption! change the label ref to what you want
+    \captionof{figure}{\emph{Visar strukturen för parametrarna \textit{parent} och \textit{child} i Google drive.}\label{fig:parentchild}}
+\end{Figure}
 
 \subsection{Lokal fillagring} \label{sec:local}
 Den lokala filhanteringen infördes för att ge användaren ett alternativ utan extern kostnad och utan filutrymmesbegränsningar från externa tjänster. För att sköta uppladdningen, som är en central del av den lokala filhanteringen i och med att det inte går att importera filer likt från Google Drive eller Dropbox, implementerades en så kallad drag och släpp-uppladdning samt en formulärsuppladdning. Drag och släpp-uppladdningen innebär att användaren kan markera en eller flera filer på sin dator, dra dem till webbläsarfönstret där systemet är öppet och släppa dem. Systemet tar där vid och laddar upp filerna. När servern har tagit emot all uppladdningsdata från webbläsaren får filen ett slumpat filnamn och placeras i en mapp på servern.
