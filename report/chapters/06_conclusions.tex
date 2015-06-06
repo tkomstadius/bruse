@@ -1,56 +1,64 @@
 \chapter{Slutsatser}
 
+Här diskuteras vilka slutsatser som kan dras kring frågeställningarna för systemet. Vilka lärdomar teamet drog och vad dessa innebar.
+
 \section{Frågeställningar}
 
-\subsection{Struktur på webbdatabas}
+\textbf{Hur ska en webbdatabas struktureras för att sökning efter sparade objekt ska kunna levereras enligt en användares förväntningar om hastighet och resultat?}
 
-\textbf{Hur ska en webbdatabas struktureras för att sökning efter sparade objekt
-ska kunna levereras enligt en användares förväntningar om hastighet och
-resultat?}
+Genom att dela upp taggar för sig och filer för sig och skapa en relation
+mellan de två som förklaras i kapitel \ref{sec:ror} kan användaren specificera
+om den vill söka på taggar, filer eller båda två. Om det specificeras vilken
+typ som eftersöks kommer systemet att kunna leverera ett snabbare resultat.
 
-Genom att dela upp taggar för sig och filer för sig och skapa en relation mellan
-de två som förklaras i sektion. Användaren kan specificera om den vill söka på
-taggar, filer eller båda två. Om det specificeras vilken typ som söks efter
-kommer systemet att kunna leverera ett snabbare resultat.
-
-\subsection{Säkerhet}
-
-\textbf{Hur går det att säkerställa att en användares information som lagras i
-en webbdatabas inte är tillgänglig för någon som inte är den specifika
-användaren eller har blivit  auktoriserad av den specifika användaren?}
+\textbf{Hur går det att säkerställa att en användares information som lagras i en webbdatabas inte är tillgänglig för någon som inte är den specifika användaren eller har blivit auktoriserad av den specifika användaren?}
 
 Genom att arbeta med en säker sessionshantering på servern som gör att en
-användare inte kan mixtra med en serverförfrågan för att ändra inlogg. För att
-ingen ska kunna få ut någon annan användares information måste systemet
+användare inte kan ändra en serverförfrågan för att modifiera data som utbyts.
+För att ingen ska kunna få ut någon annan användares information måste systemet
 försäkras om att rätt användare är inloggad och inte vara beroende på vilket id
 som skickas med i en serverförfrågan. På så sätt kan endast de inlägg i
-databasen som är kopplade till rätt användar-id säkert presenteras och .
+databasen som är kopplade till rätt användare säkert presenteras.
 
-\subsection{Databasbaserad filstruktur}
-
-\textbf{Hur kan filer i en webbdatabas presenteras i en webbapplikation på ett
-sätt som gör de överskådliga,  hanterbara och lättillgängliga för en användare,
-i en filstruktur utan kataloger eller annan hierarki?}
+\textbf{Hur kan filer i en webbdatabas presenteras i en webbtjänst på ett sätt som gör de överskådliga,  hanterbara och lättillgängliga för en användare, i en filstruktur utan kataloger eller annan hierarki?}
 
 Filer i en webbdatabas kan presenteras genom en databasbaserad filstruktur i en
-webbapplikation. En databasbaserad filstruktur innebär att filerna visas
-vartefter de söks efter med hjälp av taggar eller metadata. På så sätt kan
-filerna lätt hittas, så länge användaren vet på ett ungefär vad den letar efter.
-Filer som stämmer överens med alla sökord genom en \emph{fuzzy search} visas.
-Användaren kan också redigera filens taggar till att passa sökningen bättre.
-
-\subsection{Användargränssnitt}
+webbtjänst. En databasbaserad filstruktur innebär att filerna visas vartefter
+de söks efter med hjälp av taggar eller metadata. På så sätt kan filerna lätt
+hittas, så länge användaren vet på ett ungefär vad den letar efter. Filer som
+stämmer överens med alla sökord genom en lös sökning visas. Användaren kan
+också redigera filens taggar till att passa sökningen bättre.
 
 \textbf{På vilket sätt kan en webbapplikations användargränssnitt designas för
 att demonstrera all funktionalitet ett system besitter och göra det intuitivt
 för en användare?}
 
+Det är viktigt att hålla en konsekvent design för att användaren ska känna sig
+trygg i systemet. Funktioner som hanterar gränssnittets data ska vara lätta att
+hitta för att underlätta användarens användning av systemet.
+
 \section{Framtida arbete}
-Den framtida visionen för systemet är att fler användare ska kunna interagera med varandra genom att dela filer, projekt eller mood boards med varandra.
+
+Den framtida visionen för systemet är att fler användare ska kunna interagera
+med varandra genom att dela filer, projekt eller exempelvis \emph{mood boards}
+med varandra. Detta kan implementeras genom att användaren kan redigera
+synligheten för filer, så att de kan visas för andra genom att till exempel
+skicka en länk som ger läs- och nedladdningsrättigheter. Att kunna göra
+\emph{mood boards} måste också utvecklas, vilket kan göras med hjälp av
+delningsbara taggar särskild vy.
 
 För att öka säkerheten och kunna lagra filer på ett effektivare sätt kan den
-framtida databashanteringen ske med hjälp av MongoDB.
+framtida databashanteringen ske med hjälp av Mongodb. Detta kan göras genom att
+byta ut all befintlig databaslogik till att ske med hjälp av Mongodb.
 
-\subsection{Slutgiltigt rapportförslag}
-Denna rapport tar inte upp någonting om systemets användargränssnitt. Det beror
-på att gränssnittet i skrivande stund ej var färdigutvecklat.
+Fillagringstjänsten Box kan implementeras som ett alternativ till de externa
+tjänsterna Google Drive och Dropbox. Detta skulle förverkligas genom att utöka
+redan befintlig logik för hantering av filer från externa tjänster.
+
+I dagsläget har systemet ett API för att låta utvecklaren skapa ett snabbt och
+välfungerande gränsnitt som kan skicka och ta emot data från servern utan att
+ladda om hela sidan. Denna del av systemet har utvecklats under hela projektets
+gång utan någon gemensam strategi eller struktur. I vidare utveckling av
+systemet bör detta göras om, så sökvägar (så kallade \emph{endpoints}) för
+systemets API följer en gemensam konvention och att såväl server- som klientkod
+kan struktureras på ett mer logiskt sätt.
